@@ -4,6 +4,10 @@ const withTM = require('next-transpile-modules')(['@codegouvfr/react-dsfr']);
 const nextConfig = withTM({
   reactStrictMode: true,
   swcMinify: true,
+  i18n: {
+    locales: ['fr'],
+    defaultLocale: 'fr'
+  },
   webpack: config => {
     config.module.rules.push({
       test: /\.woff2$/,

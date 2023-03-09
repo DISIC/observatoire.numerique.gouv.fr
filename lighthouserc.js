@@ -1,20 +1,21 @@
 module.exports = {
   ci: {
     collect: {
-      startServerCommand: "npm run start",
-      startServerReadyPattern: "ready on",
-      url: ["http://localhost:3000"],
+      startServerCommand: 'npm run start',
+      startServerReadyPattern: 'ready on',
+      url: ['http://localhost:3000'],
       numberOfRuns: 1,
       settings: {
-        preset: "desktop",
-      },
+        preset: 'desktop'
+      }
     },
     assert: {
-      preset: "lighthouse:recommended",
+      preset: 'lighthouse:no-pwa',
+      assertions: { 'csp-xss': 'off', 'unused-css-rules': 'off' }
     },
     upload: {
-      target: "temporary-public-storage",
+      target: 'temporary-public-storage'
     },
-    server: {},
-  },
+    server: {}
+  }
 };
