@@ -6,9 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
     "predev": "only-include-used-icons",
     "prebuild": "only-include-used-icons"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*": "prettier --write"
   },
   "dependencies": {
     "@codegouvfr/react-dsfr": "^0.37.0",

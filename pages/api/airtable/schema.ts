@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { table } from "../../../utils/airtable";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { table } from '../../../utils/airtable';
 
 const getSchema = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -7,7 +7,7 @@ const getSchema = async (_req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(records);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ msg: "Something went wrong! 😕" });
+    res.status(500).json({ msg: 'Something went wrong! 😕' });
   }
 };
 
