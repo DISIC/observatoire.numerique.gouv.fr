@@ -35,6 +35,5 @@ jobs:
 
       - name: Build
         run: |
-          cd ./webapp-next
           npm install
           npm run build
