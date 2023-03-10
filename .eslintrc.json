@@ -1,6 +1,14 @@
 {
 	"extends": ["next/core-web-vitals", "prettier"],
 	"plugins": ["prettier"],
+	"parser": "@babel/eslint-parser",
+	"parserOptions": {
+		"ecmaVersion": 8,
+		"requireConfigFile": false,
+		"babelOptions": {
+			"presets": ["@babel/preset-react"]
+		}
+	},
 	"rules": {
 		"indent": ["error", "tab"],
 		"prettier/prettier": [2, { "tabWidth": 4, "useTabs": true }]

@@ -14,7 +14,9 @@ export function ColumnHeaderDefinition(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<i className={fr.cx(icon)} />
-			<p className={cx(classes.text)}>{text}</p>
+			<span role="text" className={cx(classes.text)}>
+				{text}
+			</span>
 		</div>
 	);
 }
@@ -31,7 +33,6 @@ const useStyles = makeStyles()(theme => ({
 		textAlign: 'center'
 	},
 	text: {
-		marginTop: fr.spacing('3v'),
-		marginBottom: 0
+		marginTop: fr.spacing('3v')
 	}
 }));
