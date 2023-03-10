@@ -77,8 +77,6 @@ indicatorLabelTests.forEach(ilt => {
 		expect(screen.getByRole('text')).toHaveStyle(
 			`background-color: ${ilt.find.backgroundColor}`
 		);
-		expect(screen.getByRole('text')).toHaveStyle(
-			`color: ${ilt.find.color}`
-		);
+		expect(screen.getByRole('text')).toHaveStyle(`color: ${ilt.find.color}`);
 	});
 });

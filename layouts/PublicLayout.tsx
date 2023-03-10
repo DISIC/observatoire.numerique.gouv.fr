@@ -18,9 +18,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	return (
 		<>
 			<Head>
-				<title>
-					L&#39;Observatoire de la qualité des démarches en ligne
-				</title>
+				<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
 
 				<meta
 					name="description"
@@ -43,7 +41,8 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/',
-					title: 'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
+					title:
+						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
 				}}
 				quickAccessItems={[
 					{
@@ -81,7 +80,8 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				}}
 				homeLinkProps={{
 					href: '/',
-					title: 'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
+					title:
+						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
 				}}
 				personalDataLinkProps={{
 					href: '#'

@@ -14,10 +14,7 @@ export default function Home({ data }: { data: any[] }) {
 					name="description"
 					content="L’Observatoire de la qualité des démarches en ligne : pour des services publics numériques de qualité."
 				/>
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1"
-				/>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main>
@@ -59,9 +56,7 @@ export default function Home({ data }: { data: any[] }) {
 											}}
 											key={row.id + s}
 										>
-											{typeof row.fields[s] === 'string'
-												? row.fields[s]
-												: ''}
+											{typeof row.fields[s] === 'string' ? row.fields[s] : ''}
 										</td>
 									))}
 								</tr>
