@@ -1,5 +1,5 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from "@codegouvfr/react-dsfr/tss";
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
 type Props = {
 	label: string;
@@ -8,19 +8,21 @@ type Props = {
 };
 
 export function IndicatorLabel(props: Props) {
-	const { label, color } = props;
+	const { label, color, noBackground } = props;
 	const { classes, cx } = useStyles();
 
 	return (
-		<p
+		<span
 			className={cx(
 				fr.cx('fr-px-1w', 'fr-py-0-5v'),
 				classes.root,
-				classes[color]
+				classes[color],
+				noBackground ? classes.noBackground : ''
 			)}
+			role="text"
 		>
 			{label}
-		</p>
+		</span>
 	);
 }
 
@@ -49,5 +51,8 @@ const useStyles = makeStyles()(theme => ({
 	gray: {
 		color: '#3A3A3A',
 		backgroundColor: '#F6F6F6'
+	},
+	noBackground: {
+		backgroundColor: 'transparent'
 	}
 }));
