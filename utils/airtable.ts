@@ -2,7 +2,7 @@ const Airtable = require('airtable');
 
 // Authenticate
 Airtable.configure({
-  apiKey: process.env.AIRTABLE_API_KEY
+	apiKey: process.env.AIRTABLE_API_KEY
 });
 
 // Initialize a base
