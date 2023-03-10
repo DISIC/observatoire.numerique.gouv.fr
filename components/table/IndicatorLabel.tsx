@@ -1,5 +1,5 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from 'tss-react/dsfr';
+import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 
 type Props = {
 	label: string;

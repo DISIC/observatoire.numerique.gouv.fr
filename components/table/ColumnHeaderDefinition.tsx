@@ -1,6 +1,6 @@
-import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
+import { type FrIconClassName, type RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { ReactNode } from 'react';
-import { makeStyles } from 'tss-react/dsfr';
+import { makeStyles } from "@codegouvfr/react-dsfr/tss";
 
 type Props = {
 	icon: FrIconClassName | RiIconClassName;
