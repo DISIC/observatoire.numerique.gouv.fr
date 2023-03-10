@@ -11,6 +11,6 @@
 	},
 	"rules": {
 		"indent": ["error", "tab"],
-		"prettier/prettier": [2, { "tabWidth": 4, "useTabs": true }]
+		"prettier/prettier": [2, { "tabWidth": 2, "useTabs": true }]
 	}
 }
