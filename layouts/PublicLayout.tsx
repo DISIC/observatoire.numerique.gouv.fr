@@ -19,7 +19,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 		<>
 			<Head>
 				<title>
-					L&eapo;Observatoire de la qualité des démarches en ligne
+					L&#39;Observatoire de la qualité des démarches en ligne
 				</title>
 
 				<meta
