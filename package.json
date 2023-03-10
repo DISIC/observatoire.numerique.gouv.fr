@@ -8,7 +8,7 @@
 		"start": "next start",
 		"lint": "prettier --check .",
 		"test": "jest --watch",
-		"test:ci": "ts-jest --ci",
+		"test:ci": "jest --ci",
 		"format": "prettier --write .",
 		"predev": "only-include-used-icons",
 		"prebuild": "only-include-used-icons",
