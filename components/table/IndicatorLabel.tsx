@@ -4,6 +4,7 @@ import { makeStyles } from 'tss-react/dsfr';
 type Props = {
 	label: string;
 	color: 'blue' | 'red' | 'orange' | 'green' | 'gray';
+	noBackground?: boolean;
 };
 
 export function IndicatorLabel(props: Props) {
