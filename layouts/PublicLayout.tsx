@@ -1,9 +1,16 @@
 import { ReactNode } from 'react';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Header } from '@codegouvfr/react-dsfr/Header';
 import { Footer } from '@codegouvfr/react-dsfr/Footer';
+import {
+	Display,
+	headerFooterDisplayItem
+} from '@codegouvfr/react-dsfr/Display';
 import Head from 'next/head';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
+	const { classes, cx } = useStyles();
+
 	const brandTop = (
 		<>
 			RÉPUBLIQUE
@@ -38,6 +45,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				></meta>
 			</Head>
 			<Header
+				className={cx(classes.header)}
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/',
@@ -65,7 +73,9 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 							href: '#'
 						},
 						text: 'Connexion'
-					}
+					},
+					// ONLY FOR TEST PURPOSE
+					headerFooterDisplayItem
 				]}
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
@@ -93,8 +103,17 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 					href: '#'
 				}}
 			/>
+			<Display />
 		</>
 	);
 };
+
+const useStyles = makeStyles()(theme => ({
+	header: {
+		['.fr-btn::before']: {
+			'--icon-size:': '0 !important'
+		}
+	}
+}));
 
 export default PublicLayout;
