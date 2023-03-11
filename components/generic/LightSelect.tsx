@@ -21,7 +21,7 @@ export function LightSelect(props: Props) {
 
 	useEffect(() => {
 		if (value !== undefined && !!onChange) onChange(value);
-	}, [value]);
+	}, [value, onChange]);
 
 	return (
 		<Select
@@ -38,7 +38,9 @@ export function LightSelect(props: Props) {
 				</option>
 			)}
 			{options.map(opt => (
-				<option value={opt.value}>{opt.label}</option>
+				<option key={`key-${opt.value}`} value={opt.value}>
+					{opt.label}
+				</option>
 			))}
 		</Select>
 	);
