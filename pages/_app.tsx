@@ -1,4 +1,3 @@
-import '../styles/header.scss';
 import type { AppProps } from 'next/app';
 import { createNextDsfrIntegrationApi } from '@codegouvfr/react-dsfr/next-pagesdir';
 import Link from 'next/link';
