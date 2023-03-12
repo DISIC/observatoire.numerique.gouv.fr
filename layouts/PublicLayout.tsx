@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Header } from '@codegouvfr/react-dsfr/Header';
 import { Footer } from '@codegouvfr/react-dsfr/Footer';
@@ -7,9 +7,12 @@ import {
 	headerFooterDisplayItem
 } from '@codegouvfr/react-dsfr/Display';
 import Head from 'next/head';
+import { getCookie } from '@/utils/cookies';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const { classes, cx } = useStyles();
+
+	const [isUserLogged, setIsUserLogged] = useState<boolean>();
 
 	const brandTop = (
 		<>
@@ -21,6 +24,12 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 
 	const serviceTitle = "L'Observatoire de la qualité";
 	const serviceTagLine = 'des démarches en ligne';
+
+	useEffect(() => {
+		setIsUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
+	}, []);
+
+	if (isUserLogged === undefined) return <></>;
 
 	return (
 		<>
@@ -63,30 +72,35 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 					{
 						iconId: 'fr-icon-add-circle-line',
 						linkProps: {
-							href: '#'
+							href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/'
 						},
 						text: "L'outil Je donne mon avis"
 					},
 					{
 						iconId: 'fr-icon-add-circle-line',
 						linkProps: {
-							href: '#'
+							href: isUserLogged
+								? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
+								: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F'
 						},
-						text: 'Connexion'
-					},
+						text: isUserLogged ? 'Déconnexion' : 'Connexion'
+					}
 					// ONLY FOR TEST PURPOSE
-					headerFooterDisplayItem
+					// headerFooterDisplayItem
 				]}
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
 			/>
 			{children}
 			<Footer
-				accessibility="fully compliant"
+				accessibility="partially compliant"
+				accessibilityLinkProps={{
+					href: 'https://observatoire.numerique.gouv.fr/Main/CGU'
+				}}
 				brandTop={brandTop}
 				contentDescription="L’Observatoire de la qualité des démarches en ligne est un service proposé par l'équipe design des services numériques de la direction interministérielle du numérique (DINUM)."
 				cookiesManagementLinkProps={{
-					href: '#'
+					href: 'https://observatoire.numerique.gouv.fr/Main/CGU'
 				}}
 				homeLinkProps={{
 					href: '/',
@@ -94,13 +108,13 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
 				}}
 				personalDataLinkProps={{
-					href: '#'
+					href: 'https://observatoire.numerique.gouv.fr/Main/CGU#HVieprivE9e'
 				}}
 				termsLinkProps={{
-					href: '#'
+					href: 'https://observatoire.numerique.gouv.fr/Main/CGU#HMentionslE9gales'
 				}}
 				websiteMapLinkProps={{
-					href: '#'
+					href: 'https://observatoire.numerique.gouv.fr/Main/plan-site'
 				}}
 			/>
 			<Display />
