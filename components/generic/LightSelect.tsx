@@ -4,9 +4,9 @@ import { Select } from '@codegouvfr/react-dsfr/Select';
 import { fr } from '@codegouvfr/react-dsfr';
 
 type Props = {
-	options: { label: string; value: string | number }[];
+	options: { label: string; value: string | number; href?: string }[];
 	defaultValue?: string | number;
-	onChange?(value: string | number): void;
+	onChange?(value: string | number, href?: string): void;
 	placeholder?: string;
 };
 
@@ -20,7 +20,8 @@ export function LightSelect(props: Props) {
 	);
 
 	useEffect(() => {
-		if (value !== undefined && !!onChange) onChange(value);
+		if (value !== undefined && !!onChange)
+			onChange(value, options.find(_ => _.value === value)?.href);
 	}, [value, onChange]);
 
 	return (
