@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { IndicatorLabel } from '../components/table/IndicatorLabel';
+import { IndicatorLabel } from './IndicatorLabel';
 
 type TestProps = {
 	label: string;
