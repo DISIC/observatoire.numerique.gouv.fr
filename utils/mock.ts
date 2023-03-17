@@ -1,4 +1,62 @@
-import { TProcedure } from '@/pages/api/procedures/types';
+import { TProcedure, TProcedureHeader } from '@/pages/api/procedures/types';
+
+export const proceduresTableHeaders: TProcedureHeader[] = [
+	{
+		slug: 'online',
+		label: 'Réalisable en ligne',
+		icon: 'ri-computer-line'
+	},
+	{
+		slug: 'satisfaction',
+		label: 'Satisfaction Usagers',
+		icon: 'ri-emotion-happy-line'
+	},
+	{
+		slug: 'handicap',
+		label: 'Prise en compte du handicaps',
+		icon: 'ri-open-arm-line'
+	},
+	{
+		slug: 'dlnuf',
+		label: 'Dites-le-nous une fois',
+		icon: 'ri-spam-line'
+	},
+	{
+		slug: 'usage',
+		label: 'Utilisation de la version numérique',
+		icon: 'ri-direction-line'
+	},
+	{
+		slug: 'simplicity',
+		label: 'Simplicité du langage',
+		icon: 'ri-sun-line'
+	},
+	{
+		slug: 'help-reachable',
+		label: 'Aide joignable et efficace',
+		icon: 'ri-customer-service-2-line'
+	},
+	{
+		slug: 'help-used',
+		label: 'Aide extérieure sollicitée',
+		icon: 'ri-chat-smile-line'
+	},
+	{
+		slug: 'uptime',
+		label: 'Disponibilité du service',
+		icon: 'ri-share-circle-fill'
+	},
+	{
+		slug: 'performance',
+		label: 'Temps de chargement des pages',
+		icon: 'ri-timer-flash-line'
+	}
+	// {
+	// 	slug: 'auth',
+	// 	label: 'Authentification',
+	// 	icon: 'ri-shield-user-line'
+	// }
+];
 
 export const proceduresMock: TProcedure[] = [
 	{

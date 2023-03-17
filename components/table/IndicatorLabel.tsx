@@ -1,9 +1,10 @@
+import { TFieldColor } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
 type Props = {
 	label: string;
-	color: 'blue' | 'red' | 'orange' | 'green' | 'gray';
+	color: TFieldColor;
 	noBackground?: boolean;
 };
 

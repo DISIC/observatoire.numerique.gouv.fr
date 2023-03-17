@@ -1,6 +1,7 @@
+import { FrIconClassName, RiIconClassName } from '@codegouvfr/react-dsfr';
 import { z } from 'zod';
 
-export const ZFieldSlug = z.enum([
+export const fieldSlugs = [
 	'online',
 	'satisfaction',
 	'handicap',
@@ -12,12 +13,24 @@ export const ZFieldSlug = z.enum([
 	'uptime',
 	'performance',
 	'auth'
-]);
+] as const;
+export const ZFieldSlug = z.enum(fieldSlugs);
+export type TFieldSlug = z.infer<typeof ZFieldSlug>;
+
+export const fieldColors = ['blue', 'red', 'orange', 'green', 'gray'] as const;
+export const ZFieldColor = z.enum(fieldColors);
+export type TFieldColor = z.infer<typeof ZFieldColor>;
+
+export type TProcedureHeader = {
+	slug: TFieldSlug;
+	label: string;
+	icon: FrIconClassName | RiIconClassName;
+};
 
 export const ZProcedureField = z.object({
 	slug: ZFieldSlug,
 	label: z.string(),
-	color: z.string(),
+	color: ZFieldColor,
 	value: z.number().optional(),
 	noBackground: z.boolean().optional(),
 	link: z.string().optional()

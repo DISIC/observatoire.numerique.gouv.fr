@@ -36,6 +36,7 @@ export function ColumnHeaderDefinition(props: Props) {
 				</span>
 			</Button>
 			<InfosModal
+				className={cx(classes.modal)}
 				title={infos.title}
 				buttons={[
 					{
@@ -75,5 +76,8 @@ const useStyles = makeStyles()(theme => ({
 		['&::before']: {
 			'--icon-size': fr.typography[18].style.fontSize
 		}
+	},
+	modal: {
+		textAlign: 'left'
 	}
 }));
