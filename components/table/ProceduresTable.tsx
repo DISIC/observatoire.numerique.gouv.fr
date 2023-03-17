@@ -62,7 +62,10 @@ export function ProceduresTable(props: Props) {
 						{proceduresTableHeaders.map((pth, index) => {
 							const hasArrow = index === 4 || index === 9;
 							return (
-								<th className={cx(hasArrow ? classes.arrowTh : {})}>
+								<th
+									key={pth.label}
+									className={cx(hasArrow ? classes.arrowTh : {})}
+								>
 									<ColumnHeaderDefinition
 										icon={pth.icon}
 										text={pth.label}
@@ -99,7 +102,7 @@ export function ProceduresTable(props: Props) {
 						.concat(procedures)
 						.concat(procedures)
 						.map(p => (
-							<tr>
+							<tr key={p.title}>
 								<td>
 									<span>{p.title}</span>
 									<br />
@@ -114,6 +117,7 @@ export function ProceduresTable(props: Props) {
 
 									return (
 										<td
+											key={`${p.title} ${pth.label}`}
 											className={cx(
 												index === 4 || index === 9 ? classes.arrowTd : {}
 											)}
