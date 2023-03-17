@@ -1,5 +1,5 @@
 import { Top250Header } from '@/components/top250/Header';
-import { Top250Table } from '@/components/top250/Table';
+import { Top250TableSection } from '@/components/top250/TableSection';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { proceduresMock } from '@/utils/mock';
@@ -22,8 +22,8 @@ export default function Observatoire() {
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)}>
-				<div className={fr.cx('fr-container')}>
-					<Top250Table procedures={proceduresMock} />
+				<div className={fr.cx('fr-container', 'fr-px-5v')}>
+					<Top250TableSection procedures={proceduresMock} />
 				</div>
 				<StickyFooter proceduresCount={proceduresMock.length} />
 			</div>
