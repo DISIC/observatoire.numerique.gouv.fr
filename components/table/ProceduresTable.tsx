@@ -81,6 +81,11 @@ export function ProceduresTable(props: Props) {
 											onClick={() => {
 												handleScrollX(index === 4);
 											}}
+											aria-label={
+												index === 4
+													? 'Voir les indicateurs suivants'
+													: 'Voir les indicateurs précédents'
+											}
 										>
 											<i
 												className={fr.cx(
