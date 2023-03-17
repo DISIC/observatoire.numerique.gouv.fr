@@ -53,6 +53,7 @@ const useStyles = makeStyles()(theme => ({
 		backgroundColor: '#F6F6F6'
 	},
 	noBackground: {
-		backgroundColor: 'transparent'
+		backgroundColor: 'transparent',
+		fontWeight: 'normal'
 	}
 }));

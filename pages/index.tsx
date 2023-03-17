@@ -68,6 +68,7 @@ export default function Home() {
 				<IndicatorLabel label="Oui" color="green" />
 				<IndicatorLabel label="Très bon" color="green" />
 				<IndicatorLabel label="Faible" color="gray" />
+				<IndicatorLabel label="Faible" color="green" noBackground />
 			</div>
 		</div>
 	);

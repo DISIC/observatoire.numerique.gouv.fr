@@ -7,7 +7,6 @@ import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import { ReactNode } from 'react';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Button } from '@codegouvfr/react-dsfr/Button';
-import { string } from 'zod';
 
 type Props = {
 	icon: FrIconClassName | RiIconClassName;
