@@ -15,7 +15,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 
 	if (slug === 'online' && typeof value === 'string')
 		return (
-			<a href={value} target="_blank">
+			<a href={value} target="_blank" rel="noreferrer">
 				Voir le service
 			</a>
 		);
