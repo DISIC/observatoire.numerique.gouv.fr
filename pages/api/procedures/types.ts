@@ -31,9 +31,8 @@ export const ZProcedureField = z.object({
 	slug: ZFieldSlug,
 	label: z.string(),
 	color: ZFieldColor,
-	value: z.number().optional(),
-	noBackground: z.boolean().optional(),
-	link: z.string().optional()
+	value: z.number().or(z.string()).optional(),
+	noBackground: z.boolean().optional()
 });
 
 export const ZProcedure = z.object({

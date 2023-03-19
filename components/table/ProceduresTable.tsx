@@ -5,13 +5,14 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
 import { useLayoutEffect, useRef } from 'react';
+import { IndicatorValue } from './IndicatorValue';
 
 type Props = {
 	procedures: TProcedure[];
 };
 
 const _containerSize = 1208;
-const _firstColSize = 308;
+const _firstColSize = 358;
 const _arrowSlideSize = 40;
 const _thRadius = 10;
 
@@ -111,9 +112,11 @@ export function ProceduresTable(props: Props) {
 								<td>
 									<span>{p.title}</span>
 									<br />
-									{p.ministere}
+									<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
 									<br />
-									{p.administration}
+									<span className={fr.cx('fr-text--sm')}>
+										{p.administration}
+									</span>
 								</td>
 								{proceduresTableHeaders.map((pth, index) => {
 									const field = p.fields.find(f => f.slug === pth.slug);
@@ -128,6 +131,9 @@ export function ProceduresTable(props: Props) {
 											)}
 										>
 											<IndicatorLabel {...field} />
+											{field.value && (
+												<IndicatorValue slug={field.slug} value={field.value} />
+											)}
 										</td>
 									);
 								})}
@@ -166,6 +172,7 @@ const useStyles = makeStyles()(theme => ({
 				},
 				position: 'fixed',
 				top: '-10px',
+				zIndex: 99,
 				marginLeft: _firstColSize,
 				width: _containerSize - _firstColSize,
 				['th:not(:first-child)']: {
@@ -213,7 +220,7 @@ const useStyles = makeStyles()(theme => ({
 				padding: fr.spacing('4v'),
 				borderTopLeftRadius: _thRadius,
 				borderBottomLeftRadius: _thRadius,
-				span: {
+				['& > span:first-child']: {
 					fontWeight: 'bold'
 				}
 			},
@@ -252,6 +259,7 @@ const useStyles = makeStyles()(theme => ({
 		width:
 			(_containerSize - _firstColSize - _arrowSlideSize) / 5 +
 			_arrowSlideSize +
-			'px !important'
+			'px !important',
+		paddingRight: _arrowSlideSize
 	}
 }));
