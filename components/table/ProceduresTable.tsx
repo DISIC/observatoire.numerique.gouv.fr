@@ -215,6 +215,7 @@ const useStyles = makeStyles()(theme => ({
 			},
 			['&:first-child']: {
 				position: 'sticky',
+				zIndex: 9,
 				left: 0,
 				width: _firstColSize,
 				borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,

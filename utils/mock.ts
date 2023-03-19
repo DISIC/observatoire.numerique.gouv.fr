@@ -70,7 +70,7 @@ export const proceduresMock: TProcedure[] = [
 				color: 'green',
 				value: 'https://portailweb.franceagrimer.fr/portail/'
 			},
-			{ slug: 'satisfaction', label: 'Moyen', color: 'orange', value: 6.7 },
+			{ slug: 'satisfaction', label: 'Moyen', color: 'yellow', value: 6.7 },
 			{
 				slug: 'handicap',
 				label: 'Partielle',
@@ -120,7 +120,7 @@ export const proceduresMock: TProcedure[] = [
 				color: 'green',
 				value: 'https://portailweb.franceagrimer.fr/portail/'
 			},
-			{ slug: 'satisfaction', label: 'Moyen', color: 'orange', value: 6.7 },
+			{ slug: 'satisfaction', label: 'Moyen', color: 'yellow', value: 6.7 },
 			{ slug: 'handicap', label: 'Non', color: 'red' },
 			{ slug: 'dlnuf', label: 'Très Bon', color: 'green' },
 			{ slug: 'usage', label: 'Faible', color: 'gray' },
@@ -165,7 +165,7 @@ export const proceduresMock: TProcedure[] = [
 				color: 'green',
 				value: 'https://portailweb.franceagrimer.fr/portail/'
 			},
-			{ slug: 'satisfaction', label: 'Moyen', color: 'orange', value: 6.7 },
+			{ slug: 'satisfaction', label: 'Moyen', color: 'yellow', value: 6.7 },
 			{ slug: 'handicap', label: 'Non', color: 'red' },
 			{ slug: 'dlnuf', label: 'Très Bon', color: 'green' },
 			{ slug: 'usage', label: 'Faible', color: 'gray' },

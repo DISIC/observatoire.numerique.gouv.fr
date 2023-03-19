@@ -41,9 +41,13 @@ const useStyles = makeStyles()(theme => ({
 		color: '#CE0500',
 		backgroundColor: '#FFE9E9'
 	},
-	orange: {
+	yellow: {
 		color: '#716043',
 		backgroundColor: '#FEECC2'
+	},
+	orange: {
+		color: '#B34000',
+		backgroundColor: '#FFE8E5'
 	},
 	green: {
 		color: '#18753C',

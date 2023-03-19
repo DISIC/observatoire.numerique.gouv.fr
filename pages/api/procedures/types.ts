@@ -17,7 +17,14 @@ export const fieldSlugs = [
 export const ZFieldSlug = z.enum(fieldSlugs);
 export type TFieldSlug = z.infer<typeof ZFieldSlug>;
 
-export const fieldColors = ['blue', 'red', 'orange', 'green', 'gray'] as const;
+export const fieldColors = [
+	'blue',
+	'red',
+	'orange',
+	'yellow',
+	'green',
+	'gray'
+] as const;
 export const ZFieldColor = z.enum(fieldColors);
 export type TFieldColor = z.infer<typeof ZFieldColor>;
 
