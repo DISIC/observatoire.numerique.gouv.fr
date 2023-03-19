@@ -11,8 +11,8 @@ type Props = {
 	procedures: TProcedure[];
 };
 
-const _containerSize = 1208;
-const _firstColSize = 358;
+const _containerWidth = 1208;
+const _firstColSize = _containerWidth * 0.3;
 const _arrowSlideSize = 40;
 const _thRadius = 10;
 
@@ -42,13 +42,13 @@ export function ProceduresTable(props: Props) {
 
 	const handleScrollX = (isRight: boolean) => {
 		scrollRef?.current?.scrollTo({
-			left: isRight ? _containerSize - _firstColSize + _arrowSlideSize : 0,
+			left: isRight ? _containerWidth - _firstColSize + _arrowSlideSize : 0,
 			behavior: 'smooth'
 		});
 
 		if (stickyHeaderRef?.current?.classList.contains('sticked-row')) {
 			stickyHeaderRef?.current?.scrollTo({
-				left: isRight ? _containerSize - _firstColSize + _arrowSlideSize : 0,
+				left: isRight ? _containerWidth - _firstColSize + _arrowSlideSize : 0,
 				behavior: 'smooth'
 			});
 		}
@@ -174,9 +174,9 @@ const useStyles = makeStyles()(theme => ({
 				top: '-10px',
 				zIndex: 99,
 				marginLeft: _firstColSize,
-				width: _containerSize - _firstColSize,
+				width: _containerWidth - _firstColSize,
 				['th:not(:first-child)']: {
-					minWidth: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
+					minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
 					borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
 				},
 				['button:first-child']: {
@@ -224,7 +224,7 @@ const useStyles = makeStyles()(theme => ({
 		td: {
 			backgroundColor: 'white',
 			border: '1px solid transparent',
-			width: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
+			width: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
 			position: 'relative',
 			['&:not(:first-child)']: {
 				textAlign: 'center'
@@ -269,7 +269,7 @@ const useStyles = makeStyles()(theme => ({
 	},
 	arrowTh: {
 		minWidth:
-			(_containerSize - _firstColSize - _arrowSlideSize) / 5 +
+			(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
 			_arrowSlideSize +
 			'px !important',
 		paddingRight: _arrowSlideSize,
@@ -277,7 +277,7 @@ const useStyles = makeStyles()(theme => ({
 	},
 	arrowTd: {
 		width:
-			(_containerSize - _firstColSize - _arrowSlideSize) / 5 +
+			(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
 			_arrowSlideSize +
 			'px !important',
 		paddingRight: _arrowSlideSize
