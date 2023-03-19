@@ -5,13 +5,14 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
 import { useLayoutEffect, useRef } from 'react';
+import { IndicatorValue } from './IndicatorValue';
 
 type Props = {
 	procedures: TProcedure[];
 };
 
 const _containerSize = 1208;
-const _firstColSize = 308;
+const _firstColSize = 358;
 const _arrowSlideSize = 40;
 const _thRadius = 10;
 
@@ -111,9 +112,11 @@ export function ProceduresTable(props: Props) {
 								<td>
 									<span>{p.title}</span>
 									<br />
-									{p.ministere}
+									<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
 									<br />
-									{p.administration}
+									<span className={fr.cx('fr-text--sm')}>
+										{p.administration}
+									</span>
 								</td>
 								{proceduresTableHeaders.map((pth, index) => {
 									const field = p.fields.find(f => f.slug === pth.slug);
@@ -128,6 +131,9 @@ export function ProceduresTable(props: Props) {
 											)}
 										>
 											<IndicatorLabel {...field} />
+											{field.value && (
+												<IndicatorValue slug={field.slug} value={field.value} />
+											)}
 										</td>
 									);
 								})}
@@ -166,22 +172,38 @@ const useStyles = makeStyles()(theme => ({
 				},
 				position: 'fixed',
 				top: '-10px',
+				zIndex: 99,
 				marginLeft: _firstColSize,
 				width: _containerSize - _firstColSize,
 				['th:not(:first-child)']: {
-					minWidth: (_containerSize - _firstColSize) / 5,
+					minWidth: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
 					borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
 				},
-				button: {
+				['button:first-child']: {
 					fontWeight: 500,
+					width: '100%',
 					fontSize: fr.typography[18].style.fontSize,
 					['&:first-of-type > i']: { display: 'none' },
 					['&:first-of-type > span']: { marginTop: 0 }
 				}
+			},
+			['&:hover']: {
+				// td: {
+				// 	borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+				// 	borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+				// 	['&:first-child']: {
+				// 		border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
+				// 	},
+				// 	['&:nth-of-type(6),  &:last-child']: {
+				// 		borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
+				// 	}
+				// }
+				td: {
+					backgroundColor: theme.decisions.background.alt.blueFrance.default
+				}
 			}
 		},
 		th: {
-			zIndex: 10,
 			backgroundColor: 'white',
 			['& > button']: {
 				margin: 'auto'
@@ -201,23 +223,26 @@ const useStyles = makeStyles()(theme => ({
 		},
 		td: {
 			backgroundColor: 'white',
+			border: '1px solid transparent',
 			width: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
+			position: 'relative',
 			['&:not(:first-child)']: {
 				textAlign: 'center'
 			},
 			['&:first-child']: {
 				position: 'sticky',
+				zIndex: 9,
 				left: 0,
 				width: _firstColSize,
 				borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
 				padding: fr.spacing('4v'),
 				borderTopLeftRadius: _thRadius,
 				borderBottomLeftRadius: _thRadius,
-				span: {
+				['& > span:first-child']: {
 					fontWeight: 'bold'
 				}
 			},
-			['&:last-child']: {
+			['&:nth-of-type(6), &:last-child']: {
 				borderTopRightRadius: _thRadius,
 				borderBottomRightRadius: _thRadius
 			}
@@ -243,8 +268,10 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	arrowTh: {
-		width:
-			(_containerSize - _firstColSize - _arrowSlideSize) / 5 + _arrowSlideSize,
+		minWidth:
+			(_containerSize - _firstColSize - _arrowSlideSize) / 5 +
+			_arrowSlideSize +
+			'px !important',
 		paddingRight: _arrowSlideSize,
 		position: 'relative'
 	},
@@ -252,6 +279,7 @@ const useStyles = makeStyles()(theme => ({
 		width:
 			(_containerSize - _firstColSize - _arrowSlideSize) / 5 +
 			_arrowSlideSize +
-			'px !important'
+			'px !important',
+		paddingRight: _arrowSlideSize
 	}
 }));

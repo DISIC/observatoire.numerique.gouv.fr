@@ -15,7 +15,7 @@ export function IndicatorLabel(props: Props) {
 	return (
 		<span
 			className={cx(
-				fr.cx('fr-px-1w', 'fr-py-0-5v'),
+				fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-text--sm'),
 				classes.root,
 				classes[color],
 				noBackground ? classes.noBackground : ''
@@ -41,9 +41,13 @@ const useStyles = makeStyles()(theme => ({
 		color: '#CE0500',
 		backgroundColor: '#FFE9E9'
 	},
-	orange: {
+	yellow: {
 		color: '#716043',
 		backgroundColor: '#FEECC2'
+	},
+	orange: {
+		color: '#B34000',
+		backgroundColor: '#FFE8E5'
 	},
 	green: {
 		color: '#18753C',

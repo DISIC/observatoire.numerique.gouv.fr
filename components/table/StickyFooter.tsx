@@ -49,6 +49,7 @@ const useStyles = makeStyles()(theme => ({
 	root: {
 		position: 'sticky',
 		bottom: 0,
+		zIndex: 11,
 		display: 'flex',
 		justifyContent: 'space-between',
 		padding: `${fr.spacing('3v')} ${fr.spacing('8v')}`,

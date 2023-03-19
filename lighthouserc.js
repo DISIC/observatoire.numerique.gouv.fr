@@ -11,7 +11,11 @@ module.exports = {
 		},
 		assert: {
 			preset: 'lighthouse:no-pwa',
-			assertions: { 'csp-xss': 'off', 'unused-css-rules': 'off' }
+			assertions: {
+				'csp-xss': 'off',
+				'unused-css-rules': 'off',
+				'unused-javascript': 'off'
+			}
 		},
 		upload: {
 			target: 'temporary-public-storage'

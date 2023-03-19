@@ -17,7 +17,14 @@ export const fieldSlugs = [
 export const ZFieldSlug = z.enum(fieldSlugs);
 export type TFieldSlug = z.infer<typeof ZFieldSlug>;
 
-export const fieldColors = ['blue', 'red', 'orange', 'green', 'gray'] as const;
+export const fieldColors = [
+	'blue',
+	'red',
+	'orange',
+	'yellow',
+	'green',
+	'gray'
+] as const;
 export const ZFieldColor = z.enum(fieldColors);
 export type TFieldColor = z.infer<typeof ZFieldColor>;
 
@@ -31,9 +38,8 @@ export const ZProcedureField = z.object({
 	slug: ZFieldSlug,
 	label: z.string(),
 	color: ZFieldColor,
-	value: z.number().optional(),
-	noBackground: z.boolean().optional(),
-	link: z.string().optional()
+	value: z.number().or(z.string()).optional(),
+	noBackground: z.boolean().optional()
 });
 
 export const ZProcedure = z.object({

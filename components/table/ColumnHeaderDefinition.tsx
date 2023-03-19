@@ -53,6 +53,7 @@ export function ColumnHeaderDefinition(props: Props) {
 
 const useStyles = makeStyles()(theme => ({
 	root: {
+		width: '90%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',

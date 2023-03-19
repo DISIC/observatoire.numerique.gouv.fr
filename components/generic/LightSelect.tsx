@@ -22,7 +22,7 @@ export function LightSelect(props: Props) {
 	useEffect(() => {
 		if (value !== undefined && !!onChange)
 			onChange(value, options.find(_ => _.value === value)?.href);
-	}, [value, onChange]);
+	}, [value, onChange, options]);
 
 	return (
 		<Select
