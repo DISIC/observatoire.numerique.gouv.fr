@@ -176,11 +176,12 @@ const useStyles = makeStyles()(theme => ({
 				marginLeft: _firstColSize,
 				width: _containerSize - _firstColSize,
 				['th:not(:first-child)']: {
-					minWidth: (_containerSize - _firstColSize) / 5,
+					minWidth: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
 					borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
 				},
-				button: {
+				['button:first-child']: {
 					fontWeight: 500,
+					width: '100%',
 					fontSize: fr.typography[18].style.fontSize,
 					['&:first-of-type > i']: { display: 'none' },
 					['&:first-of-type > span']: { marginTop: 0 }
@@ -252,8 +253,10 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	arrowTh: {
-		width:
-			(_containerSize - _firstColSize - _arrowSlideSize) / 5 + _arrowSlideSize,
+		minWidth:
+			(_containerSize - _firstColSize - _arrowSlideSize) / 5 +
+			_arrowSlideSize +
+			'px !important',
 		paddingRight: _arrowSlideSize,
 		position: 'relative'
 	},
