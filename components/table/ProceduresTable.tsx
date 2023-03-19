@@ -204,7 +204,6 @@ const useStyles = makeStyles()(theme => ({
 			}
 		},
 		th: {
-			zIndex: 10,
 			backgroundColor: 'white',
 			['& > button']: {
 				margin: 'auto'
