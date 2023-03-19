@@ -44,7 +44,12 @@ export function IndicatorValue(props: Props) {
 const useStyles = makeStyles()(theme => ({
 	root: {
 		fontSize: fr.typography[17].style.fontSize,
-		marginTop: fr.spacing('2v'),
+		marginTop: fr.spacing('4v'),
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translateX(-50%)',
+		width: '100%',
 		['a::after']: {
 			'--icon-size': 0,
 			margin: 0

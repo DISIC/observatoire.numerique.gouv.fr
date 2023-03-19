@@ -209,6 +209,7 @@ const useStyles = makeStyles()(theme => ({
 		td: {
 			backgroundColor: 'white',
 			width: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
+			position: 'relative',
 			['&:not(:first-child)']: {
 				textAlign: 'center'
 			},

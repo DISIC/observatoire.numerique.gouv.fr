@@ -74,7 +74,7 @@ export const proceduresMock: TProcedure[] = [
 			{
 				slug: 'handicap',
 				label: 'Partielle',
-				color: 'red',
+				color: 'orange',
 				value: 'Conformité à 90%'
 			},
 			{ slug: 'dlnuf', label: 'Très Bon', color: 'green' },

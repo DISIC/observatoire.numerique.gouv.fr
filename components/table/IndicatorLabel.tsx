@@ -15,7 +15,7 @@ export function IndicatorLabel(props: Props) {
 	return (
 		<span
 			className={cx(
-				fr.cx('fr-px-1w', 'fr-py-0-5v'),
+				fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-text--sm'),
 				classes.root,
 				classes[color],
 				noBackground ? classes.noBackground : ''
