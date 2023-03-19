@@ -186,6 +186,21 @@ const useStyles = makeStyles()(theme => ({
 					['&:first-of-type > i']: { display: 'none' },
 					['&:first-of-type > span']: { marginTop: 0 }
 				}
+			},
+			['&:hover']: {
+				// td: {
+				// 	borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+				// 	borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+				// 	['&:first-child']: {
+				// 		border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
+				// 	},
+				// 	['&:nth-of-type(6),  &:last-child']: {
+				// 		borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
+				// 	}
+				// }
+				td: {
+					backgroundColor: theme.decisions.background.alt.blueFrance.default
+				}
 			}
 		},
 		th: {
@@ -209,6 +224,7 @@ const useStyles = makeStyles()(theme => ({
 		},
 		td: {
 			backgroundColor: 'white',
+			border: '1px solid transparent',
 			width: (_containerSize - _firstColSize - _arrowSlideSize) / 5,
 			position: 'relative',
 			['&:not(:first-child)']: {
@@ -227,7 +243,7 @@ const useStyles = makeStyles()(theme => ({
 					fontWeight: 'bold'
 				}
 			},
-			['&:last-child']: {
+			['&:nth-of-type(6), &:last-child']: {
 				borderTopRightRadius: _thRadius,
 				borderBottomRightRadius: _thRadius
 			}
