@@ -33,6 +33,9 @@ export default function Observatoire() {
 
 const useStyles = makeStyles()(theme => ({
 	tableContainer: {
-		backgroundColor: theme.decisions.background.contrast.info.default
+		backgroundColor: theme.decisions.background.contrast.info.default,
+		['.fr-container']: {
+			maxWidth: 1440
+		}
 	}
 }));
