@@ -39,7 +39,7 @@ export function ProceduresTable(props: Props) {
 		//POSSIBILITY TO MERGE ?
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
-			_userViewportAvailable < 1208 ? _userViewportAvailable : 1208;
+			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
 		const _firstColSize = _containerWidth * 0.3;
 		const _arrowSlideSize = 40;
 
@@ -152,7 +152,7 @@ export function ProceduresTable(props: Props) {
 const useStyles = makeStyles()(theme => {
 	const _userViewportAvailable = window.innerWidth - 40;
 	const _containerWidth =
-		_userViewportAvailable < 1208 ? _userViewportAvailable : 1208;
+		_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
 	const _firstColSize = _containerWidth * 0.3;
 	const _arrowSlideSize = 40;
 	const _thRadius = 10;
