@@ -4,17 +4,12 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { IndicatorValue } from './IndicatorValue';
 
 type Props = {
 	procedures: TProcedure[];
 };
-
-const _containerWidth = 1208;
-const _firstColSize = _containerWidth * 0.3;
-const _arrowSlideSize = 40;
-const _thRadius = 10;
 
 export function ProceduresTable(props: Props) {
 	const { procedures } = props;
@@ -41,6 +36,13 @@ export function ProceduresTable(props: Props) {
 	}, []);
 
 	const handleScrollX = (isRight: boolean) => {
+		//POSSIBILITY TO MERGE ?
+		const _userViewportAvailable = window.innerWidth - 40;
+		const _containerWidth =
+			_userViewportAvailable < 1208 ? _userViewportAvailable : 1208;
+		const _firstColSize = _containerWidth * 0.3;
+		const _arrowSlideSize = 40;
+
 		scrollRef?.current?.scrollTo({
 			left: isRight ? _containerWidth - _firstColSize + _arrowSlideSize : 0,
 			behavior: 'smooth'
@@ -110,13 +112,15 @@ export function ProceduresTable(props: Props) {
 						.map(p => (
 							<tr key={p.title}>
 								<td>
-									<span>{p.title}</span>
-									<br />
-									<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
-									<br />
-									<span className={fr.cx('fr-text--sm')}>
-										{p.administration}
-									</span>
+									<div>
+										<span>{p.title}</span>
+										<br />
+										<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
+										<br />
+										<span className={fr.cx('fr-text--sm')}>
+											{p.administration}
+										</span>
+									</div>
 								</td>
 								{proceduresTableHeaders.map((pth, index) => {
 									const field = p.fields.find(f => f.slug === pth.slug);
@@ -145,141 +149,160 @@ export function ProceduresTable(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
-	root: {
-		width: '100%',
-		overflowX: 'scroll',
-		scrollbarWidth: 'none',
-		msOverflowStyle: 'none',
-		['&::-webkit-scrollbar']: {
-			display: 'none'
-		}
-	},
-	table: {
-		width: 'max-content',
-		marginTop: fr.spacing('2v'),
-		borderSpacing: `0 ${fr.spacing('2v')}`,
-		['&.table-has-sticked-row']: {
-			marginTop: 150
+const useStyles = makeStyles()(theme => {
+	const _userViewportAvailable = window.innerWidth - 40;
+	const _containerWidth =
+		_userViewportAvailable < 1208 ? _userViewportAvailable : 1208;
+	const _firstColSize = _containerWidth * 0.3;
+	const _arrowSlideSize = 40;
+	const _thRadius = 10;
+
+	return {
+		root: {
+			width: '100%',
+			overflowX: 'scroll',
+			scrollbarWidth: 'none',
+			msOverflowStyle: 'none',
+			['&::-webkit-scrollbar']: {
+				display: 'none'
+			}
 		},
-		tr: {
-			['&.sticked-row']: {
-				overflowX: 'scroll',
-				scrollbarWidth: 'none',
-				msOverflowStyle: 'none',
-				['&::-webkit-scrollbar']: {
-					display: 'none'
+		table: {
+			width: 'max-content',
+			marginTop: fr.spacing('2v'),
+			borderSpacing: `0 ${fr.spacing('2v')}`,
+			['&.table-has-sticked-row']: {
+				marginTop: 150
+			},
+			tr: {
+				['&.sticked-row']: {
+					overflowX: 'scroll',
+					scrollbarWidth: 'none',
+					msOverflowStyle: 'none',
+					['&::-webkit-scrollbar']: {
+						display: 'none'
+					},
+					position: 'fixed',
+					top: '-10px',
+					zIndex: 99,
+					marginLeft: _firstColSize,
+					width: _containerWidth - _firstColSize,
+					['th:not(:first-child)']: {
+						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
+						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
+					},
+					['button:first-child']: {
+						fontWeight: 500,
+						width: '100%',
+						fontSize: fr.typography[18].style.fontSize,
+						['&:first-of-type > i']: { display: 'none' },
+						['&:first-of-type > span']: { marginTop: 0 }
+					}
 				},
-				position: 'fixed',
-				top: '-10px',
-				zIndex: 99,
-				marginLeft: _firstColSize,
-				width: _containerWidth - _firstColSize,
-				['th:not(:first-child)']: {
-					minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
-					borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
-				},
-				['button:first-child']: {
-					fontWeight: 500,
-					width: '100%',
-					fontSize: fr.typography[18].style.fontSize,
-					['&:first-of-type > i']: { display: 'none' },
-					['&:first-of-type > span']: { marginTop: 0 }
+				['&:hover']: {
+					// td: {
+					// 	borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+					// 	borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+					// 	['&:first-child']: {
+					// 		border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
+					// 	},
+					// 	['&:nth-of-type(6),  &:last-child']: {
+					// 		borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
+					// 	}
+					// }
+					['td:not(:first-child), td:first-child > div']: {
+						backgroundColor: theme.decisions.background.alt.blueFrance.default
+					}
 				}
 			},
+			th: {
+				backgroundColor: 'white',
+				['& > button']: {
+					margin: 'auto'
+				},
+				['&:first-child']: {
+					position: 'sticky',
+					left: 0,
+					backgroundColor: theme.decisions.background.contrast.info.default,
+					zIndex: 11
+				},
+				['&:nth-of-type(2), &:nth-of-type(7)']: {
+					borderTopLeftRadius: _thRadius
+				},
+				['&:nth-of-type(6), &:last-child']: {
+					borderTopRightRadius: _thRadius
+				}
+			},
+			td: {
+				backgroundColor: 'white',
+				border: '1px solid transparent',
+				width: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
+				position: 'relative',
+				['&:not(:first-child)']: {
+					textAlign: 'center'
+				},
+				['&:first-child']: {
+					position: 'sticky',
+					zIndex: 9,
+					left: 0,
+					width: _firstColSize,
+					backgroundColor: theme.decisions.background.contrast.info.default,
+					padding: 0,
+					border: 'none',
+					borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
+					['& > div']: {
+						borderTopWidth: 1,
+						borderLeftWidth: 1,
+						borderBottomWidth: 1,
+						borderColor: 'white',
+						backgroundColor: 'white',
+						padding: fr.spacing('4v'),
+						borderTopLeftRadius: _thRadius,
+						borderBottomLeftRadius: _thRadius,
+						['& > span:first-child']: {
+							fontWeight: 'bold'
+						}
+					}
+				},
+				['&:nth-of-type(6), &:last-child']: {
+					borderTopRightRadius: _thRadius,
+					borderBottomRightRadius: _thRadius
+				}
+			}
+		},
+		arrow: {
+			width: _arrowSlideSize,
+			backgroundColor: theme.decisions.background.actionHigh.blueFrance.default,
+			position: 'absolute',
+			right: 0,
+			top: 0,
+			height: '100%',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			borderTopRightRadius: _thRadius,
 			['&:hover']: {
-				// td: {
-				// 	borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-				// 	borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-				// 	['&:first-child']: {
-				// 		border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
-				// 	},
-				// 	['&:nth-of-type(6),  &:last-child']: {
-				// 		borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
-				// 	}
-				// }
-				td: {
-					backgroundColor: theme.decisions.background.alt.blueFrance.default
-				}
+				backgroundColor:
+					theme.decisions.background.actionHigh.blueFrance.hover + ' !important'
+			},
+			i: {
+				color: 'white'
 			}
 		},
-		th: {
-			backgroundColor: 'white',
-			['& > button']: {
-				margin: 'auto'
-			},
-			['&:first-child']: {
-				position: 'sticky',
-				left: 0,
-				backgroundColor: theme.decisions.background.contrast.info.default,
-				zIndex: 11
-			},
-			['&:nth-of-type(2), &:nth-of-type(7)']: {
-				borderTopLeftRadius: _thRadius
-			},
-			['&:nth-of-type(6), &:last-child']: {
-				borderTopRightRadius: _thRadius
-			}
+		arrowTh: {
+			minWidth:
+				(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
+				_arrowSlideSize +
+				'px !important',
+			paddingRight: _arrowSlideSize,
+			position: 'relative'
 		},
-		td: {
-			backgroundColor: 'white',
-			border: '1px solid transparent',
-			width: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
-			position: 'relative',
-			['&:not(:first-child)']: {
-				textAlign: 'center'
-			},
-			['&:first-child']: {
-				position: 'sticky',
-				zIndex: 9,
-				left: 0,
-				width: _firstColSize,
-				borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
-				padding: fr.spacing('4v'),
-				borderTopLeftRadius: _thRadius,
-				borderBottomLeftRadius: _thRadius,
-				['& > span:first-child']: {
-					fontWeight: 'bold'
-				}
-			},
-			['&:nth-of-type(6), &:last-child']: {
-				borderTopRightRadius: _thRadius,
-				borderBottomRightRadius: _thRadius
-			}
+		arrowTd: {
+			width:
+				(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
+				_arrowSlideSize +
+				'px !important',
+			paddingRight: _arrowSlideSize
 		}
-	},
-	arrow: {
-		width: _arrowSlideSize,
-		backgroundColor: theme.decisions.background.actionHigh.blueFrance.default,
-		position: 'absolute',
-		right: 0,
-		top: 0,
-		height: '100%',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		borderTopRightRadius: _thRadius,
-		['&:hover']: {
-			backgroundColor:
-				theme.decisions.background.actionHigh.blueFrance.hover + ' !important'
-		},
-		i: {
-			color: 'white'
-		}
-	},
-	arrowTh: {
-		minWidth:
-			(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
-			_arrowSlideSize +
-			'px !important',
-		paddingRight: _arrowSlideSize,
-		position: 'relative'
-	},
-	arrowTd: {
-		width:
-			(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
-			_arrowSlideSize +
-			'px !important',
-		paddingRight: _arrowSlideSize
-	}
-}));
+	};
+});
