@@ -200,18 +200,25 @@ const useStyles = makeStyles()(theme => {
 					}
 				},
 				['&:hover']: {
-					// td: {
-					// 	borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-					// 	borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-					// 	['&:first-child']: {
-					// 		border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
-					// 	},
-					// 	['&:nth-of-type(6),  &:last-child']: {
-					// 		borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
-					// 	}
-					// }
-					['td:not(:first-child), td:first-child > div']: {
-						backgroundColor: theme.decisions.background.alt.blueFrance.default
+					['td:not(:first-child)']: {
+						borderTopColor:
+							theme.decisions.background.actionHigh.blueFrance.hover,
+						borderBottomColor:
+							theme.decisions.background.actionHigh.blueFrance.hover,
+						['&:nth-of-type(6),  &:last-child']: {
+							borderRightColor:
+								theme.decisions.background.actionHigh.blueFrance.hover
+						}
+					},
+					['td:first-child ']: {
+						borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+						['& > div']: {
+							borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+							borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+							borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+							borderTopLeftRadius: _thRadius,
+							borderBottomLeftRadius: _thRadius
+						}
 					}
 				}
 			},
@@ -251,9 +258,9 @@ const useStyles = makeStyles()(theme => {
 					border: 'none',
 					borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
 					['& > div']: {
-						borderTopWidth: 1,
-						borderLeftWidth: 1,
-						borderBottomWidth: 1,
+						borderTop: '1px solid transparent',
+						borderLeft: '1px solid transparent',
+						borderBottom: '1px solid transparent',
 						borderColor: 'white',
 						backgroundColor: 'white',
 						padding: fr.spacing('4v'),
