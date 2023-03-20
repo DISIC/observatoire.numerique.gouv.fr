@@ -137,11 +137,8 @@ export function ProceduresTable(props: Props) {
 										<td
 											key={`${p.title} ${pth.label}`}
 											className={cx(
-												index === 4
-													? classes.arrowTdFive
-													: index === 10
-													? classes.arrowTdSix
-													: {}
+												index === 4 ? classes.arrowTdFive : {},
+												index === 10 ? classes.arrowTdSix : {}
 											)}
 										>
 											<IndicatorLabel {...field} />
