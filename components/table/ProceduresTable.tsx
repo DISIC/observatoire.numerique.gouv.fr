@@ -112,13 +112,15 @@ export function ProceduresTable(props: Props) {
 						.map(p => (
 							<tr key={p.title}>
 								<td>
-									<span>{p.title}</span>
-									<br />
-									<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
-									<br />
-									<span className={fr.cx('fr-text--sm')}>
-										{p.administration}
-									</span>
+									<div>
+										<span>{p.title}</span>
+										<br />
+										<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
+										<br />
+										<span className={fr.cx('fr-text--sm')}>
+											{p.administration}
+										</span>
+									</div>
 								</td>
 								{proceduresTableHeaders.map((pth, index) => {
 									const field = p.fields.find(f => f.slug === pth.slug);
@@ -208,7 +210,7 @@ const useStyles = makeStyles()(theme => {
 					// 		borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`
 					// 	}
 					// }
-					td: {
+					['td:not(:first-child), td:first-child > div']: {
 						backgroundColor: theme.decisions.background.alt.blueFrance.default
 					}
 				}
@@ -244,12 +246,22 @@ const useStyles = makeStyles()(theme => {
 					zIndex: 9,
 					left: 0,
 					width: _firstColSize,
+					backgroundColor: theme.decisions.background.contrast.info.default,
+					padding: 0,
+					border: 'none',
 					borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
-					padding: fr.spacing('4v'),
-					borderTopLeftRadius: _thRadius,
-					borderBottomLeftRadius: _thRadius,
-					['& > span:first-child']: {
-						fontWeight: 'bold'
+					['& > div']: {
+						borderTopWidth: 1,
+						borderLeftWidth: 1,
+						borderBottomWidth: 1,
+						borderColor: 'white',
+						backgroundColor: 'white',
+						padding: fr.spacing('4v'),
+						borderTopLeftRadius: _thRadius,
+						borderBottomLeftRadius: _thRadius,
+						['& > span:first-child']: {
+							fontWeight: 'bold'
+						}
 					}
 				},
 				['&:nth-of-type(6), &:last-child']: {
