@@ -40,7 +40,7 @@ export function ProceduresTable(props: Props) {
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
-		const _firstColSize = _containerWidth * 0.3;
+		const _firstColSize = _containerWidth * 0.28;
 		const _arrowSlideSize = 40;
 
 		scrollRef?.current?.scrollTo({
@@ -63,11 +63,17 @@ export function ProceduresTable(props: Props) {
 					<tr ref={stickyHeaderRef}>
 						<th></th>
 						{proceduresTableHeaders.map((pth, index) => {
-							const hasArrow = index === 4 || index === 9;
+							const hasArrow = index === 4 || index === 10;
 							return (
 								<th
 									key={pth.label}
-									className={cx(hasArrow ? classes.arrowTh : {})}
+									className={cx(
+										hasArrow
+											? index === 4
+												? classes.arrowThFive
+												: classes.arrowThSix
+											: {}
+									)}
 								>
 									<ColumnHeaderDefinition
 										icon={pth.icon}
@@ -131,7 +137,11 @@ export function ProceduresTable(props: Props) {
 										<td
 											key={`${p.title} ${pth.label}`}
 											className={cx(
-												index === 4 || index === 9 ? classes.arrowTd : {}
+												index === 4
+													? classes.arrowTdFive
+													: index === 10
+													? classes.arrowTdSix
+													: {}
 											)}
 										>
 											<IndicatorLabel {...field} />
@@ -153,7 +163,7 @@ const useStyles = makeStyles()(theme => {
 	const _userViewportAvailable = window.innerWidth - 40;
 	const _containerWidth =
 		_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
-	const _firstColSize = _containerWidth * 0.3;
+	const _firstColSize = _containerWidth * 0.28;
 	const _arrowSlideSize = 40;
 	const _thRadius = 10;
 
@@ -187,9 +197,12 @@ const useStyles = makeStyles()(theme => {
 					zIndex: 99,
 					marginLeft: _firstColSize,
 					width: _containerWidth - _firstColSize,
-					['th:not(:first-child)']: {
+					['th:nth-child(-n + 5):not(:first-child)']: {
 						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
 						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
+					},
+					['th:nth-child(n + 6)']: {
+						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 					},
 					['button:first-child']: {
 						fontWeight: 500,
@@ -243,8 +256,13 @@ const useStyles = makeStyles()(theme => {
 			td: {
 				backgroundColor: 'white',
 				border: '1px solid transparent',
-				width: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
 				position: 'relative',
+				['&:nth-child(-n + 5)']: {
+					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 5
+				},
+				['&:nth-child(n + 6)']: {
+					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+				},
 				['&:not(:first-child)']: {
 					textAlign: 'center'
 				},
@@ -296,7 +314,7 @@ const useStyles = makeStyles()(theme => {
 				color: 'white'
 			}
 		},
-		arrowTh: {
+		arrowThFive: {
 			minWidth:
 				(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
 				_arrowSlideSize +
@@ -304,9 +322,24 @@ const useStyles = makeStyles()(theme => {
 			paddingRight: _arrowSlideSize,
 			position: 'relative'
 		},
-		arrowTd: {
+		arrowTdFive: {
 			width:
 				(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
+				_arrowSlideSize +
+				'px !important',
+			paddingRight: _arrowSlideSize
+		},
+		arrowThSix: {
+			minWidth:
+				(_containerWidth - _firstColSize - _arrowSlideSize) / 6 +
+				_arrowSlideSize +
+				'px !important',
+			paddingRight: _arrowSlideSize,
+			position: 'relative'
+		},
+		arrowTdSix: {
+			width:
+				(_containerWidth - _firstColSize - _arrowSlideSize) / 6 +
 				_arrowSlideSize +
 				'px !important',
 			paddingRight: _arrowSlideSize

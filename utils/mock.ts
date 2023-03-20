@@ -50,12 +50,12 @@ export const proceduresTableHeaders: TProcedureHeader[] = [
 		slug: 'performance',
 		label: 'Temps de chargement des pages',
 		icon: 'ri-timer-flash-line'
+	},
+	{
+		slug: 'auth',
+		label: 'Authentification',
+		icon: 'ri-shield-user-line'
 	}
-	// {
-	// 	slug: 'auth',
-	// 	label: 'Authentification',
-	// 	icon: 'ri-shield-user-line'
-	// }
 ];
 
 export const proceduresMock: TProcedure[] = [
