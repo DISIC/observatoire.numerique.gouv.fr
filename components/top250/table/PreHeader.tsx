@@ -10,7 +10,7 @@ export function PreHeader(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(classes.section)}>
-				Trier par volumétrie (décroissant) [TODO]
+				Trier par volumétrie (décroissant)
 			</div>
 			<div className={cx(classes.section)}>
 				<Link href="#" className={fr.cx('fr-link')}>
@@ -26,7 +26,12 @@ const useStyles = makeStyles()(theme => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		padding: `${fr.spacing('3v')} ${fr.spacing('4v')}`
+		padding: `${fr.spacing('3v')} ${fr.spacing('4v')}`,
+		[fr.breakpoints.down('lg')]: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			flexDirection: 'column'
+		}
 	},
 	section: {
 		display: 'flex',
@@ -34,6 +39,12 @@ const useStyles = makeStyles()(theme => ({
 		fontWeight: 500,
 		a: {
 			backgroundImage: 'none'
+		},
+		[fr.breakpoints.down('lg')]: {
+			['&:first-child']: {
+				marginBottom: fr.spacing('8v')
+			},
+			transform: 'translateY(-200%)'
 		}
 	},
 	linkIcon: {

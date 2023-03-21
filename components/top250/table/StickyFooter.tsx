@@ -30,10 +30,7 @@ export function StickyFooter(props: Props) {
 				</Button>
 				<a
 					href="#"
-					className={cx(
-						fr.cx('fr-ml-18v', 'fr-link', 'fr-text--sm'),
-						classes.achorLink
-					)}
+					className={cx(fr.cx('fr-link', 'fr-text--sm'), classes.achorLink)}
 				>
 					<i
 						className={cx(
@@ -56,20 +53,29 @@ const useStyles = makeStyles()(theme => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 		padding: `${fr.spacing('3v')} ${fr.spacing('8v')}`,
-		backgroundColor: theme.decisions.background.actionLow.blueFrance.default
+		backgroundColor: theme.decisions.background.actionLow.blueFrance.default,
+		[fr.breakpoints.down('lg')]: {
+			backgroundColor: theme.decisions.background.default.grey.default
+		}
 	},
 	leftSection: {
 		display: 'flex',
 		alignItems: 'center',
 		fontWeight: 500,
-		marginBottom: 0
+		marginBottom: 0,
+		[fr.breakpoints.down('lg')]: { display: 'none' }
 	},
 	rightSection: {
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'center',
+		[fr.breakpoints.down('lg')]: {
+			width: '100%'
+		}
 	},
 	button: {
-		backgroundColor: 'white'
+		backgroundColor: 'white',
+		[fr.breakpoints.down('lg')]: { display: 'none' }
 	},
 	buttonIcon: {
 		marginRight: fr.spacing('2v'),
@@ -78,7 +84,9 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	achorLink: {
-		fontWeight: 500
+		fontWeight: 500,
+		marginLeft: fr.spacing('18v'),
+		[fr.breakpoints.down('lg')]: { marginLeft: 0 }
 	},
 	anchorLinkIcon: {
 		['&::before']: {
