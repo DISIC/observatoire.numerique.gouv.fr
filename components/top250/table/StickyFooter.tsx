@@ -74,7 +74,7 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	button: {
-		backgroundColor: 'white',
+		backgroundColor: theme.decisions.background.default.grey.default,
 		[fr.breakpoints.down('lg')]: { display: 'none' }
 	},
 	buttonIcon: {

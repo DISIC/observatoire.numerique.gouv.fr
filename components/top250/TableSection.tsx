@@ -4,6 +4,7 @@ import { TProcedure } from '@/pages/api/procedures/types';
 import { PreHeader } from './table/PreHeader';
 import { ProceduresTable } from './table/ProceduresTable';
 import { PreFooter } from './table/PreFooter';
+import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 
 type Props = {
 	procedures: TProcedure[];
@@ -16,7 +17,11 @@ export function Top250TableSection(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<PreHeader />
-			<ProceduresTable procedures={procedures} />
+			{window.innerWidth > 62 * 16 ? (
+				<ProceduresTable procedures={procedures} />
+			) : (
+				<ProceduresTableMobile procedures={procedures} />
+			)}
 			<PreFooter />
 		</div>
 	);
