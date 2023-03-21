@@ -13,13 +13,13 @@ export function SocialNetworks(props: Props) {
 					Suivez-nous sur les réseaux sociaux
 				</div>
 				<div className={cx(classes.rightSection)}>
-					<a href="https://twitter.com" target="_blank" rel="norefferer">
+					<a href="https://twitter.com" target="_blank" rel="noreferrer">
 						<i className={fr.cx('ri-twitter-fill')} />
 					</a>
-					<a href="https://linkedin.com" target="_blank" rel="norefferer">
+					<a href="https://linkedin.com" target="_blank" rel="noreferrer">
 						<i className={fr.cx('ri-linkedin-box-fill')} />
 					</a>
-					<a href="https://youtube.com" target="_blank" rel="norefferer">
+					<a href="https://youtube.com" target="_blank" rel="noreferrer">
 						<i className={fr.cx('ri-youtube-fill')} />
 					</a>
 				</div>
