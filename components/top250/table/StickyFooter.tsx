@@ -12,7 +12,7 @@ export function StickyFooter(props: Props) {
 
 	return (
 		<div className={cx(classes.root)}>
-			<div className={cx(classes.leftSection)}>
+			<div className={cx(fr.cx('fr-text--sm'), classes.leftSection)}>
 				{proceduresCount} services numériques évalués
 			</div>
 			<div className={cx(classes.rightSection)}>
@@ -30,7 +30,10 @@ export function StickyFooter(props: Props) {
 				</Button>
 				<a
 					href="#"
-					className={cx(fr.cx('fr-ml-18v', 'fr-link'), classes.achorLink)}
+					className={cx(
+						fr.cx('fr-ml-18v', 'fr-link', 'fr-text--sm'),
+						classes.achorLink
+					)}
 				>
 					<i
 						className={cx(
@@ -58,7 +61,8 @@ const useStyles = makeStyles()(theme => ({
 	leftSection: {
 		display: 'flex',
 		alignItems: 'center',
-		fontWeight: 500
+		fontWeight: 500,
+		marginBottom: 0
 	},
 	rightSection: {
 		display: 'flex',

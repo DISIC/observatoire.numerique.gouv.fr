@@ -1,8 +1,9 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { TProcedure } from '@/pages/api/procedures/types';
-import { PreHeader } from '../table/PreHeader';
-import { ProceduresTable } from '../table/ProceduresTable';
+import { PreHeader } from './table/PreHeader';
+import { ProceduresTable } from './table/ProceduresTable';
+import { PreFooter } from './table/PreFooter';
 
 type Props = {
 	procedures: TProcedure[];
@@ -16,6 +17,7 @@ export function Top250TableSection(props: Props) {
 		<div className={cx(classes.root)}>
 			<PreHeader />
 			<ProceduresTable procedures={procedures} />
+			<PreFooter />
 		</div>
 	);
 }

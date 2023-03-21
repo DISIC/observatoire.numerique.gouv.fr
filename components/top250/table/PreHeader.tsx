@@ -31,7 +31,10 @@ const useStyles = makeStyles()(theme => ({
 	section: {
 		display: 'flex',
 		alignItems: 'center',
-		fontWeight: 500
+		fontWeight: 500,
+		a: {
+			backgroundImage: 'none'
+		}
 	},
 	linkIcon: {
 		['&::before']: {

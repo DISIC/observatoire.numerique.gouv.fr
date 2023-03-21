@@ -3,7 +3,7 @@ import { Top250TableSection } from '@/components/top250/TableSection';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { proceduresMock } from '@/utils/mock';
-import { StickyFooter } from '@/components/table/StickyFooter';
+import { StickyFooter } from '@/components/top250/table/StickyFooter';
 
 export default function Observatoire() {
 	const { classes, cx } = useStyles();
