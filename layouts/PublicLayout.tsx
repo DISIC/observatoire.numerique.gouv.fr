@@ -8,6 +8,7 @@ import {
 } from '@codegouvfr/react-dsfr/Display';
 import Head from 'next/head';
 import { getCookie } from '@/utils/cookies';
+import { SocialNetworks } from '@/components/layout/SocialNetworks';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const { classes, cx } = useStyles();
@@ -92,6 +93,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				serviceTitle={serviceTitle}
 			/>
 			{children}
+			<SocialNetworks />
 			<Footer
 				accessibility="partially compliant"
 				accessibilityLinkProps={{

@@ -55,8 +55,10 @@ const useStyles = makeStyles()(theme => ({
 			color: theme.decisions.background.actionHigh.blueFrance.default,
 			fontWeight: 'bold',
 			boxShadow: 'none',
+			border: `1px solid ${theme.decisions.border.default.grey.default}`,
 			...fr.typography[20].style,
-			padding: fr.spacing('2v'),
+			padding: fr.spacing('3v'),
+			paddingLeft: fr.spacing('6v'),
 			paddingRight: fr.spacing('10v')
 		}
 	}

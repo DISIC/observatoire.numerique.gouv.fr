@@ -1,5 +1,5 @@
-import { ColumnHeaderDefinition } from '@/components/table/ColumnHeaderDefinition';
-import { IndicatorLabel } from '@/components/table/IndicatorLabel';
+import { ColumnHeaderDefinition } from '@/components/top250/table/ColumnHeaderDefinition';
+import { IndicatorLabel } from '@/components/top250/table/IndicatorLabel';
 import { fr } from '@codegouvfr/react-dsfr';
 
 export default function Home() {
