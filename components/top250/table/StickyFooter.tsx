@@ -20,7 +20,7 @@ export function StickyFooter(props: Props) {
 					className={cx(classes.button)}
 					onClick={() => {
 						window.location.href =
-							'mailto:observatoire@design.numerique.gouv.fr';
+							'https://observatoire.numerique.gouv.fr/contact/';
 					}}
 					priority="tertiary"
 					size="small"
