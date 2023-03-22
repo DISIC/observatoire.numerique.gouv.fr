@@ -14,7 +14,9 @@ export function ProceduresTableMobile(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			{procedures.map(procedure => {
-				return <ProcedureMobileCard procedure={procedure} />;
+				return (
+					<ProcedureMobileCard key={procedure.title} procedure={procedure} />
+				);
 			})}
 		</div>
 	);

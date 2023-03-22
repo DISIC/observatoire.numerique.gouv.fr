@@ -1,7 +1,6 @@
 import { TProcedure } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import Link from 'next/link';
 import { IndicatorLabel } from './IndicatorLabel';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { proceduresTableHeaders } from '@/utils/mock';
@@ -23,7 +22,7 @@ export function ProcedureMobileCard(props: Props) {
 					<div>{procedure.ministere}</div>
 					{procedure.volume && (
 						<div className={fr.cx('fr-mt-3v')}>
-							Total d'utilisateur annuel : {procedure.volume}
+							Total d&apos;utilisateur annuel : {procedure.volume}
 						</div>
 					)}
 				</div>
@@ -35,7 +34,7 @@ export function ProcedureMobileCard(props: Props) {
 						pth => pth.slug === field.slug
 					);
 					return (
-						<div className={cx(classes.field)}>
+						<div key={field.slug} className={cx(classes.field)}>
 							{procedureHeader && (
 								<ColumnHeaderDefinition
 									icon={procedureHeader.icon}
