@@ -59,7 +59,13 @@ const useStyles = makeStyles()(theme => ({
 			...fr.typography[20].style,
 			padding: fr.spacing('3v'),
 			paddingLeft: fr.spacing('6v'),
-			paddingRight: fr.spacing('10v')
+			paddingRight: fr.spacing('10v'),
+			[fr.breakpoints.down('lg')]: {
+				...fr.typography[19].style,
+				padding: fr.spacing('2v'),
+				paddingLeft: fr.spacing('4v'),
+				paddingRight: fr.spacing('8v')
+			}
 		}
 	}
 }));
