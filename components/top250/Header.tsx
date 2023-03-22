@@ -119,6 +119,9 @@ const useStyles = makeStyles()(theme => ({
 			['::placeholder, ::-ms-input-placeholder']: {
 				color: theme.decisions.background.actionHigh.blueFrance.default
 			}
+		},
+		[fr.breakpoints.down('lg')]: {
+			width: '100%'
 		}
 	}
 }));

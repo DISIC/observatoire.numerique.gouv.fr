@@ -233,7 +233,7 @@ const useStyles = makeStyles()(theme => {
 				}
 			},
 			th: {
-				backgroundColor: 'white',
+				backgroundColor: theme.decisions.background.default.grey.default,
 				['& > button']: {
 					margin: 'auto'
 				},
@@ -251,7 +251,7 @@ const useStyles = makeStyles()(theme => {
 				}
 			},
 			td: {
-				backgroundColor: 'white',
+				backgroundColor: theme.decisions.background.default.grey.default,
 				border: '1px solid transparent',
 				position: 'relative',
 				['&:nth-child(-n + 5)']: {
@@ -276,8 +276,8 @@ const useStyles = makeStyles()(theme => {
 						borderTop: '1px solid transparent',
 						borderLeft: '1px solid transparent',
 						borderBottom: '1px solid transparent',
-						borderColor: 'white',
-						backgroundColor: 'white',
+						borderColor: theme.decisions.background.default.grey.default,
+						backgroundColor: theme.decisions.background.default.grey.default,
 						padding: fr.spacing('4v'),
 						borderTopLeftRadius: _thRadius,
 						borderBottomLeftRadius: _thRadius,
@@ -308,7 +308,7 @@ const useStyles = makeStyles()(theme => {
 					theme.decisions.background.actionHigh.blueFrance.hover + ' !important'
 			},
 			i: {
-				color: 'white'
+				color: theme.decisions.background.default.grey.default
 			}
 		},
 		arrowThFive: {

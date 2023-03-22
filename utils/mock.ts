@@ -63,6 +63,7 @@ export const proceduresMock: TProcedure[] = [
 		title: 'Autorisation de plantation de vignes (Vitiplantation)',
 		ministere: "Ministère de l'Agriculture et Alimentation",
 		administration: 'FranceAgriMer - FAM',
+		volume: 44000,
 		fields: [
 			{
 				slug: 'online',
