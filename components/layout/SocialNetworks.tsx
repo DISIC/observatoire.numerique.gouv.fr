@@ -14,7 +14,7 @@ export function SocialNetworks(props: Props) {
 				</div>
 				<div className={cx(classes.rightSection)}>
 					<a
-						href="https://twitter.com"
+						href="https://twitter.com/_DINUM"
 						target="_blank"
 						rel="noreferrer"
 						aria-label="Lien vers le compte Twitter"
@@ -22,7 +22,7 @@ export function SocialNetworks(props: Props) {
 						<i className={fr.cx('ri-twitter-fill')} />
 					</a>
 					<a
-						href="https://linkedin.com"
+						href="https://www.linkedin.com/company/direction-interministerielle-du-numerique-dinum/"
 						target="_blank"
 						rel="noreferrer"
 						aria-label="Lien vers le compte LinkedIn"
