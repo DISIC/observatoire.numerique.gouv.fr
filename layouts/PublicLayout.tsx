@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
+import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Header } from '@codegouvfr/react-dsfr/Header';
 import { Footer } from '@codegouvfr/react-dsfr/Footer';
@@ -126,8 +127,10 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 
 const useStyles = makeStyles()(theme => ({
 	header: {
-		['.fr-btn::before']: {
-			'--icon-size:': '0 !important'
+		[fr.breakpoints.up('lg')]: {
+			['.fr-btn::before']: {
+				'--icon-size:': '0 !important'
+			}
 		}
 	}
 }));
