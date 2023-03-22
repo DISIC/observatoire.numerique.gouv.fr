@@ -41,28 +41,29 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	blue: {
-		color: '#0063CB',
-		backgroundColor: '#E8EDFF'
+		color: theme.decisions.background.flat.info.default,
+		backgroundColor: theme.decisions.background.contrast.info.default
 	},
 	red: {
-		color: '#CE0500',
-		backgroundColor: '#FFE9E9'
+		color: theme.decisions.background.flat.error.default,
+		backgroundColor: theme.decisions.background.contrast.error.default
 	},
 	yellow: {
-		color: '#716043',
-		backgroundColor: '#FEECC2'
+		color: theme.decisions.background.actionHigh.yellowTournesol.default,
+		backgroundColor: theme.decisions.background.contrast.yellowTournesol.default
 	},
 	orange: {
-		color: '#B34000',
-		backgroundColor: '#FFE8E5'
+		color: theme.decisions.background.flat.warning.default,
+		backgroundColor:
+			theme.decisions.background.contrast.orangeTerreBattue.default
 	},
 	green: {
-		color: '#18753C',
-		backgroundColor: '#B8FEC9'
+		color: theme.decisions.background.flat.success.default,
+		backgroundColor: theme.decisions.background.contrast.success.default
 	},
 	gray: {
-		color: '#3A3A3A',
-		backgroundColor: '#F6F6F6'
+		color: theme.decisions.background.flat.grey.default,
+		backgroundColor: theme.decisions.background.default.grey.hover
 	},
 	noBackground: {
 		backgroundColor: 'transparent',

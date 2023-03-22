@@ -65,21 +65,23 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				}}
 				quickAccessItems={[
 					{
-						iconId: 'fr-icon-add-circle-line',
+						iconId: 'ri-service-fill',
 						linkProps: {
 							href: '/observatoire'
 						},
 						text: 'Suivi des services phares'
 					},
 					{
-						iconId: 'fr-icon-add-circle-line',
+						iconId: 'ri-user-star-line',
 						linkProps: {
 							href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/'
 						},
 						text: "L'outil Je donne mon avis"
 					},
 					{
-						iconId: 'fr-icon-add-circle-line',
+						iconId: isUserLogged
+							? 'ri-logout-circle-line'
+							: 'ri-login-circle-line',
 						linkProps: {
 							href: isUserLogged
 								? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
