@@ -46,6 +46,7 @@ export const ZProcedure = z.object({
 	title: z.string(),
 	ministere: z.string(),
 	administration: z.string(),
+	volume: z.number().optional(),
 	fields: z.array(ZProcedureField)
 });
 export type TProcedure = z.infer<typeof ZProcedure>;

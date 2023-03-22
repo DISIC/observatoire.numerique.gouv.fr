@@ -21,5 +21,10 @@ export function ProceduresTableMobile(props: Props) {
 }
 
 const useStyles = makeStyles()(theme => ({
-	root: {}
+	root: {
+		[fr.breakpoints.down('lg')]: {
+			marginTop: `-${fr.spacing('10v')}`,
+			marginBottom: fr.spacing('2v')
+		}
+	}
 }));

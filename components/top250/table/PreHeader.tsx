@@ -30,7 +30,8 @@ const useStyles = makeStyles()(theme => ({
 		[fr.breakpoints.down('lg')]: {
 			justifyContent: 'center',
 			alignItems: 'center',
-			flexDirection: 'column'
+			flexDirection: 'column',
+			transform: 'translateY(-50%)'
 		}
 	},
 	section: {
@@ -43,8 +44,7 @@ const useStyles = makeStyles()(theme => ({
 		[fr.breakpoints.down('lg')]: {
 			['&:first-child']: {
 				marginBottom: fr.spacing('8v')
-			},
-			transform: 'translateY(-200%)'
+			}
 		}
 	},
 	linkIcon: {

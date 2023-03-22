@@ -29,10 +29,15 @@ export function ColumnHeaderDefinition(props: Props) {
 	return (
 		<>
 			<Button className={cx(classes.root)} {...infosModalButtonProps}>
-				<i className={fr.cx(icon)} />
+				<i className={cx(fr.cx(icon), classes.mainIcon)} />
 				<span role="text" className={cx(classes.text)}>
 					{text}{' '}
-					<i className={cx(fr.cx('ri-information-line'), classes.icon)} />
+					<i
+						className={cx(
+							fr.cx('ri-information-line'),
+							classes.informationIcon
+						)}
+					/>
 				</span>
 			</Button>
 			<InfosModal
@@ -68,12 +73,31 @@ const useStyles = makeStyles()(theme => ({
 		[':hover']: {
 			backgroundColor:
 				theme.decisions.background.alt.blueFrance.default + ' !important'
+		},
+		[fr.breakpoints.down('lg')]: {
+			minHeight: 0,
+			paddingBottom: `${fr.spacing('7v')} !important`,
+			marginBottom: `-${fr.spacing('7v')}`,
+			justifyContent: 'start',
+			alignItems: 'start',
+			padding: 0,
+			position: 'relative',
+			zIndex: 1
 		}
 	},
 	text: {
-		marginTop: fr.spacing('3v')
+		marginTop: fr.spacing('3v'),
+		[fr.breakpoints.down('lg')]: {
+			marginTop: 0,
+			fontSize: fr.typography[17].style.fontSize
+		}
 	},
-	icon: {
+	mainIcon: {
+		[fr.breakpoints.down('lg')]: {
+			display: 'none'
+		}
+	},
+	informationIcon: {
 		['&::before']: {
 			'--icon-size': fr.typography[18].style.fontSize
 		}
