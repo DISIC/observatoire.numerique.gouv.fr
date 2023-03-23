@@ -44,7 +44,7 @@ export const proceduresTableHeaders: TProcedureHeader[] = [
 	{
 		slug: 'uptime',
 		label: 'Disponibilité du service',
-		icon: 'ri-share-circle-fill'
+		icon: 'ri-rest-time-line'
 	},
 	{
 		slug: 'performance',

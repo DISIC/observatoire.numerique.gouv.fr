@@ -64,6 +64,8 @@ const useStyles = makeStyles()(theme => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		padding: fr.spacing('4v'),
+		marginTop: fr.spacing('2v'),
+		marginBottom: fr.spacing('2v'),
 		color: theme.decisions.text.actionHigh.blueFrance.default,
 		fontWeight: 'bold',
 		textAlign: 'center',

@@ -206,6 +206,9 @@ const useStyles = makeStyles()(theme => {
 						minWidth: _firstColSize,
 						backgroundColor: theme.decisions.background.default.grey.default
 					},
+					['th:not(:first-child):not(:last-child)']: {
+						verticalAlign: 'middle'
+					},
 					['button:first-child']: {
 						fontWeight: 500,
 						fontSize: fr.typography[18].style.fontSize,
@@ -239,7 +242,8 @@ const useStyles = makeStyles()(theme => {
 			th: {
 				backgroundColor: theme.decisions.background.default.grey.default,
 				['& > button']: {
-					margin: 'auto'
+					marginLeft: 'auto',
+					marginRight: 'auto'
 				},
 				['&:first-child']: {
 					position: 'sticky',
@@ -258,6 +262,9 @@ const useStyles = makeStyles()(theme => {
 					['& > div']: {
 						borderTopRightRadius: _thRadius
 					}
+				},
+				['&:not(:first-child):not(:last-child)']: {
+					verticalAlign: 'top'
 				}
 			},
 			td: {
