@@ -222,9 +222,9 @@ const useStyles = makeStyles()(theme => {
 							theme.decisions.background.actionHigh.blueFrance.hover,
 						borderBottomColor:
 							theme.decisions.background.actionHigh.blueFrance.hover,
-						['&:nth-of-type(6),  &:last-child']: {
-							borderRightColor:
-								theme.decisions.background.actionHigh.blueFrance.hover
+						['&:last-child > div']: {
+							border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+							borderLeftWidth: 0
 						}
 					},
 					['td:first-child ']: {
