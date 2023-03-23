@@ -121,8 +121,11 @@ export function ProceduresTable(props: Props) {
 									<div>
 										<span>{p.title}</span>
 										<br />
-										<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
-										<br />
+										<div
+											className={fr.cx('fr-text--sm', 'fr-mt-2v', 'fr-mb-0')}
+										>
+											{p.ministere}
+										</div>
 										<span className={fr.cx('fr-text--sm')}>
 											{p.administration}
 										</span>
