@@ -67,7 +67,9 @@ const useStyles = makeStyles()(theme => ({
 		},
 		[fr.breakpoints.down('lg')]: {
 			display: 'inline',
-			position: 'static',
+			position: 'relative',
+			left: 0,
+			zIndex: 1,
 			marginTop: 0,
 			marginLeft: fr.spacing('2v'),
 			transform: 'translateX(0)'

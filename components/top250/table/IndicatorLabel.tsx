@@ -37,7 +37,9 @@ const useStyles = makeStyles()(theme => ({
 		fontWeight: 'bold',
 		borderRadius: fr.spacing('1v'),
 		[fr.breakpoints.down('lg')]: {
-			fontSize: fr.typography[17].style.fontSize
+			fontSize: fr.typography[17].style.fontSize,
+			position: 'relative',
+			zIndex: 1
 		}
 	},
 	blue: {

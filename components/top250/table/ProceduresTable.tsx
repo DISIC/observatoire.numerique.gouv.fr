@@ -4,7 +4,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
 
 type Props = {
@@ -14,6 +14,8 @@ type Props = {
 export function ProceduresTable(props: Props) {
 	const { procedures } = props;
 	const { classes, cx } = useStyles();
+
+	const [isRight, setIsRight] = useState<boolean>(false);
 
 	const stickyHeaderRef = useRef<HTMLTableRowElement | null>(null);
 	const tableRef = useRef<HTMLTableElement | null>(null);
@@ -35,25 +37,26 @@ export function ProceduresTable(props: Props) {
 		window.addEventListener('scroll', fixedHeader);
 	}, []);
 
-	const handleScrollX = (isRight: boolean) => {
+	const handleScrollX = (tmpIsRight: boolean) => {
 		//POSSIBILITY TO MERGE ?
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
 		const _firstColSize = _containerWidth * 0.28;
-		const _arrowSlideSize = 40;
 
 		scrollRef?.current?.scrollTo({
-			left: isRight ? _containerWidth - _firstColSize + _arrowSlideSize : 0,
+			left: tmpIsRight ? _containerWidth - _firstColSize : 0,
 			behavior: 'smooth'
 		});
 
 		if (stickyHeaderRef?.current?.classList.contains('sticked-row')) {
 			stickyHeaderRef?.current?.scrollTo({
-				left: isRight ? _containerWidth - _firstColSize + _arrowSlideSize : 0,
+				left: tmpIsRight ? _containerWidth - _firstColSize : 0,
 				behavior: 'smooth'
 			});
 		}
+
+		setIsRight(tmpIsRight);
 	};
 
 	return (
@@ -63,18 +66,8 @@ export function ProceduresTable(props: Props) {
 					<tr ref={stickyHeaderRef}>
 						<th></th>
 						{proceduresTableHeaders.map((pth, index) => {
-							const hasArrow = index === 4 || index === 10;
 							return (
-								<th
-									key={pth.label}
-									className={cx(
-										hasArrow
-											? index === 4
-												? classes.arrowThFive
-												: classes.arrowThSix
-											: {}
-									)}
-								>
+								<th key={pth.label}>
 									<ColumnHeaderDefinition
 										icon={pth.icon}
 										text={pth.label}
@@ -84,30 +77,28 @@ export function ProceduresTable(props: Props) {
 											title: pth.label
 										}}
 									/>
-									{hasArrow && (
-										<button
-											className={cx(classes.arrow)}
-											onClick={() => {
-												handleScrollX(index === 4);
-											}}
-											aria-label={
-												index === 4
-													? 'Voir les indicateurs suivants'
-													: 'Voir les indicateurs précédents'
-											}
-										>
-											<i
-												className={fr.cx(
-													index === 4
-														? 'ri-arrow-right-s-line'
-														: 'ri-arrow-left-s-line'
-												)}
-											/>
-										</button>
-									)}
 								</th>
 							);
 						})}
+						<th className={classes.arrowTh}>
+							<button
+								className={cx(classes.arrow)}
+								onClick={() => {
+									handleScrollX(!isRight);
+								}}
+								aria-label={
+									!isRight
+										? 'Voir les indicateurs suivants'
+										: 'Voir les indicateurs précédents'
+								}
+							>
+								<i
+									className={fr.cx(
+										!isRight ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'
+									)}
+								/>
+							</button>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -121,8 +112,11 @@ export function ProceduresTable(props: Props) {
 									<div>
 										<span>{p.title}</span>
 										<br />
-										<span className={fr.cx('fr-text--sm')}>{p.ministere}</span>
-										<br />
+										<div
+											className={fr.cx('fr-text--sm', 'fr-mt-2v', 'fr-mb-0')}
+										>
+											{p.ministere}
+										</div>
 										<span className={fr.cx('fr-text--sm')}>
 											{p.administration}
 										</span>
@@ -134,13 +128,7 @@ export function ProceduresTable(props: Props) {
 									if (!field) return <>No</>;
 
 									return (
-										<td
-											key={`${p.title} ${pth.label}`}
-											className={cx(
-												index === 4 ? classes.arrowTdFive : {},
-												index === 10 ? classes.arrowTdSix : {}
-											)}
-										>
+										<td key={`${p.title} ${pth.label}`}>
 											<IndicatorLabel {...field} />
 											{field.value && (
 												<IndicatorValue slug={field.slug} value={field.value} />
@@ -148,6 +136,9 @@ export function ProceduresTable(props: Props) {
 										</td>
 									);
 								})}
+								<td>
+									<div></div>
+								</td>
 							</tr>
 						))}
 				</tbody>
@@ -177,6 +168,7 @@ const useStyles = makeStyles()(theme => {
 		table: {
 			width: 'max-content',
 			marginTop: fr.spacing('2v'),
+			height: '100%',
 			borderSpacing: `0 ${fr.spacing('2v')}`,
 			['&.table-has-sticked-row']: {
 				marginTop: 150
@@ -190,20 +182,35 @@ const useStyles = makeStyles()(theme => {
 						display: 'none'
 					},
 					position: 'fixed',
-					top: '-10px',
+					top: '-12px',
 					zIndex: 99,
-					marginLeft: _firstColSize,
-					width: _containerWidth - _firstColSize,
+					width: _containerWidth,
+					th: {
+						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
+						borderTopLeftRadius: _thRadius
+					},
+					['th:nth-child(2)']: {
+						borderTopLeftRadius: 0
+					},
 					['th:nth-child(-n + 5):not(:first-child)']: {
-						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 5,
-						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`
+						minWidth: (_containerWidth - _firstColSize) / 5
 					},
 					['th:nth-child(n + 6)']: {
 						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 					},
+					['th:last-child']: {
+						minWidth: _arrowSlideSize
+					},
+					['th:first-child']: {
+						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
+						minWidth: _firstColSize,
+						backgroundColor: theme.decisions.background.default.grey.default
+					},
+					['th:not(:first-child):not(:last-child)']: {
+						verticalAlign: 'middle'
+					},
 					['button:first-child']: {
 						fontWeight: 500,
-						width: '100%',
 						fontSize: fr.typography[18].style.fontSize,
 						['&:first-of-type > i']: { display: 'none' },
 						['&:first-of-type > span']: { marginTop: 0 }
@@ -235,7 +242,8 @@ const useStyles = makeStyles()(theme => {
 			th: {
 				backgroundColor: theme.decisions.background.default.grey.default,
 				['& > button']: {
-					margin: 'auto'
+					marginLeft: 'auto',
+					marginRight: 'auto'
 				},
 				['&:first-child']: {
 					position: 'sticky',
@@ -246,8 +254,17 @@ const useStyles = makeStyles()(theme => {
 				['&:nth-of-type(2), &:nth-of-type(7)']: {
 					borderTopLeftRadius: _thRadius
 				},
-				['&:nth-of-type(6), &:last-child']: {
-					borderTopRightRadius: _thRadius
+				['&:last-child']: {
+					position: 'sticky',
+					right: 0,
+					zIndex: 11,
+					width: _arrowSlideSize,
+					['& > div']: {
+						borderTopRightRadius: _thRadius
+					}
+				},
+				['&:not(:first-child):not(:last-child)']: {
+					verticalAlign: 'top'
 				}
 			},
 			td: {
@@ -255,7 +272,7 @@ const useStyles = makeStyles()(theme => {
 				border: '1px solid transparent',
 				position: 'relative',
 				['&:nth-child(-n + 5)']: {
-					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 5
+					width: (_containerWidth - _firstColSize) / 5
 				},
 				['&:nth-child(n + 6)']: {
 					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
@@ -286,9 +303,22 @@ const useStyles = makeStyles()(theme => {
 						}
 					}
 				},
-				['&:nth-of-type(6), &:last-child']: {
-					borderTopRightRadius: _thRadius,
-					borderBottomRightRadius: _thRadius
+				['&:last-child']: {
+					width: _arrowSlideSize,
+					position: 'sticky',
+					zIndex: 9,
+					right: 0,
+					padding: 0,
+					borderWidth: 0,
+					height: '100%',
+					backgroundColor: theme.decisions.background.contrast.info.default,
+					['& > div']: {
+						boxSizing: 'border-box',
+						height: '100%',
+						backgroundColor: theme.decisions.background.default.grey.default,
+						borderTopRightRadius: _thRadius,
+						borderBottomRightRadius: _thRadius
+					}
 				}
 			}
 		},
@@ -308,38 +338,14 @@ const useStyles = makeStyles()(theme => {
 					theme.decisions.background.actionHigh.blueFrance.hover + ' !important'
 			},
 			i: {
-				color: theme.decisions.background.default.grey.default
+				color: theme.decisions.background.default.grey.default,
+				display: 'block !important'
 			}
 		},
-		arrowThFive: {
-			minWidth:
-				(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
-				_arrowSlideSize +
-				'px !important',
-			paddingRight: _arrowSlideSize,
+		arrowTh: {
+			backgroundColor: `${theme.decisions.background.contrast.info.default} !important`,
+			width: _arrowSlideSize,
 			position: 'relative'
-		},
-		arrowTdFive: {
-			width:
-				(_containerWidth - _firstColSize - _arrowSlideSize) / 5 +
-				_arrowSlideSize +
-				'px !important',
-			paddingRight: _arrowSlideSize
-		},
-		arrowThSix: {
-			minWidth:
-				(_containerWidth - _firstColSize - _arrowSlideSize) / 6 +
-				_arrowSlideSize +
-				'px !important',
-			paddingRight: _arrowSlideSize,
-			position: 'relative'
-		},
-		arrowTdSix: {
-			width:
-				(_containerWidth - _firstColSize - _arrowSlideSize) / 6 +
-				_arrowSlideSize +
-				'px !important',
-			paddingRight: _arrowSlideSize
 		}
 	};
 });

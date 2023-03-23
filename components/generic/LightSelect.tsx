@@ -60,6 +60,7 @@ const useStyles = makeStyles()(theme => ({
 			padding: fr.spacing('3v'),
 			paddingLeft: fr.spacing('6v'),
 			paddingRight: fr.spacing('10v'),
+			borderRadius: 0,
 			[fr.breakpoints.down('lg')]: {
 				...fr.typography[19].style,
 				padding: fr.spacing('2v'),
