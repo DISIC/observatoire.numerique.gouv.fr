@@ -38,9 +38,6 @@ const useStyles = makeStyles()(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		fontWeight: 500,
-		a: {
-			backgroundImage: 'none'
-		},
 		[fr.breakpoints.down('lg')]: {
 			['&:first-child']: {
 				marginBottom: fr.spacing('8v')
