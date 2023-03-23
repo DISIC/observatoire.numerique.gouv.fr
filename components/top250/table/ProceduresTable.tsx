@@ -343,15 +343,9 @@ const useStyles = makeStyles()(theme => {
 			}
 		},
 		arrowTh: {
+			backgroundColor: `${theme.decisions.background.contrast.info.default} !important`,
 			width: _arrowSlideSize,
 			position: 'relative'
-		},
-		arrowTdSix: {
-			width:
-				(_containerWidth - _firstColSize - _arrowSlideSize) / 6 +
-				_arrowSlideSize +
-				'px !important',
-			paddingRight: _arrowSlideSize
 		}
 	};
 });
