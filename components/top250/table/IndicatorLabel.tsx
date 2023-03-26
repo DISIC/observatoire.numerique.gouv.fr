@@ -1,11 +1,11 @@
-import { TFieldColor } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { IndicatorColor } from '@prisma/client';
 
 type Props = {
 	label: string;
-	color: TFieldColor;
-	noBackground?: boolean;
+	color: IndicatorColor;
+	noBackground?: boolean | null;
 };
 
 export function IndicatorLabel(props: Props) {

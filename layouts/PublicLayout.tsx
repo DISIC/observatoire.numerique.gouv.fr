@@ -88,9 +88,9 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 								: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F'
 						},
 						text: isUserLogged ? 'Déconnexion' : 'Connexion'
-					}
+					},
 					// ONLY FOR TEST PURPOSE
-					// headerFooterDisplayItem
+					headerFooterDisplayItem
 				]}
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}

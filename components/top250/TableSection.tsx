@@ -1,13 +1,13 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { TProcedure } from '@/pages/api/procedures/types';
 import { PreHeader } from './table/PreHeader';
 import { ProceduresTable } from './table/ProceduresTable';
 import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
 
 type Props = {
-	procedures: TProcedure[];
+	procedures: ProcedureWithFields[];
 };
 
 export function Top250TableSection(props: Props) {
