@@ -1,15 +1,18 @@
-import { TFieldSlug } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { IndicatorSlug } from '@prisma/client';
 import Link from 'next/link';
-import { classnames } from 'tss-react/tools/classnames';
 
 type Props = {
-	slug: TFieldSlug;
-	value: number | string;
+	slug: IndicatorSlug;
+	value: string;
 };
 
-const acceptedSlugValues: TFieldSlug[] = ['online', 'satisfaction', 'handicap'];
+const acceptedSlugValues: IndicatorSlug[] = [
+	'online',
+	'satisfaction',
+	'handicap'
+];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
 	const { slug, value } = props;
@@ -27,7 +30,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			</a>
 		);
 
-	if (slug === 'satisfaction' && typeof value === 'number')
+	if (slug === 'satisfaction' && !isNaN(parseInt(value)))
 		return (
 			<Link href="#" className={classes.hideMobile}>
 				{value.toString().replace('.', ',')} / 10

@@ -1,17 +1,27 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
-import { useProcedures } from '@/utils/api';
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { useEffect, useState } from 'react';
 
 export default function Airtable() {
 	const { classes, cx } = useStyles();
 
-	// TO REPLACE WITH AIRTABLE GETTER
-	const { data: procedures, isError, isLoading } = useProcedures();
-	if (isError) return <div>Une erreur est survenue.</div>;
-	if (isLoading) return <div>...</div>;
-	if (!procedures) return <div>Aucune démarche</div>;
+	const [procedures, setProcdeures] = useState<ProcedureWithFields[]>([]);
+
+	const getProceduresFormAirtalbe = async () => {
+		const res = await fetch('/api/airtable/demarches');
+		const json = await res.json();
+
+		setProcdeures(json.data);
+	};
+
+	useEffect(() => {
+		getProceduresFormAirtalbe();
+	}, []);
+
+	if (!procedures.length) return <></>;
 
 	return (
 		<div className={cx(classes.root)}>
