@@ -18,6 +18,10 @@ export async function middleware(request: NextRequest) {
 	) {
 		return NextResponse.redirect(new URL('/administration/login', request.url));
 	}
+
+	if (request.nextUrl.pathname === '/administration') {
+		return NextResponse.redirect(new URL('/administration/login', request.url));
+	}
 }
 
 // See "Matching Paths" below to learn more
