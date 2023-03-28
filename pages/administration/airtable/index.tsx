@@ -26,7 +26,7 @@ export default function Airtable() {
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container'), classes.controlPanel)}>
-				<Button type="button">Publier l'édition</Button>
+				<Button type="button">Publier l&apos;édition</Button>
 			</div>
 			<div className={cx(classes.tableContainer)}>
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>

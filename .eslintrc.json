@@ -10,7 +10,7 @@
 		}
 	},
 	"rules": {
-		"indent": ["error", "tab"],
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"prettier/prettier": [2, { "tabWidth": 2, "useTabs": true }]
 	}
 }
