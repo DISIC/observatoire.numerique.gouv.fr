@@ -5,6 +5,7 @@ import PublicLayout from '@/layouts/PublicLayout';
 import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
 import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
+import { SessionProvider } from 'next-auth/react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 
 // Only in TypeScript projects
@@ -35,7 +36,11 @@ function App({ Component, pageProps }: AppProps) {
 		}
 	};
 
-	return getLayout(<Component {...pageProps} />);
+	return (
+		<SessionProvider session={pageProps.session}>
+			{getLayout(<Component {...pageProps} />)}
+		</SessionProvider>
+	);
 }
 
 export default withDsfr(withAppEmotionCache(App));

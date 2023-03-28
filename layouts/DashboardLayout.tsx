@@ -52,11 +52,19 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				className={classes.header}
 				brandTop={brandTop}
 				homeLinkProps={{
-					href: '/',
+					href: '/administration',
 					title:
 						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
 				}}
 				quickAccessItems={[
+					{
+						iconId: 'ri-service-fill',
+						linkProps: {
+							href: '/',
+							target: '_self'
+						},
+						text: 'Retour au site'
+					},
 					{
 						iconId: 'ri-service-fill',
 						buttonProps: {
