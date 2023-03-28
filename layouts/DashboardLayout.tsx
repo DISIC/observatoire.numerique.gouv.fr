@@ -1,20 +1,16 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Header } from '@codegouvfr/react-dsfr/Header';
-import {
-	Display,
-	headerFooterDisplayItem
-} from '@codegouvfr/react-dsfr/Display';
+import { signOut } from 'next-auth/react';
 import Head from 'next/head';
-import { getCookie } from '@/utils/cookies';
-import { SocialNetworks } from '@/components/layout/SocialNetworks';
+import { useRouter } from 'next/router';
 import { CustomFooter } from '@/components/layout/CustomFooter';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const { classes, cx } = useStyles();
 
-	const [isUserLogged, setIsUserLogged] = useState<boolean>();
+	const router = useRouter();
 
 	const brandTop = (
 		<>
@@ -24,19 +20,16 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 		</>
 	);
 
-	const serviceTitle = "L'Observatoire de la qualité";
-	const serviceTagLine = 'des démarches en ligne';
-
-	useEffect(() => {
-		setIsUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
-	}, []);
-
-	if (isUserLogged === undefined) return <></>;
+	const serviceTitle = 'Administration';
+	const serviceTagLine = "de l'observatoire des démarches en ligne";
 
 	return (
 		<>
 			<Head>
-				<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
+				<title>
+					L&#39;Observatoire de la qualité des démarches en ligne -
+					Administration
+				</title>
 
 				<meta
 					name="description"
@@ -56,7 +49,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				></meta>
 			</Head>
 			<Header
-				className={cx(classes.header)}
+				className={classes.header}
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/',
@@ -66,39 +59,29 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				quickAccessItems={[
 					{
 						iconId: 'ri-service-fill',
-						linkProps: {
-							href: '/observatoire'
+						buttonProps: {
+							onClick: () => {
+								signOut();
+							}
 						},
-						text: 'Suivi des services phares'
-					},
-					{
-						iconId: 'ri-user-star-line',
-						linkProps: {
-							href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/'
-						},
-						text: "L'outil Je donne mon avis"
-					},
-					{
-						iconId: isUserLogged
-							? 'ri-logout-circle-line'
-							: 'ri-login-circle-line',
-						linkProps: {
-							href: isUserLogged
-								? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
-								: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F'
-						},
-						text: isUserLogged ? 'Déconnexion' : 'Connexion'
+						text: 'Déconnexion'
 					}
-					// ONLY FOR TEST PURPOSE
-					// headerFooterDisplayItem
+				]}
+				navigation={[
+					{
+						isActive: router.pathname === '/administration/bo',
+						linkProps: {
+							href: '/administration/bo',
+							target: '_self'
+						},
+						text: 'Prévisualisation Airtable'
+					}
 				]}
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
 			/>
 			{children}
-			<SocialNetworks />
 			<CustomFooter />
-			<Display />
 		</>
 	);
 };

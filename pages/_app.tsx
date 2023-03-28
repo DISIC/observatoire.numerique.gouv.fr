@@ -3,6 +3,9 @@ import { createNextDsfrIntegrationApi } from '@codegouvfr/react-dsfr/next-pagesd
 import Link from 'next/link';
 import PublicLayout from '@/layouts/PublicLayout';
 import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
+import { ReactNode } from 'react';
+import { useRouter } from 'next/router';
+import DashboardLayout from '@/layouts/DashboardLayout';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -22,11 +25,17 @@ const { withDsfr, dsfrDocumentApi } = createNextDsfrIntegrationApi({
 export { dsfrDocumentApi, augmentDocumentWithEmotionCache };
 
 function App({ Component, pageProps }: AppProps) {
-	return (
-		<PublicLayout>
-			<Component {...pageProps} />
-		</PublicLayout>
-	);
+	const router = useRouter();
+
+	const getLayout = (children: ReactNode) => {
+		if (router.pathname.startsWith('/administration/bo')) {
+			return <DashboardLayout>{children}</DashboardLayout>;
+		} else {
+			return <PublicLayout>{children}</PublicLayout>;
+		}
+	};
+
+	return getLayout(<Component {...pageProps} />);
 }
 
 export default withDsfr(withAppEmotionCache(App));

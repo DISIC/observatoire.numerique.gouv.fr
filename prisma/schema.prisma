@@ -39,23 +39,23 @@ model Edition {
 }
 
 model Procedure {
-  id             String  @id @default(auto()) @map("_id") @db.ObjectId
-	airtable_identifier		 Int @unique
-  title          String
-  ministere      String
-  administration String
-  sousorg        String
-  volume         Int?
-  fields         Field[]
-  edition        Edition? @relation(fields: [editionId], references: [id])
-  editionId      String?  @db.ObjectId
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  airtable_identifier Int      @unique
+  title               String
+  ministere           String
+  administration      String
+  sousorg             String
+  volume              Int?
+  fields              Field[]
+  edition             Edition? @relation(fields: [editionId], references: [id])
+  editionId           String?  @db.ObjectId
 }
 
 model Field {
   id           String         @id @default(auto()) @map("_id") @db.ObjectId
   slug         IndicatorSlug
   label        String
-  value        String? 
+  value        String?
   color        IndicatorColor
   noBackground Boolean?
   procedure    Procedure      @relation(fields: [procedureId], references: [id])
@@ -63,8 +63,16 @@ model Field {
 }
 
 model ProcedureHeader {
-  id      String        @id @default(auto()) @map("_id") @db.ObjectId
-  slug    IndicatorSlug @unique
-  label   String
-  icon    String
+  id    String        @id @default(auto()) @map("_id") @db.ObjectId
+  slug  IndicatorSlug @unique
+  label String
+  icon  String
+}
+
+// Next auth
+model User {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  username String?
+  email    String  @unique
+  password String
 }
