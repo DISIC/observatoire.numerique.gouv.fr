@@ -16,7 +16,9 @@ const field_names = {
 		online: '📊  En ligne',
 		satisfaction: '📊 Note de satisfaction /10',
 		simplicity: '[Dashlord] - JDMA note facilité',
-		uptime: '📊  Disponibilité et rapidité'
+		uptime: '📊  Disponibilité et rapidité',
+		handicap:
+			'📊  Prise en compte handicaps (après prise en compte taux global)'
 	}
 };
 const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
@@ -24,22 +26,26 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 		case 'online':
 			return ['Oui', 'Non', 'Partiel', 'Bêta'].includes(value) ? value : 'Non';
 		case 'satisfaction':
-			return isNaN(parseInt(value)) ? '< 100 votes' : value;
+			return isNaN(parseInt(value)) ? "Nombre d'avis insuffisant" : value;
 		case 'simplicity':
 			const simplicityIntValue = parseInt(value);
-			if (isNaN(simplicityIntValue)) return '< 100 votes';
+			if (isNaN(simplicityIntValue)) return "Nombre d'avis insuffisant";
 			if (simplicityIntValue < 8) return 'Bonne';
 			if (simplicityIntValue < 6) return 'Moyenne';
 			if (simplicityIntValue < 4) return 'Mauvaise';
-			else return 'Très bonne';
+			return 'Très bonne';
 		case 'uptime':
 			const uptimeIntValue = parseInt(value);
-			console.log(value);
 			if (isNaN(uptimeIntValue)) return 'Indéterminée';
 			if (uptimeIntValue < 8) return 'Bonne';
 			if (uptimeIntValue < 6) return 'Moyenne';
 			if (uptimeIntValue < 4) return 'Mauvaise';
-			else return 'Très bonne';
+			return 'Très bonne';
+		case 'handicap':
+			const realValue = value.split(' ')[1];
+			if (['Oui', 'Non'].includes(realValue)) return realValue;
+			if (realValue === 'Partiel') return 'Partielle';
+			return 'Indéterminée';
 		default:
 			return value;
 	}
@@ -63,7 +69,7 @@ const getColorFromLabel = (
 			if (intValue < 4) return 'red';
 			else return 'green';
 		case 'simplicity':
-			if (label === '< 100 votes') return 'gray';
+			if (label === "Nombre d'avis insuffisant") return 'gray';
 			if (label === 'Bonne') return 'yellow';
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
@@ -73,6 +79,11 @@ const getColorFromLabel = (
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 			else return 'green';
+		case 'handicap':
+			if (label === 'Oui') return 'green';
+			if (label === 'Partielle') return 'orange';
+			if (label === 'Non') return 'red';
+			else return 'gray';
 		default:
 			return 'gray';
 	}
@@ -115,7 +126,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				? null
 				: record.get(field_names.indicators.satisfaction),
 			procedureId: 'preview',
-			noBackground: false
+			noBackground:
+				getLabelFromValue(
+					'satisfaction',
+					record.get(field_names.indicators.satisfaction)
+				) === "Nombre d'avis insuffisant"
 		},
 		{
 			id: 'preview',
@@ -133,7 +148,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			),
 			value: null,
 			procedureId: 'preview',
-			noBackground: false
+			noBackground:
+				getLabelFromValue(
+					'simplicity',
+					record.get(field_names.indicators.simplicity)
+				) === "Nombre d'avis insuffisant"
 		},
 		{
 			id: 'preview',
@@ -145,6 +164,24 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			color: getColorFromLabel(
 				'uptime',
 				getLabelFromValue('uptime', record.get(field_names.indicators.uptime))
+			),
+			value: null,
+			procedureId: 'preview',
+			noBackground: false
+		},
+		{
+			id: 'preview',
+			slug: 'handicap',
+			label: getLabelFromValue(
+				'handicap',
+				record.get(field_names.indicators.handicap)
+			),
+			color: getColorFromLabel(
+				'handicap',
+				getLabelFromValue(
+					'handicap',
+					record.get(field_names.indicators.handicap)
+				)
 			),
 			value: null,
 			procedureId: 'preview',
