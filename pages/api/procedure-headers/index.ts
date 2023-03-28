@@ -4,7 +4,9 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function getProcedureHeaders() {
-	const procedureheader = await prisma.procedureHeader.findMany({});
+	const procedureheader = await prisma.procedureHeader.findMany({
+		orderBy: [{ position: 'asc' }]
+	});
 	return procedureheader;
 }
 
