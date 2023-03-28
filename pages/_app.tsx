@@ -28,7 +28,7 @@ function App({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 
 	const getLayout = (children: ReactNode) => {
-		if (router.pathname.startsWith('/administration/bo')) {
+		if (router.pathname.startsWith('/administration/airtable')) {
 			return <DashboardLayout>{children}</DashboardLayout>;
 		} else {
 			return <PublicLayout>{children}</PublicLayout>;

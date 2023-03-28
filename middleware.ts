@@ -11,9 +11,11 @@ export async function middleware(request: NextRequest) {
 	});
 
 	if (request.nextUrl.pathname.startsWith('/administration/login') && !!token) {
-		return NextResponse.redirect(new URL('/administration/bo', request.url));
+		return NextResponse.redirect(
+			new URL('/administration/airtable', request.url)
+		);
 	} else if (
-		request.nextUrl.pathname.startsWith('/administration/bo') &&
+		request.nextUrl.pathname.startsWith('/administration/airtable') &&
 		!token
 	) {
 		return NextResponse.redirect(new URL('/administration/login', request.url));

@@ -69,9 +69,9 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				]}
 				navigation={[
 					{
-						isActive: router.pathname === '/administration/bo',
+						isActive: router.pathname === '/administration/airtable',
 						linkProps: {
-							href: '/administration/bo',
+							href: '/administration/airtable',
 							target: '_self'
 						},
 						text: 'Prévisualisation Airtable'

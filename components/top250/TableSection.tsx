@@ -8,15 +8,16 @@ import { ProcedureWithFields } from '@/pages/api/procedures/types';
 
 type Props = {
 	procedures: ProcedureWithFields[];
+	isAdmin?: boolean;
 };
 
 export function Top250TableSection(props: Props) {
-	const { procedures } = props;
+	const { procedures, isAdmin } = props;
 	const { classes, cx } = useStyles();
 
 	return (
 		<div className={cx(classes.root)}>
-			<PreHeader />
+			{!isAdmin && <PreHeader />}
 			{window.innerWidth > 62 * 16 ? (
 				<ProceduresTable procedures={procedures} />
 			) : (
