@@ -18,7 +18,9 @@ const field_names = {
 		simplicity: '[Dashlord] - JDMA note facilité',
 		uptime: '📊  Disponibilité et rapidité',
 		handicap:
-			'📊  Prise en compte handicaps (après prise en compte taux global)'
+			'📊  Prise en compte handicaps (après prise en compte taux global)',
+		dlnuf: '📊  Dites-le nous une fois sans carrés',
+		usage: '🕶 Volumétrie en ligne'
 	}
 };
 const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
@@ -30,22 +32,36 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 		case 'simplicity':
 			const simplicityIntValue = parseInt(value);
 			if (isNaN(simplicityIntValue)) return "Nombre d'avis insuffisant";
-			if (simplicityIntValue < 8) return 'Bonne';
-			if (simplicityIntValue < 6) return 'Moyenne';
 			if (simplicityIntValue < 4) return 'Mauvaise';
+			if (simplicityIntValue < 6) return 'Moyenne';
+			if (simplicityIntValue < 8) return 'Bonne';
 			return 'Très bonne';
 		case 'uptime':
 			const uptimeIntValue = parseInt(value);
 			if (isNaN(uptimeIntValue)) return 'Indéterminée';
-			if (uptimeIntValue < 8) return 'Bonne';
-			if (uptimeIntValue < 6) return 'Moyenne';
 			if (uptimeIntValue < 4) return 'Mauvaise';
+			if (uptimeIntValue < 6) return 'Moyenne';
+			if (uptimeIntValue < 8) return 'Bonne';
 			return 'Très bonne';
+		case 'dlnuf':
+			const dlnufIntValue = parseInt(value);
+			if (isNaN(dlnufIntValue)) return 'Non communiqué';
+			if (dlnufIntValue < 4) return 'Mauvais';
+			if (dlnufIntValue < 6) return 'Moyen';
+			if (dlnufIntValue < 8) return 'Bon';
+			return 'Très bon';
 		case 'handicap':
 			const realValue = value.split(' ')[1];
 			if (['Oui', 'Non'].includes(realValue)) return realValue;
 			if (realValue === 'Partiel') return 'Partielle';
 			return 'Indéterminée';
+		case 'usage':
+			const usageFloatValue = parseFloat(value);
+			if (isNaN(usageFloatValue)) return 'Indéterminée';
+			if (usageFloatValue < 0.3) return 'Faible';
+			if (usageFloatValue < 0.5) return 'Moyenne';
+			if (usageFloatValue < 0.8) return 'Élevée';
+			return 'Totale';
 		default:
 			return value;
 	}
@@ -79,11 +95,19 @@ const getColorFromLabel = (
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 			else return 'green';
+		case 'dlnuf':
+			if (label === 'Non communiqué') return 'gray';
+			if (label === 'Bon') return 'yellow';
+			if (label === 'Moyen') return 'orange';
+			if (label === 'Mauvais') return 'red';
+			else return 'green';
 		case 'handicap':
 			if (label === 'Oui') return 'green';
 			if (label === 'Partielle') return 'orange';
 			if (label === 'Non') return 'red';
 			else return 'gray';
+		case 'usage':
+			return 'gray';
 		default:
 			return 'gray';
 	}
@@ -186,13 +210,90 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			value: null,
 			procedureId: 'preview',
 			noBackground: false
+		},
+		{
+			id: 'preview',
+			slug: 'dlnuf',
+			label: getLabelFromValue(
+				'dlnuf',
+				record.get(field_names.indicators.dlnuf)
+			),
+			color: getColorFromLabel(
+				'dlnuf',
+				getLabelFromValue('dlnuf', record.get(field_names.indicators.dlnuf))
+			),
+			value: null,
+			procedureId: 'preview',
+			noBackground:
+				getLabelFromValue('dlnuf', record.get(field_names.indicators.dlnuf)) ===
+				'Non communiqué'
+		},
+		{
+			id: 'preview',
+			slug: 'usage',
+			label: getLabelFromValue(
+				'usage',
+				(
+					parseInt(record.get(field_names.indicators.usage)) /
+					parseInt(record.get(field_names.volume))
+				).toString()
+			),
+			color: getColorFromLabel(
+				'usage',
+				getLabelFromValue(
+					'usage',
+					(
+						parseInt(record.get(field_names.indicators.usage)) /
+						parseInt(record.get(field_names.volume))
+					).toString()
+				)
+			),
+			value: null,
+			procedureId: 'preview',
+			noBackground: null
+		},
+		{
+			id: 'preview',
+			slug: 'help_reachable',
+			label: 'Bientôt disponible',
+			color: 'gray',
+			value: null,
+			procedureId: 'preview',
+			noBackground: true
+		},
+		{
+			id: 'preview',
+			slug: 'help_used',
+			label: 'Bientôt disponible',
+			color: 'gray',
+			value: null,
+			procedureId: 'preview',
+			noBackground: true
+		},
+		{
+			id: 'preview',
+			slug: 'performance',
+			label: 'À faire',
+			color: 'orange',
+			value: null,
+			procedureId: 'preview',
+			noBackground: null
+		},
+		{
+			id: 'preview',
+			slug: 'auth',
+			label: 'À faire',
+			color: 'orange',
+			value: null,
+			procedureId: 'preview',
+			noBackground: null
 		}
 	];
 
 	const volume = parseInt(record.get(field_names.volume));
 	return {
 		id: 'preview',
-		title: record.get(field_names.title),
+		title: record.get(field_names.title).replace(/[^\w\s]/gi, ''),
 		ministere: record.get(field_names.ministere),
 		administration: record.get(field_names.administration),
 		sousorg: record.get(field_names.sousorg),

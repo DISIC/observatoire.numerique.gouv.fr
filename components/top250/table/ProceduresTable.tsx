@@ -43,7 +43,7 @@ export function ProceduresTable(props: Props) {
 		isLoading
 	} = useProcedureHeaders();
 	if (isError) return <div>Une erreur est survenue.</div>;
-	if (isLoading) return <div>Chargement 2 ...</div>;
+	if (isLoading) return <div>Chargement du tableau ...</div>;
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
 	const handleScrollX = (tmpIsRight: boolean) => {
