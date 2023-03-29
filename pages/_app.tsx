@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { SessionProvider } from 'next-auth/react';
 import DashboardLayout from '@/layouts/DashboardLayout';
+import '../utils/keyframes.css';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {

@@ -21,7 +21,17 @@ export default function Airtable() {
 		getProceduresFormAirtalbe();
 	}, []);
 
-	if (!procedures.length) return <></>;
+	if (!procedures.length)
+		return (
+			<div className={cx(classes.loader)}>
+				<div>
+					<i className={fr.cx('ri-loader-4-line')} />
+				</div>
+				<p className={fr.cx('fr-pt-4v')}>
+					Chargement des données à partir du Airtable...
+				</p>
+			</div>
+		);
 
 	return (
 		<div className={cx(classes.root)}>
@@ -51,6 +61,21 @@ const useStyles = makeStyles()(theme => ({
 		backgroundColor: theme.decisions.background.contrast.info.default,
 		['.fr-container']: {
 			maxWidth: 1440
+		}
+	},
+	loader: {
+		padding: fr.spacing('30v'),
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		i: {
+			display: 'inline-block',
+			animation: 'spin 1s linear infinite;',
+			color: theme.decisions.background.actionHigh.blueFrance.default,
+			['&::before']: {
+				'--icon-size': '2rem'
+			}
 		}
 	}
 }));
