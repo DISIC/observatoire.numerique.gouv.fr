@@ -20,7 +20,8 @@ const field_names = {
 		handicap:
 			'📊  Prise en compte handicaps (après prise en compte taux global)',
 		dlnuf: '📊  Dites-le nous une fois sans carrés',
-		usage: '🕶 Volumétrie en ligne'
+		usage: '🕶 Volumétrie en ligne',
+		auth: '📊  FranceConnect'
 	}
 };
 const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
@@ -62,6 +63,10 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			if (usageFloatValue < 0.5) return 'Moyenne';
 			if (usageFloatValue < 0.8) return 'Élevée';
 			return 'Totale';
+		case 'auth':
+			if (value === 'Oui') return 'FranceConnect';
+			if (value === 'Non') return 'Spécifique';
+			return 'Indéterminée';
 		default:
 			return value;
 	}
@@ -107,6 +112,10 @@ const getColorFromLabel = (
 			if (label === 'Non') return 'red';
 			else return 'gray';
 		case 'usage':
+			return 'gray';
+		case 'auth':
+			if (label === 'FranceConnect') return 'blue';
+			if (label === 'Spécifique') return 'yellow';
 			return 'gray';
 		default:
 			return 'gray';
@@ -282,8 +291,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'auth',
-			label: 'À faire',
-			color: 'orange',
+			label: getLabelFromValue('auth', record.get(field_names.indicators.auth)),
+			color: getColorFromLabel(
+				'auth',
+				getLabelFromValue('auth', record.get(field_names.indicators.auth))
+			),
 			value: null,
 			procedureId: 'preview',
 			noBackground: null
