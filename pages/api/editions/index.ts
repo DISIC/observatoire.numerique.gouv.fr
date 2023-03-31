@@ -38,6 +38,16 @@ export async function updateEdition(id: string, data: Edition) {
 	return edition;
 }
 
+export async function deleteEdition(id: string) {
+	const edition = await prisma.edition.delete({
+		where: { id }
+	});
+	await prisma.procedure.deleteMany({
+		where: { editionId: id }
+	});
+	return edition;
+}
+
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
@@ -69,6 +79,10 @@ export default async function handler(
 
 		const data = req.body;
 		const edition = await updateEdition(id as string, data);
+		res.status(200).json(edition);
+	} else if (req.method === 'DELETE') {
+		const { id } = req.query;
+		const edition = await deleteEdition(id as string);
 		res.status(200).json(edition);
 	} else {
 		res.status(400).json({ message: 'Unsupported method' });

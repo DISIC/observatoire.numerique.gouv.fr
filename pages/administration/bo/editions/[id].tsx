@@ -43,8 +43,20 @@ export default function Editions(props: Props) {
 	if (!edition) return <div>Cette édition n&apos;existe pas.</div>;
 	if (!procedures) return <div>Aucune démarche pour cette édition</div>;
 
-	const deleteEdition = () => {
+	const deleteEdition = async () => {
 		console.log('Delete edition');
+		try {
+			if (
+				confirm(
+					`Êtes vous sur de vouloir supprimer l'édition "${edition.name}" ?`
+				)
+			) {
+				await fetch(`/api/editions?id=${edition.id}`, { method: 'DELETE' });
+				router.replace('/administration/bo/editions');
+			}
+		} catch (e) {
+			console.log('error : ', e);
+		}
 	};
 
 	return (
