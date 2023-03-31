@@ -4,11 +4,18 @@ import { PrismaClient, Edition } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function getEditions() {
-	const editions = await prisma.edition.findMany({});
+	const editions = await prisma.edition.findMany({
+		orderBy: [
+			{
+				created_at: 'desc'
+			}
+		]
+	});
 	return editions;
 }
 
 export async function getEditionById(id: string) {
+	console.log(id);
 	const edition = await prisma.edition.findUnique({
 		where: { id }
 	});

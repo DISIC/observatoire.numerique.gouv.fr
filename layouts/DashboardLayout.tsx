@@ -85,7 +85,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 						text: 'Prévisualisation Airtable'
 					},
 					{
-						isActive: router.pathname === '/administration/bo/editions',
+						isActive: router.pathname.startsWith('/administration/bo/editions'),
 						linkProps: {
 							href: '/administration/bo/editions',
 							target: '_self'
