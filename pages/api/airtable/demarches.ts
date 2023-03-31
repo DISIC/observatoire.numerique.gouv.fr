@@ -16,7 +16,8 @@ const field_names = {
 		online: '📊  En ligne',
 		satisfaction: '📊 Note de satisfaction /10',
 		simplicity: '[Dashlord] - JDMA note facilité',
-		uptime: '📊  Disponibilité et rapidité',
+		uptime: '🕶Taux de disponibilité',
+		performance: '🕶Temps de réponse (milliseconde)',
 		handicap:
 			'📊  Prise en compte handicaps (après prise en compte taux global)',
 		dlnuf: '📊  Dites-le nous une fois sans carrés',
@@ -27,28 +28,36 @@ const field_names = {
 const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 	switch (slug) {
 		case 'online':
-			return ['Oui', 'Non', 'Partiel', 'Bêta'].includes(value) ? value : 'Non';
+			if (['Oui', 'Non', 'Partiel', 'Bêta'].includes(value)) return value;
+			if (value === 'En cours de déploiement local') return 'En cours';
+			return 'Non';
 		case 'satisfaction':
 			const satisfactionIntValue = parseInt(value);
-			if (isNaN(satisfactionIntValue)) return "Nombre d'avis insuffisant";
+			if (isNaN(satisfactionIntValue)) {
+				if (value === 'Nombre insuffisant d’avis')
+					return "Nombre d'avis insuffisant";
+				if (value === 'En attente') return 'En attente';
+			}
 			if (satisfactionIntValue < 5) return 'Mauvaise';
 			if (satisfactionIntValue < 8) return 'Moyenne';
 			return 'Très bonne';
-
 		case 'simplicity':
 			const simplicityIntValue = parseInt(value);
 			if (isNaN(simplicityIntValue)) return "Nombre d'avis insuffisant";
-			if (simplicityIntValue < 4) return 'Mauvaise';
-			if (simplicityIntValue < 6) return 'Moyenne';
-			if (simplicityIntValue < 8) return 'Bonne';
+			if (simplicityIntValue < 5) return 'Mauvaise';
+			if (simplicityIntValue < 8) return 'Moyenne';
 			return 'Très bonne';
 		case 'uptime':
-			const uptimeIntValue = parseInt(value);
-			if (isNaN(uptimeIntValue)) return 'Indéterminée';
-			if (uptimeIntValue < 4) return 'Mauvaise';
-			if (uptimeIntValue < 6) return 'Moyenne';
-			if (uptimeIntValue < 8) return 'Bonne';
-			return 'Très bonne';
+			const uptimeIntValue = parseFloat(value);
+			if (isNaN(uptimeIntValue)) return 'En attente';
+			if (uptimeIntValue < 0.985) return 'Mauvaise';
+			if (uptimeIntValue < 0.99) return 'Moyenne';
+		case 'performance':
+			const performanceIntValue = parseInt(value);
+			if (isNaN(performanceIntValue)) return 'En attente';
+			if (performanceIntValue > 800) return 'Lent';
+			if (performanceIntValue > 400) return 'Moyen';
+			return 'Très rapide';
 		case 'dlnuf':
 			const dlnufIntValue = parseInt(value);
 			if (isNaN(dlnufIntValue)) return 'Non communiqué';
@@ -58,20 +67,20 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			return 'Très bon';
 		case 'handicap':
 			const realValue = value.split(' ')[1];
-			if (['Oui', 'Non'].includes(realValue)) return realValue;
+			if (['Oui', 'Non', 'En attente'].includes(realValue)) return realValue;
 			if (realValue === 'Partiel') return 'Partielle';
 			return 'Indéterminée';
 		case 'usage':
 			const usageFloatValue = parseFloat(value);
-			if (isNaN(usageFloatValue)) return 'Indéterminée';
-			if (usageFloatValue < 0.3) return 'Faible';
-			if (usageFloatValue < 0.5) return 'Moyenne';
-			if (usageFloatValue < 0.8) return 'Élevée';
+			if (isNaN(usageFloatValue)) return 'En attente';
+			if (usageFloatValue < 0.4) return 'Faible';
+			if (usageFloatValue < 0.75) return 'Moyenne';
+			if (usageFloatValue < 1) return 'Élevée';
 			return 'Totale';
 		case 'auth':
-			if (value === 'Oui') return 'FranceConnect';
-			if (value === 'Non') return 'Spécifique';
-			return 'Indéterminée';
+			if (['FranceConnect', 'FranceConnect +', 'Non'].includes(value))
+				return value;
+			return 'En attente';
 		default:
 			return value;
 	}
@@ -86,22 +95,27 @@ const getColorFromLabel = (
 			if (label === 'Oui') return 'green';
 			else if (label === 'Partiel') return 'orange';
 			else if (label === 'Bêta') return 'yellow';
+			else if (label === 'En cours') return 'blue';
 			else return 'red';
 		case 'satisfaction':
 			if (label === "Nombre d'avis insuffisant") return 'gray';
+			if (label === 'En attente') return 'blue';
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 			else return 'green';
 		case 'simplicity':
 			if (label === "Nombre d'avis insuffisant") return 'gray';
-			if (label === 'Bonne') return 'yellow';
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 		case 'uptime':
-			if (label === 'Indéterminée') return 'gray';
-			if (label === 'Bonne') return 'yellow';
+			if (label === 'En attente') return 'gray';
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
+			else return 'green';
+		case 'performance':
+			if (label === 'En attente') return 'gray';
+			if (label === 'Moyen') return 'orange';
+			if (label === 'Lent') return 'red';
 			else return 'green';
 		case 'dlnuf':
 			if (label === 'Non communiqué') return 'gray';
@@ -112,14 +126,15 @@ const getColorFromLabel = (
 		case 'handicap':
 			if (label === 'Oui') return 'green';
 			if (label === 'Partielle') return 'orange';
+			if (label === 'En attente') return 'blue';
 			if (label === 'Non') return 'red';
 			else return 'gray';
 		case 'usage':
 			return 'gray';
 		case 'auth':
-			if (label === 'FranceConnect') return 'blue';
-			if (label === 'Spécifique') return 'yellow';
-			return 'gray';
+			if (label === 'En attente') return 'gray';
+			if (label === 'Non') return 'red';
+			return 'blue';
 		default:
 			return 'gray';
 	}
@@ -160,7 +175,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			),
 			value: isNaN(parseInt(record.get(field_names.indicators.satisfaction)))
 				? null
-				: record.get(field_names.indicators.satisfaction),
+				: (
+						Math.round(
+							parseFloat(record.get(field_names.indicators.satisfaction)) * 10
+						) / 10
+				  ).toString(),
 			procedureId: 'preview',
 			noBackground:
 				getLabelFromValue(
@@ -285,8 +304,17 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'performance',
-			label: 'À faire',
-			color: 'orange',
+			label: getLabelFromValue(
+				'performance',
+				record.get(field_names.indicators.performance)
+			),
+			color: getColorFromLabel(
+				'performance',
+				getLabelFromValue(
+					'performance',
+					record.get(field_names.indicators.performance)
+				)
+			),
 			value: null,
 			procedureId: 'preview',
 			noBackground: null
