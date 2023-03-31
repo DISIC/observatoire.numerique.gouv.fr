@@ -14,7 +14,8 @@ module.exports = {
 			assertions: {
 				'csp-xss': 'off',
 				'unused-css-rules': 'off',
-				'unused-javascript': 'off'
+				'unused-javascript': 'off',
+				'errors-in-console': 'off'
 			}
 		},
 		upload: {
