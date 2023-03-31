@@ -1,20 +1,25 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Header } from '@codegouvfr/react-dsfr/Header';
-import { Footer } from '@codegouvfr/react-dsfr/Footer';
-import {
-	Display,
-	headerFooterDisplayItem
-} from '@codegouvfr/react-dsfr/Display';
+import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
+import { Display } from '@codegouvfr/react-dsfr/Display';
 import Head from 'next/head';
 import { getCookie } from '@/utils/cookies';
 import { SocialNetworks } from '@/components/layout/SocialNetworks';
+import { CustomFooter } from '@/components/layout/CustomFooter';
+import { useSession } from 'next-auth/react';
 
-const PublicLayout = ({ children }: { children: ReactNode }) => {
+type Props = {
+	children: ReactNode;
+};
+
+const PublicLayout = (props: Props) => {
+	const { children } = props;
 	const { classes, cx } = useStyles();
+	const session = useSession();
+	const isLogged = !!session.data;
 
-	const [isUserLogged, setIsUserLogged] = useState<boolean>();
+	const [isXWikiUserLogged, setIsXWikiUserLogged] = useState<boolean>();
 
 	const brandTop = (
 		<>
@@ -28,10 +33,47 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const serviceTagLine = 'des démarches en ligne';
 
 	useEffect(() => {
-		setIsUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
+		setIsXWikiUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
 	}, []);
 
-	if (isUserLogged === undefined) return <></>;
+	if (isXWikiUserLogged === undefined) return <></>;
+
+	let accessItems: HeaderProps.QuickAccessItem[] = [
+		{
+			iconId: 'ri-service-fill',
+			linkProps: {
+				href: '/observatoire'
+			},
+			text: 'Suivi des services phares'
+		},
+		{
+			iconId: 'ri-user-star-line',
+			linkProps: {
+				href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/'
+			},
+			text: "L'outil Je donne mon avis"
+		},
+		{
+			iconId: isXWikiUserLogged
+				? 'ri-logout-circle-line'
+				: 'ri-login-circle-line',
+			linkProps: {
+				href: isXWikiUserLogged
+					? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
+					: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F'
+			},
+			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
+		}
+	];
+
+	if (isLogged)
+		accessItems.unshift({
+			iconId: 'ri-user-star-line',
+			linkProps: {
+				href: '/administration'
+			},
+			text: 'Administration'
+		});
 
 	return (
 		<>
@@ -63,65 +105,13 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 					title:
 						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
 				}}
-				quickAccessItems={[
-					{
-						iconId: 'ri-service-fill',
-						linkProps: {
-							href: '/observatoire'
-						},
-						text: 'Suivi des services phares'
-					},
-					{
-						iconId: 'ri-user-star-line',
-						linkProps: {
-							href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/'
-						},
-						text: "L'outil Je donne mon avis"
-					},
-					{
-						iconId: isUserLogged
-							? 'ri-logout-circle-line'
-							: 'ri-login-circle-line',
-						linkProps: {
-							href: isUserLogged
-								? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
-								: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F'
-						},
-						text: isUserLogged ? 'Déconnexion' : 'Connexion'
-					}
-					// ONLY FOR TEST PURPOSE
-					// headerFooterDisplayItem
-				]}
+				quickAccessItems={accessItems}
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
 			/>
 			{children}
 			<SocialNetworks />
-			<Footer
-				accessibility="partially compliant"
-				accessibilityLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU'
-				}}
-				brandTop={brandTop}
-				contentDescription="L’Observatoire de la qualité des démarches en ligne est un service proposé par l'équipe design des services numériques de la direction interministérielle du numérique (DINUM)."
-				cookiesManagementLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU'
-				}}
-				homeLinkProps={{
-					href: '/',
-					title:
-						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
-				}}
-				personalDataLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU#HVieprivE9e'
-				}}
-				termsLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU#HMentionslE9gales'
-				}}
-				websiteMapLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/plan-site'
-				}}
-			/>
+			<CustomFooter />
 			<Display />
 		</>
 	);

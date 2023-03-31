@@ -38,3 +38,7 @@ next-env.d.ts
 
 # local ci results
 .lighthouseci
+
+# local db using docker-compose 
+data/
+db.sql

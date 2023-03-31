@@ -1,19 +1,20 @@
-import { TProcedure } from '@/pages/api/procedures/types';
-import { fr } from '@codegouvfr/react-dsfr';
+import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorLabel } from './IndicatorLabel';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
-import { proceduresTableHeaders } from '@/utils/mock';
 import { IndicatorValue } from './IndicatorValue';
 import { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureHeader } from '@prisma/client';
 
 type Props = {
-	procedure: TProcedure;
+	procedure: ProcedureWithFields;
+	proceduresTableHeaders: ProcedureHeader[];
 };
 
 export function ProcedureMobileCard(props: Props) {
-	const { procedure } = props;
+	const { procedure, proceduresTableHeaders } = props;
 	const { classes, cx } = useStyles();
 
 	const [toogleSwitch, setToogleSwitch] = useState<boolean>(false);
@@ -51,7 +52,11 @@ export function ProcedureMobileCard(props: Props) {
 									<div className={cx(classes.field)} ref={field.nodeRef}>
 										{procedureHeader && (
 											<ColumnHeaderDefinition
-												icon={procedureHeader.icon}
+												icon={
+													procedureHeader.icon as
+														| FrIconClassName
+														| RiIconClassName
+												}
 												text={procedureHeader.label}
 												infos={{
 													content:

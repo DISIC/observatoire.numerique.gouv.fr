@@ -1,0 +1,80 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum IndicatorSlug {
+  online
+  satisfaction
+  handicap
+  dlnuf
+  usage
+  simplicity
+  help_reachable
+  help_used
+  uptime
+  performance
+  auth
+}
+
+enum IndicatorColor {
+  blue
+  red
+  orange
+  yellow
+  green
+  gray
+}
+
+model Edition {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String      @unique
+  start_date DateTime
+  end_date   DateTime
+	created_at DateTime
+  Procedure  Procedure[]
+}
+
+model Procedure {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  airtable_identifier Int     
+  title               String
+  ministere           String
+  administration      String
+  sousorg             String
+  volume              Int?
+  fields              Field[]
+  edition             Edition? @relation(fields: [editionId], references: [id])
+  editionId           String?  @db.ObjectId
+}
+
+model Field {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  slug         IndicatorSlug
+  label        String
+  value        String?
+  color        IndicatorColor
+  noBackground Boolean?
+  procedure    Procedure      @relation(fields: [procedureId], references: [id])
+  procedureId  String         @db.ObjectId
+}
+
+model ProcedureHeader {
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  slug     IndicatorSlug @unique
+  label    String
+  icon     String
+  position Int           @unique
+}
+
+// Next auth
+model User {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  username String?
+  email    String  @unique
+  password String
+}

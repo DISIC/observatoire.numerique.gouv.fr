@@ -1,14 +1,14 @@
-import { TProcedure } from '@/pages/api/procedures/types';
-import { proceduresTableHeaders } from '@/utils/mock';
-import { fr } from '@codegouvfr/react-dsfr';
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
+import { useProcedureHeaders } from '@/utils/api';
 
 type Props = {
-	procedures: TProcedure[];
+	procedures: ProcedureWithFields[];
 };
 
 export function ProceduresTable(props: Props) {
@@ -57,8 +57,16 @@ export function ProceduresTable(props: Props) {
 		window.addEventListener('scroll', fixedHeader);
 	}, []);
 
+	const {
+		data: proceduresTableHeaders,
+		isError,
+		isLoading
+	} = useProcedureHeaders();
+	if (isError) return <div>Une erreur est survenue.</div>;
+	if (isLoading) return <div>Chargement du tableau ...</div>;
+	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
+
 	const handleScrollX = (tmpIsRight: boolean) => {
-		//POSSIBILITY TO MERGE ?
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
@@ -84,7 +92,7 @@ export function ProceduresTable(props: Props) {
 							return (
 								<th key={pth.label}>
 									<ColumnHeaderDefinition
-										icon={pth.icon}
+										icon={pth.icon as FrIconClassName | RiIconClassName}
 										text={pth.label}
 										infos={{
 											content:
@@ -214,9 +222,6 @@ const useStyles = makeStyles()(theme => {
 						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
 						minWidth: _firstColSize,
 						backgroundColor: theme.decisions.background.default.grey.default
-					},
-					['th:not(:first-child):not(:last-child)']: {
-						verticalAlign: 'middle'
 					},
 					['button:first-child']: {
 						fontWeight: 500,
