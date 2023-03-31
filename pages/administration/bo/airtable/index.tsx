@@ -7,6 +7,7 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useEffect, useRef, useState } from 'react';
 import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import Input from '@codegouvfr/react-dsfr/Input';
+import { StickyFooter } from '@/components/top250/table/StickyFooter';
 
 export default function Airtable() {
 	const { classes, cx } = useStyles();
@@ -131,6 +132,7 @@ export default function Airtable() {
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
 					<Top250TableSection procedures={procedures} isAdmin />
 				</div>
+				<StickyFooter proceduresCount={procedures.length} />
 			</div>
 			<EditionModal
 				title="Création d'une édition"

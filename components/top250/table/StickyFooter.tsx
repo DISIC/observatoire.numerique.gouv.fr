@@ -4,10 +4,11 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
 type Props = {
 	proceduresCount: number;
+	isAdmin?: boolean;
 };
 
 export function StickyFooter(props: Props) {
-	const { proceduresCount } = props;
+	const { proceduresCount, isAdmin } = props;
 	const { classes, cx } = useStyles();
 
 	return (
@@ -16,18 +17,20 @@ export function StickyFooter(props: Props) {
 				{proceduresCount} services numériques évalués
 			</div>
 			<div className={cx(classes.rightSection)}>
-				<Button
-					className={cx(classes.button)}
-					onClick={() => {
-						window.location.href =
-							'https://observatoire.numerique.gouv.fr/contact/';
-					}}
-					priority="tertiary"
-					size="small"
-				>
-					<i className={cx(fr.cx('ri-add-line'), classes.buttonIcon)} /> Un
-					service semble manquer ? Soumettez-le
-				</Button>
+				{!isAdmin && (
+					<Button
+						className={cx(classes.button)}
+						onClick={() => {
+							window.location.href =
+								'https://observatoire.numerique.gouv.fr/contact/';
+						}}
+						priority="tertiary"
+						size="small"
+					>
+						<i className={cx(fr.cx('ri-add-line'), classes.buttonIcon)} /> Un
+						service semble manquer ? Soumettez-le
+					</Button>
+				)}
 				<a
 					href="#"
 					className={cx(fr.cx('fr-link', 'fr-text--sm'), classes.achorLink)}
