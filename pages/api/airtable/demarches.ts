@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { table } from '../../../utils/airtable';
 import { ProcedureWithFields } from '../procedures/types';
 import { Field, IndicatorColor, IndicatorSlug } from '@prisma/client';
+import { getToken } from 'next-auth/jwt';
 
 const field_names = {
 	edition: '📡 Édition',
@@ -347,6 +348,13 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 };
 
 const getDemarches = async (_req: NextApiRequest, res: NextApiResponse) => {
+	const token = await getToken({
+		req: _req,
+		secret: process.env.JWT_SECRET
+	});
+	if (!token || (token.exp as number) > new Date().getTime())
+		return res.status(401).json({ msg: 'You shall not pass.' });
+
 	try {
 		let procedures: ProcedureWithFields[] = [];
 		await table

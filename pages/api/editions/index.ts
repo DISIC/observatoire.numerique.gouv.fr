@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, Edition } from '@prisma/client';
+import { getToken } from 'next-auth/jwt';
 
 const prisma = new PrismaClient();
 
@@ -41,6 +42,15 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	if (['POST', 'PUT', 'DELETE'].includes(req.method || '')) {
+		const token = await getToken({
+			req,
+			secret: process.env.JWT_SECRET
+		});
+		if (!token || (token.exp as number) > new Date().getTime())
+			return res.status(401).json({ msg: 'You shall not pass.' });
+	}
+
 	if (req.method === 'GET') {
 		const { id } = req.query;
 		if (id) {
