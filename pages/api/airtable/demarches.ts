@@ -140,9 +140,12 @@ const getColorFromLabel = (
 	}
 };
 
-const recordToProcedure = (record: any): ProcedureWithFields => {
-	// console.log(record);
+const getRoundedDecimalString = (value: string): string | null => {
+	if (isNaN(parseInt(value))) return null;
+	return (Math.round(parseFloat(value) * 10) / 10).toString();
+};
 
+const recordToProcedure = (record: any): ProcedureWithFields => {
 	let fields: Field[] = [
 		{
 			id: 'preview',
@@ -173,13 +176,9 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					record.get(field_names.indicators.satisfaction)
 				)
 			),
-			value: isNaN(parseInt(record.get(field_names.indicators.satisfaction)))
-				? null
-				: (
-						Math.round(
-							parseFloat(record.get(field_names.indicators.satisfaction)) * 10
-						) / 10
-				  ).toString(),
+			value: getRoundedDecimalString(
+				record.get(field_names.indicators.satisfaction)
+			),
 			procedureId: 'preview',
 			noBackground:
 				getLabelFromValue(
