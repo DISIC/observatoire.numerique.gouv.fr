@@ -132,7 +132,7 @@ export default function Airtable() {
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
 					<Top250TableSection procedures={procedures} isAdmin />
 				</div>
-				<StickyFooter proceduresCount={procedures.length} />
+				<StickyFooter proceduresCount={procedures.length} isAdmin />
 			</div>
 			<EditionModal
 				title="Création d'une édition"
