@@ -27,7 +27,7 @@ export default function Editions(props: Props) {
 				<div className={classes.editionsContainer}>
 					{editions.length ? (
 						editions.map((edition, index) => (
-							<div>
+							<div key={edition.id}>
 								<Card
 									desc={`Du : ${new Date(edition.start_date).toLocaleDateString(
 										'fr'

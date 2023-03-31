@@ -77,7 +77,9 @@ export default function Airtable() {
 				<div>
 					<i className={fr.cx('ri-loader-4-line')} />
 				</div>
-				<p className={fr.cx('fr-pt-4v')}>Publication de l'édition en cours</p>
+				<p className={fr.cx('fr-pt-4v')}>
+					Publication de l&eapos;édition en cours
+				</p>
 			</div>
 		);
 
@@ -96,14 +98,15 @@ export default function Airtable() {
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
-				<h2>L'édition en cours en temps réel</h2>
+				<h2>L&eapos;édition en cours en temps réel</h2>
 				<p>
-					Cet espace d'administration vous permet de publier une nouvelle
+					Cet espace d&eapos;administration vous permet de publier une nouvelle
 					édition du top 250 des démarches en direct directement depuis les
-					données du Airtable. Les démarches récupérées sont celles de l'édition
-					"Édition en cours" du Airtable. Vous pouvez ainsi publier des éditions
-					à la volée en cliquant sur "Publier l'édition". Les éditions créées
-					sont accessibles depuis l'onglet "Mes éditions".
+					données du Airtable. Les démarches récupérées sont celles de
+					l&eapos;édition &quot;Édition en cours&quot; du Airtable. Vous pouvez
+					ainsi publier des éditions à la volée en cliquant sur &quot;Publier
+					l&eapos;édition&quot;. Les éditions créées sont accessibles depuis
+					l&eapos;onglet &quot;Mes éditions&quot;.
 				</p>
 			</div>
 			{published && (

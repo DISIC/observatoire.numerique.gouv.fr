@@ -34,11 +34,13 @@ export default function Editions(props: Props) {
 					<i className={fr.cx('ri-loader-4-line')} />
 				</div>
 
-				<p className={fr.cx('fr-pt-4v')}>Chargement de l'édition en cours</p>
+				<p className={fr.cx('fr-pt-4v')}>
+					Chargement de l&eapos;édition en cours
+				</p>
 			</div>
 		);
 
-	if (!edition) return <div>Cette édition n'existe pas.</div>;
+	if (!edition) return <div>Cette édition n&eapos;existe pas.</div>;
 	if (!procedures) return <div>Aucune démarche pour cette édition</div>;
 
 	const deleteEdition = () => {
@@ -65,7 +67,7 @@ export default function Editions(props: Props) {
 					className={fr.cx('fr-mb-6v')}
 					onClick={deleteEdition}
 				>
-					Supprimer l'édition
+					Supprimer l&eapos;édition
 				</Button>
 			</div>
 			<div className={cx(classes.tableContainer)}>
