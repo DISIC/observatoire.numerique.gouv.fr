@@ -3,7 +3,7 @@ import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
 import { useProcedureHeaders } from '@/utils/api';
 
