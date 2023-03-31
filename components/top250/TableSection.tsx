@@ -5,9 +5,10 @@ import { ProceduresTable } from './table/ProceduresTable';
 import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { useMemo } from 'react';
 
 type Props = {
-	procedures: ProcedureWithFields[];
+	procedures?: ProcedureWithFields[];
 	isAdmin?: boolean;
 };
 
@@ -15,22 +16,39 @@ export function Top250TableSection(props: Props) {
 	const { procedures, isAdmin } = props;
 	const { classes, cx } = useStyles();
 
-	return (
-		<div className={cx(classes.root)}>
-			{!isAdmin && <PreHeader />}
-			{window.innerWidth > 62 * 16 ? (
-				<ProceduresTable procedures={procedures} />
-			) : (
-				<ProceduresTableMobile procedures={procedures} />
-			)}
-			<PreFooter />
-		</div>
-	);
+	const table = useMemo(() => {
+		if (!procedures || procedures.length === 0) {
+			return (
+				<div className={classes.noProcedure}>
+					Aucune démarche pour cette édition...
+				</div>
+			);
+		}
+
+		return (
+			<>
+				{!isAdmin && <PreHeader />}
+				{window.innerWidth > 62 * 16 ? (
+					<ProceduresTable procedures={procedures} />
+				) : (
+					<ProceduresTableMobile procedures={procedures} />
+				)}
+				<PreFooter />
+			</>
+		);
+	}, [procedures, isAdmin, classes.noProcedure]);
+
+	return <div className={cx(classes.root)}>{table}</div>;
 }
 
 const useStyles = makeStyles()(theme => ({
 	root: {
 		paddingBottom: fr.spacing('12v'),
 		width: '100%'
+	},
+	noProcedure: {
+		padding: fr.spacing('30v'),
+		textAlign: 'center',
+		fontWeight: 'bold'
 	}
 }));

@@ -9,7 +9,7 @@ const field_names = {
 	link: 'Lien',
 	title: 'Nom 💼 📄',
 	administration: 'Administration',
-	sousorg: 'adaz',
+	sousorg: 'Ministère opérationnel',
 	ministere: 'Ministère politique',
 	volume: 'Volumétrie totale',
 	indicators: {
@@ -29,7 +29,12 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 		case 'online':
 			return ['Oui', 'Non', 'Partiel', 'Bêta'].includes(value) ? value : 'Non';
 		case 'satisfaction':
-			return isNaN(parseInt(value)) ? "Nombre d'avis insuffisant" : value;
+			const satisfactionIntValue = parseInt(value);
+			if (isNaN(satisfactionIntValue)) return "Nombre d'avis insuffisant";
+			if (satisfactionIntValue < 5) return 'Mauvaise';
+			if (satisfactionIntValue < 8) return 'Moyenne';
+			return 'Très bonne';
+
 		case 'simplicity':
 			const simplicityIntValue = parseInt(value);
 			if (isNaN(simplicityIntValue)) return "Nombre d'avis insuffisant";
@@ -83,11 +88,9 @@ const getColorFromLabel = (
 			else if (label === 'Bêta') return 'yellow';
 			else return 'red';
 		case 'satisfaction':
-			const intValue = parseInt(label);
-			if (isNaN(intValue)) return 'gray';
-			if (intValue < 8) return 'yellow';
-			if (intValue < 6) return 'orange';
-			if (intValue < 4) return 'red';
+			if (label === "Nombre d'avis insuffisant") return 'gray';
+			if (label === 'Moyenne') return 'orange';
+			if (label === 'Mauvaise') return 'red';
 			else return 'green';
 		case 'simplicity':
 			if (label === "Nombre d'avis insuffisant") return 'gray';

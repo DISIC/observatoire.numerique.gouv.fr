@@ -35,12 +35,13 @@ model Edition {
   name       String      @unique
   start_date DateTime
   end_date   DateTime
+	created_at DateTime
   Procedure  Procedure[]
 }
 
 model Procedure {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  airtable_identifier Int      @unique
+  airtable_identifier Int     
   title               String
   ministere           String
   administration      String

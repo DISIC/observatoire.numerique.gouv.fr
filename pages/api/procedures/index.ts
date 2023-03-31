@@ -1,10 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Prisma, PrismaClient, Procedure } from '@prisma/client';
+import { Field, PrismaClient, Procedure } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export async function getProcedures() {
+	const editions = await prisma.edition.findMany({
+		orderBy: [
+			{
+				created_at: 'desc'
+			}
+		]
+	});
+
 	const procedures = await prisma.procedure.findMany({
+		where: { editionId: editions[0]?.id || null },
 		include: { fields: true }
 	});
 	return procedures;
@@ -57,10 +66,14 @@ export default async function handler(
 			res.status(200).json(procedures);
 		}
 	} else if (req.method === 'POST') {
-		const { fields, ...rest } = req.body;
+		const { fields, id, ...rest } = JSON.parse(req.body);
+		const createFields = fields.map((f: Field) => {
+			const { id, procedureId, ...rest } = f;
+			return rest;
+		});
 		const procedure = await createProcedure({
 			...rest,
-			fields: { create: fields }
+			fields: { create: createFields }
 		});
 		res.status(201).json(procedure);
 	} else if (req.method === 'PUT') {

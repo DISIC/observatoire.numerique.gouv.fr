@@ -208,9 +208,6 @@ const useStyles = makeStyles()(theme => {
 						minWidth: _firstColSize,
 						backgroundColor: theme.decisions.background.default.grey.default
 					},
-					['th:not(:first-child):not(:last-child)']: {
-						verticalAlign: 'middle'
-					},
 					['button:first-child']: {
 						fontWeight: 500,
 						fontSize: fr.typography[18].style.fontSize,
