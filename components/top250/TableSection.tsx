@@ -39,7 +39,7 @@ export function Top250TableSection(props: Props) {
 				<PreFooter />
 			</>
 		);
-	}, [procedures, isAdmin, classes.noProcedure]);
+	}, [procedures, isAdmin, search, classes.noProcedure]);
 
 	return <div className={cx(classes.root)}>{table}</div>;
 }
