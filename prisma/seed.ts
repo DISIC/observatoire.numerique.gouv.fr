@@ -30,27 +30,27 @@ async function main() {
 		);
 	});
 
-	procedures.forEach(procedure => {
-		const { fields, ...rest } = procedure;
-		promises.push(
-			prisma.procedure.upsert({
-				where: {
-					airtable_identifier: procedure.airtable_identifier
-				},
-				update: {},
-				create: {
-					...rest,
-					fields: {
-						create: fields.map(field => ({
-							...field,
-							slug: field.slug as IndicatorSlug,
-							color: field.color as IndicatorColor
-						}))
-					}
-				}
-			})
-		);
-	});
+	// procedures.forEach(procedure => {
+	// 	const { fields, ...rest } = procedure;
+	// 	promises.push(
+	// 		prisma.procedure.upsert({
+	// 			where: {
+	// 				airtable_identifier: procedure.airtable_identifier
+	// 			},
+	// 			update: {},
+	// 			create: {
+	// 				...rest,
+	// 				fields: {
+	// 					create: fields.map(field => ({
+	// 						...field,
+	// 						slug: field.slug as IndicatorSlug,
+	// 						color: field.color as IndicatorColor
+	// 					}))
+	// 				}
+	// 			}
+	// 		})
+	// 	);
+	// });
 
 	users.forEach(user => {
 		promises.push(
