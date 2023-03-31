@@ -21,6 +21,26 @@ export function ProceduresTable(props: Props) {
 	const tableRef = useRef<HTMLTableElement | null>(null);
 	const scrollRef = useRef<HTMLDivElement | null>(null);
 
+	function contentScrollHeader() {
+		if (stickyHeaderRef.current && scrollRef.current)
+			stickyHeaderRef.current.scrollLeft = scrollRef.current.scrollLeft;
+	}
+
+	function headerScrollContent() {
+		if (scrollRef.current && stickyHeaderRef.current)
+			scrollRef.current.scrollLeft = stickyHeaderRef.current.scrollLeft;
+	}
+
+	useEffect(() => {
+		if (scrollRef.current) {
+			scrollRef.current.addEventListener('scroll', contentScrollHeader);
+		}
+
+		if (stickyHeaderRef.current) {
+			stickyHeaderRef.current.addEventListener('scroll', headerScrollContent);
+		}
+	}, []);
+
 	useLayoutEffect(() => {
 		let fixedTop = stickyHeaderRef?.current?.getBoundingClientRect().top;
 		const fixedHeader = () => {
@@ -43,18 +63,13 @@ export function ProceduresTable(props: Props) {
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
 		const _firstColSize = _containerWidth * 0.28;
+		const isSticky =
+			stickyHeaderRef?.current?.classList.contains('sticked-row');
 
 		scrollRef?.current?.scrollTo({
 			left: tmpIsRight ? _containerWidth - _firstColSize : 0,
-			behavior: 'smooth'
+			behavior: isSticky ? 'auto' : 'smooth'
 		});
-
-		if (stickyHeaderRef?.current?.classList.contains('sticked-row')) {
-			stickyHeaderRef?.current?.scrollTo({
-				left: tmpIsRight ? _containerWidth - _firstColSize : 0,
-				behavior: 'smooth'
-			});
-		}
 
 		setIsRight(tmpIsRight);
 	};
@@ -102,45 +117,39 @@ export function ProceduresTable(props: Props) {
 					</tr>
 				</thead>
 				<tbody>
-					{procedures
-						.concat(procedures)
-						.concat(procedures)
-						.concat(procedures)
-						.map(p => (
-							<tr key={p.title}>
-								<td>
-									<div>
-										<span>{p.title}</span>
-										<br />
-										<div
-											className={fr.cx('fr-text--sm', 'fr-mt-2v', 'fr-mb-0')}
-										>
-											{p.ministere}
-										</div>
-										<span className={fr.cx('fr-text--sm')}>
-											{p.administration}
-										</span>
+					{procedures.map(p => (
+						<tr key={p.title}>
+							<td>
+								<div>
+									<span>{p.title}</span>
+									<br />
+									<div className={fr.cx('fr-text--sm', 'fr-mt-2v', 'fr-mb-0')}>
+										{p.ministere}
 									</div>
-								</td>
-								{proceduresTableHeaders.map((pth, index) => {
-									const field = p.fields.find(f => f.slug === pth.slug);
+									<span className={fr.cx('fr-text--sm')}>
+										{p.administration}
+									</span>
+								</div>
+							</td>
+							{proceduresTableHeaders.map((pth, index) => {
+								const field = p.fields.find(f => f.slug === pth.slug);
 
-									if (!field) return <>No</>;
+								if (!field) return <>No</>;
 
-									return (
-										<td key={`${p.title} ${pth.label}`}>
-											<IndicatorLabel {...field} />
-											{field.value && (
-												<IndicatorValue slug={field.slug} value={field.value} />
-											)}
-										</td>
-									);
-								})}
-								<td>
-									<div></div>
-								</td>
-							</tr>
-						))}
+								return (
+									<td key={`${p.title} ${pth.label}`}>
+										<IndicatorLabel {...field} />
+										{field.value && (
+											<IndicatorValue slug={field.slug} value={field.value} />
+										)}
+									</td>
+								);
+							})}
+							<td>
+								<div></div>
+							</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>
