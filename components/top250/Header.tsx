@@ -1,12 +1,13 @@
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { fr } from '@codegouvfr/react-dsfr';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { LightSelect } from '../generic/LightSelect';
 
 type Props = {
 	title: ReactNode;
 	searchLabel: string;
+	onSearch: (value: string) => void;
 };
 
 const editionOptions = [
@@ -84,9 +85,11 @@ const editionOptions = [
 ];
 
 export function Top250Header(props: Props) {
-	const { title, searchLabel } = props;
+	const { title, searchLabel, onSearch } = props;
 
 	const { classes, cx } = useStyles();
+
+	const [search, setSearch] = useState<string>('');
 
 	return (
 		<div className={cx(classes.root)}>
@@ -98,7 +101,23 @@ export function Top250Header(props: Props) {
 					if (href) location.href = href;
 				}}
 			/>
-			<SearchBar className={cx(classes.search)} label={searchLabel} />
+			<form
+				onSubmit={e => {
+					e.preventDefault();
+					onSearch(search);
+				}}
+			>
+				<SearchBar
+					className={cx(classes.search)}
+					label={searchLabel}
+					nativeInputProps={{
+						onChange: e => {
+							setSearch(e.target.value);
+							if (!e.target.value) setSearch('');
+						}
+					}}
+				/>
+			</form>
 		</div>
 	);
 }

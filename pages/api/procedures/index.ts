@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Field, PrismaClient, Procedure } from '@prisma/client';
+import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function getProcedures(editionId?: string) {
+export async function getProcedures(editionId?: string, search?: string) {
 	let tmpEditionId = editionId;
 	if (!tmpEditionId) {
 		const editions = await prisma.edition.findMany({
@@ -16,9 +16,21 @@ export async function getProcedures(editionId?: string) {
 		tmpEditionId = editions[0]?.id;
 	}
 
+	let whereRequest: Prisma.ProcedureWhereInput = {
+		editionId: tmpEditionId || null
+	};
+
+	if (search)
+		whereRequest.OR = [
+			{ title: { contains: search, mode: 'insensitive' } },
+			{ ministere: { contains: search, mode: 'insensitive' } },
+			{ sousorg: { contains: search, mode: 'insensitive' } },
+			{ administration: { contains: search, mode: 'insensitive' } }
+		];
+
 	const procedures = await prisma.procedure.findMany({
 		orderBy: [{ volume: 'desc' }],
-		where: { editionId: tmpEditionId || null },
+		where: whereRequest,
 		include: { fields: true }
 	});
 	return procedures;
@@ -62,12 +74,15 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (req.method === 'GET') {
-		const { id, editionId } = req.query;
+		const { id, editionId, search } = req.query;
 		if (id) {
 			const procedure = await getProcedureById(id.toString());
 			res.status(200).json(procedure);
 		} else {
-			const procedures = await getProcedures(editionId as string);
+			const procedures = await getProcedures(
+				editionId as string,
+				search as string
+			);
 			res.status(200).json(procedures);
 		}
 	} else if (req.method === 'POST') {

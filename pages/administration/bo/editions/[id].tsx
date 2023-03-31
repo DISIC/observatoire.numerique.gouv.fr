@@ -24,7 +24,7 @@ export default function Editions(props: Props) {
 		data: procedures,
 		isError: isErrorProcedures,
 		isLoading: isLoadingProcedures
-	} = useProcedures(id as string);
+	} = useProcedures({ editionId: id as string });
 	if (isErrorEdition || isErrorProcedures)
 		return <div>Une erreur est survenue.</div>;
 	if (isLoadingEdition || isLoadingProcedures)
@@ -35,12 +35,12 @@ export default function Editions(props: Props) {
 				</div>
 
 				<p className={fr.cx('fr-pt-4v')}>
-					Chargement de l&eapos;édition en cours
+					Chargement de l&apos;édition en cours
 				</p>
 			</div>
 		);
 
-	if (!edition) return <div>Cette édition n&eapos;existe pas.</div>;
+	if (!edition) return <div>Cette édition n&apos;existe pas.</div>;
 	if (!procedures) return <div>Aucune démarche pour cette édition</div>;
 
 	const deleteEdition = () => {
@@ -67,7 +67,7 @@ export default function Editions(props: Props) {
 					className={fr.cx('fr-mb-6v')}
 					onClick={deleteEdition}
 				>
-					Supprimer l&eapos;édition
+					Supprimer l&apos;édition
 				</Button>
 			</div>
 			<div className={cx(classes.tableContainer)}>

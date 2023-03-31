@@ -9,18 +9,21 @@ import { useMemo } from 'react';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
+	search?: string;
 	isAdmin?: boolean;
 };
 
 export function Top250TableSection(props: Props) {
-	const { procedures, isAdmin } = props;
+	const { procedures, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
 
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
 			return (
 				<div className={classes.noProcedure}>
-					Aucune démarche pour cette édition...
+					{search
+						? 'Aucune démarche trouvée pour cette recherche...'
+						: 'Aucune démarche pour cette édition...'}
 				</div>
 			);
 		}
