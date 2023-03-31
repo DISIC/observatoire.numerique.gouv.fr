@@ -17,6 +17,7 @@ export async function getProcedures(editionId?: string) {
 	}
 
 	const procedures = await prisma.procedure.findMany({
+		orderBy: [{ volume: 'desc' }],
 		where: { editionId: tmpEditionId || null },
 		include: { fields: true }
 	});

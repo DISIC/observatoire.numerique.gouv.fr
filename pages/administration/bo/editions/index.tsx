@@ -25,35 +25,43 @@ export default function Editions(props: Props) {
 			</div>
 			<div className={cx(fr.cx('fr-container'))}>
 				<div className={classes.editionsContainer}>
-					{editions.map((edition, index) => (
-						<div>
-							<Card
-								desc={`Du : ${new Date(edition.start_date).toLocaleDateString(
-									'fr'
-								)} au ${new Date(edition.end_date).toLocaleDateString('fr')}`}
-								enlargeLink
-								detail={
-									<ul className="fr-badges-group">
-										{index === 0 ? (
-											<Badge severity="new">
-												Crée le{' '}
-												{new Date(edition.created_at).toLocaleDateString('fr')}
-											</Badge>
-										) : (
-											<Badge>
-												Crée le{' '}
-												{new Date(edition.created_at).toLocaleDateString('fr')}
-											</Badge>
-										)}
-									</ul>
-								}
-								linkProps={{
-									href: `/administration/bo/editions/${edition.id}`
-								}}
-								title={edition.name}
-							/>
-						</div>
-					))}
+					{editions.length ? (
+						editions.map((edition, index) => (
+							<div>
+								<Card
+									desc={`Du : ${new Date(edition.start_date).toLocaleDateString(
+										'fr'
+									)} au ${new Date(edition.end_date).toLocaleDateString('fr')}`}
+									enlargeLink
+									detail={
+										<ul className="fr-badges-group">
+											{index === 0 ? (
+												<Badge severity="new">
+													Crée le{' '}
+													{new Date(edition.created_at).toLocaleDateString(
+														'fr'
+													)}
+												</Badge>
+											) : (
+												<Badge>
+													Crée le{' '}
+													{new Date(edition.created_at).toLocaleDateString(
+														'fr'
+													)}
+												</Badge>
+											)}
+										</ul>
+									}
+									linkProps={{
+										href: `/administration/bo/editions/${edition.id}`
+									}}
+									title={edition.name}
+								/>
+							</div>
+						))
+					) : (
+						<p>Aucune édition publiée...</p>
+					)}
 				</div>
 			</div>
 		</div>

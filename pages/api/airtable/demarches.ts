@@ -308,7 +308,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 	const volume = parseInt(record.get(field_names.volume));
 	return {
 		id: 'preview',
-		title: record.get(field_names.title).replace(/[^\w\s]/gi, ''),
+		title: record.get(field_names.title).replace(/[^\w\sÀ-ÿ]/gi, ''),
 		ministere: record.get(field_names.ministere),
 		administration: record.get(field_names.administration),
 		sousorg: record.get(field_names.sousorg),
@@ -332,7 +332,9 @@ const getDemarches = async (_req: NextApiRequest, res: NextApiResponse) => {
 				});
 				fetchNextPage();
 			});
-		res.status(200).json({ data: procedures });
+		res.status(200).json({
+			data: procedures.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0))
+		});
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ msg: 'Something went wrong! 😕' });
