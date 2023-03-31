@@ -77,12 +77,20 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				]}
 				navigation={[
 					{
-						isActive: router.pathname === '/administration/airtable',
+						isActive: router.pathname === '/administration/bo/airtable',
 						linkProps: {
-							href: '/administration/airtable',
+							href: '/administration/bo/airtable',
 							target: '_self'
 						},
 						text: 'Prévisualisation Airtable'
+					},
+					{
+						isActive: router.pathname === '/administration/bo/editions',
+						linkProps: {
+							href: '/administration/bo/editions',
+							target: '_self'
+						},
+						text: 'Mes Éditions'
 					}
 				]}
 				serviceTagline={serviceTagLine}

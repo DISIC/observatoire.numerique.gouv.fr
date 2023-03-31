@@ -99,7 +99,7 @@ export default function Airtable() {
 				<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
 					<Alert
 						closable
-						description="Retrouvez votre édition fraichement crée dans l'onglet Édition"
+						description="Retrouvez votre édition fraichement crée dans l'onglet « Mes Édition »"
 						onClose={() => {
 							setIsPublished(false);
 						}}

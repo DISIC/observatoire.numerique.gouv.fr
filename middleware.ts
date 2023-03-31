@@ -12,16 +12,19 @@ export async function middleware(request: NextRequest) {
 
 	if (request.nextUrl.pathname.startsWith('/administration/login') && !!token) {
 		return NextResponse.redirect(
-			new URL('/administration/airtable', request.url)
+			new URL('/administration/bo/airtable', request.url)
 		);
 	} else if (
-		request.nextUrl.pathname.startsWith('/administration/airtable') &&
+		request.nextUrl.pathname.startsWith('/administration/bo') &&
 		!token
 	) {
 		return NextResponse.redirect(new URL('/administration/login', request.url));
 	}
 
-	if (request.nextUrl.pathname === '/administration') {
+	if (
+		request.nextUrl.pathname === '/administration' ||
+		request.nextUrl.pathname === '/administration/bo'
+	) {
 		return NextResponse.redirect(new URL('/administration/login', request.url));
 	}
 }
