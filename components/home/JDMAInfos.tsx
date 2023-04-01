@@ -1,6 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import Image from 'next/image';
 
 type Props = {
 	title: JSX.Element;
@@ -30,7 +31,13 @@ export function JDMAInfos(props: Props) {
 					</Button>
 				</div>
 				<div>
-					<img src="/jdma-screenshot.svg" />
+					<Image
+						alt="Exemple de statistiques avec l'outil Je donne mon avis"
+						src="/jdma-screenshot.svg"
+						title="Exemple de statistiques avec l'outil Je donne mon avis"
+						width={448}
+						height={316}
+					/>
 				</div>
 			</div>
 		</div>

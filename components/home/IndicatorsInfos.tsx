@@ -40,7 +40,7 @@ export function IndicatorsInfos(props: Props) {
 				<h2>{titleIndicators}</h2>
 				<div>
 					{indicators.slice(0, 5).map(indicator => (
-						<div>
+						<div key={indicator.id}>
 							<span>
 								<i className={indicator.icon} />
 							</span>

@@ -19,7 +19,7 @@ export default function Home() {
 				}
 				description={
 					<>
-						L’Observatoire vous permet de suivre la qualité de la
+						L&apos;Observatoire vous permet de suivre la qualité de la
 						dématérialisation
 						<br />
 						de plus de 250 démarches publiques faisant partie des services les
@@ -40,7 +40,7 @@ export default function Home() {
 						Nous avons recensé plus de 250 services publics les plus utilisées
 						par les usagers et nous avons établi des indicateurs qui nous
 						permettent de suivre l’avancée de la dématérialisation, et
-						l'expérience usager de façon très concrète.
+						l&apos;expérience usager de façon très concrète.
 					</>
 				}
 				titleIndicators={<>5 indicateurs de suivi des démarches</>}
