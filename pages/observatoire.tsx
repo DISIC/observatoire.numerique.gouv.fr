@@ -1,4 +1,4 @@
-import { Top250Header } from '@/components/top250/Header';
+import { Top250Header } from '@/components/top250/Top250Header';
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';

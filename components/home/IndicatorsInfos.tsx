@@ -1,0 +1,123 @@
+import { fr } from '@codegouvfr/react-dsfr';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import Tile from '@codegouvfr/react-dsfr/Tile';
+import { ProcedureHeader } from '@prisma/client';
+
+type Props = {
+	title: JSX.Element;
+	description: JSX.Element;
+	titleIndicators: JSX.Element;
+	indicators: ProcedureHeader[];
+};
+
+export function IndicatorsInfos(props: Props) {
+	const { title, description, titleIndicators, indicators } = props;
+	const { classes, cx } = useStyles();
+
+	return (
+		<div className={cx(fr.cx('fr-container'), classes.root)}>
+			<div className={cx(classes.introContainer)}>
+				<h2>{title}</h2>
+				<p>{description}</p>
+			</div>
+			<div className={classes.tilesContainer}>
+				<Tile
+					imageUrl="/city-hall.svg"
+					linkProps={{
+						href: '#'
+					}}
+					title="La sélection des services"
+				/>
+				<Tile
+					imageUrl="/data-visualization.svg"
+					linkProps={{
+						href: '#'
+					}}
+					title="Le suivi des services"
+				/>
+			</div>
+			<div className={classes.indicatorsContainer}>
+				<h2>{titleIndicators}</h2>
+				<div>
+					{indicators.slice(0, 5).map(indicator => (
+						<div>
+							<span>
+								<i className={indicator.icon} />
+							</span>
+							<span>{indicator.label}</span>
+						</div>
+					))}
+				</div>
+			</div>
+		</div>
+	);
+}
+
+const useStyles = makeStyles()(theme => ({
+	root: {
+		maxWidth: '62rem',
+		paddingTop: fr.spacing('14v'),
+		paddingBottom: fr.spacing('24v')
+	},
+	introContainer: {
+		h2: {
+			...fr.typography[5].style,
+			textAlign: 'center',
+			color: theme.decisions.background.actionHigh.blueFrance.default
+		},
+		p: {
+			paddingLeft: fr.spacing('16v'),
+			paddingRight: fr.spacing('16v'),
+			marginTop: fr.spacing('8v')
+		}
+	},
+	tilesContainer: {
+		display: 'flex',
+		justifyContent: 'center',
+		paddingTop: fr.spacing('9v'),
+		paddingBottom: fr.spacing('17v'),
+		['& > div']: {
+			maxWidth: '11.25rem',
+			marginLeft: fr.spacing('4v'),
+			marginRight: fr.spacing('4v'),
+			paddingBottom: fr.spacing('8v')
+		}
+	},
+	indicatorsContainer: {
+		h2: {
+			...fr.typography[4].style,
+			textAlign: 'center',
+			color: theme.decisions.background.actionHigh.blueFrance.default
+		},
+		['& > div']: {
+			display: 'flex',
+			justifyContent: 'space-between',
+			['& > div']: {
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				marginTop: fr.spacing('8v'),
+				['& > span:first-child']: {
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor: theme.decisions.background.alt.blueFrance.default,
+					borderRadius: '50%',
+					width: fr.spacing('20v'),
+					height: fr.spacing('20v'),
+					['i::before']: {
+						'--icon-size': fr.spacing('10v'),
+						color: theme.decisions.background.actionHigh.blueFrance.default
+					}
+				},
+				['& > span:not(:first-child)']: {
+					maxWidth: fr.spacing('32v'),
+					textAlign: 'center',
+					color: theme.decisions.background.actionHigh.blueFrance.default,
+					fontWeight: 'bold',
+					marginTop: fr.spacing('7v')
+				}
+			}
+		}
+	}
+}));
