@@ -68,7 +68,11 @@ const useStyles = makeStyles()(theme => ({
 		p: {
 			paddingLeft: fr.spacing('16v'),
 			paddingRight: fr.spacing('16v'),
-			marginTop: fr.spacing('8v')
+			marginTop: fr.spacing('8v'),
+			[fr.breakpoints.down('sm')]: {
+				padding: 0,
+				textAlign: 'center'
+			}
 		}
 	},
 	tilesContainer: {
@@ -80,7 +84,10 @@ const useStyles = makeStyles()(theme => ({
 			maxWidth: '11.25rem',
 			marginLeft: fr.spacing('4v'),
 			marginRight: fr.spacing('4v'),
-			paddingBottom: fr.spacing('8v')
+			paddingBottom: fr.spacing('8v'),
+			[fr.breakpoints.down('sm')]: {
+				maxWidth: '9.25rem'
+			}
 		}
 	},
 	indicatorsContainer: {
@@ -116,6 +123,13 @@ const useStyles = makeStyles()(theme => ({
 					color: theme.decisions.background.actionHigh.blueFrance.default,
 					fontWeight: 'bold',
 					marginTop: fr.spacing('7v')
+				}
+			},
+			[fr.breakpoints.down('sm')]: {
+				flexWrap: 'wrap',
+				['& > div']: {
+					width: '100%',
+					['&:not(:first-of-type)']: { marginTop: fr.spacing('20v') }
 				}
 			}
 		}

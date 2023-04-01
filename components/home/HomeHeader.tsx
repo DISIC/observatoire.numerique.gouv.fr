@@ -31,6 +31,9 @@ const useStyles = makeStyles()(theme => ({
 		h1: {
 			color: theme.decisions.background.actionHigh.blueFrance.default,
 			...fr.typography[11].style
+		},
+		[fr.breakpoints.down('sm')]: {
+			textAlign: 'center'
 		}
 	}
 }));

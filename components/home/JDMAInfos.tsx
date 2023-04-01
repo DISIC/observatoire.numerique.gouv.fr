@@ -47,7 +47,7 @@ const useStyles = makeStyles()(theme => ({
 		paddingBottom: fr.spacing('14v'),
 		display: 'flex',
 		alignItems: 'center',
-		['& > div:first-child']: {
+		['& > div:first-of-type']: {
 			marginRight: fr.spacing('16v'),
 			h2: {
 				...fr.typography[4].style,
@@ -58,8 +58,22 @@ const useStyles = makeStyles()(theme => ({
 				marginBottom: fr.spacing('7v')
 			}
 		},
-		['& > div:not(:first-child)']: {
+		['& > div:not(:first-of-type)']: {
 			width: '40%'
+		},
+		[fr.breakpoints.down('sm')]: {
+			flexWrap: 'wrap',
+			textAlign: 'center',
+			['& > div:first-of-type']: {
+				marginRight: 0
+			},
+			['& > div:not(:first-of-type)']: {
+				width: '100%',
+				marginTop: fr.spacing('10v'),
+				img: {
+					maxWidth: '100%'
+				}
+			}
 		}
 	},
 	jdmaButton: {
