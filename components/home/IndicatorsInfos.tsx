@@ -23,6 +23,7 @@ export function IndicatorsInfos(props: Props) {
 			<div className={classes.tilesContainer}>
 				<Tile
 					imageUrl="/city-hall.svg"
+					imageAlt="La sélection des services"
 					linkProps={{
 						href: '#'
 					}}
@@ -30,6 +31,7 @@ export function IndicatorsInfos(props: Props) {
 				/>
 				<Tile
 					imageUrl="/data-visualization.svg"
+					imageAlt="Le suivi des services"
 					linkProps={{
 						href: '#'
 					}}
