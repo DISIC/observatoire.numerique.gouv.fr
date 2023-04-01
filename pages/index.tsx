@@ -1,6 +1,7 @@
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
 import { JDMAInfos } from '@/components/home/JDMAInfos';
+import { Questions } from '@/components/home/Questions';
 import { useProcedureHeaders } from '@/utils/api';
 
 export default function Home() {
@@ -58,6 +59,17 @@ export default function Home() {
 						Même si votre démarche n’est pas parmi les 250 suivies dans
 						l’Observatoire, vous pouvez utiliser l’outil Je donne mon avis afin
 						de suivre en temps réel la satisfaction des usagers.
+					</>
+				}
+			/>
+			<Questions
+				title={<>Des questions ?</>}
+				description={
+					<>
+						Notre objectif est l’amélioration concrète des 250 démarches
+						administratives les plus utilisées par les usagers. Cet observatoire
+						nous permet d’identifier et de suivre les démarches à améliorer en
+						priorité.
 					</>
 				}
 			/>

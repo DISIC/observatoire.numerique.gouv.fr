@@ -44,7 +44,7 @@ const useStyles = makeStyles()(theme => ({
 	container: {
 		maxWidth: '62rem',
 		paddingTop: fr.spacing('14v'),
-		paddingBottom: fr.spacing('24v'),
+		paddingBottom: fr.spacing('14v'),
 		display: 'flex',
 		alignItems: 'center',
 		['& > div:first-child']: {
