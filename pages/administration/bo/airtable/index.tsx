@@ -61,7 +61,7 @@ export default function Airtable() {
 
 		// CREATE PROCEDURES
 		const responses = procedures.map(procedure => {
-			fetch('/api/procedures', {
+			return fetch('/api/procedures', {
 				method: 'POST',
 				body: JSON.stringify({ ...procedure, editionId: editionResponse.id })
 			});
