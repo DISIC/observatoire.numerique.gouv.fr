@@ -1,5 +1,6 @@
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
+import { JDMAInfos } from '@/components/home/JDMAInfos';
 import { useProcedureHeaders } from '@/utils/api';
 
 export default function Home() {
@@ -43,6 +44,22 @@ export default function Home() {
 				}
 				titleIndicators={<>5 indicateurs de suivi des démarches</>}
 				indicators={proceduresTableHeaders || []}
+			/>
+			<JDMAInfos
+				title={
+					<>
+						Vous êtes porteur ou porteuse d’un service public
+						<br />
+						numérique ?
+					</>
+				}
+				description={
+					<>
+						Même si votre démarche n’est pas parmi les 250 suivies dans
+						l’Observatoire, vous pouvez utiliser l’outil Je donne mon avis afin
+						de suivre en temps réel la satisfaction des usagers.
+					</>
+				}
 			/>
 		</div>
 	);
