@@ -28,7 +28,7 @@ export function ProceduresTableMobile(props: Props) {
 				return (
 					<ProcedureMobileCard
 						proceduresTableHeaders={proceduresTableHeaders}
-						key={procedure.title}
+						key={procedure.id}
 						procedure={procedure}
 					/>
 				);

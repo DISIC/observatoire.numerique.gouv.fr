@@ -5,7 +5,7 @@ import { ProceduresTable } from './table/ProceduresTable';
 import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
@@ -16,6 +16,48 @@ type Props = {
 export function Top250TableSection(props: Props) {
 	const { procedures, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
+	const numberPerPage = 20;
+
+	const [displayedProcedures, setDisplayedProcedures] = useState<
+		ProcedureWithFields[]
+	>(procedures ? procedures.slice(0, numberPerPage) : []);
+	const displayedProceduresRef = useRef(displayedProcedures);
+
+	useEffect(() => {
+		displayedProceduresRef.current = displayedProcedures;
+	}, [displayedProcedures]);
+
+	useEffect(() => {
+		if (procedures && procedures.length) {
+			setDisplayedProcedures(procedures.slice(0, numberPerPage));
+		}
+	}, [procedures]);
+
+	const handleScroll = () => {
+		const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+		const currentDisplayedProcedures = displayedProceduresRef.current;
+		if (
+			scrollTop + clientHeight >= scrollHeight - 1500 &&
+			procedures &&
+			procedures.length !== currentDisplayedProcedures.length
+		) {
+			setDisplayedProcedures([
+				...currentDisplayedProcedures,
+				...procedures.slice(
+					currentDisplayedProcedures.length,
+					currentDisplayedProcedures.length + numberPerPage
+				)
+			]);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
@@ -28,17 +70,19 @@ export function Top250TableSection(props: Props) {
 			);
 		}
 
+		console.log('RERENDER');
+
 		return (
 			<>
 				{window.innerWidth > 62 * 16 ? (
-					<ProceduresTable procedures={procedures} />
+					<ProceduresTable procedures={displayedProcedures} />
 				) : (
-					<ProceduresTableMobile procedures={procedures} />
+					<ProceduresTableMobile procedures={displayedProcedures} />
 				)}
 				<PreFooter />
 			</>
 		);
-	}, [procedures, isAdmin, search, classes.noProcedure]);
+	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
 
 	return <div className={cx(classes.root)}>{table}</div>;
 }

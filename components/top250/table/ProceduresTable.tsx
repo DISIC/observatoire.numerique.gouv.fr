@@ -126,7 +126,7 @@ export function ProceduresTable(props: Props) {
 				</thead>
 				<tbody>
 					{procedures.map(p => (
-						<tr key={p.title}>
+						<tr key={p.id}>
 							<td>
 								<div>
 									<span>{p.title}</span>
