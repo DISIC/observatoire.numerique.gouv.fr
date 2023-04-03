@@ -118,7 +118,7 @@ export function Top250Header(props: Props) {
 					nativeInputProps={{
 						onChange: e => {
 							setSearch(e.target.value);
-							if (!e.target.value) setSearch('');
+							if (!e.target.value) onSearch('');
 						}
 					}}
 				/>
