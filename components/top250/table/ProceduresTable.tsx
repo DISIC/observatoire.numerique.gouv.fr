@@ -42,13 +42,16 @@ export function ProceduresTable(props: Props) {
 	}, []);
 
 	useLayoutEffect(() => {
-		let fixedTop = stickyHeaderRef?.current?.getBoundingClientRect().top;
 		const fixedHeader = () => {
-			if (fixedTop !== undefined) {
-				if (window.pageYOffset > fixedTop) {
+			let fixedTop = stickyHeaderRef?.current?.getBoundingClientRect().top;
+			let tableTop = scrollRef?.current?.getBoundingClientRect().top;
+			if (fixedTop !== undefined && tableTop !== undefined) {
+				const isFixed =
+					stickyHeaderRef.current?.classList.contains('sticked-row');
+				if (!isFixed && fixedTop < 0) {
 					stickyHeaderRef.current?.classList.add('sticked-row');
 					tableRef.current?.classList.add('table-has-sticked-row');
-				} else {
+				} else if (isFixed && tableTop > 0) {
 					stickyHeaderRef.current?.classList.remove('sticked-row');
 					tableRef.current?.classList.remove('table-has-sticked-row');
 				}
