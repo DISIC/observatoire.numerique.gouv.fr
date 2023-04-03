@@ -76,7 +76,8 @@ const useStyles = makeStyles()(theme => ({
 			paddingLeft: 0,
 			paddingBottom: 0,
 			fontWeight: 500,
-			border: 0
+			border: 0,
+			...fr.typography[19].style
 		}
 	}
 }));

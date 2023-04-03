@@ -52,7 +52,9 @@ export function Top250TableSection(props: Props) {
 	};
 
 	useEffect(() => {
-		window.addEventListener('scroll', handleScroll);
+		setTimeout(() => {
+			window.addEventListener('scroll', handleScroll);
+		}, 200);
 
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
