@@ -154,7 +154,7 @@ export function ProceduresTable(props: Props) {
 											<IndicatorValue
 												slug={field.slug}
 												value={field.value}
-												procedureId={p.id}
+												procedureId={p.airtable_identifier}
 											/>
 										)}
 									</td>

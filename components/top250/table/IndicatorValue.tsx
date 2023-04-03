@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 type Props = {
 	slug: IndicatorSlug;
-	procedureId: string;
+	procedureId: number;
 	value: string;
 };
 

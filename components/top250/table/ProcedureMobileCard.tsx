@@ -70,7 +70,7 @@ export function ProcedureMobileCard(props: Props) {
 											<IndicatorValue
 												slug={field.slug}
 												value={field.value}
-												procedureId={procedure.id}
+												procedureId={procedure.airtable_identifier}
 											/>
 										)}
 									</div>
