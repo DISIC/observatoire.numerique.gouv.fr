@@ -15,7 +15,7 @@ const field_names = {
 	volume: 'Volumétrie totale',
 	indicators: {
 		online: '📊  En ligne',
-		satisfaction: '📊 Note de satisfaction /10',
+		satisfaction: '[Dashlord] - JDMA note satisfaction',
 		simplicity: '[Dashlord] - JDMA note facilité',
 		uptime: '🕶Taux de disponibilité',
 		performance: '🕶Temps de réponse (milliseconde)',
