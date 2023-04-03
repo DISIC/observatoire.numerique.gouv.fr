@@ -8,10 +8,11 @@ type Props = {
 	defaultValue?: string | number;
 	onChange?(value: string | number, href?: string): void;
 	placeholder?: string;
+	superLight?: boolean;
 };
 
 export function LightSelect(props: Props) {
-	const { onChange, options, placeholder, defaultValue } = props;
+	const { onChange, options, placeholder, defaultValue, superLight } = props;
 
 	const { classes, cx } = useStyles();
 
@@ -27,7 +28,7 @@ export function LightSelect(props: Props) {
 	return (
 		<Select
 			label=""
-			className={cx(classes.root)}
+			className={cx(classes.root, superLight ? classes.rootSuperLight : {})}
 			nativeSelectProps={{
 				onChange: event => setValue(event.target.value),
 				value
@@ -67,6 +68,15 @@ const useStyles = makeStyles()(theme => ({
 				paddingLeft: fr.spacing('4v'),
 				paddingRight: fr.spacing('8v')
 			}
+		}
+	},
+	rootSuperLight: {
+		['select']: {
+			paddingTop: 0,
+			paddingLeft: 0,
+			paddingBottom: 0,
+			fontWeight: 500,
+			border: 0
 		}
 	}
 }));

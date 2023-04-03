@@ -6,13 +6,19 @@ import { ProcedureHeader, Edition } from '@prisma/client';
 type ProceduresProps = {
 	editionId?: string;
 	search?: string;
+	sort?: string;
 };
 
-export function useProcedures({ editionId, search }: ProceduresProps) {
-	const { data, error } = useSWR(
-		`/api/procedures?${editionId ? `editionId=${editionId}` : ''}${
-			editionId && search ? '&' : ''
-		}${search ? `search=${search}` : ''}`,
+export function useProcedures(props: ProceduresProps) {
+	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS
+	const fakeProps: { [key: string]: any } = props;
+	Object.keys(fakeProps).forEach(
+		key => fakeProps[key] === undefined && delete fakeProps[key]
+	);
+
+	const searchUrl = new URLSearchParams(fakeProps);
+	const { data, error, isValidating } = useSWR(
+		`/api/procedures?${searchUrl}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<ProcedureWithFields[]>(stringify(await res.json()));
@@ -22,7 +28,7 @@ export function useProcedures({ editionId, search }: ProceduresProps) {
 	return {
 		data,
 		isError: error,
-		isLoading: !error && !data
+		isLoading: (!error && !data) || isValidating
 	};
 }
 

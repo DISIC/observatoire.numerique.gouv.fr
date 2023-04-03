@@ -1,16 +1,44 @@
+import { LightSelect } from '@/components/generic/LightSelect';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-type Props = {};
+type Props = {
+	onSort: (value: string | number) => void;
+};
+
+const sortOptions = [
+	{
+		label: 'Trier par volumétrie (décroissant)',
+		value: 'volume:desc'
+	},
+	{
+		label: 'Trier par volumétrie (croissant)',
+		value: 'volume:asc'
+	}
+];
 
 export function PreHeader(props: Props) {
 	const { classes, cx } = useStyles();
+	const { onSort } = props;
+
+	const [localSort, setLocalSort] = useState<string>('volume:desc');
+
+	useEffect(() => {
+		if (localSort && onSort) onSort(localSort);
+	}, [localSort]);
 
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(classes.section)}>
-				Trier par volumétrie (décroissant)
+				<LightSelect
+					options={sortOptions}
+					superLight
+					onChange={value => {
+						setLocalSort(value as string);
+					}}
+				/>
 			</div>
 			<div className={cx(classes.section)}>
 				<Link href="#" className={fr.cx('fr-link')}>

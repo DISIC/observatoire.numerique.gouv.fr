@@ -30,7 +30,6 @@ export function Top250TableSection(props: Props) {
 
 		return (
 			<>
-				{!isAdmin && <PreHeader />}
 				{window.innerWidth > 62 * 16 ? (
 					<ProceduresTable procedures={procedures} />
 				) : (
