@@ -67,7 +67,11 @@ export function ProcedureMobileCard(props: Props) {
 										)}
 										<IndicatorLabel {...field} />
 										{field.value && (
-											<IndicatorValue slug={field.slug} value={field.value} />
+											<IndicatorValue
+												slug={field.slug}
+												value={field.value}
+												procedureId={procedure.id}
+											/>
 										)}
 									</div>
 								</CSSTransition>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 type Props = {
 	slug: IndicatorSlug;
+	procedureId: string;
 	value: string;
 };
 
@@ -15,7 +16,7 @@ const acceptedSlugValues: IndicatorSlug[] = [
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
-	const { slug, value } = props;
+	const { slug, value, procedureId } = props;
 	const { classes, cx } = useStyles();
 
 	if (slug === 'online' && typeof value === 'string')
@@ -32,7 +33,10 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 
 	if (slug === 'satisfaction' && !isNaN(parseInt(value)))
 		return (
-			<Link href="#" className={classes.hideMobile}>
+			<Link
+				href={`https://observatoire.numerique.gouv.fr/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
+				className={classes.hideMobile}
+			>
 				{value.toString().replace('.', ',')} / 10
 			</Link>
 		);

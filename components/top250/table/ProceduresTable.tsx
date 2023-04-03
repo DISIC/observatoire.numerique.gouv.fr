@@ -151,7 +151,11 @@ export function ProceduresTable(props: Props) {
 									<td key={`${p.title} ${pth.label}`}>
 										<IndicatorLabel {...field} />
 										{field.value && (
-											<IndicatorValue slug={field.slug} value={field.value} />
+											<IndicatorValue
+												slug={field.slug}
+												value={field.value}
+												procedureId={p.id}
+											/>
 										)}
 									</td>
 								);
