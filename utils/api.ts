@@ -17,7 +17,7 @@ export function useProcedures(props: ProceduresProps) {
 	);
 
 	const searchUrl = new URLSearchParams(fakeProps);
-	const { data, error, isValidating } = useSWR(
+	const { data, error, isLoading } = useSWR(
 		`/api/procedures?${searchUrl}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
@@ -28,7 +28,7 @@ export function useProcedures(props: ProceduresProps) {
 	return {
 		data,
 		isError: error,
-		isLoading: (!error && !data) || isValidating
+		isLoading: (!error && !data) || isLoading
 	};
 }
 

@@ -70,8 +70,6 @@ export function Top250TableSection(props: Props) {
 			);
 		}
 
-		console.log('RERENDER');
-
 		return (
 			<>
 				{window.innerWidth > 62 * 16 ? (
