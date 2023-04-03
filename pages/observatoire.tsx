@@ -5,13 +5,19 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { useProcedures } from '@/utils/api';
 import { useState } from 'react';
+import { PreHeader } from '@/components/top250/table/PreHeader';
 
 export default function Observatoire() {
 	const { classes, cx } = useStyles();
 
 	const [search, setSearch] = useState<string>();
+	const [sort, setSort] = useState<string>('volume:desc');
 
-	const { data: procedures, isError, isLoading } = useProcedures({ search });
+	const {
+		data: procedures,
+		isError,
+		isLoading
+	} = useProcedures({ search, sort });
 	if (isError) return <div>Une erreur est survenue.</div>;
 
 	return (
@@ -31,6 +37,13 @@ export default function Observatoire() {
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)}>
+				<div className={fr.cx('fr-container', 'fr-px-5v')}>
+					<PreHeader
+						onSort={value => {
+							setSort(value.toString());
+						}}
+					/>
+				</div>
 				{isLoading || !procedures ? (
 					<div className={cx(classes.loader)}>
 						<div>

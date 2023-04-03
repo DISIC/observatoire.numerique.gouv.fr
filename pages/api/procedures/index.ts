@@ -4,8 +4,13 @@ import { getToken } from 'next-auth/jwt';
 
 const prisma = new PrismaClient();
 
-export async function getProcedures(editionId?: string, search?: string) {
+export async function getProcedures(
+	editionId?: string,
+	search?: string,
+	sort?: string
+) {
 	let tmpEditionId = editionId;
+
 	if (!tmpEditionId) {
 		const editions = await prisma.edition.findMany({
 			orderBy: [
@@ -29,8 +34,20 @@ export async function getProcedures(editionId?: string, search?: string) {
 			{ administration: { contains: search, mode: 'insensitive' } }
 		];
 
+	let orderBy: any = [{ volume: 'desc' }];
+
+	if (sort) {
+		const values = sort.split(':');
+		if (values.length === 2)
+			orderBy = [
+				{
+					[values[0]]: values[1]
+				}
+			];
+	}
+
 	const procedures = await prisma.procedure.findMany({
-		orderBy: [{ volume: 'desc' }],
+		orderBy,
 		where: whereRequest,
 		include: { fields: true }
 	});
@@ -84,14 +101,15 @@ export default async function handler(
 	}
 
 	if (req.method === 'GET') {
-		const { id, editionId, search } = req.query;
+		const { id, editionId, search, sort } = req.query;
 		if (id) {
 			const procedure = await getProcedureById(id.toString());
 			res.status(200).json(procedure);
 		} else {
 			const procedures = await getProcedures(
 				editionId as string,
-				search as string
+				search as string,
+				sort as string
 			);
 			res.status(200).json(procedures);
 		}
