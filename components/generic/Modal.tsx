@@ -41,8 +41,10 @@ export const Modal = (props: Props) => {
 						<p>{children}</p>
 					</div>
 					<div className={cx(classes.modalFooter)}>
-						{buttons.map(b => (
-							<Button onClick={b.onClick}>{b.children}</Button>
+						{buttons.map((b, index) => (
+							<Button key={index} onClick={b.onClick}>
+								{b.children}
+							</Button>
 						))}
 					</div>
 				</div>

@@ -176,7 +176,8 @@ export const ProcedureHeaderContent = (props: Props) => {
 				<div className={cx(classes.root)}>
 					<h5>
 						Simplifie les démarches des usagers, en leur évitant de fournir des
-						informations ou des documents que l'Administration détient déjà.
+						informations ou des documents que l&apos;Administration détient
+						déjà.
 					</h5>
 					<p>
 						<b>5 niveaux d’évaluation :</b>
