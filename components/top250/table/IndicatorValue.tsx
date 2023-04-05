@@ -12,7 +12,10 @@ type Props = {
 const acceptedSlugValues: IndicatorSlug[] = [
 	'online',
 	'satisfaction',
-	'handicap'
+	'handicap',
+	'simplicity',
+	'uptime',
+	'performance'
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
@@ -41,7 +44,10 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			</Link>
 		);
 
-	if (slug === 'handicap') return <>{value}</>;
+	if (slug === 'uptime') return <>{value}%</>;
+	if (slug === 'performance') return <>{parseInt(value) / 1000}s</>;
+	if (slug === 'simplicity') return <>{value} / 10</>;
+	if (slug === 'handicap') return <>{value}%</>;
 
 	return <></>;
 }

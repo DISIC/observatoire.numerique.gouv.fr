@@ -153,7 +153,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 					</p>
 					<p className={classes.indicatorContainer}>
 						<span className={cx(classes.label)}>
-							<IndicatorLabel label="Partiel" color="yellow" />
+							<IndicatorLabel label="Partielle" color="yellow" />
 						</span>
 						<span>Taux de conformité compris entre 50% à 99%</span>
 					</p>
