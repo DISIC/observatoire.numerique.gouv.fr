@@ -44,10 +44,12 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			</Link>
 		);
 
-	if (slug === 'uptime') return <>{value}%</>;
-	if (slug === 'performance') return <>{parseInt(value) / 1000}s</>;
-	if (slug === 'simplicity') return <>{value} / 10</>;
-	if (slug === 'handicap') return <>{value}%</>;
+	if (slug === 'uptime' && !isNaN(parseInt(value))) return <>{value}%</>;
+	if (slug === 'performance' && !isNaN(parseInt(value)))
+		return <>{parseInt(value) / 1000}s</>;
+	if (slug === 'simplicity' && !isNaN(parseInt(value)))
+		return <>{value} / 10</>;
+	if (slug === 'handicap' && !isNaN(parseInt(value))) return <>{value}%</>;
 
 	return <></>;
 }
