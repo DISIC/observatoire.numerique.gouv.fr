@@ -6,6 +6,7 @@ import { IndicatorLabel } from './IndicatorLabel';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
 import { useProcedureHeaders } from '@/utils/api';
+import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -98,8 +99,11 @@ export function ProceduresTable(props: Props) {
 										icon={pth.icon as FrIconClassName | RiIconClassName}
 										text={pth.label}
 										infos={{
-											content:
-												'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nisl, duis ac egestas donec tincidunt lorem. Sodales risus amet nisl sed. Vitae bibendum et penatibus a eget ipsum mattis pharetra. Diam molestie vitae, diam, sed tincidunt facilisi. Arcu faucibus mattis varius pretium. Duis ullamcorper malesuada massa ipsum sit. Ornare donec sit lobortis nullam dictum ullamcorper ac. Congue erat lorem quam amet sagittis egestas lorem. Arcu, nisl, massa eu, a nulla fusce egestas vitae. Mi tortor, penatibus auctor in nisl enim velit pellentesque. Consectetur urna, eleifend non congue dolor adipiscing nec. Ipsum laoreet dui facilisis pellentesque lacus.',
+											content: (
+												<>
+													<ProcedureHeaderContent slug={pth.slug} />
+												</>
+											),
 											title: pth.label
 										}}
 									/>
