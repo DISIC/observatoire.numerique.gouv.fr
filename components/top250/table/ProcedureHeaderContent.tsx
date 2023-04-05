@@ -449,6 +449,13 @@ const useStyles = makeStyles()(theme => ({
 		display: 'flex',
 		['& > span:first-child']: {
 			flexShrink: 0
+		},
+
+		[fr.breakpoints.down('sm')]: {
+			flexDirection: 'column',
+			['& > span:first-child']: {
+				marginBottom: fr.spacing('2v')
+			}
 		}
 	},
 	moreInfos: {
