@@ -4,9 +4,10 @@ import {
 	fr
 } from '@codegouvfr/react-dsfr';
 import { createModal } from '@codegouvfr/react-dsfr/Modal';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Button } from '@codegouvfr/react-dsfr/Button';
+import { Modal } from '@/components/generic/Modal';
 
 type Props = {
 	icon: FrIconClassName | RiIconClassName;
@@ -21,14 +22,16 @@ export function ColumnHeaderDefinition(props: Props) {
 	const { icon, text, infos } = props;
 	const { classes, cx } = useStyles();
 
-	const { InfosModal, infosModalButtonProps } = createModal({
-		name: 'infos',
-		isOpenedByDefault: false
-	});
+	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	return (
 		<>
-			<Button className={cx(classes.root)} {...infosModalButtonProps}>
+			<Button
+				className={cx(classes.root)}
+				onClick={() => {
+					setOpenModal(true);
+				}}
+			>
 				<i className={cx(fr.cx(icon), classes.mainIcon)} />
 				<span role="text" className={cx(classes.text)}>
 					{text}{' '}
@@ -40,18 +43,22 @@ export function ColumnHeaderDefinition(props: Props) {
 					/>
 				</span>
 			</Button>
-			<InfosModal
-				className={cx(classes.modal)}
-				title={infos.title}
-				buttons={[
-					{
-						onClick: () => console.log('en savoir plus clicked'),
-						children: 'En savoir plus'
-					}
-				]}
-			>
-				{infos.content}
-			</InfosModal>
+			{openModal && (
+				<Modal
+					title={infos.title}
+					buttons={[
+						{
+							onClick: () => setOpenModal(false),
+							children: 'En savoir plus'
+						}
+					]}
+					onClose={() => {
+						setOpenModal(false);
+					}}
+				>
+					{infos.content}
+				</Modal>
+			)}
 		</>
 	);
 }
@@ -103,8 +110,5 @@ const useStyles = makeStyles()(theme => ({
 		['&::before']: {
 			'--icon-size': fr.typography[18].style.fontSize
 		}
-	},
-	modal: {
-		textAlign: 'left'
 	}
 }));
