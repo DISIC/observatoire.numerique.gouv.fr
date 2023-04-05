@@ -19,8 +19,7 @@ const field_names = {
 		simplicity: '[Dashlord] - JDMA note facilité',
 		uptime: '🕶Taux de disponibilité',
 		performance: '🕶Temps de réponse (milliseconde)',
-		handicap:
-			'📊  Prise en compte handicaps (après prise en compte taux global)',
+		handicap: 'Taux global RGAA',
 		dlnuf: '📊  Dites-le nous une fois sans carrés',
 		usage: '🕶 Volumétrie en ligne',
 		auth: '📊  FranceConnect'
@@ -53,6 +52,7 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			if (isNaN(uptimeIntValue)) return 'En attente';
 			if (uptimeIntValue < 0.985) return 'Mauvaise';
 			if (uptimeIntValue < 0.99) return 'Moyenne';
+			return 'Très bonne';
 		case 'performance':
 			const performanceIntValue = parseInt(value);
 			if (isNaN(performanceIntValue)) return 'En attente';
@@ -67,10 +67,11 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			if (dlnufIntValue < 8) return 'Bon';
 			return 'Très bon';
 		case 'handicap':
-			const realValue = value.split(' ')[1];
-			if (['Oui', 'Non', 'En attente'].includes(realValue)) return realValue;
-			if (realValue === 'Partiel') return 'Partielle';
-			return 'Indéterminée';
+			const handicapIntValue = parseFloat(value);
+			if (isNaN(handicapIntValue)) return 'Indéterminée';
+			if (handicapIntValue < 0.5) return 'Non';
+			if (handicapIntValue < 1) return 'Partielle';
+			return 'Oui';
 		case 'usage':
 			const usageFloatValue = parseFloat(value);
 			if (isNaN(usageFloatValue)) return 'En attente';
@@ -126,8 +127,7 @@ const getColorFromLabel = (
 			else return 'green';
 		case 'handicap':
 			if (label === 'Oui') return 'green';
-			if (label === 'Partielle') return 'orange';
-			if (label === 'En attente') return 'blue';
+			if (label === 'Partielle') return 'yellow';
 			if (label === 'Non') return 'red';
 			else return 'gray';
 		case 'usage':
@@ -147,6 +147,7 @@ const getRoundedDecimalString = (value: string): string | null => {
 };
 
 const recordToProcedure = (record: any): ProcedureWithFields => {
+	console.log(record);
 	let fields: Field[] = [
 		{
 			id: 'preview',
@@ -201,7 +202,9 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					record.get(field_names.indicators.simplicity)
 				)
 			),
-			value: null,
+			value: getRoundedDecimalString(
+				record.get(field_names.indicators.simplicity)
+			),
 			procedureId: 'preview',
 			noBackground:
 				getLabelFromValue(
@@ -220,7 +223,9 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				'uptime',
 				getLabelFromValue('uptime', record.get(field_names.indicators.uptime))
 			),
-			value: null,
+			value: getRoundedDecimalString(
+				(record.get(field_names.indicators.uptime) * 100).toString()
+			),
 			procedureId: 'preview',
 			noBackground: false
 		},
@@ -238,7 +243,9 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					record.get(field_names.indicators.handicap)
 				)
 			),
-			value: null,
+			value: getRoundedDecimalString(
+				(record.get(field_names.indicators.handicap) * 100).toString()
+			),
 			procedureId: 'preview',
 			noBackground: false
 		},
@@ -315,7 +322,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					record.get(field_names.indicators.performance)
 				)
 			),
-			value: null,
+			value: record.get(field_names.indicators.performance),
 			procedureId: 'preview',
 			noBackground: null
 		},
