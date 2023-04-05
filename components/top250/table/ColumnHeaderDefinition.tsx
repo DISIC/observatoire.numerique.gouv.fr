@@ -49,7 +49,7 @@ export function ColumnHeaderDefinition(props: Props) {
 					buttons={[
 						{
 							onClick: () => setOpenModal(false),
-							children: 'En savoir plus'
+							children: 'Consulter toute la documentation'
 						}
 					]}
 					onClose={() => {

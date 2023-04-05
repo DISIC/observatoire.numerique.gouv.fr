@@ -79,8 +79,10 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	modal: {
-		width: 'calc(600% / 12)',
-		maxWidth: 'calc(600% / 12)',
+		width: 'calc(700% / 12)',
+		maxWidth: 'calc(700% / 12)',
+		maxHeight: '95vh',
+		overflowY: 'auto',
 		height: 'auto',
 		backgroundColor: theme.decisions.background.default.grey.default,
 		[fr.breakpoints.down('lg')]: {
