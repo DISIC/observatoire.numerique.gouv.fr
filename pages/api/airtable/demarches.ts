@@ -322,7 +322,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					record.get(field_names.indicators.performance)
 				)
 			),
-			value: record.get(field_names.indicators.performance),
+			value: record.get(field_names.indicators.performance).toString(),
 			procedureId: 'preview',
 			noBackground: null
 		},
