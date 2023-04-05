@@ -87,7 +87,8 @@ const useStyles = makeStyles()(theme => ({
 		backgroundColor: theme.decisions.background.default.grey.default,
 		[fr.breakpoints.down('lg')]: {
 			width: '100%',
-			maxWidth: '100%'
+			maxWidth: '100%',
+			maxHeight: '80vh'
 		}
 	},
 	modalHeader: {
