@@ -147,7 +147,6 @@ const getRoundedDecimalString = (value: string): string | null => {
 };
 
 const recordToProcedure = (record: any): ProcedureWithFields => {
-	console.log(record);
 	let fields: Field[] = [
 		{
 			id: 'preview',
@@ -322,7 +321,9 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					record.get(field_names.indicators.performance)
 				)
 			),
-			value: record.get(field_names.indicators.performance).toString(),
+			value: parseInt(
+				record.get(field_names.indicators.performance)
+			).toString(),
 			procedureId: 'preview',
 			noBackground: null
 		},
