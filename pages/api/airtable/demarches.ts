@@ -36,7 +36,7 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			if (isNaN(satisfactionIntValue)) {
 				if (value === 'Nombre insuffisant d’avis')
 					return "Nombre d'avis insuffisant";
-				if (value === 'En attente') return 'En attente';
+				if (value === 'En attente') return 'À venir';
 			}
 			if (satisfactionIntValue < 5) return 'Mauvaise';
 			if (satisfactionIntValue < 8) return 'Moyenne';
@@ -49,13 +49,13 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			return 'Très bonne';
 		case 'uptime':
 			const uptimeIntValue = parseFloat(value);
-			if (isNaN(uptimeIntValue)) return 'En attente';
+			if (isNaN(uptimeIntValue)) return 'À venir';
 			if (uptimeIntValue < 0.985) return 'Mauvaise';
 			if (uptimeIntValue < 0.99) return 'Moyenne';
 			return 'Très bonne';
 		case 'performance':
 			const performanceIntValue = parseInt(value);
-			if (isNaN(performanceIntValue)) return 'En attente';
+			if (isNaN(performanceIntValue)) return 'À venir';
 			if (performanceIntValue > 800) return 'Lent';
 			if (performanceIntValue > 400) return 'Moyen';
 			return 'Très rapide';
@@ -74,7 +74,7 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 			return 'Oui';
 		case 'usage':
 			const usageFloatValue = parseFloat(value);
-			if (isNaN(usageFloatValue)) return 'En attente';
+			if (isNaN(usageFloatValue)) return 'À venir';
 			if (usageFloatValue < 0.4) return 'Faible';
 			if (usageFloatValue < 0.75) return 'Moyenne';
 			if (usageFloatValue < 1) return 'Élevée';
@@ -82,7 +82,7 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 		case 'auth':
 			if (['FranceConnect', 'FranceConnect +', 'Non'].includes(value))
 				return value;
-			return 'En attente';
+			return 'À venir';
 		default:
 			return value;
 	}
@@ -101,7 +101,7 @@ const getColorFromLabel = (
 			else return 'red';
 		case 'satisfaction':
 			if (label === "Nombre d'avis insuffisant") return 'gray';
-			if (label === 'En attente') return 'blue';
+			if (label === 'À venir') return 'blue';
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 			else return 'green';
@@ -110,12 +110,12 @@ const getColorFromLabel = (
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 		case 'uptime':
-			if (label === 'En attente') return 'gray';
+			if (label === 'À venir') return 'gray';
 			if (label === 'Moyenne') return 'orange';
 			if (label === 'Mauvaise') return 'red';
 			else return 'green';
 		case 'performance':
-			if (label === 'En attente') return 'gray';
+			if (label === 'À venir') return 'gray';
 			if (label === 'Moyen') return 'orange';
 			if (label === 'Lent') return 'red';
 			else return 'green';
@@ -133,7 +133,7 @@ const getColorFromLabel = (
 		case 'usage':
 			return 'gray';
 		case 'auth':
-			if (label === 'En attente') return 'gray';
+			if (label === 'À venir') return 'gray';
 			if (label === 'Non') return 'red';
 			return 'blue';
 		default:
@@ -292,7 +292,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'help_reachable',
-			label: 'Bientôt disponible',
+			label: 'À venir',
 			color: 'gray',
 			value: null,
 			procedureId: 'preview',
@@ -301,7 +301,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'help_used',
-			label: 'Bientôt disponible',
+			label: 'À venir',
 			color: 'gray',
 			value: null,
 			procedureId: 'preview',
