@@ -17,15 +17,18 @@ type Props = {
 		title: string;
 		content: ReactNode;
 	};
+	isMobile?: boolean;
 };
 
 export function ColumnHeaderDefinition(props: Props) {
-	const { icon, text, infos } = props;
+	const { icon, text, infos, isMobile } = props;
 	const { classes, cx } = useStyles();
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	const getDisplayedText = (children: ReactNode): ReactNode => {
+		if (isMobile) return children;
+
 		let childrenArray = React.Children.toArray(children) as ReactNode[];
 
 		if (typeof children === 'string') {
