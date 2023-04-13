@@ -109,7 +109,9 @@ const useStyles = makeStyles()(theme => ({
 	},
 	fields: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		paddingTop: fr.spacing('2v'),
+		paddingBottom: fr.spacing('2v')
 	},
 	field: {
 		position: 'relative',

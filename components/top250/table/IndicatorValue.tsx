@@ -24,12 +24,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 
 	if (slug === 'online' && typeof value === 'string')
 		return (
-			<a
-				href={value}
-				className={classes.hideMobile}
-				target="_blank"
-				rel="noreferrer"
-			>
+			<a href={value} target="_blank" rel="noreferrer">
 				Voir le service
 			</a>
 		);
@@ -38,7 +33,6 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		return (
 			<Link
 				href={`https://observatoire.numerique.gouv.fr/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
-				className={classes.hideMobile}
 			>
 				{value.toString().replace('.', ',')} / 10
 			</Link>
@@ -81,16 +75,11 @@ const useStyles = makeStyles()(theme => ({
 			margin: 0
 		},
 		[fr.breakpoints.down('lg')]: {
-			display: 'inline',
 			position: 'relative',
+			top: 0,
 			left: 0,
-			zIndex: 1,
-			marginTop: 0,
-			marginLeft: fr.spacing('2v'),
-			transform: 'translateX(0)'
+			transform: 'translateX(0)',
+			marginTop: fr.spacing('2v')
 		}
-	},
-	hideMobile: {
-		[fr.breakpoints.down('lg')]: { display: 'none' }
 	}
 }));

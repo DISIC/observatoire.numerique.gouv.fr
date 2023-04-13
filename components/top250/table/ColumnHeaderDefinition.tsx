@@ -108,13 +108,13 @@ const useStyles = makeStyles()(theme => ({
 		},
 		[fr.breakpoints.down('lg')]: {
 			minHeight: 0,
-			paddingBottom: `${fr.spacing('7v')} !important`,
-			marginBottom: `-${fr.spacing('7v')}`,
 			justifyContent: 'start',
 			alignItems: 'start',
 			padding: 0,
 			position: 'relative',
-			zIndex: 1
+			zIndex: 1,
+			marginTop: 0,
+			marginBottom: 0
 		}
 	},
 	text: {
@@ -131,7 +131,10 @@ const useStyles = makeStyles()(theme => ({
 	},
 	informationIcon: {
 		['&::before']: {
-			'--icon-size': fr.typography[18].style.fontSize
+			'--icon-size': fr.typography[18].style.fontSize,
+			[fr.breakpoints.down('lg')]: {
+				marginLeft: fr.spacing('1v')
+			}
 		}
 	}
 }));
