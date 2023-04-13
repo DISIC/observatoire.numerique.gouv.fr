@@ -70,7 +70,16 @@ export function ProceduresTable(props: Props) {
 		isLoading
 	} = useProcedureHeaders();
 	if (isError) return <div>Une erreur est survenue.</div>;
-	if (isLoading) return <div>Chargement du tableau ...</div>;
+	if (isLoading)
+		return (
+			<div className={cx(classes.loader)}>
+				<div>
+					<i className={fr.cx('ri-loader-4-line')} />
+				</div>
+
+				<p className={fr.cx('fr-pt-4v')}>Chargement du tableau...</p>
+			</div>
+		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
 	const handleScrollX = (tmpIsRight: boolean) => {
@@ -374,6 +383,21 @@ const useStyles = makeStyles()(theme => {
 			backgroundColor: `${theme.decisions.background.contrast.info.default} !important`,
 			width: _arrowSlideSize,
 			position: 'relative'
+		},
+		loader: {
+			padding: fr.spacing('30v'),
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			justifyContent: 'center',
+			i: {
+				display: 'inline-block',
+				animation: 'spin 1s linear infinite;',
+				color: theme.decisions.background.actionHigh.blueFrance.default,
+				['&::before']: {
+					'--icon-size': '2rem'
+				}
+			}
 		}
 	};
 });

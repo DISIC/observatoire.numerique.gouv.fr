@@ -16,50 +16,38 @@ type Props = {
 export function Top250TableSection(props: Props) {
 	const { procedures, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
-	const numberPerPage = 20;
+	const numberPerPage = isAdmin ? 50 : 100;
 
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
-	const displayedProceduresRef = useRef(displayedProcedures);
+
+	const loadAllProcedures = () => {
+		if (!procedures) return;
+
+		const futureLength = displayedProcedures.length + numberPerPage;
+		setDisplayedProcedures([
+			...displayedProcedures,
+			...procedures.slice(displayedProcedures.length, futureLength)
+		]);
+	};
 
 	useEffect(() => {
-		displayedProceduresRef.current = displayedProcedures;
+		if (
+			!!displayedProcedures.length &&
+			!!procedures &&
+			displayedProcedures.length < procedures.length
+		)
+			setTimeout(() => {
+				loadAllProcedures();
+			}, 200);
 	}, [displayedProcedures]);
 
 	useEffect(() => {
 		if (procedures && procedures.length) {
-			setDisplayedProcedures(procedures.slice(0, numberPerPage));
+			loadAllProcedures();
 		}
 	}, [procedures]);
-
-	const handleScroll = () => {
-		const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-		const currentDisplayedProcedures = displayedProceduresRef.current;
-		if (
-			scrollTop + clientHeight >= scrollHeight - 1500 &&
-			procedures &&
-			procedures.length !== currentDisplayedProcedures.length
-		) {
-			setDisplayedProcedures([
-				...currentDisplayedProcedures,
-				...procedures.slice(
-					currentDisplayedProcedures.length,
-					currentDisplayedProcedures.length + numberPerPage
-				)
-			]);
-		}
-	};
-
-	useEffect(() => {
-		setTimeout(() => {
-			window.addEventListener('scroll', handleScroll);
-		}, 200);
-
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-		};
-	}, []);
 
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
