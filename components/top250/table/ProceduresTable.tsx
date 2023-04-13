@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
 import { useProcedureHeaders } from '@/utils/api';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
+import { getDisplayedVolume } from '@/utils/tools';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -150,12 +151,16 @@ export function ProceduresTable(props: Props) {
 								<div>
 									<span>{p.title}</span>
 									<br />
-									<div className={fr.cx('fr-text--sm', 'fr-mt-2v', 'fr-mb-0')}>
+									<div className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}>
 										{p.ministere}
 									</div>
 									<span className={fr.cx('fr-text--sm')}>
 										{p.administration}
 									</span>
+									<div className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}>
+										Volumétrie en ligne :{' '}
+										{p.volume && getDisplayedVolume(p.volume)}
+									</div>
 								</div>
 							</td>
 							{proceduresTableHeaders.map((pth, index) => {

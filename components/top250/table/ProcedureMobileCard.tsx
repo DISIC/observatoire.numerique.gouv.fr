@@ -8,6 +8,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { ProcedureHeader } from '@prisma/client';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
+import { getDisplayedVolume } from '@/utils/tools';
 
 type Props = {
 	procedure: ProcedureWithFields;
@@ -28,7 +29,7 @@ export function ProcedureMobileCard(props: Props) {
 					<div>{procedure.ministere}</div>
 					{procedure.volume && (
 						<div className={fr.cx('fr-mt-3v')}>
-							Total d&apos;utilisateur annuel : {procedure.volume}
+							Volumétrie en ligne : {getDisplayedVolume(procedure.volume)}
 						</div>
 					)}
 				</div>

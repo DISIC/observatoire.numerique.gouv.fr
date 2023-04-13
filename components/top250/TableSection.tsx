@@ -22,14 +22,18 @@ export function Top250TableSection(props: Props) {
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
 
-	const loadAllProcedures = () => {
+	const loadAllProcedures = (loadMore: boolean) => {
 		if (!procedures) return;
 
-		const futureLength = displayedProcedures.length + numberPerPage;
-		setDisplayedProcedures([
-			...displayedProcedures,
-			...procedures.slice(displayedProcedures.length, futureLength)
-		]);
+		if (loadMore) {
+			const futureLength = displayedProcedures.length + numberPerPage;
+			setDisplayedProcedures([
+				...displayedProcedures,
+				...procedures.slice(displayedProcedures.length, futureLength)
+			]);
+		} else {
+			setDisplayedProcedures([...procedures.slice(0, numberPerPage)]);
+		}
 	};
 
 	useEffect(() => {
@@ -39,13 +43,13 @@ export function Top250TableSection(props: Props) {
 			displayedProcedures.length < procedures.length
 		)
 			setTimeout(() => {
-				loadAllProcedures();
-			}, 200);
+				loadAllProcedures(true);
+			}, 100);
 	}, [displayedProcedures]);
 
 	useEffect(() => {
 		if (procedures && procedures.length) {
-			loadAllProcedures();
+			loadAllProcedures(false);
 		}
 	}, [procedures]);
 
