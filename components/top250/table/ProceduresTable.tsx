@@ -40,7 +40,7 @@ export function ProceduresTable(props: Props) {
 		if (stickyHeaderRef.current) {
 			stickyHeaderRef.current.addEventListener('scroll', headerScrollContent);
 		}
-	}, []);
+	}, [stickyHeaderRef.current, scrollRef.current]);
 
 	useLayoutEffect(() => {
 		const fixedHeader = () => {
@@ -52,6 +52,9 @@ export function ProceduresTable(props: Props) {
 				if (!isFixed && fixedTop < 0) {
 					stickyHeaderRef.current?.classList.add('sticked-row');
 					tableRef.current?.classList.add('table-has-sticked-row');
+					if (stickyHeaderRef.current && scrollRef.current) {
+						stickyHeaderRef.current.scrollLeft = scrollRef.current.scrollLeft;
+					}
 				} else if (isFixed && tableTop > 0) {
 					stickyHeaderRef.current?.classList.remove('sticked-row');
 					tableRef.current?.classList.remove('table-has-sticked-row');
