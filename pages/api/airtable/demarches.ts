@@ -96,7 +96,7 @@ const getColorFromLabel = (
 		case 'online':
 			if (label === 'Oui') return 'green';
 			else if (label === 'Partiel') return 'orange';
-			else if (label === 'Bêta') return 'yellow';
+			else if (label === 'Bêta') return 'orange';
 			else if (label === 'En cours') return 'blue';
 			else return 'red';
 		case 'satisfaction':
@@ -121,13 +121,13 @@ const getColorFromLabel = (
 			else return 'green';
 		case 'dlnuf':
 			if (label === 'Non communiqué') return 'gray';
-			if (label === 'Bon') return 'yellow';
+			if (label === 'Bon') return 'orange';
 			if (label === 'Moyen') return 'orange';
 			if (label === 'Mauvais') return 'red';
 			else return 'green';
 		case 'handicap':
 			if (label === 'Oui') return 'green';
-			if (label === 'Partielle') return 'yellow';
+			if (label === 'Partielle') return 'orange';
 			if (label === 'Non') return 'red';
 			else return 'gray';
 		case 'usage':
