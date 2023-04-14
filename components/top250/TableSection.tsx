@@ -16,50 +16,42 @@ type Props = {
 export function Top250TableSection(props: Props) {
 	const { procedures, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
-	const numberPerPage = 20;
+	const numberPerPage = isAdmin ? 50 : 100;
 
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
-	const displayedProceduresRef = useRef(displayedProcedures);
 
-	useEffect(() => {
-		displayedProceduresRef.current = displayedProcedures;
-	}, [displayedProcedures]);
+	const loadAllProcedures = (loadMore: boolean) => {
+		if (!procedures) return;
 
-	useEffect(() => {
-		if (procedures && procedures.length) {
-			setDisplayedProcedures(procedures.slice(0, numberPerPage));
-		}
-	}, [procedures]);
-
-	const handleScroll = () => {
-		const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-		const currentDisplayedProcedures = displayedProceduresRef.current;
-		if (
-			scrollTop + clientHeight >= scrollHeight - 1500 &&
-			procedures &&
-			procedures.length !== currentDisplayedProcedures.length
-		) {
+		if (loadMore) {
+			const futureLength = displayedProcedures.length + numberPerPage;
 			setDisplayedProcedures([
-				...currentDisplayedProcedures,
-				...procedures.slice(
-					currentDisplayedProcedures.length,
-					currentDisplayedProcedures.length + numberPerPage
-				)
+				...displayedProcedures,
+				...procedures.slice(displayedProcedures.length, futureLength)
 			]);
+		} else {
+			setDisplayedProcedures([...procedures.slice(0, numberPerPage)]);
 		}
 	};
 
 	useEffect(() => {
-		setTimeout(() => {
-			window.addEventListener('scroll', handleScroll);
-		}, 200);
+		if (
+			!!displayedProcedures.length &&
+			!!procedures &&
+			displayedProcedures.length < procedures.length
+		)
+			setTimeout(() => {
+				loadAllProcedures(true);
+			}, 100);
+	}, [displayedProcedures]);
 
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-		};
-	}, []);
+	useEffect(() => {
+		if (procedures && procedures.length) {
+			loadAllProcedures(false);
+		}
+	}, [procedures]);
 
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {

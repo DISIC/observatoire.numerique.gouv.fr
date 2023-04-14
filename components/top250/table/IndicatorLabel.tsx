@@ -39,6 +39,7 @@ const useStyles = makeStyles()(theme => ({
 		[fr.breakpoints.down('lg')]: {
 			fontSize: fr.typography[17].style.fontSize,
 			position: 'relative',
+			top: fr.spacing('1v'),
 			zIndex: 1
 		}
 	},

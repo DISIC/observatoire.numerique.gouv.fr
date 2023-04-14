@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
 import { useProcedureHeaders } from '@/utils/api';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
+import { getDisplayedVolume } from '@/utils/tools';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -40,7 +41,7 @@ export function ProceduresTable(props: Props) {
 		if (stickyHeaderRef.current) {
 			stickyHeaderRef.current.addEventListener('scroll', headerScrollContent);
 		}
-	}, []);
+	}, [stickyHeaderRef.current, scrollRef.current]);
 
 	useLayoutEffect(() => {
 		const fixedHeader = () => {
@@ -52,6 +53,9 @@ export function ProceduresTable(props: Props) {
 				if (!isFixed && fixedTop < 0) {
 					stickyHeaderRef.current?.classList.add('sticked-row');
 					tableRef.current?.classList.add('table-has-sticked-row');
+					if (stickyHeaderRef.current && scrollRef.current) {
+						stickyHeaderRef.current.scrollLeft = scrollRef.current.scrollLeft;
+					}
 				} else if (isFixed && tableTop > 0) {
 					stickyHeaderRef.current?.classList.remove('sticked-row');
 					tableRef.current?.classList.remove('table-has-sticked-row');
@@ -67,7 +71,16 @@ export function ProceduresTable(props: Props) {
 		isLoading
 	} = useProcedureHeaders();
 	if (isError) return <div>Une erreur est survenue.</div>;
-	if (isLoading) return <div>Chargement du tableau ...</div>;
+	if (isLoading)
+		return (
+			<div className={cx(classes.loader)}>
+				<div>
+					<i className={fr.cx('ri-loader-4-line')} />
+				</div>
+
+				<p className={fr.cx('fr-pt-4v')}>Chargement du tableau...</p>
+			</div>
+		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
 	const handleScrollX = (tmpIsRight: boolean) => {
@@ -138,12 +151,16 @@ export function ProceduresTable(props: Props) {
 								<div>
 									<span>{p.title}</span>
 									<br />
-									<div className={fr.cx('fr-text--sm', 'fr-mt-2v', 'fr-mb-0')}>
+									<div className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}>
 										{p.ministere}
 									</div>
 									<span className={fr.cx('fr-text--sm')}>
 										{p.administration}
 									</span>
+									<div className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}>
+										Volumétrie en ligne :{' '}
+										{p.volume && getDisplayedVolume(p.volume)}
+									</div>
 								</div>
 							</td>
 							{proceduresTableHeaders.map((pth, index) => {
@@ -371,6 +388,21 @@ const useStyles = makeStyles()(theme => {
 			backgroundColor: `${theme.decisions.background.contrast.info.default} !important`,
 			width: _arrowSlideSize,
 			position: 'relative'
+		},
+		loader: {
+			padding: fr.spacing('30v'),
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			justifyContent: 'center',
+			i: {
+				display: 'inline-block',
+				animation: 'spin 1s linear infinite;',
+				color: theme.decisions.background.actionHigh.blueFrance.default,
+				['&::before']: {
+					'--icon-size': '2rem'
+				}
+			}
 		}
 	};
 });

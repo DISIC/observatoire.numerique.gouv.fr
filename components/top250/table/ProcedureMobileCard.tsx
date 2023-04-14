@@ -8,6 +8,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { ProcedureHeader } from '@prisma/client';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
+import { getDisplayedVolume } from '@/utils/tools';
 
 type Props = {
 	procedure: ProcedureWithFields;
@@ -28,47 +29,39 @@ export function ProcedureMobileCard(props: Props) {
 					<div>{procedure.ministere}</div>
 					{procedure.volume && (
 						<div className={fr.cx('fr-mt-3v')}>
-							Total d&apos;utilisateur annuel : {procedure.volume}
+							Volumétrie en ligne : {getDisplayedVolume(procedure.volume)}
 						</div>
 					)}
 				</div>
 			</div>
 			<hr className={fr.cx('fr-pb-1v', 'fr-mt-3v')} />
 			<TransitionGroup className={cx(classes.fields)}>
-				{procedure.fields
+				{proceduresTableHeaders
 					.map(f => ({ ...f, nodeRef: createRef<HTMLDivElement>() }))
-					.map((field, index) => {
-						const procedureHeader = proceduresTableHeaders.find(
-							pth => pth.slug === field.slug
-						);
+					.map((pth, index) => {
+						const field = procedure.fields.find(f => pth.slug === f.slug);
+
+						if (!field) return <></>;
+
 						const canBeSeen = index <= 4 || toogleSwitch;
 						return (
 							canBeSeen && (
 								<CSSTransition
-									nodeRef={field.nodeRef}
+									nodeRef={pth.nodeRef}
 									timeout={300}
 									key={field.slug}
 									classNames={classes.fieldTransition}
 								>
-									<div className={cx(classes.field)} ref={field.nodeRef}>
-										{procedureHeader && (
-											<ColumnHeaderDefinition
-												icon={
-													procedureHeader.icon as
-														| FrIconClassName
-														| RiIconClassName
-												}
-												text={procedureHeader.label}
-												infos={{
-													content: (
-														<ProcedureHeaderContent
-															slug={procedureHeader.slug}
-														/>
-													),
-													title: procedureHeader.label
-												}}
-											/>
-										)}
+									<div className={cx(classes.field)} ref={pth.nodeRef}>
+										<ColumnHeaderDefinition
+											icon={pth.icon as FrIconClassName | RiIconClassName}
+											text={pth.label}
+											infos={{
+												content: <ProcedureHeaderContent slug={pth.slug} />,
+												title: pth.label
+											}}
+											isMobile
+										/>
 										<IndicatorLabel {...field} />
 										{field.value && (
 											<IndicatorValue
@@ -117,7 +110,9 @@ const useStyles = makeStyles()(theme => ({
 	},
 	fields: {
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		paddingTop: fr.spacing('2v'),
+		paddingBottom: fr.spacing('2v')
 	},
 	field: {
 		position: 'relative',

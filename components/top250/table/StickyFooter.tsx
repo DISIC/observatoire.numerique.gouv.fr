@@ -56,6 +56,7 @@ const useStyles = makeStyles()(theme => ({
 		display: 'flex',
 		justifyContent: 'space-between',
 		padding: `${fr.spacing('3v')} ${fr.spacing('8v')}`,
+		paddingLeft: 0,
 		backgroundColor: theme.decisions.background.actionLow.blueFrance.default,
 		[fr.breakpoints.down('lg')]: {
 			backgroundColor: theme.decisions.background.default.grey.default
@@ -66,6 +67,10 @@ const useStyles = makeStyles()(theme => ({
 		alignItems: 'center',
 		fontWeight: 500,
 		marginBottom: 0,
+		paddingLeft:
+			window.innerWidth > 1400
+				? 'calc((100vw - 1400px) / 2)'
+				: fr.spacing('8v'),
 		[fr.breakpoints.down('lg')]: { display: 'none' }
 	},
 	rightSection: {

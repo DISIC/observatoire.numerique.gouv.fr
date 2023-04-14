@@ -15,7 +15,8 @@ const acceptedSlugValues: IndicatorSlug[] = [
 	'handicap',
 	'simplicity',
 	'uptime',
-	'performance'
+	'performance',
+	'usage'
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
@@ -24,12 +25,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 
 	if (slug === 'online' && typeof value === 'string')
 		return (
-			<a
-				href={value}
-				className={classes.hideMobile}
-				target="_blank"
-				rel="noreferrer"
-			>
+			<a href={value} target="_blank" rel="noreferrer">
 				Voir le service
 			</a>
 		);
@@ -38,13 +34,14 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		return (
 			<Link
 				href={`https://observatoire.numerique.gouv.fr/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
-				className={classes.hideMobile}
 			>
 				{value.toString().replace('.', ',')} / 10
 			</Link>
 		);
 
 	if (slug === 'uptime' && !isNaN(parseInt(value))) return <>{value}%</>;
+	if (slug === 'usage' && !isNaN(parseFloat(value)))
+		return <>{Math.round(parseFloat(value) * 1000) / 10}%</>;
 	if (slug === 'performance' && !isNaN(parseInt(value)))
 		return <>{parseInt(value) / 1000}s</>;
 	if (slug === 'simplicity' && !isNaN(parseInt(value)))
@@ -81,16 +78,11 @@ const useStyles = makeStyles()(theme => ({
 			margin: 0
 		},
 		[fr.breakpoints.down('lg')]: {
-			display: 'inline',
 			position: 'relative',
+			top: 0,
 			left: 0,
-			zIndex: 1,
-			marginTop: 0,
-			marginLeft: fr.spacing('2v'),
-			transform: 'translateX(0)'
+			transform: 'translateX(0)',
+			marginTop: fr.spacing('2v')
 		}
-	},
-	hideMobile: {
-		[fr.breakpoints.down('lg')]: { display: 'none' }
 	}
 }));
