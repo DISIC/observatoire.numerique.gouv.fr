@@ -285,7 +285,10 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 					).toString()
 				)
 			),
-			value: null,
+			value: (
+				parseInt(record.get(field_names.indicators.usage)) /
+				parseInt(record.get(field_names.volume))
+			).toString(),
 			procedureId: 'preview',
 			noBackground: null
 		},

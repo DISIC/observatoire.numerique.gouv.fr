@@ -15,7 +15,8 @@ const acceptedSlugValues: IndicatorSlug[] = [
 	'handicap',
 	'simplicity',
 	'uptime',
-	'performance'
+	'performance',
+	'usage'
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
@@ -39,6 +40,8 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		);
 
 	if (slug === 'uptime' && !isNaN(parseInt(value))) return <>{value}%</>;
+	if (slug === 'usage' && !isNaN(parseFloat(value)))
+		return <>{Math.round(parseFloat(value) * 1000) / 10}%</>;
 	if (slug === 'performance' && !isNaN(parseInt(value)))
 		return <>{parseInt(value) / 1000}s</>;
 	if (slug === 'simplicity' && !isNaN(parseInt(value)))
