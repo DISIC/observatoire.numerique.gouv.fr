@@ -60,13 +60,13 @@ export const ProcedureHeaderContent = (props: Props) => {
 							bénéficiaires de la démarche.
 						</span>
 					</p>
-					<p className={classes.moreInfos}>
+					<div className={classes.moreInfos}>
 						<b>Nombre insuffisant d’avis</b>
 						<p>
 							La démarche n’a pas encore recueilli le minimum de 100 avis
 							d’usagers pour que le calcul de cette note soit représentatif.
 						</p>
-					</p>
+					</div>
 				</div>
 			);
 			break;
@@ -113,13 +113,13 @@ export const ProcedureHeaderContent = (props: Props) => {
 						</span>
 						<span>Le téléservice ne permet pas encore le recueil des avis</span>
 					</p>
-					<p className={classes.moreInfos}>
+					<div className={classes.moreInfos}>
 						<b>Nombre insuffisant d’avis</b>
 						<p>
 							La démarche n’a pas encore recueilli le minimum de 100 avis
 							d’usagers pour que le calcul de cette note soit représentatif.
 						</p>
-					</p>
+					</div>
 				</div>
 			);
 			break;
@@ -210,7 +210,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 							peuvent être également difficile à trouver pour l’usager.
 						</span>
 					</p>
-					<p className={cx(classes.moreInfos, classes.moreInfosBlue)}>
+					<div className={cx(classes.moreInfos, classes.moreInfosBlue)}>
 						<b>Démarches proactive</b>
 						<p>
 							L’administration a attribué automatiquement les droits aux
@@ -218,7 +218,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 							l’usager. L’administration a fourni 100% des informations
 							nécessaires pour mettre en place le service pour l’usager.
 						</p>
-					</p>
+					</div>
 				</div>
 			);
 			break;
@@ -340,13 +340,13 @@ export const ProcedureHeaderContent = (props: Props) => {
 							en ligne, etc.)
 						</span>
 					</p>
-					<p className={cx(classes.moreInfos)}>
+					<div className={cx(classes.moreInfos)}>
 						<b>Nombre insuffisant d’avis</b>
 						<p>
 							La démarche n’a pas encore recueilli le minimum de 100 avis
 							d’usagers pour que le calcul de cette note soit représentatif.
 						</p>
-					</p>
+					</div>
 				</div>
 			);
 			break;
@@ -417,13 +417,13 @@ export const ProcedureHeaderContent = (props: Props) => {
 							en ligne, etc.)
 						</span>
 					</p>
-					<p className={classes.moreInfos}>
+					<div className={classes.moreInfos}>
 						<b>Nombre insuffisant d’avis</b>
 						<p>
 							La démarche n’a pas encore recueilli le minimum de 100 avis
 							d’usagers pour que le calcul de cette note soit représentatif.
 						</p>
-					</p>
+					</div>
 				</div>
 			);
 			break;

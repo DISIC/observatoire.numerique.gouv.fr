@@ -49,7 +49,7 @@ export const Modal = (props: Props) => {
 						</div>
 						<div className={cx(classes.modalContent)}>
 							<h1 id={`fr-modal-title-${rNumber}`}>{title}</h1>
-							<p>{children}</p>
+							<div>{children}</div>
 						</div>
 						<div className={cx(classes.modalFooter)}>
 							{buttons.map((b, index) => (
@@ -126,6 +126,9 @@ const useStyles = makeStyles()(theme => ({
 	modalContent: {
 		paddingLeft: fr.spacing('8v'),
 		paddingRight: fr.spacing('8v'),
+		h1: {
+			...fr.typography[2].style
+		},
 		[fr.breakpoints.down('lg')]: {
 			paddingLeft: fr.spacing('4v'),
 			paddingRight: fr.spacing('4v')
