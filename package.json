@@ -40,6 +40,7 @@
 		"airtable": "^0.11.6",
 		"eslint": "8.33.0",
 		"eslint-config-next": "13.1.6",
+		"focus-trap-react": "^10.1.1",
 		"next": "13.1.6",
 		"next-auth": "^4.20.1",
 		"react": "18.2.0",

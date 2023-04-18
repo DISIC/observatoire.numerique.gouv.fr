@@ -56,11 +56,11 @@ export function Top250TableSection(props: Props) {
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
 			return (
-				<div className={classes.noProcedure}>
+				<p className={classes.noProcedure} role="status">
 					{search
 						? 'Aucune démarche trouvée pour cette recherche...'
 						: 'Aucune démarche pour cette édition...'}
-				</div>
+				</p>
 			);
 		}
 

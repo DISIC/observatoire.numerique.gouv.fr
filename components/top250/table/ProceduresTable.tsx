@@ -107,7 +107,7 @@ export function ProceduresTable(props: Props) {
 						<th></th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
-								<th key={pth.label}>
+								<th key={pth.label} scope="col">
 									<ColumnHeaderDefinition
 										icon={pth.icon as FrIconClassName | RiIconClassName}
 										text={pth.label}
@@ -147,7 +147,7 @@ export function ProceduresTable(props: Props) {
 				<tbody>
 					{procedures.map(p => (
 						<tr key={p.id}>
-							<td>
+							<td scope="row">
 								<div>
 									<span>{p.title}</span>
 									<br />
