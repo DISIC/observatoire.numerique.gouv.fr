@@ -5,10 +5,10 @@ import { Field, IndicatorColor, IndicatorSlug } from '@prisma/client';
 import { getToken } from 'next-auth/jwt';
 
 const field_names = {
-	edition: '📡 Édition',
-	id: '🕶 ID',
+	edition: 'Lien vers statistiques édition',
+	id: 'ID',
 	link: 'Lien',
-	title: 'Nom 💼 📄',
+	title: 'Nom de la démarche / projet',
 	administration: 'Administration',
 	sousorg: 'Ministère opérationnel',
 	ministere: 'Ministère politique',
@@ -17,18 +17,19 @@ const field_names = {
 		online: '📊  En ligne',
 		satisfaction: '[Dashlord] - JDMA note satisfaction',
 		simplicity: '[Dashlord] - JDMA note facilité',
-		uptime: '🕶Taux de disponibilité',
-		performance: '🕶Temps de réponse (milliseconde)',
+		uptime: '2️⃣ Taux de disponibilité',
+		performance: '2️⃣ Temps moyen de chargement',
 		handicap: 'Taux global RGAA',
 		dlnuf: '📊  Dites-le nous une fois sans carrés',
-		usage: '🕶 Volumétrie en ligne',
-		auth: '📊  FranceConnect'
+		usage: 'Volumétrie en ligne',
+		auth: '2️⃣ FranceConnect'
 	}
 };
 const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 	switch (slug) {
 		case 'online':
 			if (['Oui', 'Non', 'Partiel', 'Bêta'].includes(value)) return value;
+			if (['En attente', 'A tester'].includes(value)) return 'En attente';
 			if (value === 'En cours de déploiement local') return 'En cours';
 			return 'Non';
 		case 'satisfaction':
@@ -82,6 +83,7 @@ const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
 		case 'auth':
 			if (['FranceConnect', 'FranceConnect +', 'Non'].includes(value))
 				return value;
+			if (['n/a', '-'].includes(value)) return 'Non applicable';
 			return 'À venir';
 		default:
 			return value;
@@ -133,7 +135,7 @@ const getColorFromLabel = (
 		case 'usage':
 			return 'gray';
 		case 'auth':
-			if (label === 'À venir') return 'gray';
+			if (['À venir', 'Non applicable'].includes(label)) return 'gray';
 			if (label === 'Non') return 'red';
 			return 'blue';
 		default:
