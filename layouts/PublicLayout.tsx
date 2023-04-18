@@ -109,7 +109,7 @@ const PublicLayout = (props: Props) => {
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
 			/>
-			{children}
+			<main>{children}</main>
 			<SocialNetworks />
 			<CustomFooter />
 			<Display />
