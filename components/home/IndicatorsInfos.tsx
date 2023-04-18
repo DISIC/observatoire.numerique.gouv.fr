@@ -110,7 +110,7 @@ const useStyles = makeStyles()(theme => ({
 				flexDirection: 'column',
 				alignItems: 'center',
 				marginTop: fr.spacing('8v'),
-				['& > span:first-child']: {
+				['& > span:first-of-type']: {
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
@@ -123,7 +123,7 @@ const useStyles = makeStyles()(theme => ({
 						color: theme.decisions.background.actionHigh.blueFrance.default
 					}
 				},
-				['& > span:not(:first-child)']: {
+				['& > span:not(:first-of-type)']: {
 					maxWidth: fr.spacing('32v'),
 					textAlign: 'center',
 					color: theme.decisions.background.actionHigh.blueFrance.default,

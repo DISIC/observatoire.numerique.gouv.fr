@@ -237,7 +237,7 @@ const useStyles = makeStyles()(theme => {
 					['th:nth-child(2)']: {
 						borderTopLeftRadius: 0
 					},
-					['th:nth-child(-n + 5):not(:first-child)']: {
+					['th:nth-child(-n + 5):not(:first-of-type)']: {
 						minWidth: (_containerWidth - _firstColSize) / 5
 					},
 					['th:nth-child(n + 6)']: {
@@ -246,12 +246,12 @@ const useStyles = makeStyles()(theme => {
 					['th:last-child']: {
 						minWidth: _arrowSlideSize
 					},
-					['th:first-child']: {
+					['th:first-of-type']: {
 						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
 						minWidth: _firstColSize,
 						backgroundColor: theme.decisions.background.default.grey.default
 					},
-					['button:first-child']: {
+					['button:first-of-type']: {
 						fontWeight: 500,
 						fontSize: fr.typography[18].style.fontSize,
 						['&:first-of-type > i']: { display: 'none' },
@@ -259,7 +259,7 @@ const useStyles = makeStyles()(theme => {
 					}
 				},
 				['&:hover']: {
-					['td:not(:first-child)']: {
+					['td:not(:first-of-type)']: {
 						borderTopColor:
 							theme.decisions.background.actionHigh.blueFrance.hover,
 						borderBottomColor:
@@ -269,7 +269,7 @@ const useStyles = makeStyles()(theme => {
 							borderLeftWidth: 0
 						}
 					},
-					['td:first-child ']: {
+					['td:first-of-type ']: {
 						borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
 						['& > div']: {
 							borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
@@ -287,7 +287,7 @@ const useStyles = makeStyles()(theme => {
 					marginLeft: 'auto',
 					marginRight: 'auto'
 				},
-				['&:first-child']: {
+				['&:first-of-type']: {
 					position: 'sticky',
 					left: 0,
 					backgroundColor: theme.decisions.background.contrast.info.default,
@@ -305,7 +305,7 @@ const useStyles = makeStyles()(theme => {
 						borderTopRightRadius: _thRadius
 					}
 				},
-				['&:not(:first-child):not(:last-child)']: {
+				['&:not(:first-of-type):not(:last-child)']: {
 					verticalAlign: 'top'
 				}
 			},
@@ -319,10 +319,10 @@ const useStyles = makeStyles()(theme => {
 				['&:nth-child(n + 6)']: {
 					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 				},
-				['&:not(:first-child)']: {
+				['&:not(:first-of-type)']: {
 					textAlign: 'center'
 				},
-				['&:first-child']: {
+				['&:first-of-type']: {
 					position: 'sticky',
 					zIndex: 9,
 					left: 0,
@@ -340,7 +340,7 @@ const useStyles = makeStyles()(theme => {
 						padding: fr.spacing('4v'),
 						borderTopLeftRadius: _thRadius,
 						borderBottomLeftRadius: _thRadius,
-						['& > span:first-child']: {
+						['& > span:first-of-type']: {
 							fontWeight: 'bold'
 						}
 					}

@@ -447,13 +447,13 @@ const useStyles = makeStyles()(theme => ({
 	indicatorContainer: {
 		marginBottom: fr.spacing('4v'),
 		display: 'flex',
-		['& > span:first-child']: {
+		['& > span:first-of-type']: {
 			flexShrink: 0
 		},
 
 		[fr.breakpoints.down('sm')]: {
 			flexDirection: 'column',
-			['& > span:first-child']: {
+			['& > span:first-of-type']: {
 				marginBottom: fr.spacing('2v')
 			}
 		}
