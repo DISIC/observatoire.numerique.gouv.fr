@@ -21,6 +21,7 @@ export function Top250TableSection(props: Props) {
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
+	const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
 	const loadAllProcedures = (loadMore: boolean) => {
 		if (!procedures) return;
@@ -53,6 +54,18 @@ export function Top250TableSection(props: Props) {
 		}
 	}, [procedures]);
 
+	// Listen to window resize event
+	useEffect(() => {
+		const handleResize = () => {
+			setWindowWidth(window.innerWidth);
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
 			return (
@@ -74,7 +87,14 @@ export function Top250TableSection(props: Props) {
 				<PreFooter />
 			</>
 		);
-	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
+	}, [
+		procedures,
+		displayedProcedures,
+		isAdmin,
+		search,
+		classes.noProcedure,
+		windowWidth
+	]);
 
 	return <div className={cx(classes.root)}>{table}</div>;
 }
