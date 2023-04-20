@@ -347,7 +347,13 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 	const volume = parseInt(record.get(field_names.volume));
 	return {
 		id: 'preview',
-		title: record.get(field_names.title).replace(/[^\w\sÀ-ÿ]/gi, ''),
+		title: record
+			.get(field_names.title)
+			.replace(
+				/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
+				''
+			)
+			.trim(),
 		ministere: record.get(field_names.ministere),
 		administration: record.get(field_names.administration),
 		sousorg: record.get(field_names.sousorg),
