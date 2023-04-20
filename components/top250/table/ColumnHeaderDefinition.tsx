@@ -36,7 +36,7 @@ export function ColumnHeaderDefinition(props: Props) {
 			childrenArray = words.reduce((acc, word, index) => {
 				acc.push(word);
 				if (index === 0 && word.length >= 8) {
-					acc.push(<br />);
+					acc.push(<br key={`br-${index}`} />);
 				} else {
 					acc.push(' ');
 				}
