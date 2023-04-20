@@ -49,7 +49,8 @@ const PublicLayout = (props: Props) => {
 		{
 			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/'
+				href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/',
+				target: '_self'
 			},
 			text: "L'outil Je donne mon avis"
 		},
@@ -60,7 +61,8 @@ const PublicLayout = (props: Props) => {
 			linkProps: {
 				href: isXWikiUserLogged
 					? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
-					: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F'
+					: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F',
+				target: '_self'
 			},
 			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
 		}
