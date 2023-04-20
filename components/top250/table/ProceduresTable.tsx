@@ -13,7 +13,7 @@ type Props = {
 	procedures: ProcedureWithFields[];
 };
 
-export const ProceduresTable = (props: Props) => {
+export function ProceduresTable(props: Props) {
 	const { procedures } = props;
 	const { classes, cx } = useStyles();
 
@@ -190,7 +190,7 @@ export const ProceduresTable = (props: Props) => {
 			</table>
 		</div>
 	);
-};
+}
 
 const useStyles = makeStyles()(theme => {
 	const _userViewportAvailable = window.innerWidth - 40;
