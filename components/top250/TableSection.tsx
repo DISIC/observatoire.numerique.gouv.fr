@@ -21,7 +21,6 @@ export function Top250TableSection(props: Props) {
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
-	const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
 	const loadAllProcedures = (loadMore: boolean) => {
 		if (!procedures) return;
@@ -54,18 +53,6 @@ export function Top250TableSection(props: Props) {
 		}
 	}, [procedures]);
 
-	// Listen to window resize event
-	useEffect(() => {
-		const handleResize = () => {
-			setWindowWidth(window.innerWidth);
-		};
-
-		window.addEventListener('resize', handleResize);
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
-
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
 			return (
@@ -79,22 +66,16 @@ export function Top250TableSection(props: Props) {
 
 		return (
 			<>
-				{window.innerWidth > 62 * 16 ? (
+				<div className={classes.tableDesktop}>
 					<ProceduresTable procedures={displayedProcedures} />
-				) : (
+				</div>
+				<div className={classes.tableMobile}>
 					<ProceduresTableMobile procedures={displayedProcedures} />
-				)}
+				</div>
 				<PreFooter />
 			</>
 		);
-	}, [
-		procedures,
-		displayedProcedures,
-		isAdmin,
-		search,
-		classes.noProcedure,
-		windowWidth
-	]);
+	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
 
 	return <div className={cx(classes.root)}>{table}</div>;
 }
@@ -108,5 +89,17 @@ const useStyles = makeStyles()(theme => ({
 		padding: fr.spacing('30v'),
 		textAlign: 'center',
 		fontWeight: 'bold'
+	},
+	tableDesktop: {
+		display: 'block',
+		[fr.breakpoints.down('lg')]: {
+			display: 'none'
+		}
+	},
+	tableMobile: {
+		display: 'none',
+		[fr.breakpoints.down('lg')]: {
+			display: 'block'
+		}
 	}
 }));
