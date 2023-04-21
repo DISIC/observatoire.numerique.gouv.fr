@@ -1,6 +1,6 @@
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { fr } from '@codegouvfr/react-dsfr';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { LightSelect } from '../generic/LightSelect';
 import { useEditions } from '@/utils/api';
@@ -12,6 +12,7 @@ type Props = {
 
 export function Top250Header(props: Props) {
 	const { title, searchLabel, onSearch } = props;
+	const searchInputRef = useRef<HTMLInputElement>(null);
 
 	const { data: editions } = useEditions();
 
@@ -20,6 +21,23 @@ export function Top250Header(props: Props) {
 	const { classes, cx } = useStyles();
 
 	const [search, setSearch] = useState<string>('');
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.ctrlKey && event.key === 'f') {
+				event.preventDefault();
+				if (searchInputRef.current) {
+					searchInputRef.current.focus();
+				}
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, []);
 
 	return (
 		<div className={cx(classes.root)}>
@@ -38,7 +56,8 @@ export function Top250Header(props: Props) {
 						onChange: e => {
 							setSearch(e.target.value);
 							if (!e.target.value) onSearch('');
-						}
+						},
+						ref: searchInputRef
 					}}
 				/>
 			</form>
