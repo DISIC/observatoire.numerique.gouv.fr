@@ -134,6 +134,7 @@ export function ProceduresTable(props: Props) {
 								onClick={() => {
 									handleScrollX(!isRight);
 								}}
+								tabIndex={-1}
 								aria-label={
 									!isRight
 										? 'Voir les indicateurs suivants'
