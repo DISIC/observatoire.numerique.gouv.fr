@@ -8,6 +8,7 @@ import { getCookie } from '@/utils/cookies';
 import { SocialNetworks } from '@/components/layout/SocialNetworks';
 import { CustomFooter } from '@/components/layout/CustomFooter';
 import { useSession } from 'next-auth/react';
+import { SkipLinks } from '@/components/generic/SkipLinks';
 
 type Props = {
 	children: ReactNode;
@@ -99,6 +100,14 @@ const PublicLayout = (props: Props) => {
 					content="https://observatoire.numerique.gouv.fr/static/observatoire.png"
 				></meta>
 			</Head>
+			<div className={fr.cx('fr-container')}>
+				<SkipLinks
+					links={[
+						{ text: 'Contenu', href: '#main' },
+						{ text: 'Pied de page', href: '#footer' }
+					]}
+				/>
+			</div>
 			<Header
 				className={cx(classes.header)}
 				brandTop={brandTop}
@@ -111,7 +120,9 @@ const PublicLayout = (props: Props) => {
 				serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
 			/>
-			<main>{children}</main>
+			<main id="main" role="main">
+				{children}
+			</main>
 			<SocialNetworks />
 			<CustomFooter />
 			<Display />

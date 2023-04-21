@@ -8,6 +8,7 @@ import { IndicatorValue } from './IndicatorValue';
 import { useProcedureHeaders } from '@/utils/api';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
+import { SkipLinks } from '@/components/generic/SkipLinks';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -83,7 +84,7 @@ export function ProceduresTable(props: Props) {
 		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
-	const handleScrollX = (tmpIsRight: boolean) => {
+	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
@@ -93,7 +94,7 @@ export function ProceduresTable(props: Props) {
 
 		scrollRef?.current?.scrollTo({
 			left: tmpIsRight ? _containerWidth - _firstColSize : 0,
-			behavior: isSticky ? 'auto' : 'smooth'
+			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
 
 		setIsRight(tmpIsRight);
@@ -101,7 +102,7 @@ export function ProceduresTable(props: Props) {
 
 	return (
 		<div className={cx(classes.root)} ref={scrollRef}>
-			<table className={cx(classes.table)} ref={tableRef}>
+			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
 				<thead>
 					<tr ref={stickyHeaderRef}>
 						<th></th>
@@ -118,6 +119,10 @@ export function ProceduresTable(props: Props) {
 												</>
 											),
 											title: pth.label
+										}}
+										onFocus={() => {
+											if (index >= 5) handleScrollX(true, true);
+											else handleScrollX(false, true);
 										}}
 									/>
 								</th>
@@ -145,46 +150,72 @@ export function ProceduresTable(props: Props) {
 					</tr>
 				</thead>
 				<tbody>
-					{procedures.map(p => (
-						<tr key={p.id}>
-							<td scope="row">
-								<div>
-									<span>{p.title}</span>
-									<br />
-									<div className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}>
-										{p.ministere}
+					{procedures.map((p, index) => (
+						<>
+							<tr key={p.id} id={`procedure-table-row-${index}`}>
+								<td scope="row">
+									<div>
+										<span>{p.title}</span>
+										<br />
+										<div
+											className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}
+										>
+											{p.ministere}
+										</div>
+										<span className={fr.cx('fr-text--sm')}>
+											{p.administration}
+										</span>
+										<div
+											className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}
+										>
+											Volumétrie en ligne :{' '}
+											{p.volume && getDisplayedVolume(p.volume)}
+										</div>
 									</div>
-									<span className={fr.cx('fr-text--sm')}>
-										{p.administration}
-									</span>
-									<div className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}>
-										Volumétrie en ligne :{' '}
-										{p.volume && getDisplayedVolume(p.volume)}
-									</div>
-								</div>
-							</td>
-							{proceduresTableHeaders.map((pth, index) => {
-								const field = p.fields.find(f => f.slug === pth.slug);
+								</td>
+								{proceduresTableHeaders.map((pth, index) => {
+									const field = p.fields.find(f => f.slug === pth.slug);
 
-								if (!field) return <>No</>;
+									if (!field) return <>No</>;
 
-								return (
-									<td key={`${p.title} ${pth.label}`}>
-										<IndicatorLabel {...field} />
-										{field.value && (
-											<IndicatorValue
-												slug={field.slug}
-												value={field.value}
-												procedureId={p.airtable_identifier}
-											/>
-										)}
-									</td>
-								);
-							})}
-							<td>
-								<div></div>
-							</td>
-						</tr>
+									return (
+										<td key={`${p.title} ${pth.label}`}>
+											<IndicatorLabel {...field} />
+											{field.value && (
+												<IndicatorValue
+													slug={field.slug}
+													value={field.value}
+													procedureId={p.airtable_identifier}
+												/>
+											)}
+										</td>
+									);
+								})}
+								<td>
+									<div></div>
+								</td>
+							</tr>
+							<tr key={`${p.id}-skiplinks`}>
+								<td colSpan={12} className={fr.cx('fr-pl-1-5v')}>
+									<SkipLinks
+										links={[
+											{
+												text: 'Aller au pied du tableau',
+												href: '#table-footer'
+											},
+											{
+												text: 'Revenir à la première ligne',
+												href: '#procedure-table-row-0'
+											},
+											{
+												text: 'Revenir au dessus du tableau',
+												href: '#procedures-section'
+											}
+										]}
+									/>
+								</td>
+							</tr>
+						</>
 					))}
 				</tbody>
 			</table>

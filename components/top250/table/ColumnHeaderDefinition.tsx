@@ -18,10 +18,11 @@ type Props = {
 		content: ReactNode;
 	};
 	isMobile?: boolean;
+	onFocus?: () => void;
 };
 
 export function ColumnHeaderDefinition(props: Props) {
-	const { icon, text, infos, isMobile } = props;
+	const { icon, text, infos, isMobile, onFocus } = props;
 	const { classes, cx } = useStyles();
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
@@ -53,6 +54,9 @@ export function ColumnHeaderDefinition(props: Props) {
 				className={cx(classes.root)}
 				onClick={() => {
 					setOpenModal(true);
+				}}
+				nativeButtonProps={{
+					onFocus
 				}}
 			>
 				<i className={cx(fr.cx(icon), classes.mainIcon)} />
