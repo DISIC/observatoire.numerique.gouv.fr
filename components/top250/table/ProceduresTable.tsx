@@ -83,7 +83,7 @@ export function ProceduresTable(props: Props) {
 		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
-	const handleScrollX = (tmpIsRight: boolean) => {
+	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
@@ -93,7 +93,7 @@ export function ProceduresTable(props: Props) {
 
 		scrollRef?.current?.scrollTo({
 			left: tmpIsRight ? _containerWidth - _firstColSize : 0,
-			behavior: isSticky ? 'auto' : 'smooth'
+			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
 
 		setIsRight(tmpIsRight);
@@ -118,6 +118,10 @@ export function ProceduresTable(props: Props) {
 												</>
 											),
 											title: pth.label
+										}}
+										onFocus={() => {
+											if (index >= 5) handleScrollX(true, true);
+											else handleScrollX(false, true);
 										}}
 									/>
 								</th>
