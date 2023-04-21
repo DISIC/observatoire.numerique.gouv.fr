@@ -14,8 +14,8 @@ export function SkipLinks(props: Props) {
 
 	return (
 		<ul className={classes.skipLinkList}>
-			{links.map(link => (
-				<li>
+			{links.map((link, index) => (
+				<li key={index}>
 					<a href={link.href}>{link.text}</a>
 				</li>
 			))}
