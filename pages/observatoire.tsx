@@ -36,7 +36,7 @@ export default function Observatoire() {
 					}}
 				/>
 			</div>
-			<div className={cx(classes.tableContainer)}>
+			<div className={cx(classes.tableContainer)} id="procedures-section">
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
 					<PreHeader
 						onSort={value => {

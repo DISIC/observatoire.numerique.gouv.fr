@@ -6,6 +6,7 @@ import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { SkipLinks } from '../generic/SkipLinks';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
@@ -66,13 +67,15 @@ export function Top250TableSection(props: Props) {
 
 		return (
 			<>
-				<ul className={classes.skipLinkList}>
-					<li>
-						<a className={classes.skipLink} href="#table-footer">
-							Aller au pied de page
-						</a>
-					</li>
-				</ul>
+				<SkipLinks
+					links={[
+						{ text: 'Aller au pied du tableau', href: '#table-footer' },
+						{
+							text: 'Aller à la première ligne',
+							href: '#procedure-table-row-0'
+						}
+					]}
+				/>
 				<div className={classes.tableDesktop}>
 					<ProceduresTable procedures={displayedProcedures} />
 				</div>
@@ -107,18 +110,6 @@ const useStyles = makeStyles()(theme => ({
 		display: 'none',
 		[fr.breakpoints.down('lg')]: {
 			display: 'block'
-		}
-	},
-	skipLinkList: {
-		display: 'flex',
-		flexDirection: 'row',
-		listStyle: 'none'
-	},
-	skipLink: {
-		position: 'absolute',
-		left: -9999,
-		['&:focus']: {
-			position: 'static'
 		}
 	}
 }));
