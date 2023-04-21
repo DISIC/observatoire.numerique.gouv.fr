@@ -5,7 +5,7 @@ import { ProceduresTable } from './table/ProceduresTable';
 import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type Props = {
 	procedures?: ProcedureWithFields[];

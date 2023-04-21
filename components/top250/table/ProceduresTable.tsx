@@ -211,155 +211,16 @@ const useStyles = makeStyles()(theme => {
 			}
 		},
 		table: {
-			width: 'max-content',
-			marginTop: fr.spacing('2v'),
-			height: '100%',
-			borderSpacing: `0 ${fr.spacing('2v')}`,
-			['&.table-has-sticked-row']: {
-				marginTop: 150
-			},
+			width: '100%',
 			tr: {
-				['&.sticked-row']: {
-					overflowX: 'scroll',
-					scrollbarWidth: 'none',
-					msOverflowStyle: 'none',
-					['&::-webkit-scrollbar']: {
-						display: 'none'
-					},
-					position: 'fixed',
-					top: '-12px',
-					zIndex: 99,
-					width: _containerWidth,
-					th: {
-						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
-						borderTopLeftRadius: _thRadius
-					},
-					['th:nth-of-type(2)']: {
-						borderTopLeftRadius: 0
-					},
-					['th:nth-of-type(-n + 5):not(:first-of-type)']: {
-						minWidth: (_containerWidth - _firstColSize) / 5
-					},
-					['th:nth-of-type(n + 6)']: {
-						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
-					},
-					['th:last-child']: {
-						minWidth: _arrowSlideSize
-					},
-					['th:first-of-type']: {
-						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
-						minWidth: _firstColSize,
-						backgroundColor: theme.decisions.background.default.grey.default
-					},
-					['button:first-of-type']: {
-						fontWeight: 500,
-						fontSize: fr.typography[18].style.fontSize,
-						['&:first-of-type > i']: { display: 'none' },
-						['&:first-of-type > span']: { marginTop: 0 }
-					}
-				},
-				['&:hover']: {
-					['td:not(:first-of-type)']: {
-						borderTopColor:
-							theme.decisions.background.actionHigh.blueFrance.hover,
-						borderBottomColor:
-							theme.decisions.background.actionHigh.blueFrance.hover,
-						['&:last-child > div']: {
-							border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderLeftWidth: 0
-						}
-					},
-					['td:first-of-type ']: {
-						borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-						['& > div']: {
-							borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderTopLeftRadius: _thRadius,
-							borderBottomLeftRadius: _thRadius
-						}
-					}
-				}
-			},
-			th: {
-				backgroundColor: theme.decisions.background.default.grey.default,
-				['& > button']: {
-					marginLeft: 'auto',
-					marginRight: 'auto'
-				},
-				['&:first-of-type']: {
-					position: 'sticky',
-					left: 0,
-					backgroundColor: theme.decisions.background.contrast.info.default,
-					zIndex: 11
-				},
-				['&:nth-of-type(2), &:nth-of-type(7)']: {
-					borderTopLeftRadius: _thRadius
-				},
-				['&:last-child']: {
-					position: 'sticky',
-					right: 0,
-					zIndex: 11,
-					width: _arrowSlideSize,
-					['& > div']: {
-						borderTopRightRadius: _thRadius
-					}
-				},
-				['&:not(:first-of-type):not(:last-child)']: {
-					verticalAlign: 'top'
-				}
-			},
-			td: {
-				backgroundColor: theme.decisions.background.default.grey.default,
-				border: '1px solid transparent',
-				position: 'relative',
-				['&:nth-of-type(-n + 5)']: {
-					width: (_containerWidth - _firstColSize) / 5
-				},
-				['&:nth-of-type(n + 6)']: {
-					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
-				},
-				['&:not(:first-of-type)']: {
-					textAlign: 'center'
-				},
-				['&:first-of-type']: {
-					position: 'sticky',
-					zIndex: 9,
-					left: 0,
-					width: _firstColSize,
-					backgroundColor: theme.decisions.background.contrast.info.default,
-					padding: 0,
-					border: 'none',
-					borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
-					['& > div']: {
-						borderTop: '1px solid transparent',
-						borderLeft: '1px solid transparent',
-						borderBottom: '1px solid transparent',
-						borderColor: theme.decisions.background.default.grey.default,
-						backgroundColor: theme.decisions.background.default.grey.default,
-						padding: fr.spacing('4v'),
-						borderTopLeftRadius: _thRadius,
-						borderBottomLeftRadius: _thRadius,
-						['& > span:first-of-type']: {
-							fontWeight: 'bold'
-						}
-					}
-				},
-				['&:last-child']: {
-					width: _arrowSlideSize,
-					position: 'sticky',
-					zIndex: 9,
-					right: 0,
-					padding: 0,
-					borderWidth: 0,
-					height: '100%',
-					backgroundColor: theme.decisions.background.contrast.info.default,
-					['& > div']: {
-						boxSizing: 'border-box',
-						height: '100%',
-						backgroundColor: theme.decisions.background.default.grey.default,
-						borderTopRightRadius: _thRadius,
-						borderBottomRightRadius: _thRadius
+				display: 'grid',
+				gridTemplateColumns:
+					'20% repeat(5, calc(80% / 5)) repeat(6, calc(100% / 6 ))',
+				td: {
+					['&:nth-child(1)']: {
+						position: 'sticky',
+						left: 0,
+						zIndex: 1
 					}
 				}
 			}
