@@ -66,13 +66,20 @@ export function Top250TableSection(props: Props) {
 
 		return (
 			<>
+				<ul className={classes.skipLinkList}>
+					<li>
+						<a className={classes.skipLink} href="#table-footer">
+							Aller au pied de page
+						</a>
+					</li>
+				</ul>
 				<div className={classes.tableDesktop}>
 					<ProceduresTable procedures={displayedProcedures} />
 				</div>
 				<div className={classes.tableMobile}>
 					<ProceduresTableMobile procedures={displayedProcedures} />
 				</div>
-				<PreFooter />
+				<PreFooter id="table-footer" />
 			</>
 		);
 	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
@@ -100,6 +107,18 @@ const useStyles = makeStyles()(theme => ({
 		display: 'none',
 		[fr.breakpoints.down('lg')]: {
 			display: 'block'
+		}
+	},
+	skipLinkList: {
+		display: 'flex',
+		flexDirection: 'row',
+		listStyle: 'none'
+	},
+	skipLink: {
+		position: 'absolute',
+		left: -9999,
+		['&:focus']: {
+			position: 'static'
 		}
 	}
 }));

@@ -2,13 +2,16 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
 
-type Props = {};
+type Props = {
+	id: string;
+};
 
 export function PreFooter(props: Props) {
+	const { id } = props;
 	const { classes, cx } = useStyles();
 
 	return (
-		<div className={cx(classes.root)}>
+		<div id={id} className={cx(classes.root)}>
 			<div className={cx(classes.section)}>
 				<a
 					href="https://www.data.gouv.fr/fr/datasets/observatoire-de-la-qualite-des-demarches-en-ligne/"
