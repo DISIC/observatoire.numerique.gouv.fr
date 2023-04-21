@@ -196,7 +196,7 @@ export function ProceduresTable(props: Props) {
 								</td>
 							</tr>
 							<tr key={`${p.id}-skiplinks`}>
-								<td colSpan={12}>
+								<td colSpan={12} className={fr.cx('fr-pl-1-5v')}>
 									<SkipLinks
 										links={[
 											{
@@ -204,11 +204,11 @@ export function ProceduresTable(props: Props) {
 												href: '#table-footer'
 											},
 											{
-												text: 'Retourner à la première ligne',
+												text: 'Revenir à la première ligne',
 												href: '#procedure-table-row-0'
 											},
 											{
-												text: 'Retourner au dessus du tableau',
+												text: 'Revenir au dessus du tableau',
 												href: '#procedures-section'
 											}
 										]}
