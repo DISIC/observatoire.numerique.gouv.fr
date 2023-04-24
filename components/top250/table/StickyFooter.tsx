@@ -21,8 +21,7 @@ export function StickyFooter(props: Props) {
 					<Button
 						className={cx(classes.button)}
 						onClick={() => {
-							window.location.href =
-								'https://observatoire.numerique.gouv.fr/contact/';
+							window.location.href = '/contact/';
 						}}
 						priority="tertiary"
 						size="small"

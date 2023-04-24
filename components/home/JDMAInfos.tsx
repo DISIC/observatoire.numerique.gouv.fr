@@ -23,8 +23,7 @@ export function JDMAInfos(props: Props) {
 						priority="secondary"
 						className={classes.jdmaButton}
 						onClick={() => {
-							window.location.href =
-								'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/';
+							window.location.href = '/je-donne-mon-avis/';
 						}}
 					>
 						Suivre la satisfaction de vos usagers
@@ -33,7 +32,7 @@ export function JDMAInfos(props: Props) {
 				<div>
 					<Image
 						alt="Exemple de statistiques avec l'outil Je donne mon avis"
-						src="/jdma-screenshot.svg"
+						src="/assets/jdma-screenshot.svg"
 						title="Exemple de statistiques avec l'outil Je donne mon avis"
 						width={448}
 						height={316}

@@ -14,12 +14,12 @@ export function CustomFooter() {
 			<Footer
 				accessibility="partially compliant"
 				accessibilityLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU'
+					href: '/Main/CGU'
 				}}
 				brandTop={brandTop}
 				contentDescription="L’Observatoire de la qualité des démarches en ligne est un service proposé par l'équipe design des services numériques de la direction interministérielle du numérique (DINUM)."
 				cookiesManagementLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU'
+					href: '/Main/CGU'
 				}}
 				homeLinkProps={{
 					href: '/',
@@ -27,13 +27,13 @@ export function CustomFooter() {
 						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
 				}}
 				personalDataLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU#HVieprivE9e'
+					href: '/Main/CGU#HVieprivE9e'
 				}}
 				termsLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/CGU#HMentionslE9gales'
+					href: '/Main/CGU#HMentionslE9gales'
 				}}
 				websiteMapLinkProps={{
-					href: 'https://observatoire.numerique.gouv.fr/Main/plan-site'
+					href: '/Main/plan-site'
 				}}
 			/>
 		</>

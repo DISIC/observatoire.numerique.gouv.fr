@@ -50,7 +50,7 @@ const PublicLayout = (props: Props) => {
 		{
 			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: 'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/',
+				href: '/je-donne-mon-avis/',
 				target: '_self'
 			},
 			text: "L'outil Je donne mon avis"
@@ -61,8 +61,8 @@ const PublicLayout = (props: Props) => {
 				: 'ri-login-circle-line',
 			linkProps: {
 				href: isXWikiUserLogged
-					? 'https://observatoire.numerique.gouv.fr/logout/Main/WebHome'
-					: 'https://observatoire.numerique.gouv.fr/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F',
+					? '/logout/Main/WebHome'
+					: '/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F',
 				target: '_self'
 			},
 			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
@@ -82,7 +82,6 @@ const PublicLayout = (props: Props) => {
 		<>
 			<Head>
 				<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
-
 				<meta
 					name="description"
 					content="Pour des services publics numériques de qualité"
@@ -99,10 +98,7 @@ const PublicLayout = (props: Props) => {
 					property="og:description"
 					content="Suivi de la qualité des démarches en ligne pour des services publics numériques de qualité"
 				></meta>
-				<meta
-					property="og:image"
-					content="https://observatoire.numerique.gouv.fr/static/observatoire.png"
-				></meta>
+				<meta property="og:image" content="/static/observatoire.png"></meta>
 			</Head>
 			<div className={fr.cx('fr-container')}>
 				<SkipLinks

@@ -20,7 +20,7 @@ export function Questions(props: Props) {
 				priority="secondary"
 				className={classes.contactButton}
 				onClick={() => {
-					'https://observatoire.numerique.gouv.fr/contact/';
+					'/contact/';
 				}}
 			>
 				Contacer notre équipe

@@ -40,7 +40,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		return (
 			<Link
 				title={`satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
-				href={`https://observatoire.numerique.gouv.fr/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
+				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
 			>
 				{valueToDisplay} / 10
 			</Link>
