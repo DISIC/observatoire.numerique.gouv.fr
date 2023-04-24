@@ -34,6 +34,8 @@ const PublicLayout = (props: Props) => {
 	const serviceTagLine = 'des démarches en ligne';
 
 	useEffect(() => {
+		console.log(getCookie('username'));
+		console.log(getCookie('JSESSIONID'));
 		setIsXWikiUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
 	}, []);
 
