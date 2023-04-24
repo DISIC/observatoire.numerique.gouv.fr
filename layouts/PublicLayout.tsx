@@ -4,7 +4,7 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
 import { Display } from '@codegouvfr/react-dsfr/Display';
 import Head from 'next/head';
-import { getCookie } from '@/utils/cookies';
+import { doesHttpOnlyCookieExist, getCookie } from '@/utils/cookies';
 import { SocialNetworks } from '@/components/layout/SocialNetworks';
 import { CustomFooter } from '@/components/layout/CustomFooter';
 import { useSession } from 'next-auth/react';
@@ -36,6 +36,8 @@ const PublicLayout = (props: Props) => {
 	useEffect(() => {
 		console.log(getCookie('username'));
 		console.log(getCookie('JSESSIONID'));
+		console.log(doesHttpOnlyCookieExist('JSESSIONID'));
+		console.log(doesHttpOnlyCookieExist('username'));
 		setIsXWikiUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
 	}, []);
 
