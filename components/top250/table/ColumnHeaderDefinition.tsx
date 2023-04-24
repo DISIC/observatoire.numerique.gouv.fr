@@ -93,9 +93,10 @@ export function ColumnHeaderDefinition(props: Props) {
 const useStyles = makeStyles()(theme => ({
 	root: {
 		width: '90%',
+		height: '90%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
+		justifyContent: 'start',
 		alignItems: 'center',
 		padding: fr.spacing('2v'),
 		marginTop: fr.spacing('2v'),

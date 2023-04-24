@@ -96,6 +96,10 @@ const PublicLayout = (props: Props) => {
 					content="L’Observatoire de la qualité des démarches en ligne"
 				></meta>
 				<meta
+					property="og:description"
+					content="Suivi de la qualité des démarches en ligne pour des services publics numériques de qualité"
+				></meta>
+				<meta
 					property="og:image"
 					content="https://observatoire.numerique.gouv.fr/static/observatoire.png"
 				></meta>
@@ -113,8 +117,7 @@ const PublicLayout = (props: Props) => {
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/',
-					title:
-						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
+					title: "Accueil - L'observatoire de la qualité des démarches en ligne"
 				}}
 				quickAccessItems={accessItems}
 				serviceTagline={serviceTagLine}
