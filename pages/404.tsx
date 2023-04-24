@@ -6,12 +6,12 @@ export default function NotFound() {
 	const { classes, cx } = useStyles();
 	return (
 		<div className={classes.root}>
-			<h1>Oups, cette page n'existe pas</h1>
+			<h1>Oups, cette page n&apos;existe pas</h1>
 			<p>
-				La page n'existe pas ou n'est pas disponible. Nous vous invitions à
-				retourner sur la page d'accueil.
+				La page n&apos;existe pas ou n&apos;est pas disponible. Nous vous
+				invitions à retourner sur la page d&apos;accueil.
 			</p>
-			<Link href="/">Retour à la page d'accueil</Link>
+			<Link href="/">Retour à la page d&apos;accueil</Link>
 		</div>
 	);
 }
