@@ -346,7 +346,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 
 	const volume = parseInt(record.get(field_names.volume));
 	return {
-		id: 'preview',
+		id: `preview-${record.get(field_names.id)}`,
 		title: record
 			.get(field_names.title)
 			.replace(
