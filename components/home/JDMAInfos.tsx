@@ -33,7 +33,7 @@ export function JDMAInfos(props: Props) {
 				<div>
 					<Image
 						alt="Exemple de statistiques avec l'outil Je donne mon avis"
-						src="/jdma-screenshot.svg"
+						src="/assets/jdma-screenshot.svg"
 						title="Exemple de statistiques avec l'outil Je donne mon avis"
 						width={448}
 						height={316}

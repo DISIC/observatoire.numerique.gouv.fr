@@ -22,7 +22,7 @@ export function IndicatorsInfos(props: Props) {
 			</div>
 			<div className={classes.tilesContainer}>
 				<Tile
-					imageUrl="/city-hall.svg"
+					imageUrl="/assets/city-hall.svg"
 					imageAlt="La sélection des services"
 					imageWidth={80}
 					imageHeight={80}
@@ -32,7 +32,7 @@ export function IndicatorsInfos(props: Props) {
 					title="La sélection des services"
 				/>
 				<Tile
-					imageUrl="/data-visualization.svg"
+					imageUrl="/assets/data-visualization.svg"
 					imageAlt="Le suivi des services"
 					imageWidth={80}
 					imageHeight={80}

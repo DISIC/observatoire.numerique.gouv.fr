@@ -82,7 +82,6 @@ const PublicLayout = (props: Props) => {
 		<>
 			<Head>
 				<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
-
 				<meta
 					name="description"
 					content="Pour des services publics numériques de qualité"
