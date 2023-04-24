@@ -113,8 +113,7 @@ const PublicLayout = (props: Props) => {
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/',
-					title:
-						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
+					title: "Accueil - L'observatoire de la qualité des démarches en ligne"
 				}}
 				quickAccessItems={accessItems}
 				serviceTagline={serviceTagLine}
