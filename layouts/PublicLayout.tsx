@@ -4,7 +4,7 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
 import { Display } from '@codegouvfr/react-dsfr/Display';
 import Head from 'next/head';
-import { doesHttpOnlyCookieExist, getCookie } from '@/utils/cookies';
+import { doesHttpOnlyCookieExist } from '@/utils/cookies';
 import { SocialNetworks } from '@/components/layout/SocialNetworks';
 import { CustomFooter } from '@/components/layout/CustomFooter';
 import { useSession } from 'next-auth/react';
@@ -34,11 +34,10 @@ const PublicLayout = (props: Props) => {
 	const serviceTagLine = 'des démarches en ligne';
 
 	useEffect(() => {
-		console.log(getCookie('username'));
-		console.log(getCookie('JSESSIONID'));
-		console.log(doesHttpOnlyCookieExist('JSESSIONID'));
-		console.log(doesHttpOnlyCookieExist('username'));
-		setIsXWikiUserLogged(!!getCookie('username') && !!getCookie('JSESSIONID'));
+		setIsXWikiUserLogged(
+			doesHttpOnlyCookieExist('JSESSIONID') &&
+				doesHttpOnlyCookieExist('username')
+		);
 	}, []);
 
 	if (isXWikiUserLogged === undefined) return <></>;
