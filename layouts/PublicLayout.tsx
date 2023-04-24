@@ -137,7 +137,9 @@ const useStyles = makeStyles()(theme => ({
 	header: {
 		[fr.breakpoints.up('lg')]: {
 			['.fr-btn::before']: {
-				'--icon-size:': '0 !important'
+				'--icon-size:': '0 !important',
+				marginLeft: '0px !important',
+				marginRight: '0px !important'
 			}
 		}
 	}
