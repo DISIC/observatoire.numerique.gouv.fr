@@ -23,8 +23,7 @@ export function JDMAInfos(props: Props) {
 						priority="secondary"
 						className={classes.jdmaButton}
 						onClick={() => {
-							window.location.href =
-								'https://observatoire.numerique.gouv.fr/je-donne-mon-avis/';
+							window.location.href = '/je-donne-mon-avis/';
 						}}
 					>
 						Suivre la satisfaction de vos usagers
