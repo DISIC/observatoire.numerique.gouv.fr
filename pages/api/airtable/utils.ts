@@ -22,7 +22,10 @@ export const getLabelFromValue = (
 		case 'satisfaction':
 		case 'simplicity':
 			const markIntValue = parseFloat(value);
-			if (isNaN(markIntValue) && !!value) return value;
+			if (isNaN(markIntValue) && !!value) {
+				if (value === 'Non applicable') return value;
+				else return 'À venir';
+			}
 			if (!value) return 'En attente';
 			return `${markIntValue.toFixed(1)} / 10`;
 		case 'uptime':
@@ -80,9 +83,7 @@ export const getColorFromLabel = (
 			return 'red';
 		case 'satisfaction':
 		case 'simplicity':
-			console.log(label);
 			const markIntValue = parseInt(label.split(' ')[0]);
-			console.log(markIntValue);
 			if (isNaN(markIntValue)) return 'gray';
 			if (markIntValue < 5) return 'red';
 			if (markIntValue < 8) return 'orange';

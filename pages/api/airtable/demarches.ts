@@ -70,7 +70,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				getLabelFromValue(
 					'satisfaction',
 					record.get(field_names.indicators.satisfaction)
-				) === "Nombre d'avis insuffisant"
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
@@ -94,7 +94,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				getLabelFromValue(
 					'simplicity',
 					record.get(field_names.indicators.simplicity)
-				) === "Nombre d'avis insuffisant"
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
