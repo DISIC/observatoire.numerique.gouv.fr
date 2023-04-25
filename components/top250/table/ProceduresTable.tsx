@@ -8,6 +8,7 @@ import { IndicatorValue } from './IndicatorValue';
 import { useProcedureHeaders } from '@/utils/api';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
+import { IndicatorProactive } from './IndicatorProactive';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -164,9 +165,23 @@ export function ProceduresTable(props: Props) {
 								</div>
 							</td>
 							{proceduresTableHeaders.map((pth, index) => {
+								const isProactive = p.fields.some(
+									f => f.slug === 'online' && f.label === 'Démarche proactive'
+								);
 								const field = p.fields.find(f => f.slug === pth.slug);
 
 								if (!field) return <>No</>;
+
+								if (isProactive && (index === 1 || index === 5))
+									return (
+										<td
+											colSpan={index === 1 ? 4 : 6}
+											key={`${p.title} ${pth.label}`}
+										>
+											<IndicatorProactive />
+										</td>
+									);
+								else if (isProactive && field.slug !== 'online') return;
 
 								return (
 									<td key={`${p.title} ${pth.label}`}>
