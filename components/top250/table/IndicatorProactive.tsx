@@ -28,8 +28,19 @@ const useStyles = makeStyles()(theme => ({
 		},
 		p: {
 			marginBottom: 0,
-			marginLeft: fr.spacing('2v'),
-			...fr.typography[18]
+			marginLeft: fr.spacing('2v')
+		},
+		[fr.breakpoints.down('lg')]: {
+			flexDirection: 'column',
+			alignItems: 'center',
+			marginLeft: 0,
+			i: {
+				display: 'none'
+			},
+			p: {
+				...fr.typography[18].style,
+				marginBottom: '0 !important'
+			}
 		}
 	}
 }));
