@@ -49,7 +49,10 @@ export const getLabelFromValue = (
 			return 'Optimal';
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
-			if (isNaN(handicapIntValue)) return 'Indéterminée';
+			if (isNaN(handicapIntValue)) {
+				if (['Non conforme', 'Non applicable'].includes(value)) return value;
+				return 'À venir';
+			}
 			if (handicapIntValue < 0.5) return 'Faible';
 			if (handicapIntValue < 1) return 'Partiel';
 			return 'Optimal';
@@ -107,7 +110,7 @@ export const getColorFromLabel = (
 		case 'handicap':
 			if (label === 'Optimal') return 'green';
 			if (label === 'Partiel') return 'orange';
-			if (label === 'Faible') return 'red';
+			if (['Faible', 'Non conforme'].includes(label)) return 'red';
 			return 'gray';
 		case 'usage':
 			return 'gray';
