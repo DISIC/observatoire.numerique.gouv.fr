@@ -43,6 +43,7 @@ model Procedure {
   id                  String   @id @default(auto()) @map("_id") @db.ObjectId
   airtable_identifier Int?     
   title               String
+  title_normalized    String
   ministere           String
   administration      String
   sousorg             String
