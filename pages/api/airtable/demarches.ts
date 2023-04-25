@@ -232,7 +232,10 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 	const volume = parseInt(record.get(field_names.volume));
 	return {
 		id: `preview-${record.get(field_names.id)}`,
-		title: record.get(field_names.title).trim(),
+		title: record
+			.get(field_names.title)
+			.replace(/(?:\uD83D\uDCC4|#)/g, '')
+			.trim(),
 		ministere: record.get(field_names.ministere),
 		administration: record.get(field_names.administration),
 		sousorg: record.get(field_names.sousorg),
