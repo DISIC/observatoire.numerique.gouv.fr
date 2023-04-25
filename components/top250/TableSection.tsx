@@ -6,6 +6,7 @@ import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { SkipLinks } from '../generic/SkipLinks';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
@@ -56,22 +57,32 @@ export function Top250TableSection(props: Props) {
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
 			return (
-				<div className={classes.noProcedure}>
+				<p className={classes.noProcedure} role="status">
 					{search
 						? 'Aucune démarche trouvée pour cette recherche...'
 						: 'Aucune démarche pour cette édition...'}
-				</div>
+				</p>
 			);
 		}
 
 		return (
 			<>
-				{window.innerWidth > 62 * 16 ? (
+				<SkipLinks
+					links={[
+						{ text: 'Aller au pied du tableau', href: '#table-footer' },
+						{
+							text: 'Aller à la première ligne',
+							href: '#procedure-table-row-0'
+						}
+					]}
+				/>
+				<div className={classes.tableDesktop}>
 					<ProceduresTable procedures={displayedProcedures} />
-				) : (
+				</div>
+				<div className={classes.tableMobile}>
 					<ProceduresTableMobile procedures={displayedProcedures} />
-				)}
-				<PreFooter />
+				</div>
+				<PreFooter id="table-footer" />
 			</>
 		);
 	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
@@ -88,5 +99,17 @@ const useStyles = makeStyles()(theme => ({
 		padding: fr.spacing('30v'),
 		textAlign: 'center',
 		fontWeight: 'bold'
+	},
+	tableDesktop: {
+		display: 'block',
+		[fr.breakpoints.down('lg')]: {
+			display: 'none'
+		}
+	},
+	tableMobile: {
+		display: 'none',
+		[fr.breakpoints.down('lg')]: {
+			display: 'block'
+		}
 	}
 }));

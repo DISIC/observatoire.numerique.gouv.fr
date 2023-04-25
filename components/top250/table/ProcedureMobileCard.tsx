@@ -104,7 +104,7 @@ const useStyles = makeStyles()(theme => ({
 		position: 'relative'
 	},
 	mainInfos: {
-		['& > div:first-child']: {
+		['& > div:first-of-type']: {
 			fontWeight: 500
 		}
 	},

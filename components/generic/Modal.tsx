@@ -1,6 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import FocusTrap from 'focus-trap-react';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -16,40 +17,51 @@ type Props = {
 export const Modal = (props: Props) => {
 	const { title, children, buttons, onClose } = props;
 	const { classes, cx } = useStyles();
+	const rNumber = Math.floor(Math.random() * 1000);
 
 	return (
-		<div className={cx(classes.root)} onClick={onClose}>
-			<div
-				className={cx(
-					classes.modalContainer,
-					fr.cx('fr-container', 'fr-container--fluid', 'fr-container-md')
-				)}
+		<FocusTrap>
+			<dialog
+				id={`fr-modal-${rNumber}`}
+				className={cx(classes.root)}
+				onClick={onClose}
+				role="dialog"
+				aria-labelledby={`fr-modal-title-${rNumber}`}
+				aria-modal={true}
+				open={true}
 			>
-				<div className={cx(classes.modal)} onClick={e => e.stopPropagation()}>
-					<div className={cx(classes.modalHeader)}>
-						<Button
-							priority="tertiary no outline"
-							iconId="ri-close-line"
-							iconPosition="right"
-							onClick={onClose}
-						>
-							Fermer
-						</Button>
-					</div>
-					<div className={cx(classes.modalContent)}>
-						<h4>{title}</h4>
-						<p>{children}</p>
-					</div>
-					<div className={cx(classes.modalFooter)}>
-						{buttons.map((b, index) => (
-							<Button key={index} onClick={b.onClick}>
-								{b.children}
+				<div
+					className={cx(
+						classes.modalContainer,
+						fr.cx('fr-container', 'fr-container--fluid', 'fr-container-md')
+					)}
+				>
+					<div className={cx(classes.modal)} onClick={e => e.stopPropagation()}>
+						<div className={cx(classes.modalHeader)}>
+							<Button
+								priority="tertiary no outline"
+								iconId="ri-close-line"
+								iconPosition="right"
+								onClick={onClose}
+							>
+								Fermer
 							</Button>
-						))}
+						</div>
+						<div className={cx(classes.modalContent)}>
+							<h1 id={`fr-modal-title-${rNumber}`}>{title}</h1>
+							<div>{children}</div>
+						</div>
+						<div className={cx(classes.modalFooter)}>
+							{buttons.map((b, index) => (
+								<Button key={index} onClick={b.onClick}>
+									{b.children}
+								</Button>
+							))}
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</dialog>
+		</FocusTrap>
 	);
 };
 
@@ -114,6 +126,9 @@ const useStyles = makeStyles()(theme => ({
 	modalContent: {
 		paddingLeft: fr.spacing('8v'),
 		paddingRight: fr.spacing('8v'),
+		h1: {
+			...fr.typography[2].style
+		},
 		[fr.breakpoints.down('lg')]: {
 			paddingLeft: fr.spacing('4v'),
 			paddingRight: fr.spacing('4v')

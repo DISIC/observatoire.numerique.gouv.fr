@@ -18,10 +18,11 @@ type Props = {
 		content: ReactNode;
 	};
 	isMobile?: boolean;
+	onFocus?: () => void;
 };
 
 export function ColumnHeaderDefinition(props: Props) {
-	const { icon, text, infos, isMobile } = props;
+	const { icon, text, infos, isMobile, onFocus } = props;
 	const { classes, cx } = useStyles();
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export function ColumnHeaderDefinition(props: Props) {
 			childrenArray = words.reduce((acc, word, index) => {
 				acc.push(word);
 				if (index === 0 && word.length >= 8) {
-					acc.push(<br />);
+					acc.push(<br key={`br-${index}`} />);
 				} else {
 					acc.push(' ');
 				}
@@ -53,6 +54,9 @@ export function ColumnHeaderDefinition(props: Props) {
 				className={cx(classes.root)}
 				onClick={() => {
 					setOpenModal(true);
+				}}
+				nativeButtonProps={{
+					onFocus
 				}}
 			>
 				<i className={cx(fr.cx(icon), classes.mainIcon)} />
@@ -89,9 +93,10 @@ export function ColumnHeaderDefinition(props: Props) {
 const useStyles = makeStyles()(theme => ({
 	root: {
 		width: '90%',
+		height: '90%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center',
+		justifyContent: 'start',
 		alignItems: 'center',
 		padding: fr.spacing('2v'),
 		marginTop: fr.spacing('2v'),

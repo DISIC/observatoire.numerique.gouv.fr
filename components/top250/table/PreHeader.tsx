@@ -67,7 +67,7 @@ const useStyles = makeStyles()(theme => ({
 		alignItems: 'center',
 		fontWeight: 500,
 		[fr.breakpoints.down('lg')]: {
-			['&:first-child']: {
+			['&:first-of-type']: {
 				marginBottom: fr.spacing('8v')
 			}
 		}

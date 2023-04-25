@@ -23,20 +23,28 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 
 	if (slug === 'online' && typeof value === 'string')
 		return (
-			<a href={value} target="_blank" rel="noreferrer">
+			<a
+				href={value}
+				title="accéder au service en ligne"
+				target="_blank"
+				rel="noreferrer"
+			>
 				Voir le service
 			</a>
 		);
 
-	if (slug === 'satisfaction' && !isNaN(parseInt(value)))
+	if (slug === 'satisfaction' && !isNaN(parseInt(value))) {
+		const valueToDisplay = value.toString().replace('.', ',');
 		return (
 			<Link
-				href={`https://observatoire.numerique.gouv.fr/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
-				target="_blank"
+				title={`satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
+				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
+        target="_blank"
 			>
 				Détails
 			</Link>
 		);
+	}
 
 	if (slug === 'uptime' && !isNaN(parseInt(value))) return <>{value}%</>;
 	if (slug === 'performance' && !isNaN(parseInt(value)))

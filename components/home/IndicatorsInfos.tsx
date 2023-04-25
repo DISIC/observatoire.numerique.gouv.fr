@@ -22,7 +22,7 @@ export function IndicatorsInfos(props: Props) {
 			</div>
 			<div className={classes.tilesContainer}>
 				<Tile
-					imageUrl="/city-hall.svg"
+					imageUrl="/assets/city-hall.svg"
 					imageAlt="La sélection des services"
 					imageWidth={80}
 					imageHeight={80}
@@ -32,7 +32,7 @@ export function IndicatorsInfos(props: Props) {
 					title="La sélection des services"
 				/>
 				<Tile
-					imageUrl="/data-visualization.svg"
+					imageUrl="/assets/data-visualization.svg"
 					imageAlt="Le suivi des services"
 					imageWidth={80}
 					imageHeight={80}
@@ -110,7 +110,7 @@ const useStyles = makeStyles()(theme => ({
 				flexDirection: 'column',
 				alignItems: 'center',
 				marginTop: fr.spacing('8v'),
-				['& > span:first-child']: {
+				['& > span:first-of-type']: {
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'center',
@@ -123,7 +123,7 @@ const useStyles = makeStyles()(theme => ({
 						color: theme.decisions.background.actionHigh.blueFrance.default
 					}
 				},
-				['& > span:not(:first-child)']: {
+				['& > span:not(:first-of-type)']: {
 					maxWidth: fr.spacing('32v'),
 					textAlign: 'center',
 					color: theme.decisions.background.actionHigh.blueFrance.default,

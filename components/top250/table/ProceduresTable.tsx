@@ -9,6 +9,7 @@ import { useProcedureHeaders } from '@/utils/api';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
+import { SkipLinks } from '@/components/generic/SkipLinks';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -84,7 +85,7 @@ export function ProceduresTable(props: Props) {
 		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
-	const handleScrollX = (tmpIsRight: boolean) => {
+	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
 		const _userViewportAvailable = window.innerWidth - 40;
 		const _containerWidth =
 			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
@@ -94,7 +95,7 @@ export function ProceduresTable(props: Props) {
 
 		scrollRef?.current?.scrollTo({
 			left: tmpIsRight ? _containerWidth - _firstColSize : 0,
-			behavior: isSticky ? 'auto' : 'smooth'
+			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
 
 		setIsRight(tmpIsRight);
@@ -102,13 +103,13 @@ export function ProceduresTable(props: Props) {
 
 	return (
 		<div className={cx(classes.root)} ref={scrollRef}>
-			<table className={cx(classes.table)} ref={tableRef}>
+			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
 				<thead>
 					<tr ref={stickyHeaderRef}>
 						<th></th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
-								<th key={pth.label}>
+								<th key={pth.label} scope="col">
 									<ColumnHeaderDefinition
 										icon={pth.icon as FrIconClassName | RiIconClassName}
 										text={pth.label}
@@ -120,6 +121,10 @@ export function ProceduresTable(props: Props) {
 											),
 											title: pth.label
 										}}
+										onFocus={() => {
+											if (index >= 5) handleScrollX(true, true);
+											else handleScrollX(false, true);
+										}}
 									/>
 								</th>
 							);
@@ -130,6 +135,7 @@ export function ProceduresTable(props: Props) {
 								onClick={() => {
 									handleScrollX(!isRight);
 								}}
+								tabIndex={-1}
 								aria-label={
 									!isRight
 										? 'Voir les indicateurs suivants'
@@ -146,33 +152,38 @@ export function ProceduresTable(props: Props) {
 					</tr>
 				</thead>
 				<tbody>
-					{procedures.map(p => (
-						<tr key={p.id}>
-							<td>
-								<div>
-									<span>{p.title}</span>
-									<br />
-									<div className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}>
-										{p.ministere}
+					{procedures.map((p, index) => (
+						<>
+							<tr key={p.id} id={`procedure-table-row-${index}`}>
+								<td scope="row">
+									<div>
+										<span>{p.title}</span>
+										<br />
+										<div
+											className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}
+										>
+											{p.ministere}
+										</div>
+										<span className={fr.cx('fr-text--sm')}>
+											{p.administration}
+										</span>
+										<div
+											className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}
+										>
+											Volumétrie en ligne :{' '}
+											{p.volume && getDisplayedVolume(p.volume)}
+										</div>
 									</div>
-									<span className={fr.cx('fr-text--sm')}>
-										{p.administration}
-									</span>
-									<div className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}>
-										Volumétrie en ligne :{' '}
-										{p.volume && getDisplayedVolume(p.volume)}
-									</div>
-								</div>
-							</td>
-							{proceduresTableHeaders.map((pth, index) => {
-								const isProactive = p.fields.some(
-									f => f.slug === 'online' && f.label === 'Démarche proactive'
-								);
-								const field = p.fields.find(f => f.slug === pth.slug);
+								</td>
+								{proceduresTableHeaders.map((pth, index) => {
+                  const isProactive = p.fields.some(
+                    f => f.slug === 'online' && f.label === 'Démarche proactive'
+                  );
+									const field = p.fields.find(f => f.slug === pth.slug);
 
-								if (!field) return <>No</>;
-
-								if (isProactive && (index === 1 || index === 5))
+									if (!field) return <>No</>;
+                  
+                  if (isProactive && (index === 1 || index === 5))
 									return (
 										<td
 											colSpan={index === 1 ? 4 : 6}
@@ -181,25 +192,46 @@ export function ProceduresTable(props: Props) {
 											<IndicatorProactive />
 										</td>
 									);
-								else if (isProactive && field.slug !== 'online') return;
-
-								return (
-									<td key={`${p.title} ${pth.label}`}>
-										<IndicatorLabel {...field} />
-										{field.value && (
-											<IndicatorValue
-												slug={field.slug}
-												value={field.value}
-												procedureId={p.airtable_identifier}
-											/>
-										)}
-									</td>
-								);
-							})}
-							<td>
-								<div></div>
-							</td>
-						</tr>
+								  else if (isProactive && field.slug !== 'online') return;
+                  
+									return (
+										<td key={`${p.title} ${pth.label}`}>
+											<IndicatorLabel {...field} />
+											{field.value && (
+												<IndicatorValue
+													slug={field.slug}
+													value={field.value}
+													procedureId={p.airtable_identifier}
+												/>
+											)}
+										</td>
+									);
+								})}
+								<td>
+									<div></div>
+								</td>
+							</tr>
+							<tr key={`${p.id}-skiplinks`}>
+								<td colSpan={12} className={fr.cx('fr-pl-1-5v')}>
+									<SkipLinks
+										links={[
+											{
+												text: 'Aller au pied du tableau',
+												href: '#table-footer'
+											},
+											{
+												text: 'Revenir à la première ligne',
+												href: '#procedure-table-row-0'
+											},
+											{
+												text: 'Revenir au dessus du tableau',
+												href: '#procedures-section'
+											}
+										]}
+									/>
+								</td>
+							</tr>
+						</>
 					))}
 				</tbody>
 			</table>
@@ -245,28 +277,29 @@ const useStyles = makeStyles()(theme => {
 					top: '-12px',
 					zIndex: 99,
 					width: _containerWidth,
+					maxWidth: `calc(100% - ${_arrowSlideSize})`,
 					th: {
 						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
 						borderTopLeftRadius: _thRadius
 					},
-					['th:nth-child(2)']: {
+					['th:nth-of-type(2)']: {
 						borderTopLeftRadius: 0
 					},
-					['th:nth-child(-n + 5):not(:first-child)']: {
+					['th:nth-of-type(-n + 5):not(:first-of-type)']: {
 						minWidth: (_containerWidth - _firstColSize) / 5
 					},
-					['th:nth-child(n + 6)']: {
+					['th:nth-of-type(n + 6)']: {
 						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 					},
 					['th:last-child']: {
 						minWidth: _arrowSlideSize
 					},
-					['th:first-child']: {
+					['th:first-of-type']: {
 						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
 						minWidth: _firstColSize,
 						backgroundColor: theme.decisions.background.default.grey.default
 					},
-					['button:first-child']: {
+					['button:first-of-type']: {
 						fontWeight: 500,
 						fontSize: fr.typography[18].style.fontSize,
 						['&:first-of-type > i']: { display: 'none' },
@@ -274,7 +307,7 @@ const useStyles = makeStyles()(theme => {
 					}
 				},
 				['&:hover']: {
-					['td:not(:first-child)']: {
+					['td:not(:first-of-type)']: {
 						borderTopColor:
 							theme.decisions.background.actionHigh.blueFrance.hover,
 						borderBottomColor:
@@ -284,7 +317,7 @@ const useStyles = makeStyles()(theme => {
 							borderLeftWidth: 0
 						}
 					},
-					['td:first-child ']: {
+					['td:first-of-type ']: {
 						borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
 						['& > div']: {
 							borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
@@ -302,7 +335,7 @@ const useStyles = makeStyles()(theme => {
 					marginLeft: 'auto',
 					marginRight: 'auto'
 				},
-				['&:first-child']: {
+				['&:first-of-type']: {
 					position: 'sticky',
 					left: 0,
 					backgroundColor: theme.decisions.background.contrast.info.default,
@@ -320,7 +353,7 @@ const useStyles = makeStyles()(theme => {
 						borderTopRightRadius: _thRadius
 					}
 				},
-				['&:not(:first-child):not(:last-child)']: {
+				['&:not(:first-of-type):not(:last-child)']: {
 					verticalAlign: 'top'
 				}
 			},
@@ -328,16 +361,16 @@ const useStyles = makeStyles()(theme => {
 				backgroundColor: theme.decisions.background.default.grey.default,
 				border: '1px solid transparent',
 				position: 'relative',
-				['&:nth-child(-n + 5)']: {
+				['&:nth-of-type(-n + 5)']: {
 					width: (_containerWidth - _firstColSize) / 5
 				},
-				['&:nth-child(n + 6)']: {
+				['&:nth-of-type(n + 6)']: {
 					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 				},
-				['&:not(:first-child)']: {
+				['&:not(:first-of-type)']: {
 					textAlign: 'center'
 				},
-				['&:first-child']: {
+				['&:first-of-type']: {
 					position: 'sticky',
 					zIndex: 9,
 					left: 0,
@@ -355,7 +388,7 @@ const useStyles = makeStyles()(theme => {
 						padding: fr.spacing('4v'),
 						borderTopLeftRadius: _thRadius,
 						borderBottomLeftRadius: _thRadius,
-						['& > span:first-child']: {
+						['& > span:first-of-type']: {
 							fontWeight: 'bold'
 						}
 					}
