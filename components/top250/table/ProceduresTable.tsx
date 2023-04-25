@@ -335,6 +335,12 @@ const useStyles = makeStyles()(theme => {
 					marginLeft: 'auto',
 					marginRight: 'auto'
 				},
+				['&:nth-of-type(-n + 5)']: {
+					width: (_containerWidth - _firstColSize) / 5
+				},
+				['&:nth-of-type(n + 6)']: {
+					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+				},
 				['&:first-of-type']: {
 					position: 'sticky',
 					left: 0,
@@ -361,12 +367,6 @@ const useStyles = makeStyles()(theme => {
 				backgroundColor: theme.decisions.background.default.grey.default,
 				border: '1px solid transparent',
 				position: 'relative',
-				['&:nth-of-type(-n + 5)']: {
-					width: (_containerWidth - _firstColSize) / 5
-				},
-				['&:nth-of-type(n + 6)']: {
-					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
-				},
 				['&:not(:first-of-type)']: {
 					textAlign: 'center'
 				},
