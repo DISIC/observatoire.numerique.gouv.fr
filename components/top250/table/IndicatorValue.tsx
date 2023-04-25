@@ -13,10 +13,8 @@ const acceptedSlugValues: IndicatorSlug[] = [
 	'online',
 	'satisfaction',
 	'handicap',
-	'simplicity',
 	'uptime',
-	'performance',
-	'usage'
+	'performance'
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
@@ -41,19 +39,16 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			<Link
 				title={`satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
 				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
+				target="_blank"
 			>
-				{valueToDisplay} / 10
+				Détails
 			</Link>
 		);
 	}
 
 	if (slug === 'uptime' && !isNaN(parseInt(value))) return <>{value}%</>;
-	if (slug === 'usage' && !isNaN(parseFloat(value)))
-		return <>{Math.round(parseFloat(value) * 1000) / 10}%</>;
 	if (slug === 'performance' && !isNaN(parseInt(value)))
 		return <>{parseInt(value) / 1000}s</>;
-	if (slug === 'simplicity' && !isNaN(parseInt(value)))
-		return <>{value} / 10</>;
 	if (slug === 'handicap' && !isNaN(parseInt(value))) return <>{value}%</>;
 
 	return <></>;

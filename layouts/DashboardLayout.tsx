@@ -51,7 +51,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				homeLinkProps={{
 					href: '/administration',
 					title:
-						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
+						"Administration - L'observatoire de la qualité des démarches en ligne"
 				}}
 				quickAccessItems={[
 					{

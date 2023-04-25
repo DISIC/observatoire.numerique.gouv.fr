@@ -1,149 +1,34 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { table } from '../../../utils/airtable';
 import { ProcedureWithFields } from '../procedures/types';
-import { Field, IndicatorColor, IndicatorSlug } from '@prisma/client';
+import { Field } from '@prisma/client';
 import { getToken } from 'next-auth/jwt';
+import {
+	getColorFromLabel,
+	getLabelFromValue,
+	getRoundedDecimalString
+} from './utils';
 
 const field_names = {
-	edition: '📡 Édition',
-	id: '🕶 ID',
+	edition: 'Lien vers statistiques édition',
+	id: 'ID',
 	link: 'Lien',
-	title: 'Nom 💼 📄',
+	title: 'Nom de la démarche / projet',
 	administration: 'Administration',
 	sousorg: 'Ministère opérationnel',
 	ministere: 'Ministère politique',
 	volume: 'Volumétrie totale',
 	indicators: {
-		online: '📊  En ligne',
-		satisfaction: '[Dashlord] - JDMA note satisfaction',
-		simplicity: '[Dashlord] - JDMA note facilité',
-		uptime: '🕶Taux de disponibilité',
-		performance: '🕶Temps de réponse (milliseconde)',
-		handicap: 'Taux global RGAA',
-		dlnuf: '📊  Dites-le nous une fois sans carrés',
-		usage: '🕶 Volumétrie en ligne',
-		auth: '📊  FranceConnect'
+		online: '📊 En ligne',
+		satisfaction: '📊 Satisfaction',
+		simplicity: '2️⃣ Complexité du langage',
+		uptime: '2️⃣ Taux de disponibilité',
+		performance: '2️⃣ Temps moyen de chargement',
+		handicap: '📊 Prise en compte du handicap',
+		dlnuf: '🧜‍♀️ Note DLNUF',
+		usage: 'Volumétrie en ligne',
+		auth: '2️⃣ FranceConnect'
 	}
-};
-const getLabelFromValue = (slug: IndicatorSlug, value: string): string => {
-	switch (slug) {
-		case 'online':
-			if (['Oui', 'Non', 'Partiel', 'Bêta'].includes(value)) return value;
-			if (value === 'En cours de déploiement local') return 'En cours';
-			return 'Non';
-		case 'satisfaction':
-			const satisfactionIntValue = parseInt(value);
-			if (isNaN(satisfactionIntValue)) {
-				if (value === 'Nombre insuffisant d’avis')
-					return "Nombre d'avis insuffisant";
-				if (value === 'En attente') return 'À venir';
-			}
-			if (satisfactionIntValue < 5) return 'Mauvaise';
-			if (satisfactionIntValue < 8) return 'Moyenne';
-			return 'Très bonne';
-		case 'simplicity':
-			const simplicityIntValue = parseInt(value);
-			if (isNaN(simplicityIntValue)) return "Nombre d'avis insuffisant";
-			if (simplicityIntValue < 5) return 'Mauvaise';
-			if (simplicityIntValue < 8) return 'Moyenne';
-			return 'Très bonne';
-		case 'uptime':
-			const uptimeIntValue = parseFloat(value);
-			if (isNaN(uptimeIntValue)) return 'À venir';
-			if (uptimeIntValue < 0.985) return 'Mauvaise';
-			if (uptimeIntValue < 0.99) return 'Moyenne';
-			return 'Très bonne';
-		case 'performance':
-			const performanceIntValue = parseInt(value);
-			if (isNaN(performanceIntValue)) return 'À venir';
-			if (performanceIntValue > 800) return 'Lent';
-			if (performanceIntValue > 400) return 'Moyen';
-			return 'Très rapide';
-		case 'dlnuf':
-			const dlnufIntValue = parseInt(value);
-			if (isNaN(dlnufIntValue)) return 'Non communiqué';
-			if (dlnufIntValue < 4) return 'Mauvais';
-			if (dlnufIntValue < 6) return 'Moyen';
-			if (dlnufIntValue < 8) return 'Bon';
-			return 'Très bon';
-		case 'handicap':
-			const handicapIntValue = parseFloat(value);
-			if (isNaN(handicapIntValue)) return 'Indéterminée';
-			if (handicapIntValue < 0.5) return 'Non';
-			if (handicapIntValue < 1) return 'Partielle';
-			return 'Oui';
-		case 'usage':
-			const usageFloatValue = parseFloat(value);
-			if (isNaN(usageFloatValue)) return 'À venir';
-			if (usageFloatValue < 0.4) return 'Faible';
-			if (usageFloatValue < 0.75) return 'Moyenne';
-			if (usageFloatValue < 1) return 'Élevée';
-			return 'Totale';
-		case 'auth':
-			if (['FranceConnect', 'FranceConnect +', 'Non'].includes(value))
-				return value;
-			return 'À venir';
-		default:
-			return value;
-	}
-};
-
-const getColorFromLabel = (
-	slug: IndicatorSlug,
-	label: string
-): IndicatorColor => {
-	switch (slug) {
-		case 'online':
-			if (label === 'Oui') return 'green';
-			else if (label === 'Partiel') return 'orange';
-			else if (label === 'Bêta') return 'orange';
-			else if (label === 'En cours') return 'blue';
-			else return 'red';
-		case 'satisfaction':
-			if (label === "Nombre d'avis insuffisant") return 'gray';
-			if (label === 'À venir') return 'blue';
-			if (label === 'Moyenne') return 'orange';
-			if (label === 'Mauvaise') return 'red';
-			else return 'green';
-		case 'simplicity':
-			if (label === "Nombre d'avis insuffisant") return 'gray';
-			if (label === 'Moyenne') return 'orange';
-			if (label === 'Mauvaise') return 'red';
-		case 'uptime':
-			if (label === 'À venir') return 'gray';
-			if (label === 'Moyenne') return 'orange';
-			if (label === 'Mauvaise') return 'red';
-			else return 'green';
-		case 'performance':
-			if (label === 'À venir') return 'gray';
-			if (label === 'Moyen') return 'orange';
-			if (label === 'Lent') return 'red';
-			else return 'green';
-		case 'dlnuf':
-			if (label === 'Non communiqué') return 'gray';
-			if (label === 'Bon') return 'orange';
-			if (label === 'Moyen') return 'orange';
-			if (label === 'Mauvais') return 'red';
-			else return 'green';
-		case 'handicap':
-			if (label === 'Oui') return 'green';
-			if (label === 'Partielle') return 'orange';
-			if (label === 'Non') return 'red';
-			else return 'gray';
-		case 'usage':
-			return 'gray';
-		case 'auth':
-			if (label === 'À venir') return 'gray';
-			if (label === 'Non') return 'red';
-			return 'blue';
-		default:
-			return 'gray';
-	}
-};
-
-const getRoundedDecimalString = (value: string): string | null => {
-	if (isNaN(parseInt(value))) return null;
-	return (Math.round(parseFloat(value) * 10) / 10).toString();
 };
 
 const recordToProcedure = (record: any): ProcedureWithFields => {
