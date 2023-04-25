@@ -26,7 +26,7 @@ export const getLabelFromValue = (
 				if (value === 'Non applicable') return value;
 				else return 'À venir';
 			}
-			if (!value) return 'En attente';
+			if (!value) return 'À venir';
 			return `${markIntValue.toFixed(1)} / 10`;
 		case 'uptime':
 			const uptimeIntValue = parseFloat(value);

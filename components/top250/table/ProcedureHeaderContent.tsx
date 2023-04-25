@@ -41,7 +41,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 							/>
 						</span>
 						<span>
-							La démarche est en attente d’être déployé sur tout le territoire.
+							La démarche est À venir d’être déployé sur tout le territoire.
 						</span>
 					</p>
 
@@ -109,7 +109,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 					</p>
 					<p className={classes.indicatorContainer}>
 						<span className={cx(classes.label)}>
-							<IndicatorLabel label="En attente" color="blue" />
+							<IndicatorLabel label="À venir" color="blue" />
 						</span>
 						<span>Le téléservice ne permet pas encore le recueil des avis</span>
 					</p>
@@ -266,7 +266,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 					</p>
 					<p className={classes.indicatorContainer}>
 						<span className={cx(classes.label)}>
-							<IndicatorLabel label="En attente" color="blue" />
+							<IndicatorLabel label="À venir" color="blue" />
 						</span>
 						<span>
 							Cet indicateur n’a pas encore pu être testé. Un test devrait être
@@ -323,7 +323,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 					</p>
 					<p className={classes.indicatorContainer}>
 						<span className={cx(classes.label)}>
-							<IndicatorLabel label="En attente" color="blue" />
+							<IndicatorLabel label="À venir" color="blue" />
 						</span>
 						<span>
 							Cet indicateur n’a pas encore pu être testé. Un test devrait être
@@ -400,7 +400,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 					</p>
 					<p className={classes.indicatorContainer}>
 						<span className={cx(classes.label)}>
-							<IndicatorLabel label="En attente" color="blue" />
+							<IndicatorLabel label="À venir" color="blue" />
 						</span>
 						<span>
 							Cet indicateur n’a pas encore pu être testé. Un test devrait être
