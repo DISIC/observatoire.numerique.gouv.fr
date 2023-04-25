@@ -171,7 +171,9 @@ export function ProceduresTable(props: Props) {
 											className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}
 										>
 											Volumétrie en ligne :{' '}
-											{p.volume && getDisplayedVolume(p.volume)}
+											{p.volume
+												? getDisplayedVolume(p.volume)
+												: 'non communiquée'}
 										</div>
 									</div>
 								</td>

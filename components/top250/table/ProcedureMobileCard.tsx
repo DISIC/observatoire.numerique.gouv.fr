@@ -38,11 +38,12 @@ export function ProcedureMobileCard(props: Props) {
 				<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>{procedure.title}</div>
 				<div className={fr.cx('fr-text--xs', 'fr-mb-0')}>
 					<div>{procedure.ministere}</div>
-					{procedure.volume && (
-						<div className={fr.cx('fr-mt-3v')}>
-							Volumétrie en ligne : {getDisplayedVolume(procedure.volume)}
-						</div>
-					)}
+					<div className={fr.cx('fr-mt-3v')}>
+						Volumétrie en ligne :{' '}
+						{procedure.volume
+							? getDisplayedVolume(procedure.volume)
+							: 'non communiquée'}
+					</div>
 				</div>
 			</div>
 			<hr className={fr.cx('fr-pb-1v', 'fr-mt-3v')} />
