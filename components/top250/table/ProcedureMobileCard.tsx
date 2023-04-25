@@ -9,6 +9,7 @@ import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { ProcedureHeader } from '@prisma/client';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
+import { IndicatorProactive } from './IndicatorProactive';
 
 type Props = {
 	procedure: ProcedureWithFields;
@@ -21,8 +22,18 @@ export function ProcedureMobileCard(props: Props) {
 
 	const [toogleSwitch, setToogleSwitch] = useState<boolean>(false);
 
+	const isProactive = procedure.fields.some(
+		f => f.slug === 'online' && f.label === 'Démarche proactive'
+	);
+
 	return (
-		<div className={cx(classes.root)}>
+		<div
+			className={cx(classes.root)}
+			style={{
+				borderBottomLeftRadius: isProactive ? fr.spacing('2v') : 0,
+				borderBottomRightRadius: isProactive ? fr.spacing('2v') : 0
+			}}
+		>
 			<div className={cx(classes.mainInfos)}>
 				<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>{procedure.title}</div>
 				<div className={fr.cx('fr-text--xs', 'fr-mb-0')}>
@@ -42,6 +53,9 @@ export function ProcedureMobileCard(props: Props) {
 						const field = procedure.fields.find(f => pth.slug === f.slug);
 
 						if (!field) return <></>;
+						if (isProactive && field.slug === 'satisfaction')
+							return <IndicatorProactive />;
+						if (isProactive && field.slug !== 'online') return <></>;
 
 						const canBeSeen = index <= 4 || toogleSwitch;
 						return (
@@ -76,17 +90,19 @@ export function ProcedureMobileCard(props: Props) {
 						);
 					})}
 			</TransitionGroup>
-			<button
-				type="button"
-				className={classes.toogle}
-				onClick={() => setToogleSwitch(!toogleSwitch)}
-			>
-				<i
-					className={fr.cx(
-						toogleSwitch ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'
-					)}
-				/>
-			</button>
+			{!isProactive && (
+				<button
+					type="button"
+					className={classes.toogle}
+					onClick={() => setToogleSwitch(!toogleSwitch)}
+				>
+					<i
+						className={fr.cx(
+							toogleSwitch ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'
+						)}
+					/>
+				</button>
+			)}
 		</div>
 	);
 }
