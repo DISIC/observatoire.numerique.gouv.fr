@@ -29,6 +29,7 @@ export async function getProcedures(
 	if (search)
 		whereRequest.OR = [
 			{ title: { contains: search, mode: 'insensitive' } },
+			{ title_normalized: { contains: search, mode: 'insensitive' } },
 			{ ministere: { contains: search, mode: 'insensitive' } },
 			{ sousorg: { contains: search, mode: 'insensitive' } },
 			{ administration: { contains: search, mode: 'insensitive' } }
