@@ -9,8 +9,8 @@ export function IndicatorProactive(props: Props) {
 		<div className={classes.root}>
 			<i className={fr.cx('ri-dvd-line')} />
 			<p>
-				Grâce au partage d’informations entre administrations, ce service est
-				rendu proactif et octroie directement les droits au citoyen ou usager...
+				Grâce au partage d’informations entre administrations, ce service
+				octroie automatiquement les droits aux personnes concernées.
 			</p>
 		</div>
 	);
