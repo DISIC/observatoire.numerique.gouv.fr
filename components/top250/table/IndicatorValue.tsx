@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 type Props = {
 	slug: IndicatorSlug;
-	procedureId: number;
+	procedureId: number | null;
 	value: string;
 };
 
@@ -33,7 +33,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			</a>
 		);
 
-	if (slug === 'satisfaction' && !isNaN(parseInt(value))) {
+	if (procedureId && slug === 'satisfaction' && !isNaN(parseInt(value))) {
 		const valueToDisplay = value.toString().replace('.', ',');
 		return (
 			<Link
