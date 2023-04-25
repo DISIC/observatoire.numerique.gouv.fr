@@ -329,17 +329,19 @@ const useStyles = makeStyles()(theme => {
 					}
 				}
 			},
-			th: {
-				backgroundColor: theme.decisions.background.default.grey.default,
-				['& > button']: {
-					marginLeft: 'auto',
-					marginRight: 'auto'
-				},
+			['th, td']: {
 				['&:nth-of-type(-n + 5)']: {
 					width: (_containerWidth - _firstColSize) / 5
 				},
 				['&:nth-of-type(n + 6)']: {
 					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+				}
+			},
+			th: {
+				backgroundColor: theme.decisions.background.default.grey.default,
+				['& > button']: {
+					marginLeft: 'auto',
+					marginRight: 'auto'
 				},
 				['&:first-of-type']: {
 					position: 'sticky',
