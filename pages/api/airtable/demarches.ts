@@ -15,7 +15,7 @@ const field_names = {
 	link: 'Lien',
 	title: 'Nom de la démarche / projet',
 	administration: 'Administration',
-	sousorg: 'Ministère opérationnel',
+	sousorg: 'Ministère politique',
 	ministere: 'Ministère politique',
 	volume: 'Volumétrie totale',
 	indicators: {
