@@ -279,7 +279,7 @@ const useStyles = makeStyles()(theme => {
 					top: '-12px',
 					zIndex: 99,
 					width: _containerWidth,
-					maxWidth: `calc(100% - ${_arrowSlideSize})`,
+					maxWidth: `calc(100vw - 1rem - ${_arrowSlideSize}px)`,
 					th: {
 						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
 						borderTopLeftRadius: _thRadius
