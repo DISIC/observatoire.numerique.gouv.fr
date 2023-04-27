@@ -131,7 +131,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				(record.get(field_names.indicators.handicap) * 100).toString()
 			),
 			procedureId: 'preview',
-			noBackground: false
+			noBackground:
+				getLabelFromValue(
+					'handicap',
+					record.get(field_names.indicators.satisfaction)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
@@ -175,7 +179,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				parseInt(record.get(field_names.volume))
 			).toString(),
 			procedureId: 'preview',
-			noBackground: null
+			noBackground:
+				getLabelFromValue(
+					'usage',
+					record.get(field_names.indicators.satisfaction)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
@@ -225,7 +233,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			),
 			value: null,
 			procedureId: 'preview',
-			noBackground: null
+			noBackground:
+				getLabelFromValue(
+					'auth',
+					record.get(field_names.indicators.satisfaction)
+				) === 'À venir'
 		}
 	];
 
