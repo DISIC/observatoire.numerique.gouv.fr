@@ -1,5 +1,17 @@
 import { IndicatorColor, IndicatorSlug } from '@prisma/client';
 
+export const getDlnufValue = (value: string | string[]): number | undefined => {
+	const percentageRegex = /\d+(\.\d+)?%/;
+	if (value) {
+		const match = (typeof value === 'object' ? value[0] : value).match(
+			percentageRegex
+		);
+		if (match && match[0]) {
+			return parseInt(match[0]);
+		}
+	}
+};
+
 export const getLabelFromValue = (
 	slug: IndicatorSlug,
 	value: string
@@ -41,21 +53,12 @@ export const getLabelFromValue = (
 			if (performanceIntValue > 400) return 'Partiel';
 			return 'Optimal';
 		case 'dlnuf':
-			const percentageRegex = /\d+%/;
-			if (value) {
-				const match = (typeof value === 'object' ? value[0] : value).match(
-					percentageRegex
-				);
-				if (match && match[0]) {
-					const dlnufIntValue = parseInt(match[0]);
-					if (isNaN(dlnufIntValue)) return 'À venir';
-					if (dlnufIntValue < 30) return 'Faible';
-					if (dlnufIntValue < 60) return 'Partiel';
-					return 'Optimal';
-				}
-			}
 			if (['À venir', 'Non applicable'].includes(value)) return value;
-			return 'À venir';
+			const dlnufIntValue = getDlnufValue(value);
+			if (!dlnufIntValue) return 'À venir';
+			if (dlnufIntValue < 30) return 'Faible';
+			if (dlnufIntValue < 60) return 'Partiel';
+			return 'Optimal';
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
 			if (isNaN(handicapIntValue)) {

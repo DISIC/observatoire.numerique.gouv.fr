@@ -5,6 +5,7 @@ import { Field } from '@prisma/client';
 import { getToken } from 'next-auth/jwt';
 import {
 	getColorFromLabel,
+	getDlnufValue,
 	getLabelFromValue,
 	getRoundedDecimalString
 } from './utils';
@@ -32,6 +33,7 @@ const field_names = {
 };
 
 const recordToProcedure = (record: any): ProcedureWithFields => {
+	const dlnufValue = getDlnufValue(record.get(field_names.indicators.dlnuf));
 	let fields: Field[] = [
 		{
 			id: 'preview',
@@ -156,7 +158,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				'dlnuf',
 				getLabelFromValue('dlnuf', record.get(field_names.indicators.dlnuf))
 			),
-			value: null,
+			value: dlnufValue ? dlnufValue.toString() : null,
 			procedureId: 'preview',
 			noBackground:
 				getLabelFromValue('dlnuf', record.get(field_names.indicators.dlnuf)) ===
