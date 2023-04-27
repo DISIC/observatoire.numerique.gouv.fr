@@ -49,7 +49,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			noBackground:
 				getLabelFromValue(
 					'online',
-					record.get(field_names.indicators.satisfaction)
+					record.get(field_names.indicators.online)
 				) === 'À venir'
 		},
 		{
@@ -138,7 +138,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			noBackground:
 				getLabelFromValue(
 					'handicap',
-					record.get(field_names.indicators.satisfaction)
+					record.get(field_names.indicators.handicap)
 				) === 'À venir'
 		},
 		{
@@ -184,10 +184,8 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			).toString(),
 			procedureId: 'preview',
 			noBackground:
-				getLabelFromValue(
-					'usage',
-					record.get(field_names.indicators.satisfaction)
-				) === 'À venir'
+				getLabelFromValue('usage', record.get(field_names.indicators.usage)) ===
+				'À venir'
 		},
 		{
 			id: 'preview',
@@ -238,10 +236,8 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			value: null,
 			procedureId: 'preview',
 			noBackground:
-				getLabelFromValue(
-					'auth',
-					record.get(field_names.indicators.satisfaction)
-				) === 'À venir'
+				getLabelFromValue('auth', record.get(field_names.indicators.auth)) ===
+				'À venir'
 		}
 	];
 
