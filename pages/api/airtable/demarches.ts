@@ -115,7 +115,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				(record.get(field_names.indicators.uptime) * 100).toString()
 			),
 			procedureId: 'preview',
-			noBackground: false
+			noBackground:
+				getLabelFromValue(
+					'uptime',
+					record.get(field_names.indicators.uptime)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
@@ -223,7 +227,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				record.get(field_names.indicators.performance)
 			).toString(),
 			procedureId: 'preview',
-			noBackground: null
+			noBackground:
+				getLabelFromValue(
+					'performance',
+					record.get(field_names.indicators.performance)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
