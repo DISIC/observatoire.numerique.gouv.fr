@@ -41,7 +41,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
 				target="_blank"
 			>
-				Détails
+				Voir le détail
 			</Link>
 		);
 	}

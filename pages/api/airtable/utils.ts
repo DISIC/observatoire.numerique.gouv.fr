@@ -41,12 +41,21 @@ export const getLabelFromValue = (
 			if (performanceIntValue > 400) return 'Partiel';
 			return 'Optimal';
 		case 'dlnuf':
-			const dlnufIntValue = parseInt(value);
-			if (isNaN(dlnufIntValue)) return 'Non communiqué';
-			if (dlnufIntValue < 4) return 'Faible';
-			if (dlnufIntValue < 6) return 'Partiel';
-			if (dlnufIntValue < 8) return 'Bon';
-			return 'Optimal';
+			const percentageRegex = /\d+%/;
+			if (value) {
+				const match = (typeof value === 'object' ? value[0] : value).match(
+					percentageRegex
+				);
+				if (match && match[0]) {
+					const dlnufIntValue = parseInt(match[0]);
+					if (isNaN(dlnufIntValue)) return 'À venir';
+					if (dlnufIntValue < 30) return 'Faible';
+					if (dlnufIntValue < 60) return 'Partiel';
+					return 'Optimal';
+				}
+			}
+			if (['À venir', 'Non applicable'].includes(value)) return value;
+			return 'À venir';
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
 			if (isNaN(handicapIntValue)) {
@@ -102,11 +111,10 @@ export const getColorFromLabel = (
 			if (label === 'Lent') return 'red';
 			return 'green';
 		case 'dlnuf':
-			if (label === 'Non communiqué') return 'gray';
-			if (label === 'Bon') return 'orange';
+			if (label === 'Optimal') return 'green';
 			if (label === 'Partiel') return 'orange';
 			if (label === 'Faible') return 'red';
-			return 'green';
+			return 'gray';
 		case 'handicap':
 			if (label === 'Optimal') return 'green';
 			if (label === 'Partiel') return 'orange';

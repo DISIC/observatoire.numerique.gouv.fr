@@ -160,7 +160,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			procedureId: 'preview',
 			noBackground:
 				getLabelFromValue('dlnuf', record.get(field_names.indicators.dlnuf)) ===
-				'Non communiqué'
+				'À venir'
 		},
 		{
 			id: 'preview',
