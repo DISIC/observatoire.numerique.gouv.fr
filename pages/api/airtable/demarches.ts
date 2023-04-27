@@ -46,7 +46,11 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			),
 			value: record.get(field_names.link),
 			procedureId: 'preview',
-			noBackground: false
+			noBackground:
+				getLabelFromValue(
+					'online',
+					record.get(field_names.indicators.satisfaction)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',

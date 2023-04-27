@@ -81,7 +81,7 @@ export const getColorFromLabel = (
 			if (label === 'Oui') return 'green';
 			if (label === 'Partiel') return 'orange';
 			if (label === 'Bêta') return 'orange';
-			if (label === 'En cours') return 'gray';
+			if (label === 'À venir') return 'gray';
 			if (label === 'Démarche proactive') return 'blue';
 			return 'red';
 		case 'satisfaction':
