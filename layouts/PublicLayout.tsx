@@ -115,7 +115,7 @@ const PublicLayout = (props: Props) => {
 				className={cx(classes.header)}
 				brandTop={brandTop}
 				homeLinkProps={{
-					href: '/',
+					href: isXWikiUserLogged ? '/Main' : '/',
 					target: '_self',
 					title: "Accueil - L'observatoire de la qualité des démarches en ligne"
 				}}
