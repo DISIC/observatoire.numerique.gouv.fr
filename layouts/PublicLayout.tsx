@@ -65,7 +65,7 @@ const PublicLayout = (props: Props) => {
 			linkProps: {
 				href: isXWikiUserLogged
 					? '/logout/Main/WebHome'
-					: '/login/XWiki/XWikiLogin?xredirect=%2Fobservatoire%2F',
+					: '/login/XWiki/XWikiLogin',
 				target: '_self'
 			},
 			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
@@ -116,6 +116,7 @@ const PublicLayout = (props: Props) => {
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/',
+					target: '_self',
 					title: "Accueil - L'observatoire de la qualité des démarches en ligne"
 				}}
 				quickAccessItems={accessItems}
