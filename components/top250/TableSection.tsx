@@ -68,13 +68,7 @@ export function Top250TableSection(props: Props) {
 		return (
 			<>
 				<SkipLinks
-					links={[
-						{ text: 'Aller au pied du tableau', href: '#table-footer' },
-						{
-							text: 'Aller à la première ligne',
-							href: '#procedure-table-row-0'
-						}
-					]}
+					links={[{ text: 'Aller au pied du tableau', href: '#table-footer' }]}
 				/>
 				<div className={classes.tableDesktop}>
 					<ProceduresTable procedures={displayedProcedures} />

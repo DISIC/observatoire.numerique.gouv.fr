@@ -234,14 +234,6 @@ export function ProceduresTable(props: Props) {
 									<SkipLinks
 										links={[
 											{
-												text: 'Aller au pied du tableau',
-												href: '#table-footer'
-											},
-											{
-												text: 'Revenir à la première ligne',
-												href: '#procedure-table-row-0'
-											},
-											{
 												text: 'Revenir au dessus du tableau',
 												href: '#procedures-section'
 											}
