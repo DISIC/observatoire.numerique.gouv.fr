@@ -10,6 +10,7 @@ import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
+import Button from '@codegouvfr/react-dsfr/Button';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -143,12 +144,14 @@ export function ProceduresTable(props: Props) {
 							);
 						})}
 						<th className={classes.arrowTh}>
-							<button
+							<Button
 								className={cx(classes.arrow)}
 								onClick={() => {
 									handleScrollX(!isRight);
 								}}
-								tabIndex={-1}
+								nativeButtonProps={{
+									tabIndex: -1
+								}}
 								aria-label={
 									!isRight
 										? 'Voir les indicateurs suivants'
@@ -160,7 +163,7 @@ export function ProceduresTable(props: Props) {
 										!isRight ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'
 									)}
 								/>
-							</button>
+							</Button>
 						</th>
 					</tr>
 				</thead>
@@ -442,10 +445,6 @@ const useStyles = makeStyles()(theme => {
 			alignItems: 'center',
 			justifyContent: 'center',
 			borderTopRightRadius: _thRadius,
-			['&:hover']: {
-				backgroundColor:
-					theme.decisions.background.actionHigh.blueFrance.hover + ' !important'
-			},
 			i: {
 				color: theme.decisions.background.default.grey.default,
 				display: 'block !important'

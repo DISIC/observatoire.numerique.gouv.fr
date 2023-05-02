@@ -10,6 +10,7 @@ import { ProcedureHeader } from '@prisma/client';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
+import Button from '@codegouvfr/react-dsfr/Button';
 
 type Props = {
 	procedure: ProcedureWithFields;
@@ -92,17 +93,15 @@ export function ProcedureMobileCard(props: Props) {
 					})}
 			</TransitionGroup>
 			{!isProactive && (
-				<button
+				<Button
 					type="button"
 					className={classes.toogle}
 					onClick={() => setToogleSwitch(!toogleSwitch)}
 				>
-					<i
-						className={fr.cx(
-							toogleSwitch ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'
-						)}
-					/>
-				</button>
+					{toogleSwitch
+						? "Voir moins d'indicateurs"
+						: "Voir plus d'indicateurs"}
+				</Button>
 			)}
 		</div>
 	);
@@ -150,8 +149,8 @@ const useStyles = makeStyles()(theme => ({
 		transform: 'translateY(100%)translateX(-1px)',
 		borderBottomRightRadius: fr.spacing('2v'),
 		borderBottomLeftRadius: fr.spacing('2v'),
-		paddingTop: fr.spacing('1v'),
-		paddingBottom: fr.spacing('1v')
+		paddingTop: fr.spacing('2v'),
+		paddingBottom: fr.spacing('2v')
 	},
 	fieldTransition: {
 		position: 'relative',
