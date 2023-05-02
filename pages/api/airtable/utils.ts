@@ -17,7 +17,7 @@ export const getLabelFromValue = (
 				].includes(value)
 			)
 				return value;
-			if (value === 'En cours de déploiement local') return 'En cours';
+			if (value === 'En cours de déploiement local') return 'Déploiement local';
 			return 'Non';
 		case 'satisfaction':
 		case 'simplicity':
@@ -82,6 +82,7 @@ export const getColorFromLabel = (
 			if (label === 'Partiel') return 'orange';
 			if (label === 'Bêta') return 'orange';
 			if (label === 'À venir') return 'gray';
+			if (label === 'Déploiement local') return 'green';
 			if (label === 'Démarche proactive') return 'blue';
 			return 'red';
 		case 'satisfaction':
