@@ -10,6 +10,7 @@ import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
+import Button from '@codegouvfr/react-dsfr/Button';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -24,6 +25,7 @@ export function ProceduresTable(props: Props) {
 	const stickyHeaderRef = useRef<HTMLTableRowElement | null>(null);
 	const tableRef = useRef<HTMLTableElement | null>(null);
 	const scrollRef = useRef<HTMLDivElement | null>(null);
+	const firstColRef = useRef<HTMLTableHeaderCellElement | null>(null);
 
 	function contentScrollHeader() {
 		if (stickyHeaderRef.current && scrollRef.current)
@@ -86,19 +88,31 @@ export function ProceduresTable(props: Props) {
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
 	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
-		const _userViewportAvailable = window.innerWidth - 40;
-		const _containerWidth =
-			_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
-		const _firstColSize = _containerWidth * 0.28;
-		const isSticky =
-			stickyHeaderRef?.current?.classList.contains('sticked-row');
+		if (!scrollRef.current || !firstColRef.current || !stickyHeaderRef.current)
+			return;
 
-		scrollRef?.current?.scrollTo({
-			left: tmpIsRight ? _containerWidth - _firstColSize : 0,
+		const _arrowSlideSize = 40;
+		const _containerWidth = scrollRef.current.clientWidth;
+		const _firstColSize = firstColRef.current.clientWidth;
+		const isSticky = stickyHeaderRef.current.classList.contains('sticked-row');
+
+		const scrollLeft = tmpIsRight
+			? _containerWidth -
+			  _firstColSize -
+			  _arrowSlideSize +
+			  scrollRef.current.scrollLeft
+			: 0;
+
+		scrollRef.current.scrollTo({
+			left: scrollLeft,
 			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
 
-		setIsRight(tmpIsRight);
+		const hasReachedMaxScroll =
+			scrollLeft >=
+			scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+
+		setIsRight(hasReachedMaxScroll);
 	};
 
 	return (
@@ -106,7 +120,7 @@ export function ProceduresTable(props: Props) {
 			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
 				<thead>
 					<tr ref={stickyHeaderRef}>
-						<th></th>
+						<th ref={firstColRef}>Nom des démarches</th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
 								<th key={pth.label} scope="col">
@@ -130,12 +144,14 @@ export function ProceduresTable(props: Props) {
 							);
 						})}
 						<th className={classes.arrowTh}>
-							<button
+							<Button
 								className={cx(classes.arrow)}
 								onClick={() => {
 									handleScrollX(!isRight);
 								}}
-								tabIndex={-1}
+								nativeButtonProps={{
+									tabIndex: -1
+								}}
 								aria-label={
 									!isRight
 										? 'Voir les indicateurs suivants'
@@ -147,7 +163,7 @@ export function ProceduresTable(props: Props) {
 										!isRight ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'
 									)}
 								/>
-							</button>
+							</Button>
 						</th>
 					</tr>
 				</thead>
@@ -218,14 +234,6 @@ export function ProceduresTable(props: Props) {
 									<SkipLinks
 										links={[
 											{
-												text: 'Aller au pied du tableau',
-												href: '#table-footer'
-											},
-											{
-												text: 'Revenir à la première ligne',
-												href: '#procedure-table-row-0'
-											},
-											{
 												text: 'Revenir au dessus du tableau',
 												href: '#procedures-section'
 											}
@@ -279,7 +287,7 @@ const useStyles = makeStyles()(theme => {
 					top: '-12px',
 					zIndex: 99,
 					width: _containerWidth,
-					maxWidth: `calc(100vw - 1rem - ${_arrowSlideSize}px)`,
+					maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 					th: {
 						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
 						borderTopLeftRadius: _thRadius
@@ -299,7 +307,8 @@ const useStyles = makeStyles()(theme => {
 					['th:first-of-type']: {
 						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
 						minWidth: _firstColSize,
-						backgroundColor: theme.decisions.background.default.grey.default
+						backgroundColor: theme.decisions.background.default.grey.default,
+						color: theme.decisions.background.default.grey.default
 					},
 					['button:first-of-type']: {
 						fontWeight: 500,
@@ -349,6 +358,7 @@ const useStyles = makeStyles()(theme => {
 					position: 'sticky',
 					left: 0,
 					backgroundColor: theme.decisions.background.contrast.info.default,
+					color: theme.decisions.background.contrast.info.default,
 					zIndex: 11
 				},
 				['&:nth-of-type(2), &:nth-of-type(7)']: {
@@ -427,10 +437,6 @@ const useStyles = makeStyles()(theme => {
 			alignItems: 'center',
 			justifyContent: 'center',
 			borderTopRightRadius: _thRadius,
-			['&:hover']: {
-				backgroundColor:
-					theme.decisions.background.actionHigh.blueFrance.hover + ' !important'
-			},
 			i: {
 				color: theme.decisions.background.default.grey.default,
 				display: 'block !important'
