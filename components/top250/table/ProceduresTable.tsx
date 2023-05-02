@@ -127,7 +127,7 @@ export function ProceduresTable(props: Props) {
 							width: scrollRef?.current?.clientWidth || 'auto'
 						}}
 					>
-						<th ref={firstColRef}>Nom des démarches</th>
+						<th ref={firstColRef}>Nom de la démarche</th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
 								<th key={pth.label} scope="col">
