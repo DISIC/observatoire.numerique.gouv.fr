@@ -17,42 +17,60 @@ type Props = {
 export function Top250TableSection(props: Props) {
 	const { procedures, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
-	const numberPerPage = isAdmin ? 50 : 100;
+	const numberPerPage = 20;
 
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
+	const displayedProceduresRef = useRef(displayedProcedures);
 
-	const loadAllProcedures = (loadMore: boolean) => {
-		if (!procedures) return;
-
-		if (loadMore) {
-			const futureLength = displayedProcedures.length + numberPerPage;
+	const handleScroll = () => {
+		const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+		const currentDisplayedProcedures = displayedProceduresRef.current;
+		if (
+			scrollTop + clientHeight >= scrollHeight - 1500 &&
+			procedures &&
+			procedures.length !== currentDisplayedProcedures.length
+		) {
 			setDisplayedProcedures([
-				...displayedProcedures,
-				...procedures.slice(displayedProcedures.length, futureLength)
+				...currentDisplayedProcedures,
+				...procedures.slice(
+					currentDisplayedProcedures.length,
+					currentDisplayedProcedures.length + numberPerPage
+				)
 			]);
-		} else {
-			setDisplayedProcedures([...procedures.slice(0, numberPerPage)]);
 		}
 	};
 
 	useEffect(() => {
-		if (
-			!!displayedProcedures.length &&
-			!!procedures &&
-			displayedProcedures.length < procedures.length
-		)
-			setTimeout(() => {
-				loadAllProcedures(true);
-			}, 100);
+		setTimeout(() => {
+			window.addEventListener('scroll', handleScroll);
+		}, 200);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
+
+	useEffect(() => {
+		displayedProceduresRef.current = displayedProcedures;
 	}, [displayedProcedures]);
 
 	useEffect(() => {
 		if (procedures && procedures.length) {
-			loadAllProcedures(false);
+			setDisplayedProcedures(procedures.slice(0, numberPerPage));
 		}
 	}, [procedures]);
+
+	useEffect(() => {
+		setTimeout(() => {
+			window.addEventListener('scroll', handleScroll);
+		}, 200);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	const table = useMemo(() => {
 		if (!procedures || procedures.length === 0) {
