@@ -11,12 +11,14 @@ import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
+import { useWindowResize } from '@/utils/hooks';
 
 type Props = {
 	procedures: ProcedureWithFields[];
 };
 
 export function ProceduresTable(props: Props) {
+	useWindowResize();
 	const { procedures } = props;
 	const { classes, cx } = useStyles();
 
@@ -119,7 +121,12 @@ export function ProceduresTable(props: Props) {
 		<div className={cx(classes.root)} ref={scrollRef}>
 			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
 				<thead>
-					<tr ref={stickyHeaderRef}>
+					<tr
+						ref={stickyHeaderRef}
+						style={{
+							width: scrollRef?.current?.clientWidth || 'auto'
+						}}
+					>
 						<th ref={firstColRef}>Nom des démarches</th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
@@ -286,7 +293,6 @@ const useStyles = makeStyles()(theme => {
 					position: 'fixed',
 					top: '-12px',
 					zIndex: 99,
-					width: _containerWidth,
 					maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 					th: {
 						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
