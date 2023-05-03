@@ -237,7 +237,7 @@ export function ProceduresTable(props: Props) {
 								</td>
 							</tr>
 							<tr key={`${p.id}-skiplinks`}>
-								<td colSpan={12} className={fr.cx('fr-pl-1-5v')}>
+								<td className={cx(classes.skipLinksTd, fr.cx('fr-pl-1-5v'))}>
 									<SkipLinks
 										links={[
 											{
@@ -471,6 +471,10 @@ const useStyles = makeStyles()(theme => {
 					'--icon-size': '2rem'
 				}
 			}
+		},
+		skipLinksTd: {
+			position: 'sticky',
+			left: 0
 		}
 	};
 });

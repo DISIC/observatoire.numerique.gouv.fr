@@ -27,9 +27,11 @@ export function LightSelect(props: Props) {
 
 	return (
 		<Select
-			label=""
+			label="Trier la liste des démarches"
 			className={cx(classes.root, superLight ? classes.rootSuperLight : {})}
 			nativeSelectProps={{
+				id: 'tri-liste',
+				'aria-label': 'Trier la liste des démarches',
 				onChange: event => setValue(event.target.value),
 				value
 			}}
@@ -68,6 +70,17 @@ const useStyles = makeStyles()(theme => ({
 				paddingLeft: fr.spacing('4v'),
 				paddingRight: fr.spacing('8v')
 			}
+		},
+		['.fr-label']: {
+			position: 'absolute',
+			width: 1,
+			height: 1,
+			padding: 0,
+			margin: -1,
+			overflow: 'hidden',
+			clip: 'rect(0, 0, 0, 0)',
+			whiteSpace: 'nowrap',
+			border: 0
 		}
 	},
 	rootSuperLight: {
