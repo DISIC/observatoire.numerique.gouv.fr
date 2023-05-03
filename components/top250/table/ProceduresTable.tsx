@@ -178,7 +178,7 @@ export function ProceduresTable(props: Props) {
 					{procedures.map((p, index) => (
 						<>
 							<tr key={p.id} id={`procedure-table-row-${index}`}>
-								<td scope="row">
+								<th scope="row">
 									<div>
 										<span>{p.title}</span>
 										<br />
@@ -199,7 +199,7 @@ export function ProceduresTable(props: Props) {
 												: 'non communiquée'}
 										</div>
 									</div>
-								</td>
+								</th>
 								{proceduresTableHeaders.map((pth, index) => {
 									const isProactive = p.fields.some(
 										f => f.slug === 'online' && f.label === 'Démarche proactive'
@@ -282,119 +282,113 @@ const useStyles = makeStyles()(theme => {
 			['&.table-has-sticked-row']: {
 				marginTop: 150
 			},
-			tr: {
-				['&.sticked-row']: {
-					overflowX: 'scroll',
-					scrollbarWidth: 'none',
-					msOverflowStyle: 'none',
-					['&::-webkit-scrollbar']: {
-						display: 'none'
-					},
-					position: 'fixed',
-					top: '-12px',
-					zIndex: 99,
-					maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
+			thead: {
+				tr: {
 					th: {
-						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
-						borderTopLeftRadius: _thRadius,
-						button: {
-							minHeight: 88
-						}
-					},
-					['th:nth-of-type(2)']: {
-						borderTopLeftRadius: 0
-					},
-					['th:nth-of-type(-n + 5):not(:first-of-type)']: {
-						minWidth: (_containerWidth - _firstColSize) / 5
-					},
-					['th:nth-of-type(n + 6)']: {
-						minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
-					},
-					['th:last-child']: {
-						minWidth: _arrowSlideSize
-					},
-					['th:first-of-type']: {
-						borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
-						minWidth: _firstColSize,
 						backgroundColor: theme.decisions.background.default.grey.default,
-						color: theme.decisions.background.default.grey.default
-					},
-					['button:first-of-type']: {
-						fontWeight: 500,
-						fontSize: fr.typography[18].style.fontSize,
-						['&:first-of-type > i']: { display: 'none' },
-						['&:first-of-type > span']: { marginTop: 0 }
-					}
-				},
-				['&:hover']: {
-					['td:not(:first-of-type)']: {
-						borderTopColor:
-							theme.decisions.background.actionHigh.blueFrance.hover,
-						borderBottomColor:
-							theme.decisions.background.actionHigh.blueFrance.hover,
-						['&:last-child > div']: {
-							border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderLeftWidth: 0
+						height: '100%',
+						['&:nth-of-type(-n + 5)']: {
+							width: (_containerWidth - _firstColSize) / 5
+						},
+						['&:nth-of-type(n + 6)']: {
+							width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+						},
+						['& > button']: {
+							marginLeft: 'auto',
+							marginRight: 'auto'
+						},
+						['&:first-of-type']: {
+							position: 'sticky',
+							left: 0,
+							backgroundColor: theme.decisions.background.contrast.info.default,
+							color: theme.decisions.background.contrast.info.default,
+							zIndex: 11
+						},
+						['&:nth-of-type(2), &:nth-of-type(7)']: {
+							borderTopLeftRadius: _thRadius
+						},
+						['&:last-child']: {
+							position: 'sticky',
+							right: 0,
+							zIndex: 11,
+							width: _arrowSlideSize,
+							['& > div']: {
+								borderTopRightRadius: _thRadius
+							}
+						},
+						['&:not(:first-of-type):not(:last-child)']: {
+							verticalAlign: 'top'
 						}
 					},
-					['td:first-of-type ']: {
-						borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-						['& > div']: {
-							borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-							borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+					['&.sticked-row']: {
+						overflowX: 'scroll',
+						scrollbarWidth: 'none',
+						msOverflowStyle: 'none',
+						['&::-webkit-scrollbar']: {
+							display: 'none'
+						},
+						position: 'fixed',
+						top: '-12px',
+						zIndex: 99,
+						maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
+						th: {
+							borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
 							borderTopLeftRadius: _thRadius,
-							borderBottomLeftRadius: _thRadius
+							button: {
+								minHeight: 88
+							}
+						},
+						['th:nth-of-type(2)']: {
+							borderTopLeftRadius: 0
+						},
+						['th:nth-of-type(-n + 5):not(:first-of-type)']: {
+							minWidth: (_containerWidth - _firstColSize) / 5
+						},
+						['th:nth-of-type(n + 6)']: {
+							minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+						},
+						['th:last-child']: {
+							minWidth: _arrowSlideSize
+						},
+						['th:first-of-type']: {
+							borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
+							minWidth: _firstColSize,
+							backgroundColor: theme.decisions.background.default.grey.default,
+							color: theme.decisions.background.default.grey.default
+						},
+						['button:first-of-type']: {
+							fontWeight: 500,
+							fontSize: fr.typography[18].style.fontSize,
+							['&:first-of-type > i']: { display: 'none' },
+							['&:first-of-type > span']: { marginTop: 0 }
+						}
+					},
+					['&:hover']: {
+						['td:not(:first-of-type)']: {
+							borderTopColor:
+								theme.decisions.background.actionHigh.blueFrance.hover,
+							borderBottomColor:
+								theme.decisions.background.actionHigh.blueFrance.hover,
+							['&:last-child > div']: {
+								border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+								borderLeftWidth: 0
+							}
+						},
+						['td:first-of-type ']: {
+							borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+							['& > div']: {
+								borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+								borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+								borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+								borderTopLeftRadius: _thRadius,
+								borderBottomLeftRadius: _thRadius
+							}
 						}
 					}
 				}
 			},
-			['th, td']: {
-				['&:nth-of-type(-n + 5)']: {
-					width: (_containerWidth - _firstColSize) / 5
-				},
-				['&:nth-of-type(n + 6)']: {
-					width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
-				}
-			},
-			th: {
-				backgroundColor: theme.decisions.background.default.grey.default,
-				height: '100%',
-				['& > button']: {
-					marginLeft: 'auto',
-					marginRight: 'auto'
-				},
-				['&:first-of-type']: {
-					position: 'sticky',
-					left: 0,
-					backgroundColor: theme.decisions.background.contrast.info.default,
-					color: theme.decisions.background.contrast.info.default,
-					zIndex: 11
-				},
-				['&:nth-of-type(2), &:nth-of-type(7)']: {
-					borderTopLeftRadius: _thRadius
-				},
-				['&:last-child']: {
-					position: 'sticky',
-					right: 0,
-					zIndex: 11,
-					width: _arrowSlideSize,
-					['& > div']: {
-						borderTopRightRadius: _thRadius
-					}
-				},
-				['&:not(:first-of-type):not(:last-child)']: {
-					verticalAlign: 'top'
-				}
-			},
-			td: {
-				backgroundColor: theme.decisions.background.default.grey.default,
-				border: '1px solid transparent',
-				position: 'relative',
-				['&:not(:first-of-type)']: {
-					textAlign: 'center'
-				},
-				['&:first-of-type']: {
+			tbody: {
+				th: {
 					position: 'sticky',
 					zIndex: 9,
 					left: 0,
@@ -403,6 +397,8 @@ const useStyles = makeStyles()(theme => {
 					padding: 0,
 					border: 'none',
 					borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
+					textAlign: 'left',
+					fontWeight: 'normal',
 					['& > div']: {
 						borderTop: '1px solid transparent',
 						borderLeft: '1px solid transparent',
@@ -417,21 +413,27 @@ const useStyles = makeStyles()(theme => {
 						}
 					}
 				},
-				['&:last-child']: {
-					width: _arrowSlideSize,
-					position: 'sticky',
-					zIndex: 9,
-					right: 0,
-					padding: 0,
-					borderWidth: 0,
-					height: '100%',
-					backgroundColor: theme.decisions.background.contrast.info.default,
-					['& > div']: {
-						boxSizing: 'border-box',
+				td: {
+					backgroundColor: theme.decisions.background.default.grey.default,
+					border: '1px solid transparent',
+					position: 'relative',
+					textAlign: 'center',
+					['&:last-child']: {
+						width: _arrowSlideSize,
+						position: 'sticky',
+						zIndex: 9,
+						right: 0,
+						padding: 0,
+						borderWidth: 0,
 						height: '100%',
-						backgroundColor: theme.decisions.background.default.grey.default,
-						borderTopRightRadius: _thRadius,
-						borderBottomRightRadius: _thRadius
+						backgroundColor: theme.decisions.background.contrast.info.default,
+						['& > div']: {
+							boxSizing: 'border-box',
+							height: '100%',
+							backgroundColor: theme.decisions.background.default.grey.default,
+							borderTopRightRadius: _thRadius,
+							borderBottomRightRadius: _thRadius
+						}
 					}
 				}
 			}
