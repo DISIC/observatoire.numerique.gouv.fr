@@ -91,7 +91,7 @@ const PublicLayout = (props: Props) => {
 				></meta>
 				<meta
 					property="og:url"
-					content="https://observatoire.numerique.gouv.fr"
+					content="https://observatoire.numericite.eu"
 				></meta>
 				<meta
 					property="og:title"
