@@ -9,6 +9,7 @@ import { SessionProvider } from 'next-auth/react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import '../utils/keyframes.css';
 import Head from 'next/head';
+import { ObservatoireHead } from '@/components/layout/ObservatoireHead';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -40,29 +41,7 @@ function App({ Component, pageProps }: AppProps) {
 
 	return (
 		<SessionProvider session={pageProps.session}>
-			<Head>
-				<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
-				<meta
-					name="description"
-					content="Pour des services publics numériques de qualité"
-				></meta>
-				<meta
-					property="og:url"
-					content="https://observatoire.numerique.gouv.fr"
-				></meta>
-				<meta
-					property="og:title"
-					content="L’Observatoire de la qualité des démarches en ligne"
-				></meta>
-				<meta
-					property="og:description"
-					content="Suivi de la qualité des démarches en ligne pour des services publics numériques de qualité"
-				></meta>
-				<meta
-					property="og:image"
-					content="https://observatoire.numerique.gouv.fr/assets/observatoire.png"
-				></meta>
-			</Head>
+			<ObservatoireHead />
 			{getLayout(<Component {...pageProps} />)}
 		</SessionProvider>
 	);
