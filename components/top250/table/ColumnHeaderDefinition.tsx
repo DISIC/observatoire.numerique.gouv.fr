@@ -93,7 +93,8 @@ export function ColumnHeaderDefinition(props: Props) {
 const useStyles = makeStyles()(theme => ({
 	root: {
 		width: '90%',
-		height: '90%',
+		height: 'auto',
+		minHeight: '90%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'start',

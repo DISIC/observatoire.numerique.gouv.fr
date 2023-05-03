@@ -296,7 +296,10 @@ const useStyles = makeStyles()(theme => {
 					maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 					th: {
 						borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
-						borderTopLeftRadius: _thRadius
+						borderTopLeftRadius: _thRadius,
+						button: {
+							minHeight: 88
+						}
 					},
 					['th:nth-of-type(2)']: {
 						borderTopLeftRadius: 0
@@ -356,6 +359,7 @@ const useStyles = makeStyles()(theme => {
 			},
 			th: {
 				backgroundColor: theme.decisions.background.default.grey.default,
+				height: '100%',
 				['& > button']: {
 					marginLeft: 'auto',
 					marginRight: 'auto'
