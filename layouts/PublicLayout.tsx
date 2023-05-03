@@ -101,7 +101,7 @@ const PublicLayout = (props: Props) => {
 					property="og:description"
 					content="Suivi de la qualité des démarches en ligne pour des services publics numériques de qualité"
 				></meta>
-				<meta property="og:image" content="/static/observatoire.png"></meta>
+				<meta property="og:image" content="/assets/observatoire.png"></meta>
 			</Head>
 			<div className={fr.cx('fr-container')}>
 				<SkipLinks

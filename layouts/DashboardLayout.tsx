@@ -37,13 +37,13 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				></meta>
 				<meta
 					property="og:url"
-					content="https://observatoire.numerique.gouv.fr"
+					content="https://observatoire.numericite.eu"
 				></meta>
 				<meta
 					property="og:title"
 					content="L’Observatoire de la qualité des démarches en ligne"
 				></meta>
-				<meta property="og:image" content="/static/observatoire.png"></meta>
+				<meta property="og:image" content="/assets/observatoire.png"></meta>
 			</Head>
 			<Header
 				className={classes.header}
