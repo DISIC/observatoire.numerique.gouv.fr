@@ -418,6 +418,12 @@ const useStyles = makeStyles()(theme => {
 					border: '1px solid transparent',
 					position: 'relative',
 					textAlign: 'center',
+					// ['&:nth-of-type(-n + 4)']: {
+					// 	width: (_containerWidth - _firstColSize) / 5
+					// },
+					// ['&:nth-of-type(n + 5)']: {
+					// 	width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+					// },
 					['&:last-child']: {
 						width: _arrowSlideSize,
 						position: 'sticky',
