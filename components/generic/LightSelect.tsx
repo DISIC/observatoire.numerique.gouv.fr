@@ -9,10 +9,20 @@ type Props = {
 	onChange?(value: string | number, href?: string): void;
 	placeholder?: string;
 	superLight?: boolean;
+	label: string;
+	id?: string;
 };
 
 export function LightSelect(props: Props) {
-	const { onChange, options, placeholder, defaultValue, superLight } = props;
+	const {
+		onChange,
+		options,
+		placeholder,
+		defaultValue,
+		superLight,
+		label,
+		id
+	} = props;
 
 	const { classes, cx } = useStyles();
 
@@ -27,11 +37,10 @@ export function LightSelect(props: Props) {
 
 	return (
 		<Select
-			label="Trier la liste des démarches"
+			label={label}
 			className={cx(classes.root, superLight ? classes.rootSuperLight : {})}
 			nativeSelectProps={{
-				id: 'tri-liste',
-				'aria-label': 'Trier la liste des démarches',
+				id,
 				onChange: event => setValue(event.target.value),
 				value
 			}}

@@ -33,6 +33,8 @@ export function PreHeader(props: Props) {
 		<div className={cx(classes.root)}>
 			<div className={cx(classes.section)}>
 				<LightSelect
+					label="Trier la liste des démarches"
+					id="tri-demarche"
 					options={sortOptions}
 					superLight
 					onChange={value => {
