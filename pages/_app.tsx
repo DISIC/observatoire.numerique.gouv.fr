@@ -48,7 +48,7 @@ function App({ Component, pageProps }: AppProps) {
 				></meta>
 				<meta
 					property="og:url"
-					content="https://observatoire.numericite.eu"
+					content="https://observatoire.numerique.gouv.fr"
 				></meta>
 				<meta
 					property="og:title"
@@ -60,7 +60,7 @@ function App({ Component, pageProps }: AppProps) {
 				></meta>
 				<meta
 					property="og:image"
-					content="https://observatoire.numericite.eu/assets/observatoire.png"
+					content="https://observatoire.numerique.gouv.fr/assets/observatoire.png"
 				></meta>
 			</Head>
 			{getLayout(<Component {...pageProps} />)}
