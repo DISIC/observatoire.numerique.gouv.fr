@@ -83,26 +83,6 @@ const PublicLayout = (props: Props) => {
 
 	return (
 		<>
-			<Head>
-				<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
-				<meta
-					name="description"
-					content="Pour des services publics numériques de qualité"
-				></meta>
-				<meta
-					property="og:url"
-					content="https://observatoire.numericite.eu"
-				></meta>
-				<meta
-					property="og:title"
-					content="L’Observatoire de la qualité des démarches en ligne"
-				></meta>
-				<meta
-					property="og:description"
-					content="Suivi de la qualité des démarches en ligne pour des services publics numériques de qualité"
-				></meta>
-				<meta property="og:image" content="/assets/observatoire.png"></meta>
-			</Head>
 			<div className={fr.cx('fr-container')}>
 				<SkipLinks
 					links={[
