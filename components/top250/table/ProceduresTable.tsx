@@ -337,10 +337,7 @@ const useStyles = makeStyles()(theme => {
 						maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 						th: {
 							borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
-							borderTopLeftRadius: _thRadius,
-							button: {
-								minHeight: 88
-							}
+							borderTopLeftRadius: _thRadius
 						},
 						['th:nth-of-type(2)']: {
 							borderTopLeftRadius: 0
@@ -360,11 +357,12 @@ const useStyles = makeStyles()(theme => {
 							backgroundColor: theme.decisions.background.default.grey.default,
 							color: theme.decisions.background.default.grey.default
 						},
-						['button:first-of-type']: {
+						['th > button:first-of-type']: {
 							fontWeight: 500,
 							fontSize: fr.typography[18].style.fontSize,
 							['&:first-of-type > i']: { display: 'none' },
-							['&:first-of-type > span']: { marginTop: 0 }
+							['&:first-of-type > span']: { marginTop: 0 },
+							minHeight: 88
 						}
 					},
 					['&:hover']: {
