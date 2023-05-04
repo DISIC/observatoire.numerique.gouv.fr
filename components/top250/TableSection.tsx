@@ -28,6 +28,7 @@ export function Top250TableSection(props: Props) {
 		const currentDisplayedProcedures = displayedProceduresRef.current;
 		if (
 			scrollTop + clientHeight >= scrollHeight - 1500 &&
+			scrollTop + clientHeight <= scrollHeight - 500 &&
 			procedures &&
 			procedures.length !== currentDisplayedProcedures.length
 		) {
