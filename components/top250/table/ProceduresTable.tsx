@@ -130,7 +130,9 @@ export function ProceduresTable(props: Props) {
 							width: scrollRef?.current?.clientWidth || 'auto'
 						}}
 					>
-						<th ref={firstColRef}>Nom de la démarche</th>
+						<th ref={firstColRef}>
+							<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
+						</th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
 								<th key={pth.label} scope="col">
@@ -304,7 +306,6 @@ const useStyles = makeStyles()(theme => {
 							position: 'sticky',
 							left: 0,
 							backgroundColor: theme.decisions.background.contrast.info.default,
-							color: theme.decisions.background.contrast.info.default,
 							zIndex: 11
 						},
 						['&:nth-of-type(2), &:nth-of-type(7)']: {
