@@ -89,6 +89,26 @@ export function ProceduresTable(props: Props) {
 		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
+	const getClosestColScrollPosition = (scrollPosition: number): number => {
+		if (!scrollRef.current || !tableRef.current) return scrollPosition;
+
+		const thElements = tableRef.current.querySelectorAll('thead th');
+		const thPositions = Array.from(thElements)
+			.map(th => {
+				const rect = th.getBoundingClientRect();
+				return rect.x;
+			})
+			.sort((a, b) => a - b);
+
+		const closest = thPositions
+			.filter(num => num < scrollPosition)
+			.reduce((a, b) =>
+				Math.abs(b - scrollPosition) < Math.abs(a - scrollPosition) ? b : a
+			);
+
+		return closest;
+	};
+
 	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
 		if (!scrollRef.current || !firstColRef.current || !stickyHeaderRef.current)
 			return;
@@ -96,14 +116,20 @@ export function ProceduresTable(props: Props) {
 		const _arrowSlideSize = 40;
 		const _containerWidth = scrollRef.current.clientWidth;
 		const _firstColSize = firstColRef.current.clientWidth;
+		const _userViewportAvailable = window.innerWidth - 40;
 		const isSticky = stickyHeaderRef.current.classList.contains('sticked-row');
+		const scrollLeftPosition =
+			_userViewportAvailable < 1400
+				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
+				  scrollRef.current.scrollLeft -
+				  _firstColSize -
+				  20
+				: _containerWidth -
+				  _firstColSize -
+				  _arrowSlideSize +
+				  scrollRef.current.scrollLeft;
 
-		const scrollLeft = tmpIsRight
-			? _containerWidth -
-			  _firstColSize -
-			  _arrowSlideSize +
-			  scrollRef.current.scrollLeft
-			: 0;
+		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
 		scrollRef.current.scrollTo({
 			left: scrollLeft,
@@ -120,6 +146,9 @@ export function ProceduresTable(props: Props) {
 	return (
 		<div className={cx(classes.root)} ref={scrollRef}>
 			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
+				<caption className={fr.cx('fr-sr-only')}>
+					Toutes les démarches de l&apos;observatoire
+				</caption>
 				<thead>
 					<tr
 						ref={stickyHeaderRef}
@@ -127,7 +156,9 @@ export function ProceduresTable(props: Props) {
 							width: scrollRef?.current?.clientWidth || 'auto'
 						}}
 					>
-						<th ref={firstColRef}>Nom de la démarche</th>
+						<th ref={firstColRef}>
+							<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
+						</th>
 						{proceduresTableHeaders.map((pth, index) => {
 							return (
 								<th key={pth.label} scope="col">
@@ -233,7 +264,7 @@ export function ProceduresTable(props: Props) {
 									);
 								})}
 								<td>
-									<div></div>
+									<span></span>
 								</td>
 							</tr>
 							<tr key={`${p.id}-skiplinks`}>
@@ -301,7 +332,6 @@ const useStyles = makeStyles()(theme => {
 							position: 'sticky',
 							left: 0,
 							backgroundColor: theme.decisions.background.contrast.info.default,
-							color: theme.decisions.background.contrast.info.default,
 							zIndex: 11
 						},
 						['&:nth-of-type(2), &:nth-of-type(7)']: {
@@ -333,10 +363,7 @@ const useStyles = makeStyles()(theme => {
 						maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 						th: {
 							borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
-							borderTopLeftRadius: _thRadius,
-							button: {
-								minHeight: 88
-							}
+							borderTopLeftRadius: _thRadius
 						},
 						['th:nth-of-type(2)']: {
 							borderTopLeftRadius: 0
@@ -356,11 +383,12 @@ const useStyles = makeStyles()(theme => {
 							backgroundColor: theme.decisions.background.default.grey.default,
 							color: theme.decisions.background.default.grey.default
 						},
-						['button:first-of-type']: {
+						['th > button:first-of-type']: {
 							fontWeight: 500,
 							fontSize: fr.typography[18].style.fontSize,
 							['&:first-of-type > i']: { display: 'none' },
-							['&:first-of-type > span']: { marginTop: 0 }
+							['&:first-of-type > span']: { marginTop: 0 },
+							minHeight: 88
 						}
 					},
 					['&:hover']: {
@@ -433,7 +461,8 @@ const useStyles = makeStyles()(theme => {
 						borderWidth: 0,
 						height: '100%',
 						backgroundColor: theme.decisions.background.contrast.info.default,
-						['& > div']: {
+						['& > span']: {
+							display: 'block',
 							boxSizing: 'border-box',
 							height: '100%',
 							backgroundColor: theme.decisions.background.default.grey.default,

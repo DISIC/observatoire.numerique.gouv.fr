@@ -60,7 +60,7 @@ export function ColumnHeaderDefinition(props: Props) {
 				}}
 			>
 				<i className={cx(fr.cx(icon), classes.mainIcon)} />
-				<span role="text" className={cx(classes.text)}>
+				<span className={cx(classes.text)}>
 					{getDisplayedText(text)}
 					<i
 						className={cx(

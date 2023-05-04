@@ -2,7 +2,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import FocusTrap from 'focus-trap-react';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 type Props = {
 	title: string;
@@ -18,6 +18,18 @@ export const Modal = (props: Props) => {
 	const { title, children, buttons, onClose } = props;
 	const { classes, cx } = useStyles();
 	const rNumber = Math.floor(Math.random() * 1000);
+
+	useEffect(() => {
+		const handleEsc = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				onClose();
+			}
+		};
+		document.addEventListener('keydown', handleEsc);
+		return () => {
+			document.removeEventListener('keydown', handleEsc);
+		};
+	}, []);
 
 	return (
 		<FocusTrap>

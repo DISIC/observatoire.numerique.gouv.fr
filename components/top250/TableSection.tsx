@@ -1,6 +1,5 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { PreHeader } from './table/PreHeader';
 import { ProceduresTable } from './table/ProceduresTable';
 import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
