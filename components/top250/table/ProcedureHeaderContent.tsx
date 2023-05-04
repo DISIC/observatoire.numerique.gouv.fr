@@ -26,8 +26,8 @@ export const ProcedureHeaderContent = (props: Props) => {
 				</p>
 			)}
 			<ul className={cx(classes.indicatorContainer)}>
-				{content.indicators.map(indicator => (
-					<li className={classes.indicatorItem}>
+				{content.indicators.map((indicator, index) => (
+					<li key={index} className={classes.indicatorItem}>
 						<span className={cx(classes.label)}>
 							<IndicatorLabel
 								label={indicator.label}
