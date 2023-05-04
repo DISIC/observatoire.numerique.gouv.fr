@@ -120,6 +120,9 @@ export function ProceduresTable(props: Props) {
 	return (
 		<div className={cx(classes.root)} ref={scrollRef}>
 			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
+				<caption className={fr.cx('fr-sr-only')}>
+					Toutes les démarches de l'observatoire
+				</caption>
 				<thead>
 					<tr
 						ref={stickyHeaderRef}
