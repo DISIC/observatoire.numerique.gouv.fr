@@ -153,7 +153,7 @@ export function ProceduresTable(props: Props) {
 					<tr
 						ref={stickyHeaderRef}
 						style={{
-							width: scrollRef?.current?.clientWidth || 'auto'
+							width: scrollRef?.current?.clientWidth || 1400
 						}}
 					>
 						<th ref={firstColRef}>
