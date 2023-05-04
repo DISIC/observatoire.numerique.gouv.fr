@@ -24,7 +24,6 @@ export function IndicatorLabel(props: Props) {
 				classes[color],
 				noBackground ? classes.noBackground : ''
 			)}
-			role="text"
 		>
 			{label}
 		</span>
