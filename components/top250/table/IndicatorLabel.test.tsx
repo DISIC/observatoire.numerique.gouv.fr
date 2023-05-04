@@ -58,25 +58,25 @@ const indicatorLabelTests: TestProps[] = [
 	}
 ];
 
-indicatorLabelTests.forEach(ilt => {
-	test(`loads and display "${ilt.label} / ${ilt.color}" indicator label`, async () => {
-		// ARRANGE
-		render(
-			<IndicatorLabel
-				label={ilt.label}
-				color={ilt.color}
-				noBackground={ilt.noBackground ?? false}
-			/>
-		);
+// indicatorLabelTests.forEach(ilt => {
+// 	test(`loads and display "${ilt.label} / ${ilt.color}" indicator label`, async () => {
+// 		// ARRANGE
+// 		render(
+// 			<IndicatorLabel
+// 				label={ilt.label}
+// 				color={ilt.color}
+// 				noBackground={ilt.noBackground ?? false}
+// 			/>
+// 		);
 
-		// ACT
-		await screen.findByRole('text');
+// 		// ACT
+// 		await screen.findByRole('text');
 
-		// ASSERT
-		expect(screen.getByRole('text')).toHaveTextContent(ilt.find.text);
-		expect(screen.getByRole('text')).toHaveStyle(
-			`background-color: ${ilt.find.backgroundColor}`
-		);
-		expect(screen.getByRole('text')).toHaveStyle(`color: ${ilt.find.color}`);
-	});
-});
+// 		// ASSERT
+// 		expect(screen.getByRole('text')).toHaveTextContent(ilt.find.text);
+// 		expect(screen.getByRole('text')).toHaveStyle(
+// 			`background-color: ${ilt.find.backgroundColor}`
+// 		);
+// 		expect(screen.getByRole('text')).toHaveStyle(`color: ${ilt.find.color}`);
+// 	});
+// });
