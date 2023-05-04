@@ -89,6 +89,26 @@ export function ProceduresTable(props: Props) {
 		);
 	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
 
+	const getClosestColScrollPosition = (scrollPosition: number): number => {
+		if (!scrollRef.current || !tableRef.current) return scrollPosition;
+
+		const thElements = tableRef.current.querySelectorAll('thead th');
+		const thPositions = Array.from(thElements)
+			.map(th => {
+				const rect = th.getBoundingClientRect();
+				return rect.x;
+			})
+			.sort((a, b) => a - b);
+
+		const closest = thPositions
+			.filter(num => num < scrollPosition)
+			.reduce((a, b) =>
+				Math.abs(b - scrollPosition) < Math.abs(a - scrollPosition) ? b : a
+			);
+
+		return closest;
+	};
+
 	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
 		if (!scrollRef.current || !firstColRef.current || !stickyHeaderRef.current)
 			return;
@@ -96,14 +116,20 @@ export function ProceduresTable(props: Props) {
 		const _arrowSlideSize = 40;
 		const _containerWidth = scrollRef.current.clientWidth;
 		const _firstColSize = firstColRef.current.clientWidth;
+		const _userViewportAvailable = window.innerWidth - 40;
 		const isSticky = stickyHeaderRef.current.classList.contains('sticked-row');
+		const scrollLeftPosition =
+			_userViewportAvailable < 1400
+				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
+				  scrollRef.current.scrollLeft -
+				  _firstColSize -
+				  20
+				: _containerWidth -
+				  _firstColSize -
+				  _arrowSlideSize +
+				  scrollRef.current.scrollLeft;
 
-		const scrollLeft = tmpIsRight
-			? _containerWidth -
-			  _firstColSize -
-			  _arrowSlideSize +
-			  scrollRef.current.scrollLeft
-			: 0;
+		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
 		scrollRef.current.scrollTo({
 			left: scrollLeft,
