@@ -236,7 +236,7 @@ export function ProceduresTable(props: Props) {
 									);
 								})}
 								<td>
-									<div></div>
+									<span></span>
 								</td>
 							</tr>
 							<tr key={`${p.id}-skiplinks`}>
@@ -436,7 +436,8 @@ const useStyles = makeStyles()(theme => {
 						borderWidth: 0,
 						height: '100%',
 						backgroundColor: theme.decisions.background.contrast.info.default,
-						['& > div']: {
+						['& > span']: {
+							display: 'block',
 							boxSizing: 'border-box',
 							height: '100%',
 							backgroundColor: theme.decisions.background.default.grey.default,

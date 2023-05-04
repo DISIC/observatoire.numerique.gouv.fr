@@ -12,6 +12,14 @@ export function SkipLinks(props: Props) {
 	const { links } = props;
 	const { classes, cx } = useStyles();
 
+	if (links.length === 1) {
+		return (
+			<div className={classes.skipLinkList}>
+				<a href={links[0].href}>{links[0].text}</a>
+			</div>
+		);
+	}
+
 	return (
 		<ul className={classes.skipLinkList}>
 			{links.map((link, index) => (
@@ -31,6 +39,7 @@ const useStyles = makeStyles()(theme => ({
 		position: 'fixed',
 		left: -99999,
 		paddingLeft: 0,
+		backgroundColor: 'transparent',
 		['&:focus-within']: {
 			position: 'static'
 		},
