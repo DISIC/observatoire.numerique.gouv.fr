@@ -2,7 +2,6 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { fr } from '@codegouvfr/react-dsfr';
 import { ReactNode, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
-import { LightSelect } from '../generic/LightSelect';
 import { useEditions } from '@/utils/api';
 type Props = {
 	title: ReactNode;
