@@ -70,11 +70,12 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				record.get(field_names.indicators.satisfaction)
 			),
 			procedureId: 'preview',
-			noBackground:
+			noBackground: ['À venir', "Nombre d'avis insuffisant"].includes(
 				getLabelFromValue(
 					'satisfaction',
 					record.get(field_names.indicators.satisfaction)
-				) === 'À venir'
+				)
+			)
 		},
 		{
 			id: 'preview',
@@ -94,11 +95,12 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 				record.get(field_names.indicators.simplicity)
 			),
 			procedureId: 'preview',
-			noBackground:
+			noBackground: ['À venir', "Nombre d'avis insuffisant"].includes(
 				getLabelFromValue(
 					'simplicity',
 					record.get(field_names.indicators.simplicity)
-				) === 'À venir'
+				)
+			)
 		},
 		{
 			id: 'preview',

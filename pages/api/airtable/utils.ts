@@ -23,7 +23,8 @@ export const getLabelFromValue = (
 		case 'simplicity':
 			const markIntValue = parseFloat(value);
 			if (isNaN(markIntValue) && !!value) {
-				if (value === 'Non applicable') return value;
+				if (['Non applicable', "Nombre d'avis insuffisant"].includes(value))
+					return value;
 				else return 'À venir';
 			}
 			if (!value) return 'À venir';
