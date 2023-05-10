@@ -31,7 +31,7 @@ const PublicLayout = (props: Props) => {
 	);
 
 	const serviceTitle = "L'Observatoire de la qualité";
-	const serviceTagLine = 'des démarches en ligne';
+	const serviceTagLine = 'des services numériques';
 
 	useEffect(() => {
 		setIsXWikiUserLogged(
@@ -97,7 +97,8 @@ const PublicLayout = (props: Props) => {
 				homeLinkProps={{
 					href: isXWikiUserLogged ? '/Main' : '/',
 					target: '_self',
-					title: "Accueil - L'observatoire de la qualité des démarches en ligne"
+					title:
+						"Accueil - L'observatoire de la qualité des services numériques"
 				}}
 				quickAccessItems={accessItems}
 				serviceTagline={serviceTagLine}

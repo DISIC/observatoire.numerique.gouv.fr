@@ -42,20 +42,20 @@ export const getLabelFromValue = (
 			return 'Optimal';
 		case 'dlnuf':
 			const dlnufIntValue = parseInt(value);
-			if (isNaN(dlnufIntValue)) return 'Non communiqué';
-			if (dlnufIntValue < 4) return 'Faible';
-			if (dlnufIntValue < 6) return 'Partiel';
-			if (dlnufIntValue < 8) return 'Bon';
-			return 'Optimal';
+			if (isNaN(dlnufIntValue)) return value;
+			if (dlnufIntValue < 2) return 'Optimal';
+			if (dlnufIntValue < 5) return 'Partiel';
+			return 'Faible';
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
 			if (isNaN(handicapIntValue)) {
-				if (['Non conforme', 'Non applicable'].includes(value)) return value;
+				if (['Non conforme'].includes(value)) return 'Non';
+				if (['Non applicable'].includes(value)) return value;
 				return 'À venir';
 			}
-			if (handicapIntValue < 0.5) return 'Faible';
+			if (handicapIntValue < 0.5) return 'Non';
 			if (handicapIntValue < 1) return 'Partiel';
-			return 'Optimal';
+			return 'Oui';
 		case 'usage':
 			const usageFloatValue = parseFloat(value);
 			if (isNaN(usageFloatValue)) return 'À venir';
@@ -63,9 +63,12 @@ export const getLabelFromValue = (
 				getRoundedDecimalString((usageFloatValue * 100).toString()) || '0'
 			}%`;
 		case 'auth':
-			if (['FranceConnect', 'FranceConnect +', 'Non'].includes(value))
+			if (
+				['FranceConnect', 'FranceConnect +', 'Non', 'Non applicable'].includes(
+					value
+				)
+			)
 				return value;
-			if (['n/a', '-'].includes(value)) return 'Non applicable';
 			return 'À venir';
 		default:
 			return value;
@@ -79,8 +82,8 @@ export const getColorFromLabel = (
 	switch (slug) {
 		case 'online':
 			if (label === 'Oui') return 'green';
-			if (label === 'Partiel') return 'orange';
-			if (label === 'Bêta') return 'orange';
+			if (label === 'Partiel') return 'yellow';
+			if (label === 'Bêta') return 'yellow';
 			if (label === 'À venir') return 'gray';
 			if (label === 'Déploiement local') return 'green';
 			if (label === 'Démarche proactive') return 'blue';
@@ -90,28 +93,27 @@ export const getColorFromLabel = (
 			const markIntValue = parseInt(label.split(' ')[0]);
 			if (isNaN(markIntValue)) return 'gray';
 			if (markIntValue < 5) return 'red';
-			if (markIntValue < 8) return 'orange';
+			if (markIntValue < 8) return 'yellow';
 			return 'green';
 		case 'uptime':
 			if (label === 'À venir') return 'gray';
-			if (label === 'Partiel') return 'orange';
+			if (label === 'Partiel') return 'yellow';
 			if (label === 'Faible') return 'red';
 			return 'green';
 		case 'performance':
 			if (label === 'À venir') return 'gray';
-			if (label === 'Partiel') return 'orange';
+			if (label === 'Partiel') return 'yellow';
 			if (label === 'Lent') return 'red';
 			return 'green';
 		case 'dlnuf':
-			if (label === 'Non communiqué') return 'gray';
-			if (label === 'Bon') return 'orange';
-			if (label === 'Partiel') return 'orange';
-			if (label === 'Faible') return 'red';
-			return 'green';
-		case 'handicap':
 			if (label === 'Optimal') return 'green';
-			if (label === 'Partiel') return 'orange';
-			if (['Faible', 'Non conforme'].includes(label)) return 'red';
+			if (label === 'Partiel') return 'yellow';
+			if (label === 'Faible') return 'red';
+			return 'gray';
+		case 'handicap':
+			if (label === 'Oui') return 'green';
+			if (label === 'Partiel') return 'yellow';
+			if (['Non', 'Non conforme'].includes(label)) return 'red';
 			return 'gray';
 		case 'usage':
 			return 'gray';
