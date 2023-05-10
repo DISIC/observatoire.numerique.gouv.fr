@@ -50,12 +50,13 @@ export const getLabelFromValue = (
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
 			if (isNaN(handicapIntValue)) {
-				if (['Non conforme', 'Non applicable'].includes(value)) return value;
+				if (['Non conforme'].includes(value)) return 'Non';
+				if (['Non applicable'].includes(value)) return value;
 				return 'À venir';
 			}
-			if (handicapIntValue < 0.5) return 'Faible';
+			if (handicapIntValue < 0.5) return 'Non';
 			if (handicapIntValue < 1) return 'Partiel';
-			return 'Optimal';
+			return 'Oui';
 		case 'usage':
 			const usageFloatValue = parseFloat(value);
 			if (isNaN(usageFloatValue)) return 'À venir';
@@ -109,9 +110,9 @@ export const getColorFromLabel = (
 			if (label === 'Faible') return 'red';
 			return 'green';
 		case 'handicap':
-			if (label === 'Optimal') return 'green';
+			if (label === 'Oui') return 'green';
 			if (label === 'Partiel') return 'orange';
-			if (['Faible', 'Non conforme'].includes(label)) return 'red';
+			if (['Non', 'Non conforme'].includes(label)) return 'red';
 			return 'gray';
 		case 'usage':
 			return 'gray';
