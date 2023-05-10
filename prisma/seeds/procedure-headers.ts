@@ -13,7 +13,7 @@ export const procedureHeaders = [
 	},
 	{
 		slug: 'handicap',
-		label: 'Prise en compte du handicaps',
+		label: 'Prise en compte du handicap',
 		icon: 'ri-open-arm-line',
 		position: 3
 	},
