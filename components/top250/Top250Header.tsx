@@ -3,6 +3,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { ReactNode, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useEditions } from '@/utils/api';
+import Link from 'next/link';
 type Props = {
 	title: ReactNode;
 	searchLabel: string;
@@ -24,6 +25,14 @@ export function Top250Header(props: Props) {
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
 			<p className={fr.cx('fr-text--xl')}>Edition : {currentEditionName}</p>
+
+			<Link
+				href="/observatoire/2022-octobre/"
+				target="_blank"
+				className={fr.cx('fr-link')}
+			>
+				Accéder aux éditions précédentes
+			</Link>
 			<form
 				onSubmit={e => {
 					e.preventDefault();
