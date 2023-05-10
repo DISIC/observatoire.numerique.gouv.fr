@@ -13,7 +13,7 @@ export const procedureHeaders = [
 	},
 	{
 		slug: 'handicap',
-		label: 'Prise en compte du handicaps',
+		label: 'Prise en compte du handicap',
 		icon: 'ri-open-arm-line',
 		position: 3
 	},
@@ -43,7 +43,7 @@ export const procedureHeaders = [
 	},
 	{
 		slug: 'help_used',
-		label: 'Aide extérieure sollicitée',
+		label: 'Niveau d’autonomie',
 		icon: 'ri-chat-smile-line',
 		position: 8
 	},

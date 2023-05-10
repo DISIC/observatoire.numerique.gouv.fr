@@ -110,7 +110,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 			{
 				label: 'À venir',
 				color: 'gray',
-				description: "La prise en compte du handicaps n'est pas encore évaluée"
+				description: "La prise en compte du handicap n'est pas encore évaluée"
 			}
 		]
 	},
