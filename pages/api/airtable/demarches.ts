@@ -18,6 +18,7 @@ const field_names = {
 	sousorg: 'Ministère politique',
 	ministere: 'Ministère politique',
 	volume: 'Volumétrie totale',
+	noJdma: 'MAJ manuelle de la satisfaction',
 	indicators: {
 		online: '📊 En ligne',
 		satisfaction: '📊 Satisfaction',
@@ -256,6 +257,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		.get(field_names.title)
 		.replace(/(?:\uD83D\uDCC4|#)/g, '')
 		.trim();
+
 	return {
 		id: `preview-${record.get(field_names.id)}`,
 		title,
@@ -266,6 +268,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		airtable_identifier: record.get(field_names.id),
 		volume: isNaN(volume) ? null : volume,
 		editionId: null,
+		noJdma: record.get(field_names.noJdma) || false,
 		fields
 	};
 };

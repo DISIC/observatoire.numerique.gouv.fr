@@ -281,6 +281,7 @@ export function ProceduresTable(props: Props) {
 												<IndicatorValue
 													slug={field.slug}
 													value={field.value}
+													noJdma={p.noJdma}
 													procedureId={p.airtable_identifier}
 												/>
 											)}

@@ -7,6 +7,7 @@ type Props = {
 	slug: IndicatorSlug;
 	procedureId: number | null;
 	value: string;
+	noJdma?: boolean;
 };
 
 const acceptedSlugValues: IndicatorSlug[] = [
@@ -18,7 +19,7 @@ const acceptedSlugValues: IndicatorSlug[] = [
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
-	const { slug, value, procedureId } = props;
+	const { slug, value, procedureId, noJdma } = props;
 	const { classes, cx } = useStyles();
 
 	if (slug === 'online' && typeof value === 'string')
@@ -33,7 +34,12 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			</a>
 		);
 
-	if (procedureId && slug === 'satisfaction' && !isNaN(parseInt(value))) {
+	if (
+		procedureId &&
+		slug === 'satisfaction' &&
+		!isNaN(parseInt(value)) &&
+		!noJdma
+	) {
 		const valueToDisplay = value.toString().replace('.', ',');
 		return (
 			<Link
@@ -41,7 +47,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
 				target="_blank"
 			>
-				Détails
+				Voir le détail
 			</Link>
 		);
 	}
