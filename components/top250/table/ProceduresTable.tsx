@@ -235,6 +235,12 @@ export function ProceduresTable(props: Props) {
 									const isProactive = p.fields.some(
 										f => f.slug === 'online' && f.label === 'Démarche proactive'
 									);
+									const isToCome = p.fields.some(
+										f => f.slug === 'online' && f.label === 'À venir'
+									);
+									const isNotOnline = p.fields.some(
+										f => f.slug === 'online' && f.label === 'Non'
+									);
 									const field = p.fields.find(f => f.slug === pth.slug);
 
 									if (!field) return <>No</>;
@@ -250,10 +256,28 @@ export function ProceduresTable(props: Props) {
 										);
 									else if (isProactive && field.slug !== 'online') return;
 
+									if (isToCome && field.slug !== 'online')
+										return (
+											<td key={`${p.title} ${pth.label}`}>
+												<IndicatorLabel
+													color="gray"
+													label="À venir"
+													noBackground
+												/>
+											</td>
+										);
+
+									if (isNotOnline && field.slug !== 'online')
+										return (
+											<td key={`${p.title} ${pth.label}`}>
+												<IndicatorLabel color="gray" label="-" noBackground />
+											</td>
+										);
+
 									return (
 										<td key={`${p.title} ${pth.label}`}>
 											<IndicatorLabel {...field} />
-											{field.value && (
+											{field.value && !isNotOnline && (
 												<IndicatorValue
 													slug={field.slug}
 													value={field.value}
