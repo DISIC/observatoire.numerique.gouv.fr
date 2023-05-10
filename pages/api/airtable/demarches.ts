@@ -190,8 +190,13 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			).toString(),
 			procedureId: 'preview',
 			noBackground:
-				getLabelFromValue('usage', record.get(field_names.indicators.usage)) ===
-				'À venir'
+				getLabelFromValue(
+					'usage',
+					(
+						parseInt(record.get(field_names.indicators.usage)) /
+						parseInt(record.get(field_names.volume))
+					).toString()
+				) === 'À venir'
 		},
 		{
 			id: 'preview',

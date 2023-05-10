@@ -16,7 +16,7 @@ type Props = {
 export function Top250TableSection(props: Props) {
 	const { procedures, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
-	const numberPerPage = 20;
+	const numberPerPage = isAdmin ? 300 : 20;
 
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
