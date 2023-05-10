@@ -3,6 +3,7 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ProcedureHeader } from '@prisma/client';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 type Props = {
 	title: JSX.Element;
@@ -10,8 +11,12 @@ type Props = {
 };
 
 type CardProps = {
-	imageUrl: string;
-	imageAlt: string;
+	image: {
+		alt: string;
+		src: string;
+		width: number;
+		height: number;
+	};
 	title: JSX.Element;
 	description: string;
 	button: {
@@ -21,17 +26,19 @@ type CardProps = {
 };
 
 function IndicatorsInfosCard(props: CardProps) {
-	const { imageUrl, imageAlt, title, description, button } = props;
+	const { image, title, description, button } = props;
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
 	return (
 		<div className={classes.explanation}>
 			<div className={classes.explanationTitle}>
-				<img
+				<Image
 					className={cx(fr.cx('fr-responsive-img'))}
-					src={imageUrl}
-					alt={imageAlt}
+					src={image.src}
+					alt={image.alt}
+					width={image.width}
+					height={image.height}
 				/>
 				<span>{title}</span>
 			</div>
@@ -62,8 +69,12 @@ export function IndicatorsInfos(props: Props) {
 			</div>
 			<div className={classes.explainationsContainer}>
 				<IndicatorsInfosCard
-					imageUrl="/assets/data-visualization.svg"
-					imageAlt="Le suivi des services"
+					image={{
+						src: '/assets/data-visualization.svg',
+						alt: 'Le suivi des services',
+						width: 80,
+						height: 80
+					}}
 					title={
 						<>
 							Une évaluation trimestrielle
@@ -77,8 +88,12 @@ export function IndicatorsInfos(props: Props) {
 					}}
 				/>
 				<IndicatorsInfosCard
-					imageUrl="/assets/city-hall.svg"
-					imageAlt="La sélection des services"
+					image={{
+						src: '/assets/city-hall.svg',
+						alt: 'La sélection des services',
+						width: 80,
+						height: 80
+					}}
 					title={
 						<>
 							Une sélection des services
