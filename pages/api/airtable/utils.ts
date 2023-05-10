@@ -79,8 +79,8 @@ export const getColorFromLabel = (
 	switch (slug) {
 		case 'online':
 			if (label === 'Oui') return 'green';
-			if (label === 'Partiel') return 'orange';
-			if (label === 'Bêta') return 'orange';
+			if (label === 'Partiel') return 'yellow';
+			if (label === 'Bêta') return 'yellow';
 			if (label === 'À venir') return 'gray';
 			if (label === 'Déploiement local') return 'green';
 			if (label === 'Démarche proactive') return 'blue';
@@ -90,26 +90,26 @@ export const getColorFromLabel = (
 			const markIntValue = parseInt(label.split(' ')[0]);
 			if (isNaN(markIntValue)) return 'gray';
 			if (markIntValue < 5) return 'red';
-			if (markIntValue < 8) return 'orange';
+			if (markIntValue < 8) return 'yellow';
 			return 'green';
 		case 'uptime':
 			if (label === 'À venir') return 'gray';
-			if (label === 'Partiel') return 'orange';
+			if (label === 'Partiel') return 'yellow';
 			if (label === 'Faible') return 'red';
 			return 'green';
 		case 'performance':
 			if (label === 'À venir') return 'gray';
-			if (label === 'Partiel') return 'orange';
+			if (label === 'Partiel') return 'yellow';
 			if (label === 'Lent') return 'red';
 			return 'green';
 		case 'dlnuf':
 			if (label === 'Optimal') return 'green';
-			if (label === 'Partiel') return 'orange';
+			if (label === 'Partiel') return 'yellow';
 			if (label === 'Faible') return 'red';
 			return 'gray';
 		case 'handicap':
 			if (label === 'Oui') return 'green';
-			if (label === 'Partiel') return 'orange';
+			if (label === 'Partiel') return 'yellow';
 			if (['Non', 'Non conforme'].includes(label)) return 'red';
 			return 'gray';
 		case 'usage':
