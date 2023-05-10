@@ -27,13 +27,7 @@ export default function Home() {
 				buttonText="Tableau de suivi des services publics"
 			/>
 			<IndicatorsInfos
-				title={
-					<>
-						Comment évaluons-nous
-						<br />
-						la qualité des démarches ?
-					</>
-				}
+				title={<>Comment évaluons-nous la qualité des services numériques ?</>}
 				description={
 					<>
 						Nous avons recensé plus de 250 services publics les plus utilisées
