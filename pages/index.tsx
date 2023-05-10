@@ -1,8 +1,7 @@
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { IndicatorsDetails } from '@/components/home/IndicatorsDetails';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
-import { JDMAInfos } from '@/components/home/JDMAInfos';
-import { Questions } from '@/components/home/Questions';
+import { TextWithImage } from '@/components/home/TextWithImage';
 import { useProcedureHeaders } from '@/utils/api';
 
 export default function Home() {
@@ -58,7 +57,7 @@ export default function Home() {
 					link: '/'
 				}}
 			/>
-			<JDMAInfos
+			<TextWithImage
 				title={
 					<>
 						Vous êtes porteur ou porteuse d’un service public
@@ -68,22 +67,68 @@ export default function Home() {
 				}
 				description={
 					<>
-						Même si votre démarche n’est pas parmi les 250 suivies dans
-						l’Observatoire, vous pouvez utiliser l’outil Je donne mon avis afin
-						de suivre en temps réel la satisfaction des usagers.
+						Vous pouvez proposer votre service et utiliser les indicateurs
+						choisi par l’observatoire afin de piloter votre trategie
+						d’amélioration de la qualité de vos services
 					</>
 				}
+				button={{
+					text: 'Proposer votre service',
+					link: '/'
+				}}
+				image={{
+					alt: 'Top 250 des services publics numériques',
+					src: '/assets/top250.svg',
+					width: 303,
+					height: 280
+				}}
 			/>
-			<Questions
-				title={<>Des questions ?</>}
+			<TextWithImage
+				title={<>Comment suivre la satisfaction de vos usagers ?</>}
 				description={
 					<>
-						Notre objectif est l’amélioration concrète des 250 démarches
-						administratives les plus utilisées par les usagers. Cet observatoire
-						nous permet d’identifier et de suivre les démarches à améliorer en
-						priorité.
+						Avec l'outil Je donne mon avis, suivez en temps réel la satisfaction
+						des usagers de vos services publics numériques.
 					</>
 				}
+				button={{
+					text: 'Ajouter le bouton “je donne mon avis”',
+					link: '/je-donne-mon-avis/'
+				}}
+				image={{
+					alt: "Exemple de statistiques avec l'outil Je donne mon avis",
+					src: '/assets/jdma-screenshot.svg',
+					width: 327,
+					height: 255
+				}}
+				imageRight
+				blueBackground
+			/>
+			<TextWithImage
+				title={
+					<>
+						Vous êtes porteur ou porteuse d’un service public
+						<br />
+						numérique ?
+					</>
+				}
+				description={
+					<>
+						Vous pouvez proposer votre service et utiliser les indicateurs
+						choisi par l’observatoire afin de piloter votre trategie
+						d’amélioration de la qualité de vos services
+					</>
+				}
+				button={{
+					text: 'Proposer votre service',
+					link: '/'
+				}}
+				image={{
+					alt: 'Top 250 des services publics numériques',
+					src: '/assets/top250.svg',
+					width: 303,
+					height: 280
+				}}
 			/>
 		</div>
 	);
