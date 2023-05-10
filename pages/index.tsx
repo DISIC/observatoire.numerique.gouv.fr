@@ -1,4 +1,5 @@
 import { HomeHeader } from '@/components/home/HomeHeader';
+import { IndicatorsDetails } from '@/components/home/IndicatorsDetails';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
 import { JDMAInfos } from '@/components/home/JDMAInfos';
 import { Questions } from '@/components/home/Questions';
@@ -36,7 +37,21 @@ export default function Home() {
 						l&apos;expérience usager de façon très concrète.
 					</>
 				}
-				titleIndicators={<>5 indicateurs de suivi des démarches</>}
+			/>
+			<IndicatorsDetails
+				title={
+					<>
+						Des indicateurs clés de suivi de la qualité des services publics{' '}
+						<br /> numériques.
+					</>
+				}
+				description={
+					<>
+						Nous avons pensé 11 indicateurs clés afin de suivre les
+						améliorations des services numériques selon des critères de qualité
+						de l’expérience utilisateur, de proactivité et de performance.
+					</>
+				}
 				indicators={proceduresTableHeaders || []}
 			/>
 			<JDMAInfos
