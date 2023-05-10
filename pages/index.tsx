@@ -53,6 +53,10 @@ export default function Home() {
 					</>
 				}
 				indicators={proceduresTableHeaders || []}
+				button={{
+					text: 'Voir tous les indicateurs',
+					link: '/'
+				}}
 			/>
 			<JDMAInfos
 				title={

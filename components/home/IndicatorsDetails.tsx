@@ -1,16 +1,23 @@
 import { fr } from '@codegouvfr/react-dsfr';
+import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ProcedureHeader } from '@prisma/client';
+import { useRouter } from 'next/router';
 
 type Props = {
 	title: JSX.Element;
 	description: JSX.Element;
 	indicators: ProcedureHeader[];
+	button: {
+		text: string;
+		link: string;
+	};
 };
 
 export function IndicatorsDetails(props: Props) {
-	const { title, description, indicators } = props;
+	const { title, description, indicators, button } = props;
 	const { classes, cx } = useStyles();
+	const router = useRouter();
 
 	return (
 		<div className={classes.root}>
@@ -29,6 +36,18 @@ export function IndicatorsDetails(props: Props) {
 							{indicator.description && <p>{indicator.description}</p>}
 						</div>
 					))}
+				</div>
+				<div className={classes.buttonContainer}>
+					<Button
+						type="button"
+						priority="secondary"
+						size="small"
+						onClick={() => {
+							router.push(button.link);
+						}}
+					>
+						{button.text}
+					</Button>
 				</div>
 			</div>
 		</div>
@@ -107,5 +126,10 @@ const useStyles = makeStyles()(theme => ({
 		[fr.breakpoints.down('sm')]: {
 			textAlign: 'center'
 		}
+	},
+	buttonContainer: {
+		display: 'flex',
+		justifyContent: 'center',
+		marginTop: fr.spacing('8v')
 	}
 }));
