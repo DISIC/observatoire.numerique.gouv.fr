@@ -7,8 +7,6 @@ import { useRouter } from 'next/router';
 type Props = {
 	title: JSX.Element;
 	description: JSX.Element;
-	titleIndicators: JSX.Element;
-	indicators: ProcedureHeader[];
 };
 
 type CardProps = {
@@ -53,7 +51,7 @@ function IndicatorsInfosCard(props: CardProps) {
 }
 
 export function IndicatorsInfos(props: Props) {
-	const { title, description, titleIndicators, indicators } = props;
+	const { title, description } = props;
 	const { classes, cx } = useStyles();
 
 	return (
