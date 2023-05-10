@@ -74,7 +74,7 @@ export default function Home() {
 				}
 				button={{
 					text: 'Proposer votre service',
-					link: '/'
+					link: 'https://www.plus.transformation.gouv.fr/experience/step_1'
 				}}
 				image={{
 					alt: 'Top 250 des services publics numériques',
@@ -87,8 +87,8 @@ export default function Home() {
 				title={<>Comment suivre la satisfaction de vos usagers ?</>}
 				description={
 					<>
-						Avec l'outil Je donne mon avis, suivez en temps réel la satisfaction
-						des usagers de vos services publics numériques.
+						Avec l&apo;outil Je donne mon avis, suivez en temps réel la
+						satisfaction des usagers de vos services publics numériques.
 					</>
 				}
 				button={{
