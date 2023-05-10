@@ -63,9 +63,12 @@ export const getLabelFromValue = (
 				getRoundedDecimalString((usageFloatValue * 100).toString()) || '0'
 			}%`;
 		case 'auth':
-			if (['FranceConnect', 'FranceConnect +', 'Non'].includes(value))
+			if (
+				['FranceConnect', 'FranceConnect +', 'Non', 'Non applicable'].includes(
+					value
+				)
+			)
 				return value;
-			if (['n/a', '-'].includes(value)) return 'Non applicable';
 			return 'À venir';
 		default:
 			return value;
