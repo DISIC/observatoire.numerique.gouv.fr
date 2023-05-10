@@ -1,20 +1,32 @@
 import { fr } from '@codegouvfr/react-dsfr';
+import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { useRouter } from 'next/router';
 
 type Props = {
 	title: JSX.Element;
 	description: JSX.Element;
+	buttonText: string;
 };
 
 export function HomeHeader(props: Props) {
-	const { title, description } = props;
+	const { title, description, buttonText } = props;
 	const { classes, cx } = useStyles();
+	const router = useRouter();
 
 	return (
 		<div className={classes.root}>
 			<div className={cx(fr.cx('fr-container'), classes.container)}>
 				<h1>{title}</h1>
 				<p>{description}</p>
+				<Button
+					type="button"
+					onClick={() => {
+						router.push('/observatoire');
+					}}
+				>
+					{buttonText}
+				</Button>
 			</div>
 		</div>
 	);
@@ -28,12 +40,15 @@ const useStyles = makeStyles()(theme => ({
 		maxWidth: '55rem',
 		paddingTop: fr.spacing('18v'),
 		paddingBottom: fr.spacing('18v'),
+		textAlign: 'center',
 		h1: {
 			color: theme.decisions.background.actionHigh.blueFrance.default,
-			...fr.typography[11].style
+			...fr.typography[12].style,
+			marginBottom: fr.spacing('13v')
 		},
-		[fr.breakpoints.down('sm')]: {
-			textAlign: 'center'
+		p: {
+			...fr.typography[21].style,
+			marginBottom: fr.spacing('13v')
 		}
 	}
 }));

@@ -12,20 +12,19 @@ export default function Home() {
 			<HomeHeader
 				title={
 					<>
-						Pour des services publics
-						<br />
-						numériques de qualité
+						Suivez l’amélioration <br /> de la qualité des services <br />{' '}
+						publics numériques phares.
 					</>
 				}
 				description={
 					<>
-						L&apos;Observatoire vous permet de suivre la qualité de la
-						dématérialisation
+						Pour des services numériques simple, accessible et efficace.
 						<br />
-						de plus de 250 démarches publiques faisant partie des services les
-						plus utilisées.
+						L’observatoire vous accompagne dans votre stratégie de transition
+						numérique.
 					</>
 				}
+				buttonText="Tableau de suivi des services publics"
 			/>
 			<IndicatorsInfos
 				title={
