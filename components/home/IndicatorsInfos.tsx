@@ -1,17 +1,64 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import Tile from '@codegouvfr/react-dsfr/Tile';
 import { ProcedureHeader } from '@prisma/client';
+import Button from '@codegouvfr/react-dsfr/Button';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 type Props = {
 	title: JSX.Element;
 	description: JSX.Element;
-	titleIndicators: JSX.Element;
-	indicators: ProcedureHeader[];
 };
 
+type CardProps = {
+	image: {
+		alt: string;
+		src: string;
+		width: number;
+		height: number;
+	};
+	title: JSX.Element;
+	description: string;
+	button: {
+		text: string;
+		link: string;
+	};
+};
+
+function IndicatorsInfosCard(props: CardProps) {
+	const { image, title, description, button } = props;
+	const { classes, cx } = useStyles();
+	const router = useRouter();
+
+	return (
+		<div className={classes.explanation}>
+			<div className={classes.explanationTitle}>
+				<Image
+					className={cx(fr.cx('fr-responsive-img'))}
+					src={image.src}
+					alt={image.alt}
+					width={image.width}
+					height={image.height}
+				/>
+				<span>{title}</span>
+			</div>
+			<p>{description}</p>
+			<Button
+				type="button"
+				priority="secondary"
+				size="small"
+				onClick={() => {
+					router.push(button.link);
+				}}
+			>
+				{button.text} <i className={fr.cx('ri-arrow-right-line', 'fr-ml-2v')} />
+			</Button>
+		</div>
+	);
+}
+
 export function IndicatorsInfos(props: Props) {
-	const { title, description, titleIndicators, indicators } = props;
+	const { title, description } = props;
 	const { classes, cx } = useStyles();
 
 	return (
@@ -20,40 +67,45 @@ export function IndicatorsInfos(props: Props) {
 				<h2>{title}</h2>
 				<p>{description}</p>
 			</div>
-			<div className={classes.tilesContainer}>
-				<Tile
-					imageUrl="/assets/city-hall.svg"
-					imageAlt="La sélection des services"
-					imageWidth={80}
-					imageHeight={80}
-					linkProps={{
-						href: '#'
+			<div className={classes.explainationsContainer}>
+				<IndicatorsInfosCard
+					image={{
+						src: '/assets/data-visualization.svg',
+						alt: 'Le suivi des services',
+						width: 80,
+						height: 80
 					}}
-					title="La sélection des services"
-				/>
-				<Tile
-					imageUrl="/assets/data-visualization.svg"
-					imageAlt="Le suivi des services"
-					imageWidth={80}
-					imageHeight={80}
-					linkProps={{
-						href: '#'
+					title={
+						<>
+							Une évaluation trimestrielle
+							<br /> des services
+						</>
+					}
+					description="Elle permet d’évaluer les services sur des critères de qualité et de performance."
+					button={{
+						text: 'Comprendre l’évaluation',
+						link: '/'
 					}}
-					title="Le suivi des services"
 				/>
-			</div>
-			<div className={classes.indicatorsContainer}>
-				<h2>{titleIndicators}</h2>
-				<div>
-					{indicators.slice(0, 5).map(indicator => (
-						<div key={indicator.id}>
-							<span>
-								<i className={indicator.icon} />
-							</span>
-							<span>{indicator.label}</span>
-						</div>
-					))}
-				</div>
+				<IndicatorsInfosCard
+					image={{
+						src: '/assets/city-hall.svg',
+						alt: 'La sélection des services',
+						width: 80,
+						height: 80
+					}}
+					title={
+						<>
+							Une sélection des services
+							<br /> numériques phares
+						</>
+					}
+					description="Tous les services publics numérique peuvent réaliser une demande pour entrer dans l’observatoire."
+					button={{
+						text: 'Voir les critères d’entrée',
+						link: '/'
+					}}
+				/>
 			</div>
 		</div>
 	);
@@ -67,77 +119,76 @@ const useStyles = makeStyles()(theme => ({
 	},
 	introContainer: {
 		h2: {
-			...fr.typography[5].style,
+			...fr.typography[3].style,
 			textAlign: 'center',
-			color: theme.decisions.background.actionHigh.blueFrance.default
+			color: theme.decisions.background.actionHigh.blueFrance.default,
+			marginBottom: fr.spacing('6v')
 		},
 		p: {
-			paddingLeft: fr.spacing('16v'),
-			paddingRight: fr.spacing('16v'),
-			marginTop: fr.spacing('8v'),
+			paddingLeft: fr.spacing('17v'),
+			paddingRight: fr.spacing('17v'),
+			marginBottom: fr.spacing('10v'),
+			textAlign: 'center',
 			[fr.breakpoints.down('sm')]: {
 				padding: 0,
 				textAlign: 'center'
 			}
 		}
 	},
-	tilesContainer: {
+	explainationsContainer: {
 		display: 'flex',
-		justifyContent: 'center',
-		paddingTop: fr.spacing('9v'),
-		paddingBottom: fr.spacing('17v'),
-		['& > div']: {
-			maxWidth: '11.25rem',
-			marginLeft: fr.spacing('4v'),
-			marginRight: fr.spacing('4v'),
-			paddingBottom: fr.spacing('8v'),
+		flexWrap: 'wrap',
+		gap: fr.spacing('14w'),
+		paddingLeft: fr.spacing('17v'),
+		paddingRight: fr.spacing('17v'),
+		[fr.breakpoints.down('sm')]: {
+			flexDirection: 'column-reverse',
+			textAlign: 'center',
+			gap: 0,
+			paddingLeft: 0,
+			paddingRight: 0
+		}
+	},
+	explanation: {
+		width: `calc(50% - ${fr.spacing('7w')})`,
+		p: {
+			marginTop: fr.spacing('9v'),
+			marginBottom: fr.spacing('9v'),
+			height: fr.spacing('8w'),
 			[fr.breakpoints.down('sm')]: {
-				maxWidth: '9.25rem'
+				marginTop: fr.spacing('4v'),
+				marginBottom: fr.spacing('4v'),
+				height: 'auto'
+			}
+		},
+		button: {
+			fontWeight: 400,
+			['i::before']: {
+				'--icon-size': '1rem !important'
+			}
+		},
+		[fr.breakpoints.down('sm')]: {
+			width: '100%',
+			['&:not(:last-of-type)']: {
+				marginTop: fr.spacing('16v')
 			}
 		}
 	},
-	indicatorsContainer: {
-		h2: {
-			...fr.typography[4].style,
-			textAlign: 'center',
-			color: theme.decisions.background.actionHigh.blueFrance.default
+	explanationTitle: {
+		display: 'flex',
+		alignItems: 'center',
+		img: {
+			width: fr.spacing('19v')
 		},
-		['& > div']: {
-			display: 'flex',
-			justifyContent: 'space-between',
-			['& > div']: {
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				marginTop: fr.spacing('8v'),
-				['& > span:first-of-type']: {
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'center',
-					backgroundColor: theme.decisions.background.alt.blueFrance.default,
-					borderRadius: '50%',
-					width: fr.spacing('20v'),
-					height: fr.spacing('20v'),
-					['i::before']: {
-						'--icon-size': fr.spacing('10v'),
-						color: theme.decisions.background.actionHigh.blueFrance.default
-					}
-				},
-				['& > span:not(:first-of-type)']: {
-					maxWidth: fr.spacing('32v'),
-					textAlign: 'center',
-					color: theme.decisions.background.actionHigh.blueFrance.default,
-					fontWeight: 'bold',
-					marginTop: fr.spacing('7v')
-				}
-			},
-			[fr.breakpoints.down('sm')]: {
-				flexWrap: 'wrap',
-				['& > div']: {
-					width: '100%',
-					['&:not(:first-of-type)']: { marginTop: fr.spacing('20v') }
-				}
-			}
+		span: {
+			...fr.typography[20].style,
+			color: theme.decisions.background.actionHigh.blueFrance.default,
+			fontWeight: 500,
+			margin: `0 0 0 ${fr.spacing('4v')}`
+		},
+		[fr.breakpoints.down('sm')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('6v')
 		}
 	}
 }));

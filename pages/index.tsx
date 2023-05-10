@@ -1,7 +1,7 @@
 import { HomeHeader } from '@/components/home/HomeHeader';
+import { IndicatorsDetails } from '@/components/home/IndicatorsDetails';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
-import { JDMAInfos } from '@/components/home/JDMAInfos';
-import { Questions } from '@/components/home/Questions';
+import { TextWithImage } from '@/components/home/TextWithImage';
 import { useProcedureHeaders } from '@/utils/api';
 
 export default function Home() {
@@ -12,29 +12,22 @@ export default function Home() {
 			<HomeHeader
 				title={
 					<>
-						Pour des services publics
-						<br />
-						numériques de qualité
+						Suivez l’amélioration <br /> de la qualité des services <br />{' '}
+						publics numériques phares.
 					</>
 				}
 				description={
 					<>
-						L&apos;Observatoire vous permet de suivre la qualité de la
-						dématérialisation
+						Pour des services numériques simple, accessible et efficace.
 						<br />
-						de plus de 250 démarches publiques faisant partie des services les
-						plus utilisées.
+						L’observatoire vous accompagne dans votre stratégie de transition
+						numérique.
 					</>
 				}
+				buttonText="Tableau de suivi des services publics"
 			/>
 			<IndicatorsInfos
-				title={
-					<>
-						Comment évaluons-nous
-						<br />
-						la qualité des démarches ?
-					</>
-				}
+				title={<>Comment évaluons-nous la qualité des services numériques ?</>}
 				description={
 					<>
 						Nous avons recensé plus de 250 services publics les plus utilisées
@@ -43,10 +36,28 @@ export default function Home() {
 						l&apos;expérience usager de façon très concrète.
 					</>
 				}
-				titleIndicators={<>5 indicateurs de suivi des démarches</>}
-				indicators={proceduresTableHeaders || []}
 			/>
-			<JDMAInfos
+			<IndicatorsDetails
+				title={
+					<>
+						Des indicateurs clés de suivi de la qualité des services publics{' '}
+						<br /> numériques.
+					</>
+				}
+				description={
+					<>
+						Nous avons pensé 11 indicateurs clés afin de suivre les
+						améliorations des services numériques selon des critères de qualité
+						de l’expérience utilisateur, de proactivité et de performance.
+					</>
+				}
+				indicators={proceduresTableHeaders || []}
+				button={{
+					text: 'Voir tous les indicateurs',
+					link: '/'
+				}}
+			/>
+			<TextWithImage
 				title={
 					<>
 						Vous êtes porteur ou porteuse d’un service public
@@ -56,22 +67,68 @@ export default function Home() {
 				}
 				description={
 					<>
-						Même si votre démarche n’est pas parmi les 250 suivies dans
-						l’Observatoire, vous pouvez utiliser l’outil Je donne mon avis afin
-						de suivre en temps réel la satisfaction des usagers.
+						Vous pouvez proposer votre service et utiliser les indicateurs
+						choisi par l’observatoire afin de piloter votre trategie
+						d’amélioration de la qualité de vos services
 					</>
 				}
+				button={{
+					text: 'Proposer votre service',
+					link: 'https://www.plus.transformation.gouv.fr/experience/step_1'
+				}}
+				image={{
+					alt: 'Top 250 des services publics numériques',
+					src: '/assets/top250.svg',
+					width: 303,
+					height: 280
+				}}
 			/>
-			<Questions
-				title={<>Des questions ?</>}
+			<TextWithImage
+				title={<>Comment suivre la satisfaction de vos usagers ?</>}
 				description={
 					<>
-						Notre objectif est l’amélioration concrète des 250 démarches
-						administratives les plus utilisées par les usagers. Cet observatoire
-						nous permet d’identifier et de suivre les démarches à améliorer en
-						priorité.
+						Avec l&apo;outil Je donne mon avis, suivez en temps réel la
+						satisfaction des usagers de vos services publics numériques.
 					</>
 				}
+				button={{
+					text: 'Ajouter le bouton “je donne mon avis”',
+					link: '/je-donne-mon-avis/'
+				}}
+				image={{
+					alt: "Exemple de statistiques avec l'outil Je donne mon avis",
+					src: '/assets/jdma-screenshot.svg',
+					width: 327,
+					height: 255
+				}}
+				imageRight
+				blueBackground
+			/>
+			<TextWithImage
+				title={
+					<>
+						Vous êtes porteur ou porteuse d’un service public
+						<br />
+						numérique ?
+					</>
+				}
+				description={
+					<>
+						Vous pouvez proposer votre service et utiliser les indicateurs
+						choisi par l’observatoire afin de piloter votre trategie
+						d’amélioration de la qualité de vos services
+					</>
+				}
+				button={{
+					text: 'Proposer votre service',
+					link: '/'
+				}}
+				image={{
+					alt: 'Top 250 des services publics numériques',
+					src: '/assets/top250.svg',
+					width: 303,
+					height: 280
+				}}
 			/>
 		</div>
 	);
