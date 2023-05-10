@@ -6,7 +6,7 @@ import { IndicatorValue } from './IndicatorValue';
 import { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { ProcedureHeader } from '@prisma/client';
+import { Field, ProcedureHeader } from '@prisma/client';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
@@ -26,6 +26,34 @@ export function ProcedureMobileCard(props: Props) {
 	const isProactive = procedure.fields.some(
 		f => f.slug === 'online' && f.label === 'Démarche proactive'
 	);
+	const isToCome = procedure.fields.some(
+		f => f.slug === 'online' && f.label === 'À venir'
+	);
+	const isNotOnline = procedure.fields.some(
+		f => f.slug === 'online' && f.label === 'Non'
+	);
+
+	const displayIndicator = (field: Field) => {
+		if (isToCome && field.slug !== 'online')
+			return <IndicatorLabel color="gray" label="À venir" noBackground />;
+
+		if (isNotOnline && field.slug !== 'online')
+			return <IndicatorLabel color="gray" label="-" noBackground />;
+
+		return (
+			<>
+				<IndicatorLabel {...field} />
+
+				{field.value && (
+					<IndicatorValue
+						slug={field.slug}
+						value={field.value}
+						procedureId={procedure.airtable_identifier}
+					/>
+				)}
+			</>
+		);
+	};
 
 	return (
 		<div
@@ -78,14 +106,7 @@ export function ProcedureMobileCard(props: Props) {
 											}}
 											isMobile
 										/>
-										<IndicatorLabel {...field} />
-										{field.value && (
-											<IndicatorValue
-												slug={field.slug}
-												value={field.value}
-												procedureId={procedure.airtable_identifier}
-											/>
-										)}
+										{displayIndicator(field)}
 									</div>
 								</CSSTransition>
 							)
