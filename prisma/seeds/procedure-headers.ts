@@ -43,7 +43,7 @@ export const procedureHeaders = [
 	},
 	{
 		slug: 'help_used',
-		label: 'Aide extérieure sollicitée',
+		label: 'Niveau d’autonomie',
 		icon: 'ri-chat-smile-line',
 		position: 8
 	},
