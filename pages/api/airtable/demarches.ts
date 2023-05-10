@@ -25,7 +25,7 @@ const field_names = {
 		uptime: '2️⃣ Taux de disponibilité',
 		performance: '2️⃣ Temps moyen de chargement',
 		handicap: '📊 Prise en compte du handicap',
-		dlnuf: '🧜‍♀️ Note DLNUF',
+		dlnuf: 'DLNUF (pour publication)',
 		usage: 'Volumétrie en ligne',
 		auth: '2️⃣ FranceConnect'
 	}
@@ -160,7 +160,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 			procedureId: 'preview',
 			noBackground:
 				getLabelFromValue('dlnuf', record.get(field_names.indicators.dlnuf)) ===
-				'Non communiqué'
+				'À venir'
 		},
 		{
 			id: 'preview',

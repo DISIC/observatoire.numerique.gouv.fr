@@ -42,11 +42,10 @@ export const getLabelFromValue = (
 			return 'Optimal';
 		case 'dlnuf':
 			const dlnufIntValue = parseInt(value);
-			if (isNaN(dlnufIntValue)) return 'Non communiqué';
-			if (dlnufIntValue < 4) return 'Faible';
-			if (dlnufIntValue < 6) return 'Partiel';
-			if (dlnufIntValue < 8) return 'Bon';
-			return 'Optimal';
+			if (isNaN(dlnufIntValue)) return value;
+			if (dlnufIntValue < 2) return 'Optimal';
+			if (dlnufIntValue < 5) return 'Partiel';
+			return 'Faible';
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
 			if (isNaN(handicapIntValue)) {
@@ -104,11 +103,10 @@ export const getColorFromLabel = (
 			if (label === 'Lent') return 'red';
 			return 'green';
 		case 'dlnuf':
-			if (label === 'Non communiqué') return 'gray';
-			if (label === 'Bon') return 'orange';
+			if (label === 'Optimal') return 'green';
 			if (label === 'Partiel') return 'orange';
 			if (label === 'Faible') return 'red';
-			return 'green';
+			return 'gray';
 		case 'handicap':
 			if (label === 'Oui') return 'green';
 			if (label === 'Partiel') return 'orange';
