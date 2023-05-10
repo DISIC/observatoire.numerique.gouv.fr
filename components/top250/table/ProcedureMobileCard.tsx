@@ -48,6 +48,7 @@ export function ProcedureMobileCard(props: Props) {
 					<IndicatorValue
 						slug={field.slug}
 						value={field.value}
+						noJdma={procedure.noJdma}
 						procedureId={procedure.airtable_identifier}
 					/>
 				)}
