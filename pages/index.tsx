@@ -24,7 +24,10 @@ export default function Home() {
 						numérique.
 					</>
 				}
-				buttonText="Tableau de suivi des services publics"
+				button={{
+					text: 'Tableau de suivi des services publics',
+					link: '/observatoire'
+				}}
 			/>
 			<IndicatorsInfos
 				title={<>Comment évaluons-nous la qualité des services numériques ?</>}

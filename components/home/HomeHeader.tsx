@@ -7,21 +7,20 @@ import { useRouter } from 'next/router';
 type Props = {
 	title: JSX.Element;
 	description: JSX.Element;
-	buttonText: string;
+	button: { link: string; text: string };
 };
 
 export function HomeHeader(props: Props) {
-	const { title, description, buttonText } = props;
+	const { title, description, button } = props;
 	const { classes, cx } = useStyles();
-	const router = useRouter();
 
 	return (
 		<div className={classes.root}>
 			<div className={cx(fr.cx('fr-container'), classes.container)}>
 				<h1>{title}</h1>
 				<p>{description}</p>
-				<Link href={'/observatoire'} className={fr.cx('fr-btn')}>
-					{buttonText}
+				<Link href={button.link} className={fr.cx('fr-btn')}>
+					{button.text}
 				</Link>
 			</div>
 		</div>
