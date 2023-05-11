@@ -1,32 +1,27 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 type Props = {
 	title: JSX.Element;
 	description: JSX.Element;
-	buttonText: string;
+	button: { link: string; text: string };
 };
 
 export function HomeHeader(props: Props) {
-	const { title, description, buttonText } = props;
+	const { title, description, button } = props;
 	const { classes, cx } = useStyles();
-	const router = useRouter();
 
 	return (
 		<div className={classes.root}>
 			<div className={cx(fr.cx('fr-container'), classes.container)}>
 				<h1>{title}</h1>
 				<p>{description}</p>
-				<Button
-					type="button"
-					onClick={() => {
-						router.push('/observatoire');
-					}}
-				>
-					{buttonText}
-				</Button>
+				<Link href={button.link} className={fr.cx('fr-btn')}>
+					{button.text}
+				</Link>
 			</div>
 		</div>
 	);

@@ -4,6 +4,7 @@ import { ProcedureHeader } from '@prisma/client';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type Props = {
 	title: JSX.Element;
@@ -43,16 +44,12 @@ function IndicatorsInfosCard(props: CardProps) {
 				<span>{title}</span>
 			</div>
 			<p>{description}</p>
-			<Button
-				type="button"
-				priority="secondary"
-				size="small"
-				onClick={() => {
-					router.push(button.link);
-				}}
+			<Link
+				href={button.link}
+				className={fr.cx('fr-btn', 'fr-btn--secondary', 'fr-btn--sm')}
 			>
 				{button.text} <i className={fr.cx('ri-arrow-right-line', 'fr-ml-2v')} />
-			</Button>
+			</Link>
 		</div>
 	);
 }
@@ -161,10 +158,13 @@ const useStyles = makeStyles()(theme => ({
 				height: 'auto'
 			}
 		},
-		button: {
+		a: {
 			fontWeight: 400,
+			borderBottom: 0,
 			['i::before']: {
-				'--icon-size': '1rem !important'
+				'--icon-size': '1rem !important',
+				position: 'relative',
+				top: 2
 			}
 		},
 		[fr.breakpoints.down('sm')]: {

@@ -2,6 +2,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -39,16 +40,12 @@ export function TextWithImage(props: Props) {
 				<div className={classes.firstSection}>
 					<h2>{title}</h2>
 					<p>{description}</p>
-					<Button
-						type="button"
-						priority="secondary"
-						className={classes.contactButton}
-						onClick={() => {
-							router.push(button.link);
-						}}
+					<Link
+						href={button.link}
+						className={fr.cx('fr-btn', 'fr-btn--secondary')}
 					>
 						{button.text}
-					</Button>
+					</Link>
 				</div>
 				<div className={classes.secondSection}>
 					<Image
