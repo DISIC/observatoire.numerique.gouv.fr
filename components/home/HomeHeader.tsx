@@ -1,6 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -19,14 +20,9 @@ export function HomeHeader(props: Props) {
 			<div className={cx(fr.cx('fr-container'), classes.container)}>
 				<h1>{title}</h1>
 				<p>{description}</p>
-				<Button
-					type="button"
-					onClick={() => {
-						router.push('/observatoire');
-					}}
-				>
+				<Link href={'/observatoire'} className={fr.cx('fr-btn')}>
 					{buttonText}
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);
