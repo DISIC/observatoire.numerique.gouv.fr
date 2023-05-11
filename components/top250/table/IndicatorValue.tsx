@@ -8,6 +8,7 @@ type Props = {
 	procedureId: number | null;
 	value: string;
 	noJdma?: boolean;
+	label: string;
 };
 
 const acceptedSlugValues: IndicatorSlug[] = [
@@ -19,10 +20,10 @@ const acceptedSlugValues: IndicatorSlug[] = [
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
-	const { slug, value, procedureId, noJdma } = props;
+	const { slug, value, label, procedureId, noJdma } = props;
 	const { classes, cx } = useStyles();
 
-	if (slug === 'online' && typeof value === 'string')
+	if (slug === 'online' && label !== 'À venir' && typeof value === 'string')
 		return (
 			<a
 				href={value}
