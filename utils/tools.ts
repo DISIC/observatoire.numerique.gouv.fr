@@ -3,7 +3,7 @@ export const getDisplayedVolume = (volume: number): string => {
 		const millions = Math.floor(volume / 1000000);
 		const remainder = volume % 1000000;
 		if (remainder === 0) {
-			return `${millions} millions`;
+			return `${millions} million${millions > 1 ? 's' : ''}`;
 		} else {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
