@@ -81,7 +81,7 @@ export function IndicatorsInfos(props: Props) {
 					description="Elle permet d’évaluer les services sur des critères de qualité et de performance."
 					button={{
 						text: 'Comprendre l’évaluation',
-						link: '/'
+						link: '/Aide/Observatoire?tab=goals'
 					}}
 				/>
 				<IndicatorsInfosCard
@@ -100,7 +100,7 @@ export function IndicatorsInfos(props: Props) {
 					description="Tous les services publics numérique peuvent réaliser une demande pour entrer dans l’observatoire."
 					button={{
 						text: 'Voir les critères d’entrée',
-						link: '/'
+						link: '/Aide/Observatoire?tab=criterias'
 					}}
 				/>
 			</div>
