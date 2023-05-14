@@ -29,7 +29,7 @@ export function HelpIndicators(props: Props) {
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
 						>
-							{pth.description || 'À rédiger...'}
+							{pth.description_full || 'À rédiger...'}
 						</AccordionWithIcon>
 					))}
 				</div>
@@ -49,7 +49,7 @@ export function HelpIndicators(props: Props) {
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
 						>
-							{pth.description || 'À rédiger...'}
+							{pth.description_full || 'À rédiger...'}
 						</AccordionWithIcon>
 					))}
 				</div>
