@@ -2,6 +2,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorSlug } from '@prisma/client';
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 
 type Props = {
 	slug: IndicatorSlug;
@@ -9,6 +10,7 @@ type Props = {
 	value: string;
 	noJdma?: boolean;
 	label: string;
+	onLinkFocus?: () => void;
 };
 
 const acceptedSlugValues: IndicatorSlug[] = [
@@ -20,19 +22,35 @@ const acceptedSlugValues: IndicatorSlug[] = [
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
-	const { slug, value, label, procedureId, noJdma } = props;
+	const { slug, value, label, procedureId, noJdma, onLinkFocus } = props;
 	const { classes, cx } = useStyles();
+
+	const linkRef = useRef<HTMLAnchorElement | null>(null);
+
+	useEffect(() => {
+		const link = linkRef.current;
+
+		if (link && onLinkFocus) {
+			link.addEventListener('focus', onLinkFocus);
+
+			// Clean up
+			return () => {
+				link.removeEventListener('focus', onLinkFocus);
+			};
+		}
+	}, []);
 
 	if (slug === 'online' && label !== 'À venir' && typeof value === 'string')
 		return (
-			<a
+			<Link
+				ref={linkRef}
 				href={value}
 				title="accéder au service en ligne"
 				target="_blank"
 				rel="noreferrer"
 			>
 				Voir le service
-			</a>
+			</Link>
 		);
 
 	if (
@@ -44,6 +62,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		const valueToDisplay = value.toString().replace('.', ',');
 		return (
 			<Link
+				ref={linkRef}
 				title={`Détails : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
 				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
 				target="_blank"

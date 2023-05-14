@@ -284,6 +284,10 @@ export function ProceduresTable(props: Props) {
 													label={field.label}
 													noJdma={p.noJdma}
 													procedureId={p.airtable_identifier}
+													onLinkFocus={() => {
+														console.log('focus!');
+														scrollRef.current?.scrollTo({ left: 0 });
+													}}
 												/>
 											)}
 										</td>
