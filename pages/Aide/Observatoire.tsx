@@ -1,3 +1,6 @@
+import { HelpCriterias } from '@/components/help/Criterias';
+import { HelpGoals } from '@/components/help/Goals';
+import { HelpIndicators } from '@/components/help/Indicators';
 import { PageTitleHeader } from '@/components/layout/PageTitleHeader';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Tabs } from '@codegouvfr/react-dsfr/Tabs';
@@ -29,6 +32,18 @@ export default function AideObservatoire() {
 		}
 	}, [router.query]);
 
+	const getTabToDisplay = () => {
+		switch (selectedTabId) {
+			case 'goals':
+				return <HelpGoals />;
+			case 'criterias':
+				return <HelpCriterias />;
+			case 'indicators':
+			default:
+				return <HelpIndicators />;
+		}
+	};
+
 	return (
 		<div className={classes.root}>
 			<PageTitleHeader title="En savoir plus sur l'Observatoire" />
@@ -37,7 +52,9 @@ export default function AideObservatoire() {
 					selectedTabId={selectedTabId}
 					tabs={tabs}
 					onTabChange={handleTabChange}
-				></Tabs>
+				>
+					{getTabToDisplay()}
+				</Tabs>
 			</div>
 		</div>
 	);
@@ -46,6 +63,10 @@ export default function AideObservatoire() {
 const useStyles = makeStyles()(theme => ({
 	root: {},
 	tabsContainer: {
-		padding: `${fr.spacing('18v')} 0`
+		maxWidth: '50rem',
+		padding: `${fr.spacing('18v')} 0`,
+		['.fr-tabs, .fr-tabs::before']: {
+			boxShadow: 'none'
+		}
 	}
 }));
