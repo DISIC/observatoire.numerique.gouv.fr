@@ -17,14 +17,15 @@ export function HelpIndicators(props: Props) {
 			<div className={classes.primarySection}>
 				<h2 className={cx(fr.cx('fr-h2'))}>Les indicateurs clés</h2>
 				<p>
-					Voir s’il est utile d’avoir un texte ici très court pour parler des
-					indicateurs clés.
+					Voir s&apos;il est utile d’avoir un texte ici très court pour parler
+					des indicateurs clés.
 				</p>
 				<div
 					className={cx(fr.cx('fr-accordions-group'), classes.accordionGroup)}
 				>
 					{proceduresTableHeaders.slice(0, 5).map(pth => (
 						<AccordionWithIcon
+							key={pth.id}
 							className={classes.accordion}
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
@@ -37,14 +38,15 @@ export function HelpIndicators(props: Props) {
 			<div className={classes.secondarySection}>
 				<h2 className={cx(fr.cx('fr-h2'))}>Les indicateurs complémentaires</h2>
 				<p>
-					Voir s’il est utile d’avoir un texte ici très court pour parler des
-					indicateurs complémentaires.
+					Voir s&apos;il est utile d’avoir un texte ici très court pour parler
+					des indicateurs complémentaires.
 				</p>
 				<div
 					className={cx(fr.cx('fr-accordions-group'), classes.accordionGroup)}
 				>
 					{proceduresTableHeaders.slice(5).map(pth => (
 						<AccordionWithIcon
+							key={pth.id}
 							className={classes.accordion}
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
