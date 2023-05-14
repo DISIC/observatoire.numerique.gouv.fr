@@ -57,7 +57,7 @@ export default function Home() {
 				indicators={proceduresTableHeaders || []}
 				button={{
 					text: 'Voir tous les indicateurs',
-					link: '/'
+					link: '/Aide/Observatoire?tab=indicators'
 				}}
 			/>
 			<TextWithImage
