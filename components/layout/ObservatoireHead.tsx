@@ -1,9 +1,28 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 export function ObservatoireHead() {
+	const router = useRouter();
+
+	let pageTitlePrefix = '';
+	switch (router.pathname) {
+		case '/':
+			pageTitlePrefix = 'Accueil -';
+			break;
+		case '/observatoire':
+			pageTitlePrefix = 'Observatoire -';
+			break;
+		case '/Aide/Observatoire':
+			pageTitlePrefix = "En savoir plus sur l'Observatoire -";
+			break;
+	}
+
 	return (
 		<Head>
-			<title>L&#39;Observatoire de la qualité des démarches en ligne</title>
+			<title>
+				{pageTitlePrefix} L&#39;Observatoire de la qualité des démarches en
+				ligne
+			</title>
 			<meta
 				name="description"
 				content="Pour des services publics numériques de qualité"
