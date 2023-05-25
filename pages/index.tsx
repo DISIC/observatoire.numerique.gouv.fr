@@ -18,14 +18,12 @@ export default function Home() {
 				}
 				description={
 					<>
-						Pour des services numériques simple, accessible et efficace.
-						<br />
-						L’observatoire vous accompagne dans votre stratégie de transition
-						numérique.
+						L’observatoire est un outil de pilotage interministériel permettant
+						d’identifier les services à améliorer en priorité.
 					</>
 				}
 				button={{
-					text: 'Tableau de suivi des services publics',
+					text: 'Consulter le tableau de suivi des services publics',
 					link: '/observatoire'
 				}}
 			/>
@@ -33,10 +31,10 @@ export default function Home() {
 				title={<>Comment évaluons-nous la qualité des services numériques ?</>}
 				description={
 					<>
-						Nous avons recensé plus de 250 services publics les plus utilisées
-						par les usagers et nous avons établi des indicateurs qui nous
-						permettent de suivre l’avancée de la dématérialisation, et
-						l&apos;expérience usager de façon très concrète.
+						Nous avons recensé les services publics les plus utilisés par les
+						usagers et nous avons établi des indicateurs qui nous permettent de
+						suivre l&apos;avancée de la dématérialisation, et l&apos;expérience
+						usager de façon très concrète.
 					</>
 				}
 			/>
@@ -63,21 +61,20 @@ export default function Home() {
 			<TextWithImage
 				title={
 					<>
-						Vous êtes porteur ou porteuse d’un service public
-						<br />
-						numérique ?
+						Un service publics numérique <br />
+						semble manquer à la liste ?
 					</>
 				}
 				description={
 					<>
-						Vous pouvez proposer votre service et utiliser les indicateurs
-						choisi par l’observatoire afin de piloter votre trategie
-						d’amélioration de la qualité de vos services
+						Toute personne, qu’elle soit citoyenne ou agent administratif peut
+						proposer l’ajout d’un service publics numérique à l’observatoire de
+						la qualité des services publics numériques.
 					</>
 				}
 				button={{
-					text: 'Proposer votre service',
-					link: 'https://www.plus.transformation.gouv.fr/experience/step_1'
+					text: 'Proposer un service numérique',
+					link: '/'
 				}}
 				image={{
 					alt: 'Top 250 des services publics numériques',
@@ -87,7 +84,12 @@ export default function Home() {
 				}}
 			/>
 			<TextWithImage
-				title={<>Comment suivre la satisfaction de vos usagers ?</>}
+				title={
+					<>
+						Vous êtes agent France Service, accompagnant social <br />
+						ou médiateur numérique ?
+					</>
+				}
 				description={
 					<>
 						Avec l&apo;outil Je donne mon avis, suivez en temps réel la
@@ -95,12 +97,12 @@ export default function Home() {
 					</>
 				}
 				button={{
-					text: 'Ajouter le bouton “je donne mon avis”',
-					link: '/je-donne-mon-avis/'
+					text: 'Partagez-nous vote experience',
+					link: 'https://www.plus.transformation.gouv.fr/experience/step_1'
 				}}
 				image={{
 					alt: "Exemple de statistiques avec l'outil Je donne mon avis",
-					src: '/assets/jdma-screenshot.svg',
+					src: '/assets/agents.svg',
 					width: 327,
 					height: 255
 				}}
@@ -110,25 +112,24 @@ export default function Home() {
 			<TextWithImage
 				title={
 					<>
-						Vous êtes porteur ou porteuse d’un service public
-						<br />
-						numérique ?
+						Vous êtes une administration
+						<br /> et vous souhaitez suivre la satisfaction de vos usagers ?
 					</>
 				}
 				description={
 					<>
-						Vous pouvez proposer votre service et utiliser les indicateurs
-						choisi par l’observatoire afin de piloter votre trategie
-						d’amélioration de la qualité de vos services
+						Grâce à l’ajout du bouton “je donne mon avis” à la fin de vos
+						démarches vous pourrez recueillir tous les avis de vos usagers en
+						temps réel.
 					</>
 				}
 				button={{
-					text: 'Proposer votre service',
-					link: '/'
+					text: 'Ajouter le bouton “je donne mon avis”',
+					link: '/je-donne-mon-avis/'
 				}}
 				image={{
 					alt: 'Top 250 des services publics numériques',
-					src: '/assets/top250.svg',
+					src: '/assets/jdma.svg',
 					width: 303,
 					height: 280
 				}}
