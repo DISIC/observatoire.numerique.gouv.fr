@@ -1,11 +1,11 @@
-import { Top250Header } from '@/components/top250/Top250Header';
 import { Top250TableSection } from '@/components/top250/TableSection';
-import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { Top250Header } from '@/components/top250/Top250Header';
+import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { useProcedures } from '@/utils/api';
+import { fr } from '@codegouvfr/react-dsfr';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useState } from 'react';
-import { PreHeader } from '@/components/top250/table/PreHeader';
 
 export default function Observatoire() {
 	const { classes, cx } = useStyles();
