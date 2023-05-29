@@ -64,7 +64,7 @@ export default function Demande() {
 									}}
 								/>
 								<Alert
-									description="Il s’agit du service que vous souhaitez soumettre à l’observatoire de la qualité des démarches en ligne"
+									description="Il s’agit du service que vous souhaitez soumettre à l’observatoire de la qualité des services numériques"
 									severity="info"
 									className={cx(classes.lightInfoAlert)}
 									small

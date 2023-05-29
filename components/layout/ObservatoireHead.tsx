@@ -20,8 +20,8 @@ export function ObservatoireHead() {
 	return (
 		<Head>
 			<title>
-				{pageTitlePrefix} L&#39;Observatoire de la qualité des démarches en
-				ligne
+				{pageTitlePrefix} L&#39;Observatoire de la qualité des services
+				numériques
 			</title>
 			<meta
 				name="description"
@@ -33,11 +33,11 @@ export function ObservatoireHead() {
 			></meta>
 			<meta
 				property="og:title"
-				content="L’Observatoire de la qualité des démarches en ligne"
+				content="L’Observatoire de la qualité des services numériques"
 			></meta>
 			<meta
 				property="og:description"
-				content="Suivi de la qualité des démarches en ligne pour des services publics numériques de qualité"
+				content="Suivi de la qualité des services numériques pour des services publics numériques de qualité"
 			></meta>
 			<meta
 				property="og:image"
