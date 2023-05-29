@@ -48,7 +48,7 @@ const PublicLayout = (props: Props) => {
 			linkProps: {
 				href: '/observatoire'
 			},
-			text: 'Suivi des services phares'
+			text: 'Tableau de suivi des services'
 		},
 		{
 			iconId: 'ri-user-star-line',
