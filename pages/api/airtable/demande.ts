@@ -7,15 +7,8 @@ export default async function handler(
 ) {
 	if (_req.method === 'POST') {
 		try {
-			console.log(_req.body);
-			console.log(_req.body['serviceName']);
 			const { serviceName, url, remarks } = _req.body;
 
-			console.log({
-				Name: _req.body.serviceName,
-				URL: url,
-				Notes: remarks
-			});
 			const records = await tableDemande.create([
 				{
 					fields: {
