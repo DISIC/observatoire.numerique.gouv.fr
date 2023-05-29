@@ -151,6 +151,10 @@ const useStyles = makeStyles()(theme => ({
 			display: 'block',
 			marginLeft: 'auto',
 			marginTop: `-${fr.spacing('2v')}`
+		},
+		[fr.breakpoints.down('lg')]: {
+			paddingLeft: fr.spacing('4v'),
+			paddingRight: fr.spacing('4v')
 		}
 	},
 	submitted: {
@@ -160,6 +164,10 @@ const useStyles = makeStyles()(theme => ({
 			...fr.typography[11].style,
 			marginBottom: 0,
 			color: theme.decisions.background.actionHigh.blueFrance.default
+		},
+		[fr.breakpoints.down('lg')]: {
+			paddingLeft: fr.spacing('4v'),
+			paddingRight: fr.spacing('4v')
 		}
 	},
 	lightInfoAlert: {
