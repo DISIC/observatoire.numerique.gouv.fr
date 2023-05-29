@@ -10,5 +10,6 @@ const base = Airtable.base(process.env.AIRTABLE_BASE_ID);
 
 // Reference a table
 const table = base(process.env.AIRTABLE_TABLE_NAME);
+const tableDemande = base(process.env.AIRTABLE_TABLE_DEMANDE_NAME);
 
-export { table };
+export { table, tableDemande };

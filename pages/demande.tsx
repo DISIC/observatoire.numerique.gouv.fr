@@ -36,12 +36,20 @@ export default function Demande() {
 						initialValues={{ serviceName: '', url: '', remarks: '' }}
 						validationSchema={validationSchema}
 						onSubmit={(values, { setSubmitting }) => {
-							console.log(values);
-							setTimeout(() => {
-								alert(JSON.stringify(values, null, 2));
-								setSubmitting(false);
-								setIsSubmitted(true);
-							}, 400);
+							fetch('/api/airtable/demande', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(values)
+							})
+								.then(res =>
+									res.json().then(json => {
+										console.log(json);
+										setIsSubmitted(true);
+									})
+								)
+								.finally(() => setSubmitting(false));
 						}}
 					>
 						{({ values, handleChange, handleBlur, isSubmitting, errors }) => (
