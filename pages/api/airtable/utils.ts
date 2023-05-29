@@ -50,7 +50,7 @@ export const getLabelFromValue = (
 		case 'handicap':
 			const handicapIntValue = parseFloat(value);
 			if (isNaN(handicapIntValue)) {
-				if (['Non conforme'].includes(value)) return 'Non';
+				if (['Non conforme'].includes(value)) return 'À venir';
 				if (['Non applicable'].includes(value)) return value;
 				return 'À venir';
 			}
