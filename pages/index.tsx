@@ -74,7 +74,7 @@ export default function Home() {
 				}
 				button={{
 					text: 'Proposer un service numérique',
-					link: '/'
+					link: '/demande'
 				}}
 				image={{
 					alt: 'Top 250 des services publics numériques',

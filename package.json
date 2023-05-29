@@ -41,6 +41,7 @@
 		"eslint": "8.33.0",
 		"eslint-config-next": "13.1.6",
 		"focus-trap-react": "^10.1.1",
+		"formik": "^2.4.0",
 		"next": "13.1.6",
 		"next-auth": "^4.20.1",
 		"react": "18.2.0",
@@ -51,6 +52,7 @@
 		"swr": "^2.1.1",
 		"tss-react": "^4.7.4",
 		"typescript": "^5.0.2",
+		"yup": "^1.2.0",
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {

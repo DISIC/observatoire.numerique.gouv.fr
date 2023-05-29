@@ -1,8 +1,9 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { ReactNode } from 'react';
 
 type Props = {
-	title: string;
+	title: string | ReactNode;
 };
 
 export function PageTitleHeader(props: Props) {

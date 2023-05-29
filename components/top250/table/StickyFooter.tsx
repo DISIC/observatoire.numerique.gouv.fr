@@ -21,7 +21,7 @@ export function StickyFooter(props: Props) {
 					<Button
 						className={cx(classes.button)}
 						onClick={() => {
-							window.location.href = '/contact/';
+							window.location.href = '/demande';
 						}}
 						priority="tertiary"
 						size="small"
