@@ -35,6 +35,7 @@ export function CustomFooter() {
 				websiteMapLinkProps={{
 					href: '/Main/plan-site'
 				}}
+				bottomItems={[{ text: 'Contact', linkProps: { href: '/contact' } }]}
 			/>
 		</>
 	);
