@@ -63,7 +63,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		return (
 			<Link
 				ref={linkRef}
-				title={`Détails : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
+				title={`Voir le détail : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
 				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
 				target="_blank"
 			>
