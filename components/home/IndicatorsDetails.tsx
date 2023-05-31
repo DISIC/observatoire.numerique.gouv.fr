@@ -41,7 +41,7 @@ export function IndicatorsDetails(props: Props) {
 				<div className={classes.buttonContainer}>
 					<Link
 						href={button.link}
-						className={fr.cx('fr-btn', 'fr-btn--secondary', 'fr-btn--sm')}
+						className={fr.cx('fr-btn', 'fr-btn--secondary')}
 					>
 						{button.text}
 					</Link>
