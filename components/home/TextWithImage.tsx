@@ -1,6 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { push } from '@socialgouv/matomo-next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -42,6 +42,9 @@ export function TextWithImage(props: Props) {
 					<p>{description}</p>
 					<Link
 						href={button.link}
+						onClick={() => {
+							push(['trackEvent', 'home', 'formDemand']);
+						}}
 						className={fr.cx('fr-btn', 'fr-btn--secondary')}
 					>
 						{button.text}

@@ -6,6 +6,7 @@ import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SkipLinks } from '../generic/SkipLinks';
+import { push } from '@socialgouv/matomo-next';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
@@ -39,6 +40,7 @@ export function Top250TableSection(props: Props) {
 					currentDisplayedProcedures.length + numberPerPage
 				)
 			]);
+			push(['trackEvent', 'top250', 'loadMore']);
 		}
 	};
 

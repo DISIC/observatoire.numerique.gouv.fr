@@ -1,14 +1,13 @@
-import {
-	type FrIconClassName,
-	type RiIconClassName,
-	fr
-} from '@codegouvfr/react-dsfr';
-import { createModal } from '@codegouvfr/react-dsfr/Modal';
-import { ReactNode, useState } from 'react';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Button } from '@codegouvfr/react-dsfr/Button';
 import { Modal } from '@/components/generic/Modal';
-import React from 'react';
+import {
+	fr,
+	type FrIconClassName,
+	type RiIconClassName
+} from '@codegouvfr/react-dsfr';
+import { Button } from '@codegouvfr/react-dsfr/Button';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { push } from '@socialgouv/matomo-next';
+import React, { ReactNode, useState } from 'react';
 
 type Props = {
 	icon: FrIconClassName | RiIconClassName;
@@ -53,6 +52,7 @@ export function ColumnHeaderDefinition(props: Props) {
 			<Button
 				className={cx(classes.root)}
 				onClick={() => {
+					push(['trackEvent', 'top250', 'openModalIndicator', infos.title]);
 					setOpenModal(true);
 				}}
 				nativeButtonProps={{

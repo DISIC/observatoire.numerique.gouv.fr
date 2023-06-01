@@ -1,6 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { push } from '@socialgouv/matomo-next';
 
 type Props = {
 	proceduresCount: number;
@@ -21,6 +22,7 @@ export function StickyFooter(props: Props) {
 					<Button
 						className={cx(classes.button)}
 						onClick={() => {
+							push(['trackEvent', 'top250', 'formDemand']);
 							window.location.href = '/demande';
 						}}
 						priority="tertiary"
