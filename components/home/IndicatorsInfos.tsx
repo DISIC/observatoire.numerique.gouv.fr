@@ -97,7 +97,7 @@ export function IndicatorsInfos(props: Props) {
 							<br /> numériques phares
 						</>
 					}
-					description="Tous les services publics numérique peuvent réaliser une demande pour entrer dans l’observatoire."
+					description="Tous les services publics numériques peuvent réaliser une demande pour entrer dans l’observatoire."
 					button={{
 						text: 'Voir les critères d’entrée',
 						link: '/Aide/Observatoire?tab=criterias'

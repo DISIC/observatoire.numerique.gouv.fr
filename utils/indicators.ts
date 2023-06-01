@@ -147,7 +147,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 	{
 		slug: 'usage',
 		title:
-			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
+			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tous canaux confondus.',
 		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{

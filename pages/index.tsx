@@ -49,7 +49,7 @@ export default function Home() {
 					<>
 						Nous avons pensé 11 indicateurs clés afin de suivre les
 						améliorations des services numériques selon des critères de qualité
-						de l’expérience utilisateur, de proactivité et de performance.
+						d’expérience utilisateur, de proactivité et de performance.
 					</>
 				}
 				indicators={proceduresTableHeaders || []}
@@ -61,14 +61,14 @@ export default function Home() {
 			<TextWithImage
 				title={
 					<>
-						Un service publics numérique <br />
+						Un service public numérique <br />
 						semble manquer à la liste ?
 					</>
 				}
 				description={
 					<>
 						Toute personne, qu’elle soit citoyenne ou agent administratif peut
-						proposer l’ajout d’un service publics numérique à l’observatoire de
+						proposer l’ajout d’un service public numérique à l’observatoire de
 						la qualité des services publics numériques.
 					</>
 				}
@@ -92,12 +92,13 @@ export default function Home() {
 				}
 				description={
 					<>
-						Avec l&apo;outil Je donne mon avis, suivez en temps réel la
-						satisfaction des usagers de vos services publics numériques.
+						Faites part des difficultés persistantes rencontrées lors de la
+						<br />
+						réalisation des démarches en ligne.
 					</>
 				}
 				button={{
-					text: 'Partagez-nous vote experience',
+					text: 'Partagez-nous votre experience',
 					link: 'https://www.plus.transformation.gouv.fr/experience/step_1'
 				}}
 				image={{

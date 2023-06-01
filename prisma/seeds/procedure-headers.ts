@@ -44,9 +44,9 @@ export const procedureHeaders = [
 		label: 'Utilisation de la version numérique',
 		icon: 'ri-direction-line',
 		description:
-			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus',
+			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tous canaux confondus',
 		description_full:
-			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus',
+			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tous canaux confondus',
 		position: 5
 	},
 	{
