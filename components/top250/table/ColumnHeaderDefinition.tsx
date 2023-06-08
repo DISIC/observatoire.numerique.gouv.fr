@@ -9,6 +9,7 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Button } from '@codegouvfr/react-dsfr/Button';
 import { Modal } from '@/components/generic/Modal';
 import React from 'react';
+import { useRouter } from 'next/router';
 
 type Props = {
 	icon: FrIconClassName | RiIconClassName;
@@ -24,6 +25,7 @@ type Props = {
 export function ColumnHeaderDefinition(props: Props) {
 	const { icon, text, infos, isMobile, onFocus } = props;
 	const { classes, cx } = useStyles();
+	const router = useRouter();
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -75,7 +77,9 @@ export function ColumnHeaderDefinition(props: Props) {
 					title={infos.title}
 					buttons={[
 						{
-							onClick: () => setOpenModal(false),
+							onClick: () => {
+								router.push('/Aide/Observatoire?tab=indicators');
+							},
 							children: 'Consulter toute la documentation'
 						}
 					]}
