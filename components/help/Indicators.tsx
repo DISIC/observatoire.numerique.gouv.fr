@@ -66,9 +66,7 @@ const useStyles = makeStyles()(theme => ({
 			color: theme.decisions.background.actionHigh.blueFrance.default
 		}
 	},
-	primarySection: {
-		marginTop: fr.spacing('5v')
-	},
+	primarySection: {},
 	secondarySection: {
 		marginTop: fr.spacing('15v')
 	},
