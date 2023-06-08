@@ -1,5 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import Link from 'next/link';
 
 type Props = {};
 
@@ -58,6 +59,9 @@ export function HelpCriterias(props: Props) {
 				informations nécessaire à leur évaluation et entrer dans une dynamique
 				d’accompagnement à l’amélioration des services.
 			</p>
+			<Link className={fr.cx('fr-btn', 'fr-mt-4v')} href="/demande">
+				Je propose l’ajout d’un service
+			</Link>
 		</div>
 	);
 }
