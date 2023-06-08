@@ -9,12 +9,12 @@ export function HelpGoals(props: Props) {
 
 	return (
 		<div className={classes.root}>
-			<h2 className={cx(fr.cx('fr-h2'))}>L'observatoire</h2>
+			<h2 className={cx(fr.cx('fr-h2'))}>L&apos;observatoire</h2>
 			<p>
 				L’Observatoire de la qualité des services publiques, anciennement
 				“Observatoire de la qualité des démarches en ligne”, est une entité
-				gouvernementale française chargée d'évaluer et d'améliorer la qualité
-				des services publics numérique à destination de ses concitoyens.
+				gouvernementale française chargée d&apos;évaluer et d&apos;améliorer la
+				qualité des services publics numérique à destination de ses concitoyens.
 			</p>
 			<p>
 				Lancé en juin 2019, l’observatoire s’inscrit dans la dynamique
@@ -38,12 +38,12 @@ export function HelpGoals(props: Props) {
 				déterminés, via notamment les retours directs des usagers.
 			</p>
 			<p>
-				En résumé, l'observatoire de la qualité des démarches en ligne de la
-				DINUM joue un rôle essentiel dans l'amélioration des services publics
-				numériques en France. Il contribue à garantir une expérience utilisateur
-				optimale, en veillant à ce que les sites web et les applications mobiles
-				des administrations répondent aux normes de qualité et aux attentes de
-				ses concitoyens.
+				En résumé, l&apos;observatoire de la qualité des démarches en ligne de
+				la DINUM joue un rôle essentiel dans l&apos;amélioration des services
+				publics numériques en France. Il contribue à garantir une expérience
+				utilisateur optimale, en veillant à ce que les sites web et les
+				applications mobiles des administrations répondent aux normes de qualité
+				et aux attentes de ses concitoyens.
 			</p>
 			<h2 className={cx(fr.cx('fr-h2'))}>Les objectifs</h2>
 			<p>
@@ -64,7 +64,7 @@ export function HelpGoals(props: Props) {
 					communication aux administrations des critères de qualité de
 					l’expérience usager. Il communique les résultats de ses évaluations,
 					partage les bonnes pratiques et organise des événements pour
-					promouvoir l'amélioration continue de la qualité des démarches en
+					promouvoir l&apos;amélioration continue de la qualité des démarches en
 					ligne.
 				</li>
 				<li>
@@ -78,11 +78,11 @@ export function HelpGoals(props: Props) {
 				</li>
 
 				<li>
-					L'observatoire se pense également au travers de référentiels
+					L&apos;observatoire se pense également au travers de référentiels
 					internationaux pour évaluer la qualité des services en ligne. Il
 					permet de comparer les performances des administrations françaises
-					avec celles d'autres pays afin d'identifier les bonnes pratiques et de
-					favoriser les échanges d'expérience.
+					avec celles d&apos;autres pays afin d&apos;identifier les bonnes
+					pratiques et de favoriser les échanges d&apos;expérience.
 				</li>
 			</ol>
 			<p>
@@ -98,10 +98,11 @@ export function HelpGoals(props: Props) {
 					plus utilisés, réalisables en ligne de bout en bout.
 				</li>
 				<li>
-					<strong>Favoriser l'expérience utilisateur</strong> : Son objectif est
-					de rendre ces démarches en ligne simples, intuitives et efficaces, en
-					s'assurant que les utilisateurs peuvent facilement accéder aux
-					informations et effectuer leurs démarches de manière fluide.
+					<strong>Favoriser l&apos;expérience utilisateur</strong> : Son
+					objectif est de rendre ces démarches en ligne simples, intuitives et
+					efficaces, en s&apos;assurant que les utilisateurs peuvent facilement
+					accéder aux informations et effectuer leurs démarches de manière
+					fluide.
 				</li>
 				<li>
 					<strong>
@@ -121,18 +122,18 @@ export function HelpGoals(props: Props) {
 				</li>
 			</ol>
 			<p>
-				En résumé, les objectifs de l'observatoire de la qualité des démarches
-				en ligne de la DINUM sont d'améliorer la qualité des services publics
-				numériques, d'optimiser l'expérience utilisateur, de mesurer la
-				performance des services en ligne, de fournir des recommandations et des
-				conseils, et de sensibiliser les acteurs concernés à l'importance de la
-				qualité des démarches en ligne.
+				En résumé, les objectifs de l&apos;observatoire de la qualité des
+				démarches en ligne de la DINUM sont d&apos;améliorer la qualité des
+				services publics numériques, d&apos;optimiser l&apos;expérience
+				utilisateur, de mesurer la performance des services en ligne, de fournir
+				des recommandations et des conseils, et de sensibiliser les acteurs
+				concernés à l&apos;importance de la qualité des démarches en ligne.
 			</p>
 			<h2 className={cx(fr.cx('fr-h2'))}>La méthodologie</h2>
 			<p>
-				L'observatoire de la qualité des services numérique utilise des
-				méthodologies d'évaluation à l’aide de critères clés de qualité. Ces
-				critères sont aujourd’hui le moyen de mesurer la progression des
+				L&apos;observatoire de la qualité des services numérique utilise des
+				méthodologies d&apos;évaluation à l’aide de critères clés de qualité.
+				Ces critères sont aujourd’hui le moyen de mesurer la progression des
 				différents services et de leur administrations. Nous parlerons
 				d’avantage de la fonction de ces{' '}
 				<Link href="/Aide/Observatoire?tab=indicators">indicateurs</Link> dans
@@ -141,9 +142,9 @@ export function HelpGoals(props: Props) {
 			<p>
 				L’observatoire effectue des audits réguliers des sites web et des
 				applications mobiles, en évaluant des aspects tels que la facilité
-				d'utilisation, la clarté des informations fournies, l'accessibilité pour
-				les personnes handicapées, la sécurité des données et la satisfaction
-				des utilisateurs.
+				d&apos;utilisation, la clarté des informations fournies,
+				l&apos;accessibilité pour les personnes handicapées, la sécurité des
+				données et la satisfaction des utilisateurs.
 			</p>
 			<p>
 				Les résultats de ces évaluations sont ensuite publiés sous forme de
@@ -152,9 +153,9 @@ export function HelpGoals(props: Props) {
 				mettre en œuvre des actions correctives.
 			</p>
 			<p>
-				L'observatoire de la qualité des démarches en ligne de la DINUM utilise
-				différentes méthodologies pour évaluer la qualité des services publics
-				en ligne. Ces méthodologie sont guidé par les{' '}
+				L&apos;observatoire de la qualité des démarches en ligne de la DINUM
+				utilise différentes méthodologies pour évaluer la qualité des services
+				publics en ligne. Ces méthodologie sont guidé par les{' '}
 				<Link href="/Aide/Observatoire?tab=indicators">
 					indicateurs de qualités
 				</Link>
@@ -169,24 +170,25 @@ export function HelpGoals(props: Props) {
 					du bouton ”je donne mon avis” qui se positionne à la fin d’une
 					démarche pour ses utilisateurs. Il permet ainsi de recueillir leurs
 					retours et évaluer leur satisfaction vis-à-vis des services en ligne.
-					Cela permet d'identifier les points forts et les points à améliorer.
+					Cela permet d&apos;identifier les points forts et les points à
+					améliorer.
 				</li>
 				<li>
-					<strong>L'accessibilité</strong> : L'observatoire réalise des audits
-					afin de mesurer la conformité des services publics numériques aux
-					normes d’accessibilité, conformément aux normes en vigueur.
-					L’accessibilité consiste en la prise en compte des contraintes
-					d’usages des personnes en situation de handicap. Cela englobe des
-					critères tels que la compatibilité avec les technologies d'assistance,
-					la lisibilité des contenus, la possibilité de naviguer avec le
-					clavier, etc.
+					<strong>L&apos;accessibilité</strong> : L&apos;observatoire réalise
+					des audits afin de mesurer la conformité des services publics
+					numériques aux normes d’accessibilité, conformément aux normes en
+					vigueur. L’accessibilité consiste en la prise en compte des
+					contraintes d’usages des personnes en situation de handicap. Cela
+					englobe des critères tels que la compatibilité avec les technologies
+					d&apos;assistance, la lisibilité des contenus, la possibilité de
+					naviguer avec le clavier, etc.
 				</li>
 				<li>
-					<strong>L'audit technique</strong> : L'observatoire effectue des
-					audits techniques approfondis des sites web et des applications
-					mobiles des administrations. Cela implique d'analyser la structure du
-					site, la qualité du code, la conformité aux normes web, la sécurité
-					des données, la disponibilité du service, etc.
+					<strong>L&apos;audit technique</strong> : L&apos;observatoire effectue
+					des audits techniques approfondis des sites web et des applications
+					mobiles des administrations. Cela implique d&apos;analyser la
+					structure du site, la qualité du code, la conformité aux normes web,
+					la sécurité des données, la disponibilité du service, etc.
 				</li>
 			</ol>
 		</div>
