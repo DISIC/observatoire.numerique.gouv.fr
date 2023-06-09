@@ -65,6 +65,9 @@ const useStyles = makeStyles()(theme => ({
 	tabsContainer: {
 		maxWidth: '50rem',
 		padding: `${fr.spacing('18v')} 0`,
+		['.fr-tabs__panel']: {
+			paddingTop: fr.spacing('11v')
+		},
 		['.fr-tabs, .fr-tabs::before']: {
 			boxShadow: 'none'
 		}
