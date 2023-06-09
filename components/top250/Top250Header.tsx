@@ -24,20 +24,22 @@ export function Top250Header(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
-			<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
-				<a className={fr.cx('fr-link')} href="#">
-					{currentEditionName}
-				</a>
-			</span>
-			<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
-				<a
-					className={fr.cx('fr-link')}
-					href="/observatoire/2022-octobre"
-					target="_blank"
-				>
-					Voir les éditions précédentes
-				</a>
-			</span>
+			<div className={cx(classes.editionsContainer)}>
+				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
+					<a className={fr.cx('fr-link')} href="#">
+						{currentEditionName}
+					</a>
+				</span>
+				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
+					<a
+						className={fr.cx('fr-link')}
+						href="/observatoire/2022-octobre"
+						target="_blank"
+					>
+						Voir les éditions précédentes
+					</a>
+				</span>
+			</div>
 			<form
 				onSubmit={e => {
 					e.preventDefault();
@@ -78,7 +80,7 @@ const useStyles = makeStyles()(theme => ({
 	},
 	search: {
 		width: '50%',
-		marginTop: fr.spacing('10w'),
+		marginTop: fr.spacing('8w'),
 		['input.fr-input']: {
 			backgroundColor: theme.decisions.background.alt.blueFrance.default,
 			['::placeholder, ::-ms-input-placeholder']: {
@@ -89,11 +91,16 @@ const useStyles = makeStyles()(theme => ({
 			width: '100%'
 		}
 	},
+	editionsContainer: {
+		display: 'flex',
+		flexWrap: 'wrap'
+	},
 	linkTag: {
 		textAlign: 'center',
 		fontWeight: 'bold',
 		borderRadius: fr.spacing('1v'),
 		marginRight: fr.spacing('4v'),
+		marginBottom: fr.spacing('4v'),
 		textTransform: 'uppercase',
 		backgroundColor: theme.decisions.background.contrast.info.default,
 		['.fr-link']: {
