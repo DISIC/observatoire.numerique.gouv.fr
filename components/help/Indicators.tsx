@@ -30,7 +30,11 @@ export function HelpIndicators(props: Props) {
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
 						>
-							{pth.description_full || 'À rédiger...'}
+							<div
+								dangerouslySetInnerHTML={{
+									__html: pth.description_full || 'À rédiger...'
+								}}
+							></div>
 						</AccordionWithIcon>
 					))}
 				</div>
@@ -51,7 +55,11 @@ export function HelpIndicators(props: Props) {
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
 						>
-							{pth.description_full || 'À rédiger...'}
+							<div
+								dangerouslySetInnerHTML={{
+									__html: pth.description_full || 'À rédiger...'
+								}}
+							></div>
 						</AccordionWithIcon>
 					))}
 				</div>

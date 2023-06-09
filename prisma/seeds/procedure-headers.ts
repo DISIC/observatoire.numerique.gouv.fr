@@ -5,8 +5,28 @@ export const procedureHeaders = [
 		icon: 'ri-computer-line',
 		description:
 			'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
-		description_full:
-			'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
+		description_full: `
+			<p><strong>Évalue si le service est numérisé.</strong></p>
+			<p>Cet indicateur permet de mesurer la numérisation des services en répondant à trois questions :</p>
+			<ul>
+				<li>Le service est-il entièrement numérique ?</li>
+				<li>Est-il disponible sur tout le territoire français ?</li>
+				<li>Est-il ouvert à tous ?</li>
+			</ul>
+			<br/>
+			<p>L’évaluation est réalisée de la manière suivante :</p>
+			<ul>
+				<li>Oui : le service est intégralement utilisable numériquement et disponible sur l’intégralité du territoire français.</li>
+				<li>Proactif : le service octroie automatiquement les droits aux personnes concernées.</li>
+				<li>En cours de déploiement local : le service n’est pas encore disponible sur l’intégralité du territoire - les collectivités sont responsables de son déploiement.</li>
+				<li>Partiel :  une partie du service n’est pas réalisable numériquement ou n’est pas disponible sur l’intégralité du territoire français, ou n’est ouvert qu’à une partie de la population</li>
+				<li>Bêta : le service est en cours d’expérimentation sur un échantillon restreint d’utilisateurs ou de cas métier</li>
+				<li>Non : le service n’est n’est pas numérisé</li>
+			</ul>
+			<br/>
+			<p>D’où vient la donnée ?</p>
+			<p>À compléter</p>
+			`,
 		position: 1
 	},
 	{
@@ -15,8 +35,29 @@ export const procedureHeaders = [
 		icon: 'ri-emotion-happy-line',
 		description:
 			'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton “je donne mons avis“.',
-		description_full:
-			'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton “je donne mons avis“.',
+		description_full: `
+			<p><strong>Évalue le niveau de satisfaction du service, par les usagers.</strong></p>
+			<p>Cette note de satisfaction est calculée sur la base des avis déposés sur le service par les usagers.</p>
+			<p>Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option de réponses proposée dans le questionnaire :</p>
+			<ul>
+				<li>Le service est-il entièrement numérique ?</li>
+				<li>Est-il disponible sur tout le territoire français ?</li>
+				<li>Est-il ouvert à tous ?</li>
+			</ul>
+			<br/>
+			<p>L’évaluation est réalisée de la manière suivante :</p>
+			<ul>
+				<li>Oui : le service est intégralement utilisable numériquement et disponible sur l’intégralité du territoire français.</li>
+				<li>Proactif : le service octroie automatiquement les droits aux personnes concernées.</li>
+				<li>En cours de déploiement local : le service n’est pas encore disponible sur l’intégralité du territoire - les collectivités sont responsables de son déploiement.</li>
+				<li>Partiel :  une partie du service n’est pas réalisable numériquement ou n’est pas disponible sur l’intégralité du territoire français, ou n’est ouvert qu’à une partie de la population</li>
+				<li>Bêta : le service est en cours d’expérimentation sur un échantillon restreint d’utilisateurs ou de cas métier</li>
+				<li>Non : le service n’est n’est pas numérisé</li>
+			</ul>
+			<br/>
+			<p>D’où vient la donnée ?</p>
+			<p>À compléter</p>
+		`,
 		position: 2
 	},
 	{
