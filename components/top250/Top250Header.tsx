@@ -3,6 +3,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { ReactNode, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useEditions } from '@/utils/api';
+import Link from 'next/link';
 type Props = {
 	title: ReactNode;
 	searchLabel: string;
@@ -23,7 +24,22 @@ export function Top250Header(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
-			<p className={fr.cx('fr-text--xl')}>Edition : {currentEditionName}</p>
+			<div className={cx(classes.editionsContainer)}>
+				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
+					<a className={fr.cx('fr-link')} href="#">
+						{currentEditionName}
+					</a>
+				</span>
+				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
+					<a
+						className={fr.cx('fr-link')}
+						href="/observatoire/2022-octobre"
+						target="_blank"
+					>
+						Voir les éditions précédentes
+					</a>
+				</span>
+			</div>
 			<form
 				onSubmit={e => {
 					e.preventDefault();
@@ -56,7 +72,7 @@ const useStyles = makeStyles()(theme => ({
 	title: {
 		...fr.typography[11].style,
 		color: theme.decisions.background.actionHigh.blueFrance.default,
-		marginBottom: fr.spacing('3v'),
+		marginBottom: fr.spacing('3w'),
 		[fr.breakpoints.down('lg')]: {
 			fontSize: `${fr.typography[4].style.fontSize} !important`,
 			lineHeight: `${fr.typography[4].style.lineHeight} !important`
@@ -64,7 +80,7 @@ const useStyles = makeStyles()(theme => ({
 	},
 	search: {
 		width: '50%',
-		marginTop: fr.spacing('11v'),
+		marginTop: fr.spacing('8w'),
 		['input.fr-input']: {
 			backgroundColor: theme.decisions.background.alt.blueFrance.default,
 			['::placeholder, ::-ms-input-placeholder']: {
@@ -73,6 +89,34 @@ const useStyles = makeStyles()(theme => ({
 		},
 		[fr.breakpoints.down('lg')]: {
 			width: '100%'
+		}
+	},
+	editionsContainer: {
+		display: 'flex',
+		flexWrap: 'wrap'
+	},
+	linkTag: {
+		textAlign: 'center',
+		fontWeight: 'bold',
+		borderRadius: fr.spacing('1v'),
+		marginRight: fr.spacing('4v'),
+		marginBottom: fr.spacing('4v'),
+		textTransform: 'uppercase',
+		backgroundColor: theme.decisions.background.contrast.info.default,
+		['.fr-link']: {
+			color: theme.decisions.background.flat.info.default,
+			fontSize: fr.typography[18].style.fontSize,
+			backgroundImage: 'none',
+			['&:hover']: {
+				backgroundImage: 'var(--underline-img), var(--underline-img)',
+				'--underline-hover-width': 0
+			}
+		},
+		[fr.breakpoints.down('lg')]: {
+			fontSize: fr.typography[17].style.fontSize,
+			position: 'relative',
+			top: fr.spacing('1v'),
+			zIndex: 1
 		}
 	}
 }));
