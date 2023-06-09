@@ -1,15 +1,15 @@
-import type { AppProps } from 'next/app';
-import { createNextDsfrIntegrationApi } from '@codegouvfr/react-dsfr/next-pagesdir';
-import Link from 'next/link';
-import PublicLayout from '@/layouts/PublicLayout';
-import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
-import { ReactNode } from 'react';
-import { useRouter } from 'next/router';
-import { SessionProvider } from 'next-auth/react';
-import DashboardLayout from '@/layouts/DashboardLayout';
-import '../utils/keyframes.css';
-import Head from 'next/head';
 import { ObservatoireHead } from '@/components/layout/ObservatoireHead';
+import DashboardLayout from '@/layouts/DashboardLayout';
+import PublicLayout from '@/layouts/PublicLayout';
+import { createNextDsfrIntegrationApi } from '@codegouvfr/react-dsfr/next-pagesdir';
+import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ReactNode, useEffect } from 'react';
+import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
+import '../utils/keyframes.css';
+import { init } from '@socialgouv/matomo-next';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -26,10 +26,17 @@ const { withDsfr, dsfrDocumentApi } = createNextDsfrIntegrationApi({
 	Link
 });
 
-export { dsfrDocumentApi, augmentDocumentWithEmotionCache };
+export { augmentDocumentWithEmotionCache, dsfrDocumentApi };
+
+const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL as string;
+const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID as string;
 
 function App({ Component, pageProps }: AppProps) {
 	const router = useRouter();
+
+	useEffect(() => {
+		init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+	}, []);
 
 	const getLayout = (children: ReactNode) => {
 		if (router.pathname.startsWith('/administration/bo')) {
