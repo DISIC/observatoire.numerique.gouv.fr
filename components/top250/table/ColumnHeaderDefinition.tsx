@@ -8,7 +8,6 @@ import { Button } from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { push } from '@socialgouv/matomo-next';
 import React, { ReactNode, useState } from 'react';
-import { Modal } from '@/components/generic/Modal';
 import { useRouter } from 'next/router';
 
 type Props = {
