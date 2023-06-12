@@ -17,7 +17,7 @@ export function CustomFooter() {
 					href: '/Main/CGU'
 				}}
 				brandTop={brandTop}
-				contentDescription="L’Observatoire de la qualité des services numériques est un service proposé par l'équipe design des services numériques de la direction interministérielle du numérique (DINUM)."
+				contentDescription="Vos démarches numériques essentielles est un service proposé par l'équipe design des services numériques (DesignGouv) de la direction interministérielle du numérique (DINUM)."
 				cookiesManagementLinkProps={{
 					href: '/Main/CGU'
 				}}
