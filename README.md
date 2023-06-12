@@ -1,4 +1,4 @@
-# L'Obersvatoire de la qualité des services numériques
+# Vos démarches numériques essentielles
 
 Ce dépôt contient le code du site observatoire.numerique.gouv.fr, un site gouvernemental dédié à l'évaluation collaborative des démarches administratives.
 
