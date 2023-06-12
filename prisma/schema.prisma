@@ -70,6 +70,7 @@ model ProcedureHeader {
   slug             IndicatorSlug @unique
   label            String
   description      String?
+  description_full String?
   icon             String
   position         Int           @unique
 }

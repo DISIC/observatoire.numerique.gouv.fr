@@ -2,8 +2,6 @@ import { RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import AccordionWithIcon from '../generic/AccordionWithIcon';
 import { useProcedureHeaders } from '@/utils/api';
-import { indicatorsDescriptions } from '@/utils/indicators';
-import { ProcedureHeaderContent } from '../top250/table/ProcedureHeaderContent';
 
 type Props = {};
 
@@ -32,7 +30,7 @@ export function HelpIndicators(props: Props) {
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
 						>
-							<ProcedureHeaderContent slug={pth.slug} isFull />
+							{pth.description_full || 'À rédiger...'}
 						</AccordionWithIcon>
 					))}
 				</div>
@@ -53,7 +51,7 @@ export function HelpIndicators(props: Props) {
 							icon={pth.icon as RiIconClassName}
 							label={pth.label}
 						>
-							<ProcedureHeaderContent slug={pth.slug} isFull />
+							{pth.description_full || 'À rédiger...'}
 						</AccordionWithIcon>
 					))}
 				</div>

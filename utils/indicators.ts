@@ -9,7 +9,6 @@ type IndicatorDescriptions = {
 		label: string;
 		color: IndicatorColor;
 		description: string;
-		noBackground?: boolean;
 	}[];
 	moreInfos_title?: string;
 	moreInfos?: string;
@@ -19,9 +18,8 @@ type IndicatorDescriptions = {
 export const indicatorsDescriptions: IndicatorDescriptions = [
 	{
 		slug: 'online',
-		title: 'Évalue si le service est numérisé.',
-		description:
-			'Cet indicateur permet de mesurer la numérisation des services en répondant à trois questions : \n - Le service est-il entièrement numérique ?\n - Est-il disponible sur tout le territoire français ? \n - Est-il ouvert à tous ?',
+		title:
+			'Permet d’évaluer si la démarche est réalisable en ligne de bout en bout.',
 		indicators_intro: "5 niveaux d'évaluation :",
 		indicators: [
 			{
@@ -34,13 +32,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 				label: 'En cours de déploiement local',
 				color: 'green',
 				description:
-					'La démarche est en cours de déploiement sur tout le territoire.'
-			},
-			{
-				label: 'Partiel',
-				color: 'yellow',
-				description:
-					'Une partie du service n’est pas réalisable numériquement ou n’est pas disponible sur l’intégralité du territoire français, ou n’est ouvert qu’à une partie de la population.'
+					'La démarche est À venir d’être déployé sur tout le territoire.'
 			},
 			{
 				label: 'Non',
@@ -48,7 +40,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 				description: 'La démarche n’est pas encore possible en ligne.'
 			},
 			{
-				label: 'Démarche proactive',
+				label: 'Démarches proactive',
 				color: 'blue',
 				description:
 					'L’administration a attribué automatiquement les droits aux bénéficiaires de la démarche.'
@@ -57,142 +49,133 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 	},
 	{
 		slug: 'satisfaction',
-		title: 'Évalue le niveau de satisfaction du service, par les usagers.',
+		title: 'Reflète le niveau de satisfaction des usagers du service.',
 		description:
-			'Cette note de satisfaction est calculée sur la base des avis déposés sur le service par les usagers. Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option de réponses proposée dans le questionnaire.',
-		indicators_intro: "5 niveaux d'évaluation :",
+			'Cette appréciation est calculée sur la base du recueil des l’avis déposés par les usagers grâce au bouton “je donne mon avis” qui se trouve à la fin de la démarche. Plus pécisément, cette appréciation correspond à une note moyenne calculée à partir de l’ensemble des réponses données par les usagers à la question : “ Comment s’est passée cette démarche pour vous ? ”.',
+		indicators_intro:
+			'Voici la corrélation entre cette note et les 3 niveaux d’appréciation :',
 		indicators: [
 			{
-				label: '8 / 10',
+				label: 'Très bon',
 				color: 'green',
-				description: 'Moyenne des notes au dessus de 8/10.'
+				description: 'Moyenne des notes au dessus de 8/10'
 			},
 			{
-				label: '5 / 10',
+				label: 'Moyen',
 				color: 'yellow',
-				description: 'Moyenne des notes entre 5 et 8/10.'
+				description: 'Moyenne des notes entre 5 et 8/10'
 			},
 			{
-				label: '1 / 10',
+				label: 'Mauvais',
 				color: 'red',
-				description: 'Moyenne inférieure à 5/10.'
+				description: 'Moyenne inférieure à 5/10'
 			},
 			{
 				label: 'À venir',
 				color: 'gray',
-				noBackground: true,
-				description: 'La démarche ne permet pas encore le recueil des avis.'
-			},
-			{
-				label: "Nombre d'avis insuffisants",
-				color: 'gray',
-				noBackground: true,
-				description:
-					'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.'
+				description: 'Le téléservice ne permet pas encore le recueil des avis'
 			}
 		],
-		moreInfos_title: 'Méthode de calcul',
+		moreInfos_title: 'Nombre insuffisant d’avis',
 		moreInfos:
-			'Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option.'
+			'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
+		isMoreInfosBlue: false
 	},
 	{
 		slug: 'handicap',
 		title:
-			"Évalue le niveau d’accessibilité numérique d’un service, en se basant sur le niveau de conformité au Référentiel général d'amélioration de l'accessibilité (RGAA).",
+			'Mets en lumière le niveau de conformité du service numérique aux critères d’accessibilité (RGAA) déterminés par la loi.',
 		description:
-			'Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères : \n - Indiquer si l’accessibilité est totale, moyenne ou conforme. \n - Proposer un moyen de contact accessible aux personnes en situation de handicap. \n - S’appuyer sur un échantillon représentatif. \n - Mentionner le taux global de conformité. \n - Ne pas être expirée.',
-		indicators_intro: "4 niveaux d'évaluation :",
+			'L’accessibilité numérique consiste à rendre les contenus et services numériques compréhensibles et utilisables par les personnes en situation de handicap.',
+		indicators_intro:
+			'Cet indicateur est donc évalué comme un taux de conformité aux critères du RGAA, il se décline selon 3 niveaux d’appréciation de la conformité :',
 		indicators: [
 			{
 				label: 'Oui',
 				color: 'green',
 				description:
-					'Le service a atteint un taux de 100% de conformité au RGAA.'
+					'Le service a atteint un taux de 100% de conformité au RGAA'
 			},
 			{
 				label: 'Partiel',
 				color: 'yellow',
-				description: 'Taux de conformité compris entre 50% et 99%.'
+				description: 'Taux de conformité compris entre 50% à 99%'
 			},
 			{
 				label: 'Non',
 				color: 'red',
 				description:
-					'Le service déclare un taux de conformité au RGAA inférieur à 50% ou n’a pas de déclaration d’accessibilité.'
+					'Le service déclare un taux de conformité au RGAA inférieur à 50% ou n’a pas de déclaration d’accessibilité'
 			},
 			{
 				label: 'À venir',
 				color: 'gray',
-				noBackground: true,
-				description: "La prise en compte du handicap n'est pas encore évaluée."
+				description: "La prise en compte du handicap n'est pas encore évaluée"
 			}
-		],
-		moreInfos_title: 'Méthode de calcul',
-		moreInfos:
-			"Le taux de conformité RGAA est déterminé à la suite d'un audit réalisé par un.e expert.e accessibilité."
+		]
 	},
 	{
 		slug: 'dlnuf',
 		title:
-			'Évalue la qualité de pré-remplissage des informations usagers d’ores et déjà détenues par l’administration.',
-		description:
-			"La capacité d’un service à réutiliser des informations et pièces justificatives de l’usager qui sont en sa possession a une forte influence sur la simplification, voire l’automatisation de la soumission d’une démarche pour les usagers. Le principe de ne pas avoir à saisir plusieurs fois les mêmes informations pour l’usager est nommé le “dites-le nous une fois”. Il est basé techniquement sur la mise en place d’API. Les démarches doivent utiliser ces API pour récupérer les données nécessaires à leur réalisation.\n\n Une API est une interface technique entre deux acteurs, dont l'accord enclenche l'exposition automatique de données dans un format et une structure donnée.\n\n Les administrations sont encouragées à mettre à disposition leurs données via des API.\n\n Ce partage d’information est un principe consacré dans le code des relations entre le public et l’administration (CRPA) aux articles 114-8 et 114-9.",
+			"Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l'Administration détient déjà.",
 		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
-				label: 'Optimal',
+				label: 'Très bon',
 				color: 'green',
 				description:
-					'Un effort très faible est demandé aux usagers : aucune ou une seule information est requise.'
+					'Une quantité faible d’information est demandée aux usagers. Au moins 70% des informations sont pré-remplies.'
 			},
 			{
-				label: 'Partiel',
+				label: 'Moyen',
 				color: 'yellow',
 				description:
-					'Un effort modéré est demandé aux usagers : 2 à 4 informations sont requises.'
+					'Une partie seulement de la démarche peut être réalisée en ligne.'
 			},
 			{
-				label: 'Faible',
+				label: 'Mauvais',
 				color: 'red',
 				description:
-					'Un effort important est demandé aux usagers : plus de 4 informations sont requises.'
-			},
-			{
-				label: 'Non applicable',
-				color: 'gray',
-				description: "Le critère ne s'applique pas à cette démarche."
-			},
-			{
-				label: 'À venir',
-				color: 'gray',
-				noBackground: true,
-				description: 'Le système de notation est en cours de réalisation.'
+					'Un grand nombre d’informations pourtant détenu par l’administration doit être à nouveau saisi. Ces informations peuvent être également difficile à trouver pour l’usager.'
 			}
 		],
-		moreInfos_title: 'Méthode de calcul',
+		moreInfos_title: 'Démarches proactive',
 		moreInfos:
-			"Afin d’évaluer l’efficacité de ce pré-remplissage, nous comptons le nombre d’informations au sein de la démarche demandées par l'administration à l'usager qui pourraient être pré-remplies."
+			'L’administration a attribué automatiquement les droits aux bénéficiaires de la démarche. Aucune information n’est demandée à l’usager. L’administration a fourni 100% des informations nécessaires pour mettre en place le service pour l’usager.',
+		isMoreInfosBlue: true
 	},
 	{
 		slug: 'usage',
 		title:
 			'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tous canaux confondus.',
-		description:
-			'Il s’agit d’un taux allant de 0 à 100%, calculé en divisant le nombre de réalisation du service par en ligne divisé par le nombre total de réalisation du service, sur une année glissante.',
-		indicators_intro: '2 niveaux d’évaluation :',
+		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
-				label: '50%',
-				color: 'gray',
-				description:
-					"Taux d'utilisation de la version numérique de la démarche."
+				label: 'Totale',
+				color: 'green',
+				description: '100% des usagers ont utilisé le service en ligne'
 			},
 			{
-				label: 'À venir',
-				color: 'gray',
-				noBackground: true,
+				label: 'Élevée',
+				color: 'green',
+				description: 'Plus de 75 % des usagers ont utilisé le service en ligne'
+			},
+			{
+				label: 'Moyenne',
+				color: 'yellow',
 				description:
-					"Le taux d'utilisation de la version numérique de la démarche est en cours d'analyse."
+					'Entre 75 % et 40% des usagers ont utilisé en service en ligne'
+			},
+			{
+				label: 'Faible',
+				color: 'red',
+				description: 'Moins de 40% des usagers ont utilisé le service en ligne'
+			},
+			{
+				label: 'Non applicable',
+				color: 'gray',
+				description:
+					'Cet indicateur n’est pas pertinent pour le service en ligne (démarche non dématérialisée, ou existence de plusieurs services en ligne, etc.)'
 			}
 		]
 	},
@@ -201,198 +184,138 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		title:
 			'Evalue le niveau de simplicité du langage employé par l’administration, selon les usagers.',
 		description:
-			'Comme la note de satisfaction usager, cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton « je donne mon avis », qui se trouve à la fin de la démarche).\n\n Plus précisément, cette appréciation correspond à une note moyenne calculée à partir de l’ensemble des réponses données par les usagers à la question : « Que pensez-vous du langage utilisé ? ».',
+			'Cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton “je donne mon avis”, qui se trouve à la fin de la démarche).',
 		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
-				label: '8 / 10',
+				label: 'Très bon',
 				color: 'green',
-				description: 'Moyenne des notes au dessus de 8/10.'
+				description: 'Moyenne des notes au dessus de 8/10'
 			},
 			{
-				label: '5 / 10',
+				label: 'Moyen',
 				color: 'yellow',
-				description: 'Moyenne des notes entre 5 et 8/10.'
+				description: 'Moyenne des notes entre 5 et 8/10'
 			},
 			{
-				label: '1 / 10',
+				label: 'Mauvais',
 				color: 'red',
-				description: 'Moyenne inférieure à 5/10.'
+				description: 'Moyenne inférieure à 5/10'
 			},
 			{
 				label: 'À venir',
 				color: 'gray',
-				noBackground: true,
-				description: 'La démarche ne permet pas encore le recueil des avis.'
-			},
-			{
-				label: "Nombre d'avis insuffisants",
-				color: 'gray',
-				noBackground: true,
-				description:
-					'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.'
+				description: 'Le téléservice ne permet pas encore le recueil des avis'
 			}
 		],
-		moreInfos_title: 'Méthode de calcul',
+		moreInfos_title: 'Nombre insuffisant d’avis',
 		moreInfos:
-			'Pour calculer la note de simplicité du langage, nous réalisons une moyenne des réponses données à la question « Que pensez-vous du langage utilisé ? » en attribuant une note /10 aux trois réponses proposées dans le questionnaire.',
+			'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
 		isMoreInfosBlue: false
-	},
-	{
-		slug: 'help_reachable',
-		title:
-			'Examine le pourcentage des usagers déclarant n’ayant pas réussi à contacter le service pour recevoir de l’aide.',
-		description:
-			'Cette indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes.\n\n Cette évaluation est issue des réponses des usagers à la question «Avez-vous tenté de contacter le service pour de l’aide ?». Question présente dans le formulaire de satisfaction «je donne mon avis», qui se trouve à la fin de la démarche.',
-		indicators_intro: "2 niveaux d'évaluation :",
-		indicators: [
-			{
-				label: '50%',
-				color: 'gray',
-				description:
-					"Pourcentage d'usagers n'ayant pas réussi à contacter le service."
-			},
-			{
-				label: 'À venir',
-				color: 'gray',
-				noBackground: true,
-				description:
-					"L'accès à une aide joignable et efficace n'est pas encore évaluée."
-			}
-		],
-		moreInfos_title: 'Méthode de calcul',
-		moreInfos:
-			'Cette évaluation correspond à la somme des usagers ayant répondu, avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.'
-	},
-	{
-		slug: 'help_used',
-		title:
-			'Mesure le nombre d’usagers ayant eu besoin d’être accompagné par une aide extérieure au service afin de pouvoir réaliser leur démarche.',
-		description:
-			'Cet indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes.',
-		indicators_intro: "2 niveaux d'évaluation :",
-		indicators: [
-			{
-				label: '50%',
-				color: 'gray',
-				description: "Pourcentage d'usagers ayant eu besoin d'être accompagnés."
-			},
-			{
-				label: 'À venir',
-				color: 'gray',
-				noBackground: true,
-				description: "Le niveau d'autonomie n'est pas encore évalué."
-			}
-		],
-		moreInfos_title: 'Méthode de calcul',
-		moreInfos:
-			'Comme la note de satisfaction usager, cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton «je donne mon avis», qui se trouve à la fin de la démarche).'
 	},
 	{
 		slug: 'uptime',
 		title:
-			'Indique le niveau moyen de disponibilité d’un service en ligne, sur une période donnée.',
+			'Mesure le nombre d’usagers ayant eu besoin d’être accompagné par une aide extérieure au service afin de pouvoir réaliser leur démarche.',
 		description:
-			'Un service numérique peut ne plus être disponible pour des raisons de maintenance, de mises à jour, de surcharge des serveurs ou de tout autres problèmes techniques. C’est ce temps durant lequel l’usager ne peut avoir accès au service qui est ici analysé.\n\n Afin d’estimer le temps pendant lequel un service est disponible ou non, des tests sont réalisés par un outil qui interroge 24 heures sur 24 les adresses URL des sites afin de calculer les niveaux de disponibilité et de temps de réponse.',
-		indicators_intro: '4 niveaux d’évaluation :',
+			'Cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton “je donne mon avis”, qui se trouve à la fin de la démarche). Cette évaluation correspond à la somme des usagers ayant répondu avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.',
+		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
-				label: 'Optimal',
+				label: 'Très bon',
 				color: 'green',
-				description: 'Taux de disponibilité supérieur à 99.9%.'
+				description:
+					'Plus de 90 % des usagers n’ont pas eu besoin d’aide pour effectuer leur démarche.'
 			},
 			{
-				label: 'Partiel',
+				label: 'Moyen',
 				color: 'yellow',
-				description: 'Taux de disponibilité compris entre 98.5% et 99.9%.'
+				description: 'Moyenne des notes entre 5 et 8/10'
 			},
 			{
-				label: 'Faible',
+				label: 'Mauvais',
 				color: 'red',
-				description: 'Taux de disponibilité inférieur à 98.5%.'
+				description: 'Moyenne inférieure à 5/10'
 			},
 			{
 				label: 'À venir',
 				color: 'gray',
-				noBackground: true,
-				description:
-					"La taux de disponibilité de la démarche n'est pas encore évalué."
+				description: 'Le téléservice ne permet pas encore le recueil des avis'
 			}
 		],
-		moreInfos_title: 'Méthode de calcul',
+		moreInfos_title: 'Nombre insuffisant d’avis',
 		moreInfos:
-			"On obtient ce taux de disponibilité en divisant la durée durant laquelle ledit service est opérationnel par la durée totale durant laquelle on aurait souhaité qu'il le soit. Cet indicateur est calculé sur une durée de 3 mois précédant la publication de l’Observatoire."
+			'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
+		isMoreInfosBlue: false
 	},
 	{
 		slug: 'performance',
 		title:
-			'Mesure le temps moyen que met une page à s’afficher pour un usager, quelle que soit la qualité de la couverture réseau.',
-		indicators_intro: '4 niveaux d’évaluation :',
+			'Mesure le nombre d’usagers ayant eu besoin d’être accompagné par une aide extérieure au service afin de pouvoir réaliser leur démarche.',
+		description:
+			'Cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton “je donne mon avis”, qui se trouve à la fin de la démarche). Cette évaluation correspond à la somme des usagers ayant répondu avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.',
+		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
-				label: 'Optimal',
+				label: 'Très bon',
 				color: 'green',
-				description: 'Temps de chargement des pages inférieur à 0.4s.'
+				description:
+					'Plus de 90 % des usagers n’ont pas eu besoin d’aide pour effectuer leur démarche.'
 			},
 			{
-				label: 'Partiel',
+				label: 'Moyen',
 				color: 'yellow',
-				description: 'Temps de chargement des pages compris entre 0.4s et 0.8s.'
+				description: 'Moyenne des notes entre 5 et 8/10'
 			},
 			{
-				label: 'Faible',
+				label: 'Mauvais',
 				color: 'red',
-				description: 'Temps de chargement des pages supérieur à 0.8s.'
+				description: 'Moyenne inférieure à 5/10'
 			},
 			{
 				label: 'À venir',
 				color: 'gray',
-				noBackground: true,
-				description:
-					"Le temps de chargement des pages de la démarche n'est pas encore évalué."
+				description: 'Le téléservice ne permet pas encore le recueil des avis'
 			}
 		],
-		moreInfos_title: 'Méthode de calcul',
+		moreInfos_title: 'Nombre insuffisant d’avis',
 		moreInfos:
-			'Afin de calculer cette vitesse d’affichage d’une page (ou “temps de réponse d’une page”), des tests sont réalisés par un outil automatique qui interroge 24 heures sur 24 les adresses URL des sites afin de calculer ce temps de réponse.'
+			'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
+		isMoreInfosBlue: false
 	},
 	{
 		slug: 'auth',
 		title:
-			'Indique si le service en ligne est équipé ou non de FranceConnect ou FranceConnect+.',
+			'Mesure le nombre d’usagers ayant eu besoin d’être accompagné par une aide extérieure au service afin de pouvoir réaliser leur démarche.',
 		description:
-			"Le bouton FranceConnect est la solution de l'État pour faciliter la connexion à vos services et démarches en ligne. Il permet d'accéder à plus de 1400 services en utilisant un compte et un mot de passe que vous possédez déjà.",
+			'Cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton “je donne mon avis”, qui se trouve à la fin de la démarche). Cette évaluation correspond à la somme des usagers ayant répondu avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.',
 		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
-				label: 'FranceConnect',
-				color: 'blue',
-				description: 'Le service est équipé du dispositif FranceConnect.'
+				label: 'Très bon',
+				color: 'green',
+				description:
+					'Plus de 90 % des usagers n’ont pas eu besoin d’aide pour effectuer leur démarche.'
 			},
 			{
-				label: 'FranceConnect+',
-				color: 'blue',
-				description: 'Le service est équipé du dispositif FranceConnect+.'
+				label: 'Moyen',
+				color: 'yellow',
+				description: 'Moyenne des notes entre 5 et 8/10'
 			},
 			{
-				label: 'Non',
+				label: 'Mauvais',
 				color: 'red',
-				description:
-					'Le service n’est équipé ni du dispositif FranceConnect ni du dispositif FranceConnect+.'
-			},
-			{
-				label: 'Non applicable',
-				color: 'gray',
-				description:
-					'L’authentification par le bouton FranceConnect n’est pas pertinente.'
+				description: 'Moyenne inférieure à 5/10'
 			},
 			{
 				label: 'À venir',
 				color: 'gray',
-				noBackground: true,
-				description:
-					"L'implémentation de l'authentification FranceConnect n'est pas encore évaluée."
+				description: 'Le téléservice ne permet pas encore le recueil des avis'
 			}
-		]
+		],
+		moreInfos_title: 'Nombre insuffisant d’avis',
+		moreInfos:
+			'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
+		isMoreInfosBlue: false
 	}
 ];

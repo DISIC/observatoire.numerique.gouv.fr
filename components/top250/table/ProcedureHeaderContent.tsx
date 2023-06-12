@@ -6,11 +6,10 @@ import { indicatorsDescriptions } from '@/utils/indicators';
 
 type Props = {
 	slug: IndicatorSlug;
-	isFull?: boolean;
 };
 
 export const ProcedureHeaderContent = (props: Props) => {
-	const { slug, isFull } = props;
+	const { slug } = props;
 	const { classes, cx } = useStyles();
 
 	const content = indicatorsDescriptions.find(i => i.slug === slug);
@@ -20,20 +19,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 	return (
 		<div className={cx(classes.root)}>
 			<h5>{content.title}</h5>
-			{isFull && content.description && (
-				<p className={cx(classes.description)}>{content.description}</p>
-			)}
-			{isFull && content.moreInfos && (
-				<div
-					className={cx(
-						classes.moreInfos,
-						content.isMoreInfosBlue ? classes.moreInfosBlue : {}
-					)}
-				>
-					{content.moreInfos_title && <b>{content.moreInfos_title}</b>}
-					<p>{content.moreInfos}</p>
-				</div>
-			)}
+			{content.description && <p>{content.description}</p>}
 			{content.indicators_intro && (
 				<p>
 					<b>{content.indicators_intro}</b>
@@ -46,13 +32,23 @@ export const ProcedureHeaderContent = (props: Props) => {
 							<IndicatorLabel
 								label={indicator.label}
 								color={indicator.color as IndicatorColor}
-								noBackground={indicator.noBackground}
 							/>
 						</span>
 						<span>{indicator.description}</span>
 					</li>
 				))}
 			</ul>
+			{content.moreInfos && (
+				<div
+					className={cx(
+						classes.moreInfos,
+						content.isMoreInfosBlue ? classes.moreInfosBlue : {}
+					)}
+				>
+					{content.moreInfos_title && <b>{content.moreInfos_title}</b>}
+					<p>{content.moreInfos}</p>
+				</div>
+			)}
 		</div>
 	);
 };
@@ -66,9 +62,6 @@ const useStyles = makeStyles()(theme => ({
 			fontSize: '14px'
 		}
 	},
-	description: {
-		whiteSpace: 'pre-line'
-	},
 	label: {
 		marginRight: fr.spacing('2v')
 	},
@@ -78,20 +71,23 @@ const useStyles = makeStyles()(theme => ({
 	indicatorItem: {
 		marginBottom: `${fr.spacing('4v')} !important`,
 		display: 'flex',
-		flexDirection: 'column',
 		...fr.typography[18].style,
 		['& > span:first-of-type']: {
-			flexShrink: 0,
-			marginBottom: fr.spacing('2v')
+			flexShrink: 0
+		},
+		[fr.breakpoints.down('sm')]: {
+			flexDirection: 'column',
+			['& > span:first-of-type']: {
+				marginBottom: fr.spacing('2v')
+			}
 		}
 	},
 	moreInfos: {
 		padding: fr.spacing('2v'),
-		marginBottom: fr.spacing('6v'),
+		marginTop: fr.spacing('6v'),
 		backgroundColor: theme.decisions.background.default.grey.hover,
 		p: {
-			marginBottom: 0,
-			marginTop: fr.spacing('1v')
+			marginBottom: 0
 		}
 	},
 	moreInfosBlue: {

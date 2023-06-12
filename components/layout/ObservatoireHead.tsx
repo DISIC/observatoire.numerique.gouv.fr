@@ -6,11 +6,10 @@ export function ObservatoireHead() {
 
 	let pageTitlePrefix = '';
 	let og = {
-		title: `L’Observatoire de la qualité des services publics numériques`,
-		description: `L’Observatoire recense les services publics numériques les
-		plus utilisés et permet d’analyser, chaque trimestre, leur qualité à 
-		travers des critères clés, notamment via les retours directs des 
-		usagers.`,
+		title: `Vos démarches numériques essentielles`,
+		description: `Ce dispositif recense les démarches et services numériques
+		essentiels, et permet d’analyser, chaque trimestre, leur qualité à
+		travers des indicateurs clés.`,
 		imageUrl: 'https://observatoire.numerique.gouv.fr/assets/observatoire.png'
 	};
 
@@ -20,22 +19,21 @@ export function ObservatoireHead() {
 			break;
 		case '/observatoire':
 			pageTitlePrefix = 'Observatoire -';
-			og.title = `Suivi des services numériques phares de l’État`;
+			og.title = `Vos démarches numériques essentielles`;
 			break;
 		case '/Aide/Observatoire':
-			pageTitlePrefix = "En savoir plus sur l'Observatoire -";
-			og.title = 'En savoir plus sur l’Observatoire';
+			pageTitlePrefix = "En savoir plus -";
+			og.title = 'En savoir plus';
 			break;
 		case '/demande':
-			pageTitlePrefix = 'Soumettre un service -';
+			pageTitlePrefix = 'Soumettre une démarche ou un service -';
 			break;
 	}
 
 	return (
 		<Head>
 			<title>
-				{pageTitlePrefix} L&#39;Observatoire de la qualité des services
-				numériques
+				{pageTitlePrefix} Vos démarches numériques essentielles
 			</title>
 			<meta name="description" content={og.description}></meta>
 			<meta property="og:url" content={og.imageUrl}></meta>

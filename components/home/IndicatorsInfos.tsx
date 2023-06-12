@@ -74,11 +74,11 @@ export function IndicatorsInfos(props: Props) {
 					}}
 					title={
 						<>
-							Une évaluation trimestrielle
-							<br /> des services
+							Une publication trimestrielle
+							<br /> de la qualité des services
 						</>
 					}
-					description="Elle permet d’évaluer les services sur des critères de qualité et de performance."
+					description="Tous les trois mois, nous mettons à jour notre évaluation de chaque service sur des critères de qualité et de performance."
 					button={{
 						text: 'Comprendre l’évaluation',
 						link: '/Aide/Observatoire?tab=goals'
@@ -93,13 +93,13 @@ export function IndicatorsInfos(props: Props) {
 					}}
 					title={
 						<>
-							Une sélection des services
-							<br /> numériques phares
+							L'évaluation des services
+							<br /> numériques essentiels
 						</>
 					}
-					description="Tous les services publics numériques peuvent réaliser une demande pour entrer dans l’observatoire."
+					description="Toutes les démarches et services publics numériques peuvent réaliser une demande pour entrer dans l’observatoire."
 					button={{
-						text: 'Voir les critères d’entrée',
+						text: 'Critères de selection',
 						link: '/Aide/Observatoire?tab=criterias'
 					}}
 				/>

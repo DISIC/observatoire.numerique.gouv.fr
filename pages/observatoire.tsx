@@ -27,7 +27,7 @@ export default function Observatoire() {
 					title={
 						<>
 							Suivi trimestriel de la qualité
-							<br /> des services numériques phares de l’État
+							<br /> vos démarches numériques essentielles
 						</>
 					}
 					searchLabel="Rechercher par ministère, administration, ..."

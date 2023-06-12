@@ -10,53 +10,40 @@ export function HelpCriterias(props: Props) {
 	return (
 		<div className={classes.root}>
 			<h2 className={cx(fr.cx('fr-h2'))}>
-				Les critères d’entrée des services à l’observatoire de la qualité des
-				services.
+				Critères de recensement des services suivis
 			</h2>
-			<p>
-				La sélection des services a pour vocation à sélectionner les services
-				les plus utilisés et ayant le plus d’impact dans la vie des concitoyens.
-			</p>
-
-			<p>Ces critères d’entrée sont au nombre de deux :</p>
+			<p>Chaque démarches ou service doit, pour être recensé :</p>
 			<ol>
 				<li>
-					Le service doit comptabiliser une volumétrie annuelle supérieure à 200
-					000 usagers.
+					Comptabiliser une volumétrie annuelle
+					supérieure à 200 000 usagers ou
 				</li>
 				<li>
-					Le service donne accès à une aide / une prestation financière publique
-					nationale.
+					Donner accès à une aide financière publique nationale
 				</li>
 			</ol>
 			<h2 className={cx(fr.cx('fr-h2'))}>
-				Comment un service peut-il entrer à l’observatoire ?
+				Comment une démarche ou service peut-il être ajouté ?
 			</h2>
-			<p>Trois possibilités d’entrée à l’observatoire coexistent : </p>
+			<p>Trois possibilités coexistent : </p>
 			<ol>
 				<li>
-					L’administration déclare directement à l’observatoire son intention de
-					vouloir rejoindre l’observatoire.
+					La DINUM découvre une nouvelle démarche ou service qui respecte un
+					des deux critères détaillés ci-dessus
 				</li>
 				<li>
-					Le travail de recherche de nos experts des services publics numérique
-					à fort impact. Notre équipe analyse et répertorie les services publics
-					de l’Etat correspondant à ces critères. Ces services sont alors
-					contacté et informé de la possibilité de consulter les données
-					concernant leur service mais aussi de permettre le recueil des données
-					les plus justes.
+					L’administration déclare directement aux équipes de la DINUM de leur
+					son intention de vouloir rejoindre ce dispositif
 				</li>
 				<li>
-					Demande provenant des toute personne ayant remarqué l’absence d’un
-					service à la liste de l’observatoire, qu’il s’agisse d’usagers ou
-					encore d’agents de l’administration.
+					Un citoyen remarque l’absence d’une démarche ou service et le signale
 				</li>
 			</ol>
 			<p>
-				Suite à la soumission d’un service publics numérique, les équipe de
-				l’observatoire vérifient la conformité du services aux critères, puis
-				contacte le service pour aider afin de recueillir toutes les
-				informations nécessaire à leur évaluation et entrer dans une dynamique
+				Chaque demande d'ajout est instruite par les équipes de la DINUM, qui
+				vérifient la conformité de la démarche ou service aux critères. Ensuite
+				elle travaille avec l'équipe concernée afin de recueillir toutes les
+				informations nécessaires à leur évaluation et entrer dans une dynamique
 				d’accompagnement à l’amélioration des services.
 			</p>
 			<Link className={fr.cx('fr-btn', 'fr-mt-4v')} href="/demande">

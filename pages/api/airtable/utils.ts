@@ -104,7 +104,7 @@ export const getColorFromLabel = (
 		case 'performance':
 			if (label === 'À venir') return 'gray';
 			if (label === 'Partiel') return 'yellow';
-			if (label === 'Faible') return 'red';
+			if (label === 'Lent') return 'red';
 			return 'green';
 		case 'dlnuf':
 			if (label === 'Optimal') return 'green';

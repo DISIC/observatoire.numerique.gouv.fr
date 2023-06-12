@@ -55,7 +55,7 @@ export default function Demande() {
 						{({ values, handleChange, handleBlur, isSubmitting, errors }) => (
 							<Form>
 								<Input
-									label="Nom du sevice numérique (optionnel)"
+									label="Nom de la démarche ou du service numérique (optionnel)"
 									nativeInputProps={{
 										name: 'serviceName',
 										value: values.serviceName,
@@ -64,7 +64,7 @@ export default function Demande() {
 									}}
 								/>
 								<Alert
-									description="Il s’agit du service que vous souhaitez soumettre à l’observatoire de la qualité des services numériques"
+									description="Il s’agit de la démarche ou du service que vous souhaitez soumettre"
 									severity="info"
 									className={cx(classes.lightInfoAlert)}
 									small
@@ -99,16 +99,14 @@ export default function Demande() {
 						)}
 					</Formik>
 					<p className={fr.cx('fr-text--xs', 'fr-mt-12v')}>
-						Pour qu’un service public rejoigne l’observatoire de la qualité des
-						démarches en ligne, ce dernier doit répondre à quelques critères
-						d’entrées.
+						Pour qu’une démarche ou un service public rejoigne cet outil de
+						suivi, ce dernier doit répondre à quelques critères d’entrées.
 					</p>
 					<Link
 						className={fr.cx('fr-link', 'fr-text--xs')}
 						href="/Aide/Observatoire?tab=criterias"
 					>
-						Consulter les critères d’entrée à l’observatoire de la qualité des
-						services publics numériques
+						Consulter les critères d’entrée
 					</Link>
 				</div>
 			</>

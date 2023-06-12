@@ -46,7 +46,7 @@ export default function AideObservatoire() {
 
 	return (
 		<div className={classes.root}>
-			<PageTitleHeader title="En savoir plus sur l'Observatoire" />
+			<PageTitleHeader title="À propos" />
 			<div className={cx(fr.cx('fr-container'), classes.tabsContainer)}>
 				<Tabs
 					selectedTabId={selectedTabId}

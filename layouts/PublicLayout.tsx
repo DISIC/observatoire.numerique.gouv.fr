@@ -30,8 +30,8 @@ const PublicLayout = (props: Props) => {
 		</>
 	);
 
-	const serviceTitle = "L'Observatoire de la qualité";
-	const serviceTagLine = 'des services numériques';
+	const serviceTitle = "Vos démarches numériques essentielles";
+	const serviceTagLine = '';
 
 	useEffect(() => {
 		setIsXWikiUserLogged(
@@ -48,7 +48,7 @@ const PublicLayout = (props: Props) => {
 			linkProps: {
 				href: '/observatoire'
 			},
-			text: 'Tableau de suivi des services'
+			text: 'Tableau de suivi'
 		},
 		{
 			iconId: 'ri-user-star-line',
