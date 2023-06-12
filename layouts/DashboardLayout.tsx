@@ -21,8 +21,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	);
 
 	const serviceTitle = 'Administration';
-	const serviceTagLine =
-		"de l'observatoire de la qualité des services numériques";
+	const serviceTagLine = 'de vos démarches numériques essentielles';
 
 	return (
 		<>
@@ -31,8 +30,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/administration',
-					title:
-						"Administration - L'observatoire de la qualité de la qualité des services numériques"
+					title: 'Administration - Vos démarches numériques essentielles'
 				}}
 				quickAccessItems={[
 					{

@@ -12,49 +12,44 @@ export default function Home() {
 			<HomeHeader
 				title={
 					<>
-						Suivez l’amélioration <br /> de la qualité des services <br />{' '}
-						publics numériques phares.
+						Suivez l’amélioration de la qualité de vos démarches numériques
+						essentielles
 					</>
 				}
 				description={
 					<>
-						L’observatoire est un outil de pilotage interministériel permettant
-						d’identifier les services à améliorer en priorité.
+						Cet outil permet d’identifier les démarches et services numériques à
+						améliorer en priorité.
 					</>
 				}
 				button={{
-					text: 'Consulter le tableau de suivi des services publics',
+					text: 'Consulter le tableau de suivi',
 					link: '/observatoire'
 				}}
 			/>
 			<IndicatorsInfos
-				title={<>Comment évaluons-nous la qualité des services numériques ?</>}
+				title={<>Comment évaluons-nous la qualité de ces services ?</>}
 				description={
 					<>
-						Nous avons recensé les services publics les plus utilisés par les
-						usagers et nous avons établi des indicateurs qui nous permettent de
-						suivre l&apos;avancée de la dématérialisation, et l&apos;expérience
-						usager de façon très concrète.
+						Nous répertorions les démarches et services numériques les plus
+						fréquemment utilisés, et nous avons mis en place des indicateurs qui
+						nous permettent de mesurer la progression de la dématérialisation et
+						d&apos;évaluer concrètement l&apos;expérience utilisateur.
 					</>
 				}
 			/>
 			<IndicatorsDetails
-				title={
-					<>
-						Des indicateurs clés de suivi de la qualité des services publics{' '}
-						<br /> numériques.
-					</>
-				}
+				title={<>Des indicateurs de suivi de la qualité.</>}
 				description={
 					<>
-						Nous avons pensé 11 indicateurs clés afin de suivre les
-						améliorations des services numériques selon des critères de qualité
-						d’expérience utilisateur, de proactivité et de performance.
+						Nous avons pensé 5 indicateurs clés afin de suivre les améliorations
+						des services numériques selon des critères de qualité d’expérience
+						utilisateur, de proactivité et de performance.
 					</>
 				}
 				indicators={proceduresTableHeaders || []}
 				button={{
-					text: 'Voir tous les indicateurs',
+					text: 'Consulter tous les indicateurs',
 					link: '/Aide/Observatoire?tab=indicators'
 				}}
 			/>
@@ -68,12 +63,11 @@ export default function Home() {
 				description={
 					<>
 						Toute personne, qu’elle soit citoyenne ou agent administratif peut
-						proposer l’ajout d’un service public numérique à l’observatoire de
-						la qualité des services publics numériques.
+						proposer l’ajout d’une démarche ou d’un service public numérique.
 					</>
 				}
 				button={{
-					text: 'Proposer un service numérique',
+					text: 'Proposer une démarche ou un service',
 					link: '/demande'
 				}}
 				image={{
