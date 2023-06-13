@@ -1,129 +1,190 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { PageTitleHeader } from '@/components/layout/PageTitleHeader';
 import { fr } from '@codegouvfr/react-dsfr';
+import Alert from '@codegouvfr/react-dsfr/Alert';
+import Button from '@codegouvfr/react-dsfr/Button';
+import Input from '@codegouvfr/react-dsfr/Input';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
-import { Display } from '@codegouvfr/react-dsfr/Display';
-import Head from 'next/head';
-import { doesHttpOnlyCookieExist } from '@/utils/cookies';
-import { SocialNetworks } from '@/components/layout/SocialNetworks';
-import { CustomFooter } from '@/components/layout/CustomFooter';
-import { useSession } from 'next-auth/react';
-import { SkipLinks } from '@/components/generic/SkipLinks';
+import { Form, Formik } from 'formik';
+import Link from 'next/link';
+import { useState } from 'react';
+import * as Yup from 'yup';
 
-type Props = {
-	children: ReactNode;
-};
-
-const PublicLayout = (props: Props) => {
-	const { children } = props;
+export default function Demande() {
 	const { classes, cx } = useStyles();
-	const session = useSession();
-	const isLogged = !!session.data;
 
-	const [isXWikiUserLogged, setIsXWikiUserLogged] = useState<boolean>();
+	const [isSubmitted, setIsSubmitted] = useState(false);
 
-	const brandTop = (
-		<>
-			RÉPUBLIQUE
-			<br />
-			FRANÇAISE
-		</>
-	);
+	const validationSchema = Yup.object().shape({
+		serviceName: Yup.string(),
+		url: Yup.string().url('Invalid URL').required('URL is required'),
+		remarks: Yup.string()
+	});
 
-	const serviceTitle = 'Vos démarches numériques essentielles';
-	const serviceTagLine = '';
+	const DemandeForm = () => {
+		return (
+			<>
+				<PageTitleHeader
+					title={
+						<>
+							Demande de soumission d&apos;un service
+							<br /> public
+						</>
+					}
+				/>
+				<div className={cx(classes.formContainer, fr.cx('fr-container'))}>
+					<Formik
+						initialValues={{ serviceName: '', url: '', remarks: '' }}
+						validationSchema={validationSchema}
+						onSubmit={(values, { setSubmitting }) => {
+							fetch('/api/airtable/demande', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(values)
+							})
+								.then(res =>
+									res.json().then(json => {
+										console.log(json);
+										setIsSubmitted(true);
+									})
+								)
+								.finally(() => setSubmitting(false));
+						}}
+					>
+						{({ values, handleChange, handleBlur, isSubmitting, errors }) => (
+							<Form>
+								<Input
+									label="Nom du sevice numérique (optionnel)"
+									nativeInputProps={{
+										name: 'serviceName',
+										value: values.serviceName,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+								/>
+								<Alert
+									description="Il s’agit du service que vous souhaitez soumettre à l’observatoire de la qualité des services numériques"
+									severity="info"
+									className={cx(classes.lightInfoAlert)}
+									small
+								/>
+								<Input
+									label="URL"
+									nativeInputProps={{
+										name: 'url',
+										value: values.url,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									state={!!errors['url'] ? 'error' : 'default'}
+									stateRelatedMessage="Une URL doit être renseignée (exemple: http://impots.gouv.fr/)"
+								/>
+								<Input
+									label="Remarques (optionnel)"
+									nativeTextAreaProps={{
+										name: 'remarks',
+										value: values.remarks,
+										onChange: handleChange,
+										onBlur: handleBlur
+									}}
+									state="default"
+									textArea
+								/>
 
-	useEffect(() => {
-		setIsXWikiUserLogged(
-			doesHttpOnlyCookieExist('JSESSIONID') &&
-				doesHttpOnlyCookieExist('username')
+								<Button size="large" type="submit" disabled={isSubmitting}>
+									Envoyer
+								</Button>
+							</Form>
+						)}
+					</Formik>
+					<p className={fr.cx('fr-text--xs', 'fr-mt-12v')}>
+						Pour qu’un service public rejoigne l’observatoire de la qualité des
+						démarches en ligne, ce dernier doit répondre à quelques critères
+						d’entrées.
+					</p>
+					<Link
+						className={fr.cx('fr-link', 'fr-text--xs')}
+						href="/Aide/Observatoire?tab=criterias"
+					>
+						Consulter les critères d’entrée à l’observatoire de la qualité des
+						services publics numériques
+					</Link>
+				</div>
+			</>
 		);
-	}, []);
+	};
 
-	if (isXWikiUserLogged === undefined) return <></>;
-
-	let accessItems: HeaderProps.QuickAccessItem[] = [
-		{
-			iconId: 'ri-service-fill',
-			linkProps: {
-				href: '/observatoire'
-			},
-			text: 'Tableau de suivi'
-		},
-		{
-			iconId: 'ri-user-star-line',
-			linkProps: {
-				href: '/je-donne-mon-avis/',
-				target: '_self'
-			},
-			text: "L'outil Je donne mon avis"
-		},
-		{
-			iconId: isXWikiUserLogged
-				? 'ri-logout-circle-line'
-				: 'ri-login-circle-line',
-			linkProps: {
-				href: isXWikiUserLogged
-					? '/logout/Main/WebHome'
-					: '/login/XWiki/XWikiLogin',
-				target: '_self'
-			},
-			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
-		}
-	];
-
-	if (isLogged)
-		accessItems.unshift({
-			iconId: 'ri-user-star-line',
-			linkProps: {
-				href: '/administration'
-			},
-			text: 'Administration'
-		});
+	const DemandeSuccess = () => {
+		return (
+			<div className={cx(classes.submitted, fr.cx('fr-container'))}>
+				<h1 className={fr.cx('fr-mb-10v')}>
+					Merci pour votre contribution,
+					<br />
+					nous étudions votre proposition.
+				</h1>
+				<Link
+					href="/demande"
+					onClick={() => setIsSubmitted(false)}
+					className={fr.cx('fr-btn')}
+				>
+					Faire une autre demande
+				</Link>
+			</div>
+		);
+	};
 
 	return (
-		<>
-			<div className={fr.cx('fr-container')}>
-				<SkipLinks
-					links={[
-						{ text: 'Contenu', href: '#main' },
-						{ text: 'Pied de page', href: '#footer' }
-					]}
-				/>
-			</div>
-			<Header
-				className={cx(classes.header)}
-				brandTop={brandTop}
-				homeLinkProps={{
-					href: isXWikiUserLogged ? '/Main' : '/',
-					target: '_self',
-					title:
-						"Accueil - L'observatoire de la qualité des services numériques"
-				}}
-				quickAccessItems={accessItems}
-				serviceTagline={serviceTagLine}
-				serviceTitle={serviceTitle}
-			/>
-			<main id="main" role="main">
-				{children}
-			</main>
-			<SocialNetworks />
-			<CustomFooter />
-			<Display />
-		</>
+		<div className={cx(classes.root)}>
+			{!isSubmitted ? <DemandeForm /> : <DemandeSuccess />}
+		</div>
 	);
-};
+}
 
 const useStyles = makeStyles()(theme => ({
-	header: {
-		[fr.breakpoints.up('lg')]: {
-			['.fr-btn::before']: {
-				'--icon-size:': '0 !important',
-				marginLeft: '0px !important',
-				marginRight: '0px !important'
-			}
+	root: {},
+	formContainer: {
+		padding: `0 0 ${fr.spacing('16v')} 0`,
+		maxWidth: '38rem',
+		['.fr-input-group']: { margin: `${fr.spacing('12v')} 0` },
+		['button[type="submit"]']: {
+			display: 'block',
+			marginLeft: 'auto',
+			marginTop: `-${fr.spacing('2v')}`
+		},
+		[fr.breakpoints.down('lg')]: {
+			paddingLeft: fr.spacing('4v'),
+			paddingRight: fr.spacing('4v')
+		}
+	},
+	submitted: {
+		padding: `${fr.spacing('14w')} 0`,
+		textAlign: 'center',
+		h1: {
+			...fr.typography[11].style,
+			marginBottom: 0,
+			color: theme.decisions.background.actionHigh.blueFrance.default
+		},
+		[fr.breakpoints.down('lg')]: {
+			paddingLeft: fr.spacing('4v'),
+			paddingRight: fr.spacing('4v')
+		}
+	},
+	lightInfoAlert: {
+		boxShadow: 'none',
+		padding: `0 0 0 ${fr.spacing('5v')}`,
+		color: theme.decisions.background.flat.info.default,
+		marginTop: `-${fr.spacing('9v')}`,
+		['&::before']: {
+			color: theme.decisions.background.flat.info.default,
+			'--icon-size': '1rem',
+			margin: `2px 0 0 0`
+		},
+		['.fr-alert__title']: {
+			display: 'none'
+		},
+		p: {
+			...fr.typography[17].style
 		}
 	}
 }));
-
-export default PublicLayout;
