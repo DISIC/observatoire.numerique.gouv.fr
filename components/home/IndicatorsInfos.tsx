@@ -78,7 +78,7 @@ export function IndicatorsInfos(props: Props) {
 							<br /> de la qualité des services
 						</>
 					}
-					description="Tous les trois mois, nous mettons à jour notre évaluation de chaque service sur des critères de qualité et de performance."
+					description="Tous les trois mois, nous mettons à jour l’évaluation de chaque service sur des critères de qualité et de performance."
 					button={{
 						text: 'Comprendre l’évaluation',
 						link: '/Aide/Observatoire?tab=goals'
@@ -93,11 +93,11 @@ export function IndicatorsInfos(props: Props) {
 					}}
 					title={
 						<>
-							L&apos;évaluation des services
+							Le recensement des services
 							<br /> numériques essentiels
 						</>
 					}
-					description="Toutes les démarches et services publics numériques peuvent réaliser une demande pour entrer dans l’observatoire."
+					description="L'outil recense les services les plus utilisés, ou donnant accès à une aide financière publique nationale."
 					button={{
 						text: 'Critères de selection',
 						link: '/Aide/Observatoire?tab=criterias'
