@@ -19,9 +19,9 @@ type IndicatorDescriptions = {
 export const indicatorsDescriptions: IndicatorDescriptions = [
 	{
 		slug: 'online',
-		title: 'Évalue si le service est numérisé.',
+		title: 'Évalue si la démarche ou le service est numérisé.',
 		description:
-			'Cet indicateur permet de mesurer la numérisation des services en répondant à trois questions : \n - Le service est-il entièrement numérique ?\n - Est-il disponible sur tout le territoire français ? \n - Est-il ouvert à tous ?',
+			'Cet indicateur permet de mesurer la numérisation des démarches en répondant à trois questions : \n - La démarche est-elle entièrement réalisable en ligne ?\n - Est-elle disponible sur tout le territoire français ? \n - Est-elle ouverte à toutes et tous ?',
 		indicators_intro: "5 niveaux d'évaluation :",
 		indicators: [
 			{
@@ -34,24 +34,24 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 				label: 'En cours de déploiement local',
 				color: 'green',
 				description:
-					'La démarche est en cours de déploiement sur tout le territoire.'
+					'La démarche est en cours de déploiement sur le territoire.'
 			},
 			{
 				label: 'Partiel',
 				color: 'yellow',
 				description:
-					'Une partie du service n’est pas réalisable numériquement ou n’est pas disponible sur l’intégralité du territoire français, ou n’est ouvert qu’à une partie de la population.'
+					'Une partie de la démarche n’est pas réalisable en ligne, n’est pas disponible sur l’intégralité du territoire français, ou n’est ouverte qu’à une partie de la population.'
 			},
 			{
 				label: 'Non',
 				color: 'red',
-				description: 'La démarche n’est pas encore possible en ligne.'
+				description: 'La démarche n’est pas encore réalisable en ligne.'
 			},
 			{
 				label: 'Démarche proactive',
 				color: 'blue',
 				description:
-					'L’administration a attribué automatiquement les droits aux bénéficiaires de la démarche.'
+					'Grâce au partage d’informations entre administrations, ce service attribue automatiquement les droits aux personnes concernées.'
 			}
 		]
 	},
@@ -59,7 +59,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		slug: 'satisfaction',
 		title: 'Évalue le niveau de satisfaction du service, par les usagers.',
 		description:
-			'Cette note de satisfaction est calculée sur la base des avis déposés sur le service par les usagers. Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option de réponses proposée dans le questionnaire.',
+			'Cette note de satisfaction est calculée sur la base des avis déposés sur la démarche par les usagers.',
 		indicators_intro: "5 niveaux d'évaluation :",
 		indicators: [
 			{
@@ -93,32 +93,32 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		],
 		moreInfos_title: 'Méthode de calcul',
 		moreInfos:
-			'Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option.'
+			'Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option de réponses proposée dans le questionnaire.'
 	},
 	{
 		slug: 'handicap',
 		title:
-			"Évalue le niveau d’accessibilité numérique d’un service, en se basant sur le niveau de conformité au Référentiel général d'amélioration de l'accessibilité (RGAA).",
+			"Évalue le niveau d’accessibilité numérique d’un service.",
 		description:
-			'Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères : \n - Indiquer si l’accessibilité est totale, moyenne ou conforme. \n - Proposer un moyen de contact accessible aux personnes en situation de handicap. \n - S’appuyer sur un échantillon représentatif. \n - Mentionner le taux global de conformité. \n - Ne pas être expirée.',
+			'Il est basé sur le taux de conformité au Référentiel général d’amélioration de l’accessibilité (RGAA). Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères : \n - Indiquer si l’accessibilité est totale, moyenne ou conforme, \n - Proposer un moyen de contact accessible aux personnes en situation de handicap, \n - S’appuyer sur un échantillon représentatif, \n - Afficher le taux global de conformité, \n - Ne pas être expirée (dernier audit il y a moins de 3 ans).',
 		indicators_intro: "4 niveaux d'évaluation :",
 		indicators: [
 			{
 				label: 'Oui',
 				color: 'green',
 				description:
-					'Le service a atteint un taux de 100% de conformité au RGAA.'
+					'Le service est 100% conforme au RGAA.'
 			},
 			{
 				label: 'Partiel',
 				color: 'yellow',
-				description: 'Taux de conformité compris entre 50% et 99%.'
+				description: 'Entre 50% et 99% de conformité au RGAA.'
 			},
 			{
 				label: 'Non',
 				color: 'red',
 				description:
-					'Le service déclare un taux de conformité au RGAA inférieur à 50% ou n’a pas de déclaration d’accessibilité.'
+					'Moins de 50% de conformité au RGAA, ou aucune déclaration d’accessibilité, ou une déclaration ne respectant pas les critères énnoncés ci-dessus.'
 			},
 			{
 				label: 'À venir',
@@ -129,14 +129,14 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		],
 		moreInfos_title: 'Méthode de calcul',
 		moreInfos:
-			"Le taux de conformité RGAA est déterminé à la suite d'un audit réalisé par un.e expert.e accessibilité."
+			"Le taux de conformité au RGAA est déterminé à la suite d'un audit réalisé par un.e expert.e accessibilité."
 	},
 	{
 		slug: 'dlnuf',
 		title:
-			'Évalue la qualité de pré-remplissage des informations usagers d’ores et déjà détenues par l’administration.',
+			'Évalue le taux de pré-remplissage des formulaires. Cela évite aux usagers de saisir des informations ou de fournir des pièces justificatives que d’autres administrations possèdent déjà.',
 		description:
-			"La capacité d’un service à réutiliser des informations et pièces justificatives de l’usager qui sont en sa possession a une forte influence sur la simplification, voire l’automatisation de la soumission d’une démarche pour les usagers. Le principe de ne pas avoir à saisir plusieurs fois les mêmes informations pour l’usager est nommé le “dites-le nous une fois”. Il est basé techniquement sur la mise en place d’API. Les démarches doivent utiliser ces API pour récupérer les données nécessaires à leur réalisation.\n\n Une API est une interface technique entre deux acteurs, dont l'accord enclenche l'exposition automatique de données dans un format et une structure donnée.\n\n Les administrations sont encouragées à mettre à disposition leurs données via des API.\n\n Ce partage d’information est un principe consacré dans le code des relations entre le public et l’administration (CRPA) aux articles 114-8 et 114-9.",
+			"Le partage de données entre administrations permet d’éviter de redemander les mêmes informations et les mêmes pièces justificatives aux usagers. Ce principe, appelé “Dites-le nous une fois”, s'appuie sur l'utilisation d'APIs : des interfaces techniques entre deux entités qui permettent d'échanger certaines données détenues de manière sécurisée. Ce partage d’information est un principe consacré dans le code des relations entre le public et l’administration (CRPA) aux articles 114-8 et 114-9.",
 		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{

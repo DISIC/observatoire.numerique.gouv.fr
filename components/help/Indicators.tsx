@@ -18,10 +18,7 @@ export function HelpIndicators(props: Props) {
 		<div className={classes.root}>
 			<div className={classes.primarySection}>
 				<h2 className={cx(fr.cx('fr-h2'))}>Les indicateurs clés</h2>
-				<p>
-					Voir s&apos;il est utile d’avoir un texte ici très court pour parler
-					des indicateurs clés.
-				</p>
+				<p></p>
 				<div
 					className={cx(fr.cx('fr-accordions-group'), classes.accordionGroup)}
 				>
@@ -40,8 +37,8 @@ export function HelpIndicators(props: Props) {
 			<div className={classes.secondarySection}>
 				<h2 className={cx(fr.cx('fr-h2'))}>Les indicateurs complémentaires</h2>
 				<p>
-					Voir s&apos;il est utile d’avoir un texte ici très court pour parler
-					des indicateurs complémentaires.
+					Des indicateurs complémentaires permettent aux équipes d’affiner
+					l’identification d’opportunités d’améliorations.
 				</p>
 				<div
 					className={cx(fr.cx('fr-accordions-group'), classes.accordionGroup)}
