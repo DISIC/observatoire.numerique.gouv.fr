@@ -26,8 +26,8 @@ export default function Demande() {
 				<PageTitleHeader
 					title={
 						<>
-							Demande de soumission d&apos;un service
-							<br /> public
+							Demande d&apos;ajout d&apos;une démarche
+							<br /> ou d&apos;un service public
 						</>
 					}
 				/>
@@ -55,7 +55,7 @@ export default function Demande() {
 						{({ values, handleChange, handleBlur, isSubmitting, errors }) => (
 							<Form>
 								<Input
-									label="Nom du sevice numérique (optionnel)"
+									label="Nom de la démarche ou du service numérique (champ optionnel)"
 									nativeInputProps={{
 										name: 'serviceName',
 										value: values.serviceName,
@@ -64,7 +64,7 @@ export default function Demande() {
 									}}
 								/>
 								<Alert
-									description="Il s’agit du service que vous souhaitez soumettre à l’observatoire de la qualité des services numériques"
+									description="Il s’agit de l’intitulé de la démarche ou du service que vous souhaitez voir ajouté dans notre suivi trimestriel"
 									severity="info"
 									className={cx(classes.lightInfoAlert)}
 									small
@@ -81,7 +81,7 @@ export default function Demande() {
 									stateRelatedMessage="Une URL doit être renseignée (exemple: http://impots.gouv.fr/)"
 								/>
 								<Input
-									label="Remarques (optionnel)"
+									label="Remarques (champ optionnel)"
 									nativeTextAreaProps={{
 										name: 'remarks',
 										value: values.remarks,
@@ -99,16 +99,14 @@ export default function Demande() {
 						)}
 					</Formik>
 					<p className={fr.cx('fr-text--xs', 'fr-mt-12v')}>
-						Pour qu’un service public rejoigne l’observatoire de la qualité des
-						démarches en ligne, ce dernier doit répondre à quelques critères
-						d’entrées.
+						Pour qu’une démarche ou un service soit intégré, ce dernier doit
+						répondre à quelques critères.
 					</p>
 					<Link
 						className={fr.cx('fr-link', 'fr-text--xs')}
 						href="/Aide/Observatoire?tab=criterias"
 					>
-						Consulter les critères d’entrée à l’observatoire de la qualité des
-						services publics numériques
+						Consulter les critères
 					</Link>
 				</div>
 			</>

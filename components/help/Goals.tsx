@@ -108,7 +108,7 @@ export function HelpGoals(props: Props) {
 				démarches et des services.
 			</p>
 			<p>
-				Elles effectuent des audits régulières des démarches et services, en
+				Elles effectuent des audits réguliers des démarches et services, en
 				évaluant des aspects tels que la facilité d&apos;utilisation, la clarté
 				des informations fournies, l&apos;accessibilité aux personnes
 				handicapées, la rapidité de chargement des pages, etc.
