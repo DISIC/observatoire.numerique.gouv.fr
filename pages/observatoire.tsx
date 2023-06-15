@@ -26,7 +26,7 @@ export default function Observatoire() {
 				<Top250Header
 					title={
 						<>
-							Suivi trimestriel de la qualité
+							Suivi trimestriel de la qualité de
 							<br /> vos démarches numériques essentielles
 						</>
 					}
