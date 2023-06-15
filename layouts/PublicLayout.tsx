@@ -97,8 +97,7 @@ const PublicLayout = (props: Props) => {
 				homeLinkProps={{
 					href: isXWikiUserLogged ? '/Main' : '/',
 					target: '_self',
-					title:
-						"Accueil - L'observatoire de la qualité des services numériques"
+					title: 'Accueil - Vos démarches numériques essentielles'
 				}}
 				quickAccessItems={accessItems}
 				serviceTagline={serviceTagLine}
