@@ -118,7 +118,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 				label: 'Non',
 				color: 'red',
 				description:
-					'Moins de 50% de conformité au RGAA, ou aucune déclaration d’accessibilité, ou une déclaration ne respectant pas les critères énnoncés ci-dessus.'
+					'Moins de 50% de conformité au RGAA, ou aucune déclaration d’accessibilité, ou une déclaration ne respectant pas les critères ennoncés ci-dessus.'
 			},
 			{
 				label: 'À venir',
@@ -243,7 +243,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		title:
 			'Examine le pourcentage des usagers déclarant n’ayant pas réussi à contacter le service pour recevoir de l’aide.',
 		description:
-			'Cette indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes.\n\n Cette évaluation est issue des réponses des usagers à la question «Avez-vous tenté de contacter le service pour de l’aide ?». Question présente dans le formulaire de satisfaction «je donne mon avis», qui se trouve à la fin de la démarche.',
+			'Cet indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes.\n\n Cette évaluation est issue des réponses des usagers à la question «Avez-vous tenté de contacter le service pour de l’aide ?». Question présente dans le formulaire de satisfaction «je donne mon avis», qui se trouve à la fin de la démarche.',
 		indicators_intro: "2 niveaux d'évaluation :",
 		indicators: [
 			{

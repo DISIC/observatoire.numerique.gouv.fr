@@ -12,7 +12,7 @@ export function HelpCriterias(props: Props) {
 			<h2 className={cx(fr.cx('fr-h2'))}>
 				Critères de recensement des services suivis
 			</h2>
-			<p>Chaque démarches ou service doit, pour être recensé :</p>
+			<p>Chaque démarche ou service doit, pour être recensé :</p>
 			<ol>
 				<li>
 					Comptabiliser une volumétrie annuelle supérieure à 200 000 usagers ou
