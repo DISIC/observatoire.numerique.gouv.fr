@@ -11,15 +11,13 @@ export default function Home() {
 		<div>
 			<HomeHeader
 				title={
-					<>
-						Suivez l’amélioration de la qualité de vos démarches numériques
-						essentielles
-					</>
+					<>Suivez l’amélioration de vos démarches numériques essentielles</>
 				}
 				description={
 					<>
-						Cet outil permet d’identifier les démarches et services numériques à
-						améliorer en priorité.
+						Cet outil permet d’évaluer en continu la qualité des démarches et
+						services numériques, afin d’identifier des opportunités
+						d’amélioration à prioriser.
 					</>
 				}
 				button={{
@@ -32,19 +30,19 @@ export default function Home() {
 				description={
 					<>
 						Nous répertorions les démarches et services numériques les plus
-						fréquemment utilisés, et nous avons mis en place des indicateurs qui
-						nous permettent de mesurer la progression de la dématérialisation et
-						d&apos;évaluer concrètement l&apos;expérience utilisateur.
+						fréquemment utilisés, et nous évaluons leur qualité à travers 5
+						indicateurs clés.
 					</>
 				}
 			/>
 			<IndicatorsDetails
-				title={<>Des indicateurs de suivi de la qualité.</>}
+				title={<>Zoom sur les indicateurs.</>}
 				description={
 					<>
-						Nous avons pensé 5 indicateurs clés afin de suivre les améliorations
-						des services numériques selon des critères de qualité d’expérience
-						utilisateur, de proactivité et de performance.
+						Nous avons défini 5 indicateurs clés afin de suivre les
+						améliorations des services numériques. Ils couvrent les enjeux de
+						qualité de l’expérience utilisateur, de la proactivité et de la
+						performance.
 					</>
 				}
 				indicators={proceduresTableHeaders || []}
