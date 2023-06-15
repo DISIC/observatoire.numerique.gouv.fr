@@ -48,7 +48,7 @@ export const ProcedureHeaderContent = (props: Props) => {
 								color={indicator.color as IndicatorColor}
 								noBackground={indicator.noBackground}
 							/>
-						</span>
+						</span>{' '}
 						<span>{indicator.description}</span>
 					</li>
 				))}
