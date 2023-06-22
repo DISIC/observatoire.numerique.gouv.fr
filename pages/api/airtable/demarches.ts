@@ -290,7 +290,7 @@ const getDemarches = async (_req: NextApiRequest, res: NextApiResponse) => {
 		let procedures: ProcedureWithFields[] = [];
 		await table
 			.select({
-				filterByFormula: `{${field_names.edition}} = 'Édition actuelle'`
+				filterByFormula: `{${field_names.edition}} = 'Édition 1'`
 			})
 			.eachPage((records: any[], fetchNextPage: () => void) => {
 				records.forEach(record => {
