@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 export function ObservatoireHead() {
 	const router = useRouter();
 
-	let pageTitle =
-		'Accueil - Observatoire - Vos démarches numériques essentielles';
+	let pageTitle = 'Accueil - Vos démarches numériques essentielles';
 	let og = {
 		title: `Vos démarches numériques essentielles`,
 		description: `Ce dispositif recense les démarches et services numériques
@@ -17,7 +16,7 @@ export function ObservatoireHead() {
 
 	switch (router.pathname) {
 		case '/observatoire':
-			pageTitle = 'Observatoire - Vos démarches numériques essentielles';
+			pageTitle = 'Tableau de suivi - Vos démarches numériques essentielles';
 			og.title = `Vos démarches numériques essentielles`;
 			break;
 		case '/Aide/Observatoire':
@@ -25,7 +24,8 @@ export function ObservatoireHead() {
 			og.title = 'En savoir plus';
 			break;
 		case '/demande':
-			pageTitle = 'Soumettre une démarche ou un service -';
+			pageTitle =
+				'Soumettre une démarche - Vos démarches numériques essentielles';
 			break;
 	}
 
