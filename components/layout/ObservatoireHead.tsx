@@ -32,6 +32,7 @@ export function ObservatoireHead() {
 	return (
 		<Head>
 			<title>{pageTitle}</title>
+			<link rel="icon" href="/assets/favicon.ico"></link>
 			<meta name="description" content={og.description}></meta>
 			<meta property="og:url" content={og.url}></meta>
 			<meta property="og:title" content={og.title}></meta>
