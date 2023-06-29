@@ -33,6 +33,10 @@ export function ObservatoireHead() {
 		<Head>
 			<title>{pageTitle}</title>
 			<link rel="icon" href="/assets/favicon.ico"></link>
+			<meta
+				name="google-site-verification"
+				content="Qq6hrULzNbBjpoH5ToHuvWg_uW8aRRSV2QdUZEHXCsc"
+			/>
 			<meta name="description" content={og.description}></meta>
 			<meta property="og:url" content={og.url}></meta>
 			<meta property="og:title" content={og.title}></meta>
