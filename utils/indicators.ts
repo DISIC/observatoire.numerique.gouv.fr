@@ -100,7 +100,7 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		title:
 			"Évalue le niveau d’accessibilité numérique d’un service.",
 		description:
-			'Il est basé sur le taux de conformité au Référentiel général d’amélioration de l’accessibilité (RGAA). Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères : \n - Indiquer si l’accessibilité est totale, moyenne ou conforme, \n - Proposer un moyen de contact accessible aux personnes en situation de handicap, \n - S’appuyer sur un échantillon représentatif, \n - Afficher le taux global de conformité, \n - Ne pas être expirée (dernier audit il y a moins de 3 ans).',
+			'Il est basé sur le taux de conformité au Référentiel général d’amélioration de l’accessibilité (RGAA). Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères : \n - Indiquer si le niveau d’accessibilité est totalement conforme, partiellement conforme ou non conforme, \n - Proposer un moyen de contact accessible aux personnes en situation de handicap, \n - S’appuyer sur un échantillon représentatif, \n - Afficher le taux global de conformité, \n - Ne pas être expirée (dernier audit il y a moins de 3 ans).',
 		indicators_intro: "4 niveaux d'évaluation :",
 		indicators: [
 			{
