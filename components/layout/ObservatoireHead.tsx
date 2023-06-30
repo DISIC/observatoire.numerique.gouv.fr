@@ -32,11 +32,14 @@ export function ObservatoireHead() {
 	return (
 		<Head>
 			<title>{pageTitle}</title>
-			<link rel="icon" href="/assets/favicon.ico"></link>
-			<meta
-				name="google-site-verification"
-				content="Qq6hrULzNbBjpoH5ToHuvWg_uW8aRRSV2QdUZEHXCsc"
-			/>
+			<link
+				rel="icon"
+				href="https://observatoire.numerique.gouv.fr/assets/favicon-32x32.ico"
+			></link>
+			<link
+				rel="icon"
+				href="https://observatoire.numerique.gouv.fr/assets/favicon-96x96.ico"
+			></link>
 			<meta name="description" content={og.description}></meta>
 			<meta property="og:url" content={og.url}></meta>
 			<meta property="og:title" content={og.title}></meta>
