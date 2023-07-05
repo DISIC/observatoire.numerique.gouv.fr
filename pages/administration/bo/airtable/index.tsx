@@ -121,9 +121,9 @@ export default function Airtable() {
 				/>
 				<p>
 					Cet espace d&apos;administration vous permet de publier une nouvelle
-					édition du top 250 des démarches en direct directement depuis les
-					données du Airtable. Sélectionnez l&apos;édition cible du Airtable,
-					puis prévisualisez les données de celle. Vous pouvez ainsi publier des
+					édition du top 250 des démarches en direct depuis les données du
+					Airtable. Sélectionnez l&apos;édition cible du Airtable, puis
+					prévisualisez les données de celle-ci. Vous pouvez ainsi publier des
 					éditions dans l&apos;Observatoire à la volée en cliquant sur
 					&quot;Publier l&apos;édition&quot;. Les éditions créées sont
 					accessibles depuis l&apos;onglet &quot;Mes éditions&quot;.
