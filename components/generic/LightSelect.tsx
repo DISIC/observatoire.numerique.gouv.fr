@@ -79,17 +79,6 @@ const useStyles = makeStyles()(theme => ({
 				paddingLeft: fr.spacing('4v'),
 				paddingRight: fr.spacing('8v')
 			}
-		},
-		['.fr-label']: {
-			position: 'absolute',
-			width: 1,
-			height: 1,
-			padding: 0,
-			margin: -1,
-			overflow: 'hidden',
-			clip: 'rect(0, 0, 0, 0)',
-			whiteSpace: 'nowrap',
-			border: 0
 		}
 	},
 	rootSuperLight: {
@@ -100,6 +89,18 @@ const useStyles = makeStyles()(theme => ({
 			fontWeight: 500,
 			border: 0,
 			...fr.typography[19].style
+		},
+
+		['.fr-label']: {
+			position: 'absolute',
+			width: 1,
+			height: 1,
+			padding: 0,
+			margin: -1,
+			overflow: 'hidden',
+			clip: 'rect(0, 0, 0, 0)',
+			whiteSpace: 'nowrap',
+			border: 0
 		}
 	}
 }));

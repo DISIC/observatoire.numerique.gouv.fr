@@ -8,11 +8,15 @@ import { useEffect, useRef, useState } from 'react';
 import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import Input from '@codegouvfr/react-dsfr/Input';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
+import { LightSelect } from '@/components/generic/LightSelect';
 
 export default function Airtable() {
 	const { classes, cx } = useStyles();
 
 	const [procedures, setProcdeures] = useState<ProcedureWithFields[]>([]);
+	const [editions, setEditions] = useState<string[]>([]);
+	const [selectedEdition, setSelectedEdition] = useState<string>('');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isPublishing, setIsPublishing] = useState<boolean>(false);
 	const [published, setIsPublished] = useState<boolean>(false);
 
@@ -30,16 +34,32 @@ export default function Airtable() {
 		isOpenedByDefault: false
 	});
 
-	const getProceduresFormAirtalbe = async () => {
-		const res = await fetch('/api/airtable/demarches');
+	const getEditionsFromAirtable = async () => {
+		const res = await fetch('/api/airtable/editions');
+		const json = await res.json();
+
+		setEditions(json.data);
+		setSelectedEdition(json.data[0]);
+	};
+
+	const getProceduresFromAirtable = async () => {
+		setIsLoading(true);
+		const res = await fetch(
+			`/api/airtable/demarches?edition=${selectedEdition}`
+		);
 		const json = await res.json();
 
 		setProcdeures(json.data);
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
-		getProceduresFormAirtalbe();
+		getEditionsFromAirtable();
 	}, []);
+
+	useEffect(() => {
+		if (!!editions.length && !!selectedEdition) getProceduresFromAirtable();
+	}, [editions, selectedEdition]);
 
 	const publish = async () => {
 		console.log(inputRef.current?.value);
@@ -84,56 +104,69 @@ export default function Airtable() {
 			</div>
 		);
 
-	if (!procedures.length)
-		return (
-			<div className={cx(classes.loader)}>
-				<div>
-					<i className={fr.cx('ri-loader-4-line')} />
-				</div>
-				<p className={fr.cx('fr-pt-4v')}>
-					Chargement des données à partir du Airtable...
-				</p>
-			</div>
-		);
-
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
-				<h2>Prévisualisation de l&apos;édition en cours</h2>
+				<h2>Prévisualisation à partir du Airtable</h2>
+				<LightSelect
+					label="Édition cible du Airtable"
+					id="selecteur-editions"
+					options={editions.map(e => ({
+						label: e,
+						value: e
+					}))}
+					onChange={e => {
+						setSelectedEdition(e as string);
+					}}
+				/>
 				<p>
 					Cet espace d&apos;administration vous permet de publier une nouvelle
 					édition du top 250 des démarches en direct directement depuis les
-					données du Airtable. Les démarches récupérées sont celles de
-					l&apos;édition &quot;Édition en cours&quot; du Airtable. Vous pouvez
-					ainsi publier des éditions à la volée en cliquant sur &quot;Publier
-					l&apos;édition&quot;. Les éditions créées sont accessibles depuis
-					l&apos;onglet &quot;Mes éditions&quot;.
+					données du Airtable. Sélectionnez l&apos;édition cible du Airtable,
+					puis prévisualisez les données de celle. Vous pouvez ainsi publier des
+					éditions dans l&apos;Observatoire à la volée en cliquant sur
+					&quot;Publier l&apos;édition&quot;. Les éditions créées sont
+					accessibles depuis l&apos;onglet &quot;Mes éditions&quot;.
 				</p>
 			</div>
-			{published && (
-				<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
-					<Alert
-						closable
-						description="Retrouvez votre édition fraichement crée dans l'onglet « Mes Édition »"
-						onClose={() => {
-							setIsPublished(false);
-						}}
-						severity="success"
-						title="L'édition a bien été publiée"
-					/>
+			{isLoading || !procedures.length ? (
+				<div className={cx(classes.loader)}>
+					<div>
+						<i className={fr.cx('ri-loader-4-line')} />
+					</div>
+					<p className={fr.cx('fr-pt-4v')}>
+						Chargement des données à partir du Airtable...
+					</p>
 				</div>
+			) : (
+				<>
+					{published && (
+						<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
+							<Alert
+								closable
+								description="Retrouvez votre édition fraichement crée dans l'onglet « Mes Édition »"
+								onClose={() => {
+									setIsPublished(false);
+								}}
+								severity="success"
+								title="L'édition a bien été publiée"
+							/>
+						</div>
+					)}
+					<div className={cx(fr.cx('fr-container'), classes.controlPanel)}>
+						<Button type="button" {...editionModalButtonProps}>
+							Publier l&apos;édition
+						</Button>
+					</div>
+					<div className={cx(classes.tableContainer)}>
+						<div className={fr.cx('fr-container', 'fr-px-5v')}>
+							<Top250TableSection procedures={procedures} isAdmin />
+						</div>
+						<StickyFooter proceduresCount={procedures.length} isAdmin />
+					</div>
+				</>
 			)}
-			<div className={cx(fr.cx('fr-container'), classes.controlPanel)}>
-				<Button type="button" {...editionModalButtonProps}>
-					Publier l&apos;édition
-				</Button>
-			</div>
-			<div className={cx(classes.tableContainer)}>
-				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<Top250TableSection procedures={procedures} isAdmin />
-				</div>
-				<StickyFooter proceduresCount={procedures.length} isAdmin />
-			</div>
+
 			<EditionModal
 				title="Création d'une édition"
 				buttons={[
