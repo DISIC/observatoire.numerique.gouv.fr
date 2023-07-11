@@ -257,7 +257,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		}
 	];
 
-	const volume = parseInt(record.get(field_names.volume));
+	const volume = parseInt(record.get(field_names.indicators.usage));
 	const title = record
 		.get(field_names.title)
 		.replace(/(?:\uD83D\uDCC4|#)/g, '')

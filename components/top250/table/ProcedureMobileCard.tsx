@@ -70,7 +70,7 @@ export function ProcedureMobileCard(props: Props) {
 				<div className={fr.cx('fr-text--xs', 'fr-mb-0')}>
 					<div>{procedure.ministere}</div>
 					<div className={fr.cx('fr-mt-3v')}>
-						Volumétrie :{' '}
+						Volumétrie en ligne :{' '}
 						{procedure.volume
 							? getDisplayedVolume(procedure.volume)
 							: 'non communiquée'}
