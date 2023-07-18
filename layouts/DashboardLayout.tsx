@@ -21,7 +21,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	);
 
 	const serviceTitle = 'Administration';
-	const serviceTagLine = 'de Vos démarches essentielles';
+	const serviceTagLine = 'de vos démarches essentielles';
 
 	return (
 		<>
