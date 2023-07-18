@@ -65,12 +65,6 @@ export function HelpGoals(props: Props) {
 				</li>
 			</ul>
 			<p>
-				<strong>Eté 2024 :</strong>
-			</p>
-			<ul>
-				<li>Satisfaction usager supérieure à 8/10</li>
-			</ul>
-			<p>
 				<strong>Décembre 2024 :</strong>
 			</p>
 			<ul>
@@ -94,6 +88,7 @@ export function HelpGoals(props: Props) {
 			</p>
 			<ul>
 				<li>Réalisable en ligne</li>
+				<li>Satisfaction usager supérieure à 8/10</li>
 				<li>
 					Ne plus demander à l’usager les données déjà détenues par
 					l’administration, et ne plus demander des données qui ne servent pas
