@@ -21,7 +21,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	);
 
 	const serviceTitle = 'Administration';
-	const serviceTagLine = 'de vos démarches numériques essentielles';
+	const serviceTagLine = 'de Vos démarches essentielles';
 
 	return (
 		<>
@@ -30,7 +30,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 				brandTop={brandTop}
 				homeLinkProps={{
 					href: '/administration',
-					title: 'Administration - Vos démarches numériques essentielles'
+					title: 'Administration - Vos démarches essentielles'
 				}}
 				quickAccessItems={[
 					{

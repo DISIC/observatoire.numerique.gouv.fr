@@ -10,9 +10,7 @@ export default function Home() {
 	return (
 		<div>
 			<HomeHeader
-				title={
-					<>Suivez l’amélioration de vos démarches numériques essentielles</>
-				}
+				title={<>Suivez l’amélioration de Vos démarches essentielles</>}
 				description={
 					<>
 						Cet outil permet d’évaluer en continu la qualité des démarches et

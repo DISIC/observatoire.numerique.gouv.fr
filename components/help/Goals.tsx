@@ -11,10 +11,9 @@ export function HelpGoals(props: Props) {
 		<div className={classes.root}>
 			<h2 className={cx(fr.cx('fr-h2'))}>Mission</h2>
 			<p>
-				Vos démarches numériques essentielles, est un dispositif gouvernemental
-				français chargé d&apos;évaluer et d&apos;améliorer la qualité des
-				démarches et services publics numériques à destination de ses
-				concitoyens.
+				Vos démarches essentielles, est un dispositif gouvernemental français
+				chargé d&apos;évaluer et d&apos;améliorer la qualité des démarches et
+				services publics numériques à destination de ses concitoyens.
 			</p>
 			<p>
 				Lancé en juin 2019, ce dispositif s’inscrit dans la dynamique

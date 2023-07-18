@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 export function ObservatoireHead() {
 	const router = useRouter();
 
-	let pageTitle = 'Accueil - Vos démarches numériques essentielles';
+	let pageTitle = 'Accueil - Vos démarches essentielles';
 	let og = {
-		title: `Vos démarches numériques essentielles`,
+		title: `Vos démarches essentielles`,
 		description: `Ce dispositif recense les démarches et services numériques
 		essentiels, et permet d’analyser, chaque trimestre, leur qualité à
 		travers des indicateurs clés.`,
@@ -16,16 +16,15 @@ export function ObservatoireHead() {
 
 	switch (router.pathname) {
 		case '/observatoire':
-			pageTitle = 'Tableau de suivi - Vos démarches numériques essentielles';
-			og.title = `Vos démarches numériques essentielles`;
+			pageTitle = 'Tableau de suivi - Vos démarches essentielles';
+			og.title = `Vos démarches essentielles`;
 			break;
 		case '/Aide/Observatoire':
-			pageTitle = 'En savoir plus - Vos démarches numériques essentielles';
+			pageTitle = 'En savoir plus - Vos démarches essentielles';
 			og.title = 'En savoir plus';
 			break;
 		case '/demande':
-			pageTitle =
-				'Soumettre une démarche - Vos démarches numériques essentielles';
+			pageTitle = 'Soumettre une démarche - Vos démarches essentielles';
 			break;
 	}
 
