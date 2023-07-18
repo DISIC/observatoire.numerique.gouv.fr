@@ -30,7 +30,7 @@ const PublicLayout = (props: Props) => {
 		</>
 	);
 
-	const serviceTitle = 'Vos démarches numériques essentielles';
+	const serviceTitle = 'Vos démarches essentielles';
 	const serviceTagLine = '';
 
 	useEffect(() => {
@@ -97,7 +97,7 @@ const PublicLayout = (props: Props) => {
 				homeLinkProps={{
 					href: isXWikiUserLogged ? '/Main' : '/',
 					target: '_self',
-					title: 'Accueil - Vos démarches numériques essentielles'
+					title: 'Accueil - Vos démarches essentielles'
 				}}
 				quickAccessItems={accessItems}
 				serviceTagline={serviceTagLine}

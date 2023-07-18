@@ -27,7 +27,7 @@ export default function Observatoire() {
 					title={
 						<>
 							Suivi trimestriel de la qualité de
-							<br /> vos démarches numériques essentielles
+							<br /> vos démarches essentielles
 						</>
 					}
 					searchLabel="Rechercher par ministère, administration, ..."
