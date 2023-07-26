@@ -51,6 +51,7 @@ export function ProcedureMobileCard(props: Props) {
 						noJdma={procedure.noJdma}
 						label={field.label}
 						procedureId={procedure.airtable_identifier}
+						procedureTitle={procedure.title}
 					/>
 				)}
 			</>

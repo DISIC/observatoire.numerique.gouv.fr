@@ -3,6 +3,7 @@ import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import FocusTrap from 'focus-trap-react';
 import { ReactNode, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 type Props = {
 	title: string;
@@ -31,7 +32,7 @@ export const Modal = (props: Props) => {
 		};
 	}, []);
 
-	return (
+	return createPortal(
 		<FocusTrap>
 			<dialog
 				id={`fr-modal-${rNumber}`}
@@ -73,7 +74,8 @@ export const Modal = (props: Props) => {
 					</div>
 				</div>
 			</dialog>
-		</FocusTrap>
+		</FocusTrap>,
+		document.body
 	);
 };
 

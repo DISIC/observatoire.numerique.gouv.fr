@@ -68,7 +68,7 @@ export function IndicatorsInfos(props: Props) {
 				<IndicatorsInfosCard
 					image={{
 						src: '/assets/data-visualization.svg',
-						alt: 'Le suivi des services',
+						alt: '',
 						width: 80,
 						height: 80
 					}}
@@ -87,7 +87,7 @@ export function IndicatorsInfos(props: Props) {
 				<IndicatorsInfosCard
 					image={{
 						src: '/assets/city-hall.svg',
-						alt: 'La sélection des services',
+						alt: '',
 						width: 80,
 						height: 80
 					}}
@@ -167,7 +167,7 @@ const useStyles = makeStyles()(theme => ({
 				top: 2
 			}
 		},
-		[fr.breakpoints.down('sm')]: {
+		[fr.breakpoints.down('md')]: {
 			width: '100%',
 			['&:not(:last-of-type)']: {
 				marginTop: fr.spacing('16v')

@@ -67,7 +67,7 @@ export default function Home() {
 					link: '/demande'
 				}}
 				image={{
-					alt: 'Top 250 des services publics numériques',
+					alt: '',
 					src: '/assets/top250.svg',
 					width: 303,
 					height: 280
@@ -92,7 +92,7 @@ export default function Home() {
 					link: 'https://www.plus.transformation.gouv.fr/experience/step_1'
 				}}
 				image={{
-					alt: "Exemple de statistiques avec l'outil Je donne mon avis",
+					alt: '',
 					src: '/assets/agents.svg',
 					width: 327,
 					height: 255
@@ -119,7 +119,7 @@ export default function Home() {
 					link: '/je-donne-mon-avis/'
 				}}
 				image={{
-					alt: 'Top 250 des services publics numériques',
+					alt: '',
 					src: '/assets/jdma.svg',
 					width: 303,
 					height: 280
