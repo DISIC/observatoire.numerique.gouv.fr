@@ -284,6 +284,7 @@ export function ProceduresTable(props: Props) {
 													label={field.label}
 													noJdma={p.noJdma}
 													procedureId={p.airtable_identifier}
+													procedureTitle={p.title}
 													onLinkFocus={() => {
 														console.log('focus!');
 														scrollRef.current?.scrollTo({ left: 0 });

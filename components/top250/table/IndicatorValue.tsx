@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 type Props = {
 	slug: IndicatorSlug;
 	procedureId: number | null;
+	procedureTitle: string | null;
 	value: string;
 	noJdma?: boolean;
 	label: string;
@@ -22,7 +23,15 @@ const acceptedSlugValues: IndicatorSlug[] = [
 ];
 
 function IndicatorValueDisplay(props: Props): JSX.Element {
-	const { slug, value, label, procedureId, noJdma, onLinkFocus } = props;
+	const {
+		slug,
+		value,
+		label,
+		procedureId,
+		procedureTitle,
+		noJdma,
+		onLinkFocus
+	} = props;
 	const { classes, cx } = useStyles();
 
 	const linkRef = useRef<HTMLAnchorElement | null>(null);
@@ -45,7 +54,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 			<Link
 				ref={linkRef}
 				href={value}
-				title="accéder au service en ligne"
+				title={`Voir le service ${procedureTitle}`}
 				target="_blank"
 				rel="noreferrer"
 			>
