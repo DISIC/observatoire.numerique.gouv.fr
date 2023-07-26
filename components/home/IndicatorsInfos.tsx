@@ -167,7 +167,7 @@ const useStyles = makeStyles()(theme => ({
 				top: 2
 			}
 		},
-		[fr.breakpoints.down('sm')]: {
+		[fr.breakpoints.down('md')]: {
 			width: '100%',
 			['&:not(:last-of-type)']: {
 				marginTop: fr.spacing('16v')
