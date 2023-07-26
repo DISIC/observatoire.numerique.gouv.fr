@@ -20,8 +20,10 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 	{
 		slug: 'online',
 		title: 'Évalue si la démarche ou le service est numérisé.',
-		description:
-			'Cet indicateur permet de mesurer la numérisation des démarches en répondant à trois questions : \n - La démarche est-elle entièrement réalisable en ligne ?\n - Est-elle disponible sur tout le territoire français ? \n - Est-elle ouverte à toutes et tous ?',
+		description: `Cet indicateur permet de mesurer la numérisation des démarches en répondant à trois questions :
+- La démarche est-elle entièrement réalisable en ligne ?
+- Est-elle disponible sur tout le territoire français ?
+- Est-elle ouverte à toutes et tous?`,
 		indicators_intro: "5 niveaux d'évaluation :",
 		indicators: [
 			{
@@ -97,17 +99,19 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 	},
 	{
 		slug: 'handicap',
-		title:
-			"Évalue le niveau d’accessibilité numérique d’un service.",
-		description:
-			'Il est basé sur le taux de conformité au Référentiel général d’amélioration de l’accessibilité (RGAA). Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères : \n - Indiquer si le niveau d’accessibilité est totalement conforme, partiellement conforme ou non conforme, \n - Proposer un moyen de contact accessible aux personnes en situation de handicap, \n - S’appuyer sur un échantillon représentatif, \n - Afficher le taux global de conformité, \n - Ne pas être expirée (dernier audit il y a moins de 3 ans).',
+		title: 'Évalue le niveau d’accessibilité numérique d’un service.',
+		description: `Il est basé sur le taux de conformité au Référentiel général d’amélioration de l’accessibilité (RGAA). Afin que ce critère soit pris en compte, une déclaration d’accessibilité doit être publiée et accessible depuis chaque page du service. Pour être recevable, cette déclaration doit respecter un certain nombre de critères :
+- Indiquer si le niveau d’accessibilité est totalement conforme, partiellement conforme ou non conforme,
+- Proposer un moyen de contact accessible aux personnes en situation de handicap,
+- S’appuyer sur un échantillon représentatif,
+- Afficher le taux global de conformité,
+- Ne pas être expirée (dernier audit il y a moins de 3 ans).`,
 		indicators_intro: "4 niveaux d'évaluation :",
 		indicators: [
 			{
 				label: 'Oui',
 				color: 'green',
-				description:
-					'Le service est 100% conforme au RGAA.'
+				description: 'Le service est 100% conforme au RGAA.'
 			},
 			{
 				label: 'Partiel',
@@ -200,8 +204,8 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		slug: 'simplicity',
 		title:
 			'Evalue le niveau de simplicité du langage employé par l’administration, selon les usagers.',
-		description:
-			'Comme la note de satisfaction usager, cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton « je donne mon avis », qui se trouve à la fin de la démarche).\n\n Plus précisément, cette appréciation correspond à une note moyenne calculée à partir de l’ensemble des réponses données par les usagers à la question : « Que pensez-vous du langage utilisé ? ».',
+		description: `Comme la note de satisfaction usager, cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton « je donne mon avis », qui se trouve à la fin de la démarche).
+		Plus précisément, cette appréciation correspond à une note moyenne calculée à partir de l’ensemble des réponses données par les usagers à la question : « Que pensez-vous du langage utilisé ? ».`,
 		indicators_intro: '5 niveaux d’évaluation :',
 		indicators: [
 			{
@@ -242,8 +246,8 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		slug: 'help_reachable',
 		title:
 			'Examine le pourcentage des usagers déclarant n’ayant pas réussi à contacter le service pour recevoir de l’aide.',
-		description:
-			'Cet indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes.\n\n Cette évaluation est issue des réponses des usagers à la question «Avez-vous tenté de contacter le service pour de l’aide ?». Question présente dans le formulaire de satisfaction «je donne mon avis», qui se trouve à la fin de la démarche.',
+		description: `Cet indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes.
+      Cette évaluation est issue des réponses des usagers à la question «Avez-vous tenté de contacter le service pour de l’aide ?». Question présente dans le formulaire de satisfaction «je donne mon avis», qui se trouve à la fin de la démarche.`,
 		indicators_intro: "2 niveaux d'évaluation :",
 		indicators: [
 			{
@@ -292,8 +296,8 @@ export const indicatorsDescriptions: IndicatorDescriptions = [
 		slug: 'uptime',
 		title:
 			'Indique le niveau moyen de disponibilité d’un service en ligne, sur une période donnée.',
-		description:
-			'Un service numérique peut ne plus être disponible pour des raisons de maintenance, de mises à jour, de surcharge des serveurs ou de tout autres problèmes techniques. C’est ce temps durant lequel l’usager ne peut avoir accès au service qui est ici analysé.\n\n Afin d’estimer le temps pendant lequel un service est disponible ou non, des tests sont réalisés par un outil qui interroge 24 heures sur 24 les adresses URL des sites afin de calculer les niveaux de disponibilité et de temps de réponse.',
+		description: `Un service numérique peut ne plus être disponible pour des raisons de maintenance, de mises à jour, de surcharge des serveurs ou de tout autres problèmes techniques. C’est ce temps durant lequel l’usager ne peut avoir accès au service qui est ici analysé.
+      Afin d’estimer le temps pendant lequel un service est disponible ou non, des tests sont réalisés par un outil qui interroge 24 heures sur 24 les adresses URL des sites afin de calculer les niveaux de disponibilité et de temps de réponse.`,
 		indicators_intro: '4 niveaux d’évaluation :',
 		indicators: [
 			{

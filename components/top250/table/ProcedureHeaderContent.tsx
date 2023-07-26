@@ -3,6 +3,9 @@ import { IndicatorColor, IndicatorSlug } from '@prisma/client';
 import { IndicatorLabel } from './IndicatorLabel';
 import { fr } from '@codegouvfr/react-dsfr';
 import { indicatorsDescriptions } from '@/utils/indicators';
+import { remark } from 'remark';
+import html from 'remark-html';
+import React from 'react';
 
 type Props = {
 	slug: IndicatorSlug;
@@ -10,6 +13,9 @@ type Props = {
 };
 
 export const ProcedureHeaderContent = (props: Props) => {
+	const [description, setDescription] = React.useState<string | undefined>(
+		undefined
+	);
 	const { slug, isFull } = props;
 	const { classes, cx } = useStyles();
 
@@ -17,11 +23,24 @@ export const ProcedureHeaderContent = (props: Props) => {
 
 	if (!content) return <p>À venir...</p>;
 
+	const renderMarkdown = async () => {
+		if (!content.description) return;
+		const result = await remark().use(html).process(content.description);
+		return result.toString();
+	};
+
+	React.useEffect(() => {
+		renderMarkdown().then(res => setDescription(res));
+	}, [content.description]);
+
 	return (
 		<div className={cx(classes.root)}>
-			<h5>{content.title}</h5>
+			<h4>{content.title}</h4>
 			{isFull && content.description && (
-				<p className={cx(classes.description)}>{content.description}</p>
+				<div
+					className={cx(classes.description)}
+					dangerouslySetInnerHTML={{ __html: description as string }}
+				/>
 			)}
 			{isFull && content.moreInfos && (
 				<div
@@ -67,7 +86,8 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	description: {
-		whiteSpace: 'pre-line'
+		fontSize: '14px',
+		marginBottom: fr.spacing('4v')
 	},
 	label: {
 		marginRight: fr.spacing('2v')
