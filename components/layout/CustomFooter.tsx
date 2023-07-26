@@ -23,7 +23,7 @@ export function CustomFooter() {
 					title: 'Accueil - Vos démarches essentielles'
 				}}
 				personalDataLinkProps={{
-					href: '/Main/CGU#HVieprivE9e'
+					href: '/Main/CGU'
 				}}
 				termsLinkProps={{
 					href: '/Main/CGU#HMentionslE9gales'
