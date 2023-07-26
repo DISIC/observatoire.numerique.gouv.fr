@@ -23,8 +23,7 @@ export function CustomFooter() {
 				}}
 				homeLinkProps={{
 					href: '/',
-					title:
-						'Accueil - Nom de l’entité (ministère, secrétariat d‘état, gouvernement)'
+					title: 'Accueil - Vos démarches essentielles'
 				}}
 				personalDataLinkProps={{
 					href: '/Main/CGU#HVieprivE9e'
