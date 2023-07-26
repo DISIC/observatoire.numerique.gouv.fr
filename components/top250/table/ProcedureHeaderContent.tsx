@@ -21,17 +21,17 @@ export const ProcedureHeaderContent = (props: Props) => {
 
 	const content = indicatorsDescriptions.find(i => i.slug === slug);
 
-	if (!content) return <p>À venir...</p>;
-
-	const renderMarkdown = async () => {
-		if (!content.description) return;
-		const result = await remark().use(html).process(content.description);
+	const renderMarkdown = async (str: string) => {
+		const result = await remark().use(html).process(str);
 		return result.toString();
 	};
 
 	React.useEffect(() => {
-		renderMarkdown().then(res => setDescription(res));
-	}, [content.description]);
+		if (content && content.description)
+			renderMarkdown(content.description).then(res => setDescription(res));
+	}, [content]);
+
+	if (!content) return <p>À venir...</p>;
 
 	return (
 		<div className={cx(classes.root)}>
