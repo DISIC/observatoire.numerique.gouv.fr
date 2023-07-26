@@ -20,8 +20,9 @@ export function ObservatoireHead() {
 			og.title = `Vos démarches essentielles`;
 			break;
 		case '/Aide/Observatoire':
-			pageTitle = 'En savoir plus - Vos démarches essentielles';
-			og.title = 'En savoir plus';
+			pageTitle =
+				'Méthodologie et calcul des indicateurs - Vos démarches essentielles';
+			og.title = 'Méthodologie et calcul des indicateurs';
 			break;
 		case '/demande':
 			pageTitle = 'Soumettre une démarche - Vos démarches essentielles';
