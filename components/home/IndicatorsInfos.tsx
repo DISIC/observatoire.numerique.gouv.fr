@@ -68,7 +68,7 @@ export function IndicatorsInfos(props: Props) {
 				<IndicatorsInfosCard
 					image={{
 						src: '/assets/data-visualization.svg',
-						alt: 'Le suivi des services',
+						alt: '',
 						width: 80,
 						height: 80
 					}}
@@ -87,7 +87,7 @@ export function IndicatorsInfos(props: Props) {
 				<IndicatorsInfosCard
 					image={{
 						src: '/assets/city-hall.svg',
-						alt: 'La sélection des services',
+						alt: '',
 						width: 80,
 						height: 80
 					}}
