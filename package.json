@@ -28,7 +28,7 @@
 		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./prisma/seed.ts"
 	},
 	"dependencies": {
-		"@codegouvfr/react-dsfr": "^0.75.1",
+		"@codegouvfr/react-dsfr": "^0.48.0",
 		"@emotion/react": "^11.10.6",
 		"@emotion/server": "^11.10.0",
 		"@next/font": "13.1.6",
