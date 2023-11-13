@@ -3,7 +3,9 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { ReactNode, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useEditions } from '@/utils/api';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
+
 type Props = {
 	title: ReactNode;
 	searchLabel: string;
@@ -12,10 +14,10 @@ type Props = {
 
 export function Top250Header(props: Props) {
 	const { title, searchLabel, onSearch } = props;
+	const router = useRouter();
+	const { id: edition_id } = router.query;
 
 	const { data: editions } = useEditions();
-
-	const currentEditionName = editions && editions[0] ? editions[0].name : '...';
 
 	const { classes, cx } = useStyles();
 
@@ -25,11 +27,31 @@ export function Top250Header(props: Props) {
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
 			<div className={cx(classes.editionsContainer)}>
-				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
-					<a className={fr.cx('fr-link')} href="#">
-						{currentEditionName}
-					</a>
-				</span>
+				{editions?.map((e, index) => {
+					const isCurrent =
+						(edition_id && e.id === edition_id) || (!edition_id && index === 0);
+					return (
+						<span
+							className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
+						>
+							{isCurrent ? (
+								<a
+									className={cx(fr.cx('fr-link'), classes.currentLink)}
+									href={'#'}
+								>
+									{e.name}
+								</a>
+							) : (
+								<Link
+									href={`/observatoire/${e.id}`}
+									className={fr.cx('fr-link')}
+								>
+									{e.name}
+								</Link>
+							)}
+						</span>
+					);
+				})}
 				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
 					<a
 						className={fr.cx('fr-link')}
@@ -118,5 +140,8 @@ const useStyles = makeStyles()(theme => ({
 			top: fr.spacing('1v'),
 			zIndex: 1
 		}
+	},
+	currentLink: {
+		textDecoration: 'underline'
 	}
 }));
