@@ -29,9 +29,9 @@ export default function Editions(props: Props) {
 						editions.map((edition, index) => (
 							<div key={edition.id}>
 								<Card
-									desc={`Du : ${new Date(edition.start_date).toLocaleDateString(
-										'fr'
-									)} au ${new Date(edition.end_date).toLocaleDateString('fr')}`}
+									// desc={`Du : ${new Date(edition.start_date).toLocaleDateString(
+									// 	'fr'
+									// )} au ${new Date(edition.end_date).toLocaleDateString('fr')}`}
 									enlargeLink
 									detail={
 										<ul className="fr-badges-group">
