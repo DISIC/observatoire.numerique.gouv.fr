@@ -32,6 +32,7 @@ export function Top250Header(props: Props) {
 						(edition_id && e.id === edition_id) || (!edition_id && index === 0);
 					return (
 						<span
+							key={index}
 							className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
 						>
 							{isCurrent ? (
