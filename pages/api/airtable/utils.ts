@@ -43,7 +43,7 @@ export const getLabelFromValue = (
 			return 'Optimal';
 		case 'dlnuf':
 			const dlnufIntValue = parseInt(value);
-			if (isNaN(dlnufIntValue) && !!value) return value;
+			if (isNaN(dlnufIntValue)) return !!value ? value : '';
 			if (dlnufIntValue < 2) return 'Optimal';
 			if (dlnufIntValue < 5) return 'Partiel';
 			return 'Faible';
