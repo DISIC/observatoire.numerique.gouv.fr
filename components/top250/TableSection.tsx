@@ -7,15 +7,17 @@ import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SkipLinks } from '../generic/SkipLinks';
 import { push } from '@socialgouv/matomo-next';
+import { Edition } from '@prisma/client';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
+	edition?: Edition;
 	search?: string;
 	isAdmin?: boolean;
 };
 
 export function Top250TableSection(props: Props) {
-	const { procedures, isAdmin, search } = props;
+	const { procedures, edition, isAdmin, search } = props;
 	const { classes, cx } = useStyles();
 	const numberPerPage = isAdmin ? 300 : 20;
 
@@ -91,10 +93,13 @@ export function Top250TableSection(props: Props) {
 					links={[{ text: 'Aller au pied du tableau', href: '#table-footer' }]}
 				/>
 				<div className={classes.tableDesktop}>
-					<ProceduresTable procedures={displayedProcedures} />
+					<ProceduresTable edition={edition} procedures={displayedProcedures} />
 				</div>
 				<div className={classes.tableMobile}>
-					<ProceduresTableMobile procedures={displayedProcedures} />
+					<ProceduresTableMobile
+						edition={edition}
+						procedures={displayedProcedures}
+					/>
 				</div>
 				<PreFooter id="table-footer" />
 			</>

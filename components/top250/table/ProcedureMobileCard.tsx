@@ -6,7 +6,7 @@ import { IndicatorValue } from './IndicatorValue';
 import { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { Field, ProcedureHeader } from '@prisma/client';
+import { Edition, Field, ProcedureHeader } from '@prisma/client';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
@@ -15,10 +15,11 @@ import Button from '@codegouvfr/react-dsfr/Button';
 type Props = {
 	procedure: ProcedureWithFields;
 	proceduresTableHeaders: ProcedureHeader[];
+	edition?: Edition;
 };
 
 export function ProcedureMobileCard(props: Props) {
-	const { procedure, proceduresTableHeaders } = props;
+	const { procedure, proceduresTableHeaders, edition } = props;
 	const { classes, cx } = useStyles();
 
 	const [toogleSwitch, setToogleSwitch] = useState<boolean>(false);
@@ -52,6 +53,7 @@ export function ProcedureMobileCard(props: Props) {
 						label={field.label}
 						procedureId={procedure.airtable_identifier}
 						procedureTitle={procedure.title}
+						edition={edition}
 					/>
 				)}
 			</>

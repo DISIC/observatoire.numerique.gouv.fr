@@ -55,7 +55,13 @@ export default function Observatoire() {
 				) : (
 					<>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
-							<Top250TableSection procedures={procedures} search={search} />
+							<Top250TableSection
+								edition={
+									procedures[0].edition ? procedures[0].edition : undefined
+								}
+								procedures={procedures}
+								search={search}
+							/>
 						</div>
 						<StickyFooter proceduresCount={procedures.length} />
 					</>
