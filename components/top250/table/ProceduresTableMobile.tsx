@@ -2,15 +2,16 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ProcedureMobileCard } from './ProcedureMobileCard';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { ProcedureHeader } from '@prisma/client';
+import { Edition, ProcedureHeader } from '@prisma/client';
 import { useProcedureHeaders } from '@/utils/api';
 
 type Props = {
 	procedures: ProcedureWithFields[];
+	edition?: Edition;
 };
 
 export function ProceduresTableMobile(props: Props) {
-	const { procedures } = props;
+	const { procedures, edition } = props;
 	const { classes, cx } = useStyles();
 
 	const {
@@ -30,6 +31,7 @@ export function ProceduresTableMobile(props: Props) {
 						proceduresTableHeaders={proceduresTableHeaders}
 						key={procedure.id}
 						procedure={procedure}
+						edition={edition}
 					/>
 				);
 			})}

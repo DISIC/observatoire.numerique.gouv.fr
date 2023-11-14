@@ -1,6 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { IndicatorSlug } from '@prisma/client';
+import { Edition, IndicatorSlug } from '@prisma/client';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 
@@ -8,6 +8,7 @@ type Props = {
 	slug: IndicatorSlug;
 	procedureId: number | null;
 	procedureTitle: string | null;
+	edition?: Edition;
 	value: string;
 	noJdma?: boolean;
 	label: string;
@@ -29,6 +30,7 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		label,
 		procedureId,
 		procedureTitle,
+		edition,
 		noJdma,
 		onLinkFocus
 	} = props;
@@ -69,11 +71,18 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 		!noJdma
 	) {
 		const valueToDisplay = value.toString().replace('.', ',');
+
+		let datesParam = `date-debut=2022-04-01&date-fin=2023-03-31`;
+		if (edition)
+			datesParam = `date-debut=${
+				edition.start_date.toString().split('T')[0]
+			}&date-fin=${edition.end_date.toString().split('T')[0]}`;
+
 		return (
 			<Link
 				ref={linkRef}
 				title={`Voir le détail : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
-				href={`/Demarches/${procedureId}?view-mode=statistics&date-debut=2022-04-01&date-fin=2023-03-31`}
+				href={`/Demarches/${procedureId}?view-mode=statistics&${datesParam}`}
 				target="_blank"
 			>
 				Voir le détail

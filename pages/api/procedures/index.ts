@@ -50,7 +50,7 @@ export async function getProcedures(
 	const procedures = await prisma.procedure.findMany({
 		orderBy,
 		where: whereRequest,
-		include: { fields: true }
+		include: { fields: true, edition: true }
 	});
 	return procedures;
 }

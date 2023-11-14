@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { ProcedureHeader, Edition } from '@prisma/client';
 
 type ProceduresProps = {
@@ -21,7 +21,9 @@ export function useProcedures(props: ProceduresProps) {
 		`/api/procedures?${searchUrl}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<ProcedureWithFields[]>(stringify(await res.json()));
+			return superJSONParse<ProcedureWithFieldsAndEditions[]>(
+				stringify(await res.json())
+			);
 		}
 	);
 

@@ -12,14 +12,16 @@ import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
+import { Edition } from '@prisma/client';
 
 type Props = {
 	procedures: ProcedureWithFields[];
+	edition?: Edition;
 };
 
 export function ProceduresTable(props: Props) {
 	useWindowResize();
-	const { procedures } = props;
+	const { procedures, edition } = props;
 	const { classes, cx } = useStyles();
 
 	const [isRight, setIsRight] = useState<boolean>(false);
@@ -285,6 +287,7 @@ export function ProceduresTable(props: Props) {
 													noJdma={p.noJdma}
 													procedureId={p.airtable_identifier}
 													procedureTitle={p.title}
+													edition={edition}
 													onLinkFocus={() => {
 														console.log('focus!');
 														scrollRef.current?.scrollTo({ left: 0 });
