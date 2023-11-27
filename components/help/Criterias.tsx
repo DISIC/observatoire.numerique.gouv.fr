@@ -17,7 +17,7 @@ export function HelpCriterias(props: Props) {
 				<li>
 					Comptabiliser une volumétrie annuelle supérieure à 200 000 usagers ou
 				</li>
-				<li>Donner accès à une aide financière publique nationale</li>
+				<li>Donner accès à une aide financière publique nationale pérenne/pérennisable</li>
 			</ol>
 			<h2 className={cx(fr.cx('fr-h2'))}>
 				Comment une démarche ou service peut-il être ajouté ?
@@ -26,22 +26,21 @@ export function HelpCriterias(props: Props) {
 			<ol>
 				<li>
 					La DINUM découvre une nouvelle démarche ou service qui respecte un des
-					deux critères détaillés ci-dessus
+					deux critères détaillés ci-dessus ;
 				</li>
 				<li>
-					L’administration déclare directement aux équipes de la DINUM de leur
-					son intention de vouloir rejoindre ce dispositif
+					L’administration déclare directement aux équipes de la DINUM son intention de vouloir rejoindre ce dispositif ;
 				</li>
 				<li>
-					Un citoyen remarque l’absence d’une démarche ou service et le signale
+					Un citoyen remarque l’absence d’une démarche ou service et le signale.
 				</li>
 			</ol>
 			<p>
 				Chaque demande d’ajout est instruite par les équipes de la DINUM, qui
-				vérifient la conformité de la démarche ou service aux critères. Ensuite
+				vérifient la conformité de la démarche ou service aux critères susmentionnés. Ensuite
 				elle travaille avec l’équipe concernée afin de recueillir toutes les
-				informations nécessaires à leur évaluation et entrer dans une dynamique
-				d’accompagnement à l’amélioration des services.
+				informations nécessaires à l'évaluation de la démarche ou service et entrer dans une dynamique
+				d’accompagnement à son amélioration.
 			</p>
 			<Link className={fr.cx('fr-btn', 'fr-mt-4v')} href="/demande">
 				Je propose l’ajout d’un service
