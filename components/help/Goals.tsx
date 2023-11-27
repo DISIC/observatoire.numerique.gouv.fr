@@ -46,7 +46,7 @@ export function HelpGoals(props: Props) {
 			</p>
 			<h2 className={cx(fr.cx('fr-h2'))}>Objectifs gouvernementaux</h2>
 			<p>
-				Ce outil de suivi vise à garantir l’engagement des administrations dans
+				Cet outil de suivi vise à garantir l’engagement des administrations dans
 				la qualité de leurs démarches et services numériques. Pour ce faire, il
 				permet de visualiser l’état d’avancement des services au regard de
 				différents objectifs de qualité.
