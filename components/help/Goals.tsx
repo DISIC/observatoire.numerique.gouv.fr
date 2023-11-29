@@ -11,9 +11,10 @@ export function HelpGoals(props: Props) {
 		<div className={classes.root}>
 			<h2 className={cx(fr.cx('fr-h2'))}>Mission</h2>
 			<p>
-				Vos démarches essentielles (VDE), est un dispositif gouvernemental français
-				chargé d&apos;évaluer et d&apos;améliorer la qualité des démarches et
-				services publics numériques à destination de ses concitoyens.
+				Vos démarches essentielles (VDE), est un dispositif gouvernemental
+				français chargé d&apos;évaluer et d&apos;améliorer la qualité des
+				démarches et services publics numériques à destination de ses
+				concitoyens.
 			</p>
 			<p>
 				Lancé en juin 2019, ce dispositif s’inscrit dans la dynamique
@@ -103,8 +104,8 @@ export function HelpGoals(props: Props) {
 			<h2 className={cx(fr.cx('fr-h2'))}>Méthodologie</h2>
 			<p>
 				Les équipes de la direction interministérielle du numérique qui pilotent
-				ce dispositif de suivi sont responsables de mesurer la progression de la qualité des
-				démarches et des services.
+				ce dispositif de suivi sont responsables de mesurer la progression de la
+				qualité des démarches et des services.
 			</p>
 			<p>
 				Elles effectuent des audits réguliers des démarches et services, en
