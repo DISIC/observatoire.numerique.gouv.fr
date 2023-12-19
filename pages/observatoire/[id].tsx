@@ -21,13 +21,14 @@ export default function ObservatoireEdition() {
 		isError,
 		isLoading
 	} = useProcedures({ search, sort, editionId: id as string });
-	if (isError) return <div>Une erreur est survenue.</div>;
 
 	const { data: editions } = useEditions();
 	if (!editions) return;
 	const currentEdition = id
 		? editions.find(edition => edition.id === (id as string))
 		: editions[0];
+
+	if (isError) return <div>Une erreur est survenue.</div>;
 
 	return (
 		<>

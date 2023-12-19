@@ -18,11 +18,12 @@ export default function Observatoire() {
 		isError,
 		isLoading
 	} = useProcedures({ search, sort });
-	if (isError) return <div>Une erreur est survenue.</div>;
 
 	const { data: editions } = useEditions();
 	if (!editions) return;
 	const currentEdition = editions[0];
+
+	if (isError) return <div>Une erreur est survenue.</div>;
 
 	return (
 		<>
