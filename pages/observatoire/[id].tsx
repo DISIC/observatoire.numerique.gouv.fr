@@ -2,7 +2,7 @@ import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useProcedures } from '@/utils/api';
+import { useEditions, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
@@ -22,6 +22,12 @@ export default function ObservatoireEdition() {
 		isLoading
 	} = useProcedures({ search, sort, editionId: id as string });
 	if (isError) return <div>Une erreur est survenue.</div>;
+
+	const { data: editions } = useEditions();
+	if (!editions) return;
+	const currentEdition = id
+		? editions.find(edition => edition.id === (id as string))
+		: editions[0];
 
 	return (
 		<>
@@ -59,9 +65,7 @@ export default function ObservatoireEdition() {
 					<>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
 							<Top250TableSection
-								edition={
-									procedures[0].edition ? procedures[0].edition : undefined
-								}
+								edition={currentEdition}
 								procedures={procedures}
 								search={search}
 							/>
