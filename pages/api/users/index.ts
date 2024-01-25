@@ -84,7 +84,7 @@ export default async function handler(
 		const user = await updateUser(id as string, data);
 		res.status(200).json(user);
 	} else if (req.method === 'DELETE') {
-		const { id } = req.query;
+		const { id } = JSON.parse(req.body);
 		const user = await deleteUser(id as string);
 		res.status(200).json(user);
 	} else {

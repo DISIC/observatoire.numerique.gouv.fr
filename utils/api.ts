@@ -67,7 +67,7 @@ export function useEditions() {
 }
 
 export function useUsers(page: number, numberPerPage: number) {
-	const { data, error } = useSWR(
+	const { data, error, mutate } = useSWR(
 		`/api/users?page=${page}&numberPerPage=${numberPerPage}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
@@ -77,6 +77,7 @@ export function useUsers(page: number, numberPerPage: number) {
 
 	return {
 		data,
+		mutate,
 		isError: error,
 		isLoading: !error && !data
 	};

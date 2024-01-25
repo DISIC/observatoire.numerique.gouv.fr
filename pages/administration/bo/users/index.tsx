@@ -23,7 +23,7 @@ export default function Editions(props: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [numberPerPage, _] = useState(10);
 
-	const { data: usersResult, isError, isLoading } = useUsers(currentPage, numberPerPage);
+	const { data: usersResult, isError, isLoading, mutate: refetchUsers } = useUsers(currentPage, numberPerPage,);
 	if (isError) return <div>Une erreur est survenue.</div>;
 	if (isLoading || !usersResult) return <div>...</div>;
 
@@ -35,6 +35,16 @@ export default function Editions(props: Props) {
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
 	};
+
+	const deleteUser = async (user: User) => {
+		if (confirm('Êtes vous sûr de vouloir supprimer cet utilisateur ?')) {
+			await fetch('/api/users', {
+				method: 'DELETE',
+				body: JSON.stringify({ id: user.id })
+			})
+			refetchUsers()
+		}
+	}
 
 	const nbPages = getNbPages(usersCount, numberPerPage);
 
@@ -96,7 +106,9 @@ export default function Editions(props: Props) {
 									<UserCard
 										user={user}
 										key={index}
-										onButtonClick={() => { }}
+										onButtonClick={({ type, user }) => {
+											if (type === 'delete') deleteUser(user)
+										}}
 									/>
 								))
 							}
