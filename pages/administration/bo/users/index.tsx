@@ -4,6 +4,8 @@ import { Pagination } from '@/components/generic/Pagination';
 import { useUsers } from '@/utils/api';
 import { getNbPages } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
+import Button from '@codegouvfr/react-dsfr/Button';
+import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { User } from '@prisma/client';
 import { useState } from 'react';
@@ -23,6 +25,8 @@ export default function Editions(props: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [numberPerPage, _] = useState(10);
 
+	const [currentUser, setCurrentUser] = useState<User>();
+
 	const { data: usersResult, isError, isLoading, mutate: refetchUsers } = useUsers(currentPage, numberPerPage,);
 	if (isError) return <div>Une erreur est survenue.</div>;
 	if (isLoading || !usersResult) return <div>...</div>;
@@ -31,6 +35,10 @@ export default function Editions(props: Props) {
 
 	if (!users) return <div>Aucun utilisateur</div>;
 
+	const { UserModal, userModalButtonProps } = createModal({
+		name: 'user',
+		isOpenedByDefault: false
+	})
 
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
@@ -46,6 +54,10 @@ export default function Editions(props: Props) {
 		}
 	}
 
+	const upsertUser = async () => {
+
+	}
+
 	const nbPages = getNbPages(usersCount, numberPerPage);
 
 	return (
@@ -53,6 +65,13 @@ export default function Editions(props: Props) {
 			<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
 				<h2>Utilisateurs</h2>
 				<p>Retrouvez sur cette page la liste des administrateurs de la plateforme.</p>
+				<div onClick={() => {
+					setCurrentUser(undefined)
+				}}>
+					<Button iconId="fr-icon-add-circle-line" type="button" {...userModalButtonProps} className={fr.cx('fr-btn--secondary')}>
+						Ajouter un utilisateur
+					</Button>
+				</div>
 			</div>
 			<div className={cx(fr.cx('fr-container'))}>
 				{isLoading ? (
@@ -106,6 +125,8 @@ export default function Editions(props: Props) {
 									<UserCard
 										user={user}
 										key={index}
+										setCurrentUser={setCurrentUser}
+										modalProps={userModalButtonProps}
 										onButtonClick={({ type, user }) => {
 											if (type === 'delete') deleteUser(user)
 										}}
@@ -154,6 +175,19 @@ export default function Editions(props: Props) {
 					</div>
 				)}
 			</div>
+			<UserModal
+				title="Création d'une édition"
+				buttons={[
+					{
+						onClick: upsertUser,
+						children: "Créer l'utilisateur"
+					}
+				]}
+			>
+				<form onSubmit={e => e.preventDefault()}>
+					{JSON.stringify(currentUser)}
+				</form>
+			</UserModal>
 		</div>
 	);
 }

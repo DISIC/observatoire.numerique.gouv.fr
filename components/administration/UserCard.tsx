@@ -5,13 +5,16 @@ import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
 	user: User;
+	modalProps: { onClick: () => void; },
+	setCurrentUser: Dispatch<SetStateAction<User | undefined>>,
 	onButtonClick: ({ type, user }: OnButtonClickUserParams) => void;
 };
 
-const UserCard = ({ user, onButtonClick }: Props) => {
+const UserCard = ({ user, onButtonClick, modalProps, setCurrentUser }: Props) => {
 	const { data: session } = useSession({ required: true });
 	const { cx, classes } = useStyles();
 
@@ -54,15 +57,17 @@ const UserCard = ({ user, onButtonClick }: Props) => {
 					>
 						Supprimer
 					</Button>
-					<Button
-						priority="secondary"
-						size="small"
-						iconId="fr-icon-edit-line"
-						iconPosition="right"
-						onClick={() => onButtonClick({ type: 'create', user })}
-					>
-						Modifier
-					</Button>
+					<div onClick={() => { setCurrentUser(user) }}>
+						<Button
+							priority="secondary"
+							size="small"
+							iconId="fr-icon-edit-line"
+							iconPosition="right"
+							{...modalProps}
+						>
+							Modifier
+						</Button>
+					</div>
 				</div>
 			</div>
 		</div>
