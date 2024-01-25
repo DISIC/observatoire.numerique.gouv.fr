@@ -4,6 +4,13 @@ import { getToken } from 'next-auth/jwt';
 
 const prisma = new PrismaClient();
 
+const userWithoutPassword = (user: User): User => {
+	return {
+		...user,
+		password: 'nice_try'
+	}
+}
+
 export async function getUsers(page: number, numberPerPage: number) {
 	const users = await prisma.user.findMany({
 		take: numberPerPage,
@@ -18,7 +25,7 @@ export async function getUsers(page: number, numberPerPage: number) {
 	const count = await prisma.user.count({})
 
 	return {
-		data: users, metadata: { count }
+		data: users.map((user) => userWithoutPassword(user)), metadata: { count }
 	}
 }
 
@@ -26,14 +33,14 @@ export async function getUserById(id: string) {
 	const user = await prisma.user.findUnique({
 		where: { id }
 	});
-	return user;
+	return user ? userWithoutPassword(user) : null;
 }
 
 export async function createUser(data: Omit<User, 'id'>) {
 	const user = await prisma.user.create({
 		data
 	});
-	return user;
+	return userWithoutPassword(user);
 }
 
 export async function updateUser(id: string, data: User) {
@@ -41,14 +48,14 @@ export async function updateUser(id: string, data: User) {
 		where: { id },
 		data
 	});
-	return user;
+	return userWithoutPassword(user);
 }
 
 export async function deleteUser(id: string) {
 	const user = await prisma.user.delete({
 		where: { id }
 	});
-	return user;
+	return userWithoutPassword(user);
 }
 
 export default async function handler(
