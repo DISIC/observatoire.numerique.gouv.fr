@@ -9,6 +9,7 @@ import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import Input from '@codegouvfr/react-dsfr/Input';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { LightSelect } from '@/components/generic/LightSelect';
+import { Loader } from '@/components/generic/Loader';
 
 export default function Airtable() {
 	const { classes, cx } = useStyles();
@@ -94,14 +95,7 @@ export default function Airtable() {
 
 	if (isPublishing)
 		return (
-			<div className={cx(classes.loader)}>
-				<div>
-					<i className={fr.cx('ri-loader-4-line')} />
-				</div>
-				<p className={fr.cx('fr-pt-4v')}>
-					Publication de l&apos;édition en cours
-				</p>
-			</div>
+			<Loader loadingMessage="Publication de l'édition en cours" />
 		);
 
 	return (
@@ -130,14 +124,7 @@ export default function Airtable() {
 				</p>
 			</div>
 			{isLoading || !procedures.length ? (
-				<div className={cx(classes.loader)}>
-					<div>
-						<i className={fr.cx('ri-loader-4-line')} />
-					</div>
-					<p className={fr.cx('fr-pt-4v')}>
-						Chargement des données à partir du Airtable...
-					</p>
-				</div>
+				<Loader loadingMessage="Chargement des données à partir du Airtable..." />
 			) : (
 				<>
 					{published && (
@@ -210,19 +197,4 @@ const useStyles = makeStyles()(theme => ({
 			maxWidth: 1440
 		}
 	},
-	loader: {
-		padding: fr.spacing('30v'),
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		i: {
-			display: 'inline-block',
-			animation: 'spin 1s linear infinite;',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
-			['&::before']: {
-				'--icon-size': '2rem'
-			}
-		}
-	}
 }));

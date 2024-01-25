@@ -8,9 +8,8 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${
-					millions > 1 ? 's' : ''
-				}`;
+				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
+					}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}
@@ -25,3 +24,26 @@ export const getDisplayedVolume = (volume: number): string => {
 		return parts.join(' ');
 	}
 };
+
+
+export function getNbPages(count: number, numberPerPage: number) {
+	return count % numberPerPage === 0
+		? count / numberPerPage
+		: Math.trunc(count / numberPerPage) + 1;
+}
+
+export function formatDateToFrenchString(tmpDate: string) {
+	const date = new Date(tmpDate);
+
+	if (!(date instanceof Date)) {
+		throw new Error('Input is not a valid Date object');
+	}
+
+	const formatter = new Intl.DateTimeFormat('fr-FR', {
+		year: 'numeric',
+		month: 'numeric',
+		day: 'numeric'
+	});
+
+	return formatter.format(date);
+}

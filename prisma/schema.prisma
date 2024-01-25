@@ -66,18 +66,19 @@ model Field {
 }
 
 model ProcedureHeader {
-  id               String        @id @default(auto()) @map("_id") @db.ObjectId
-  slug             IndicatorSlug @unique
-  label            String
-  description      String?
-  icon             String
-  position         Int           @unique
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  slug        IndicatorSlug @unique
+  label       String
+  description String?
+  icon        String
+  position    Int           @unique
 }
 
 // Next auth
 model User {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  username String?
-  email    String  @unique
-  password String
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  username   String?
+  email      String    @unique
+  password   String
+  created_at DateTime? @default(now())
 }
