@@ -77,7 +77,7 @@ model ProcedureHeader {
 // Next auth
 model User {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  username   String?
+  username   String
   email      String    @unique
   password   String
   created_at DateTime? @default(now())

@@ -3,14 +3,14 @@ import { formatDateToFrenchString } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { useSession } from 'next-auth/react';
 import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
 	user: User;
 	modalProps: { onClick: () => void; },
-	setCurrentUser: Dispatch<SetStateAction<User | undefined>>,
+	setCurrentUser: Dispatch<SetStateAction<Prisma.UserUpdateInput & { id: string } | Prisma.UserCreateInput>>,
 	onButtonClick: ({ type, user }: OnButtonClickUserParams) => void;
 };
 

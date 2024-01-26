@@ -5,10 +5,11 @@ import { useUsers } from '@/utils/api';
 import { getNbPages } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
+import Input from '@codegouvfr/react-dsfr/Input';
 import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { User } from '@prisma/client';
-import { useState } from 'react';
+import { Prisma, User } from '@prisma/client';
+import { useEffect, useRef, useState } from 'react';
 
 export type OnButtonClickUserParams =
 	| { type: 'create'; user?: User }
@@ -18,6 +19,12 @@ type Props = {
 	error?: string;
 };
 
+const defaultUserCreation = {
+	username: '',
+	email: '',
+	password: ''
+}
+
 export default function Editions(props: Props) {
 	const { error } = props;
 	const { classes, cx } = useStyles();
@@ -25,7 +32,19 @@ export default function Editions(props: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [numberPerPage, _] = useState(10);
 
-	const [currentUser, setCurrentUser] = useState<User>();
+	const [currentUser, setCurrentUser] = useState<Prisma.UserUpdateInput & { id: string } | Prisma.UserCreateInput>(defaultUserCreation);
+
+	const usernameInputRef = useRef<HTMLInputElement>(null);
+	const emailInputRef = useRef<HTMLInputElement>(null);
+	const passwordInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (currentUser) {
+			if (usernameInputRef) usernameInputRef.current?.setAttribute('value', currentUser.username as string)
+			if (emailInputRef) emailInputRef.current?.setAttribute('value', currentUser.email as string)
+			if (passwordInputRef) passwordInputRef.current?.setAttribute('value', currentUser.password as string)
+		}
+	}, [currentUser])
 
 	const { data: usersResult, isError, isLoading, mutate: refetchUsers } = useUsers(currentPage, numberPerPage,);
 	if (isError) return <div>Une erreur est survenue.</div>;
@@ -39,6 +58,12 @@ export default function Editions(props: Props) {
 		name: 'user',
 		isOpenedByDefault: false
 	})
+
+	// WORKAROUND BESCAUSE THIS IS NOT POSSIBLE ON REACT-DSFR V1
+	const closeModal = () => {
+		const button = document.getElementsByClassName('fr-link--close')[0] as HTMLButtonElement;
+		if (button) button.click()
+	}
 
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
@@ -55,7 +80,24 @@ export default function Editions(props: Props) {
 	}
 
 	const upsertUser = async () => {
+		if (!usernameInputRef?.current?.value) { usernameInputRef?.current?.focus(); return; }
+		if (!emailInputRef?.current?.value) { emailInputRef?.current?.focus(); return; }
 
+		if (currentUser.id) {
+			await fetch('/api/users', {
+				method: 'PUT',
+				body: JSON.stringify({ id: currentUser.id, username: usernameInputRef?.current?.value, email: emailInputRef?.current?.value })
+			})
+		} else {
+			if (!passwordInputRef?.current?.value) { passwordInputRef?.current?.focus(); return; }
+			await fetch('/api/users', {
+				method: 'POST',
+				body: JSON.stringify({ username: usernameInputRef?.current?.value, email: emailInputRef?.current?.value, password: passwordInputRef?.current?.value })
+			})
+		}
+
+		closeModal()
+		refetchUsers()
 	}
 
 	const nbPages = getNbPages(usersCount, numberPerPage);
@@ -66,7 +108,7 @@ export default function Editions(props: Props) {
 				<h2>Utilisateurs</h2>
 				<p>Retrouvez sur cette page la liste des administrateurs de la plateforme.</p>
 				<div onClick={() => {
-					setCurrentUser(undefined)
+					setCurrentUser(defaultUserCreation)
 				}}>
 					<Button iconId="fr-icon-add-circle-line" type="button" {...userModalButtonProps} className={fr.cx('fr-btn--secondary')}>
 						Ajouter un utilisateur
@@ -176,16 +218,49 @@ export default function Editions(props: Props) {
 				)}
 			</div>
 			<UserModal
-				title="Création d'une édition"
+				title={currentUser.id ? "Modification d'un utilisateur" : "Création d'un utilisateur"}
 				buttons={[
 					{
 						onClick: upsertUser,
-						children: "Créer l'utilisateur"
+						children: currentUser.id ? "Modifier l'utilisateur" : "Créer l'utilisateur",
+						doClosesModal: false
 					}
 				]}
 			>
-				<form onSubmit={e => e.preventDefault()}>
-					{JSON.stringify(currentUser)}
+				<form onSubmit={e => {
+					e.preventDefault()
+					upsertUser()
+				}}>
+					<Input
+						label="Nom complet"
+						nativeInputProps={{
+							name: 'username',
+							ref: usernameInputRef
+						}}
+					/>
+					<Input
+						label="Email"
+						disabled={!!currentUser.id}
+						nativeInputProps={{
+							name: 'email',
+							type: 'email',
+							ref: emailInputRef
+						}}
+					/>
+					{
+						!currentUser.id && (
+
+							<Input
+								label="Mot de passe"
+								nativeInputProps={{
+									name: 'password',
+									type: 'password',
+									ref: passwordInputRef
+								}}
+							/>
+						)
+					}
+					<button type="submit" style={{ display: "none" }}></button>
 				</form>
 			</UserModal>
 		</div>

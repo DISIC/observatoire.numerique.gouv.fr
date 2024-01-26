@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, User } from '@prisma/client';
 import { getToken } from 'next-auth/jwt';
+import crypto from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -38,7 +39,13 @@ export async function getUserById(id: string) {
 
 export async function createUser(data: Omit<User, 'id'>) {
 	const user = await prisma.user.create({
-		data
+		data: {
+			...data,
+			password: crypto
+				.createHash('sha256')
+				.update(data.password)
+				.digest('hex')
+		}
 	});
 	return userWithoutPassword(user);
 }
@@ -85,9 +92,7 @@ export default async function handler(
 		const user = await createUser(data);
 		res.status(201).json(user);
 	} else if (req.method === 'PUT') {
-		const { id } = req.query;
-
-		const data = req.body;
+		const { id, ...data } = JSON.parse(req.body);
 		const user = await updateUser(id as string, data);
 		res.status(200).json(user);
 	} else if (req.method === 'DELETE') {
