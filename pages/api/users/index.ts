@@ -9,13 +9,13 @@ const userWithoutPassword = (user: User): User => {
 	return {
 		...user,
 		password: 'nice_try'
-	}
-}
+	};
+};
 
 export async function getUsers(page: number, numberPerPage: number) {
 	const users = await prisma.user.findMany({
 		take: numberPerPage,
-		skip: ((page - 1) * numberPerPage),
+		skip: (page - 1) * numberPerPage,
 		orderBy: [
 			{
 				created_at: 'desc'
@@ -23,11 +23,12 @@ export async function getUsers(page: number, numberPerPage: number) {
 		]
 	});
 
-	const count = await prisma.user.count({})
+	const count = await prisma.user.count({});
 
 	return {
-		data: users.map((user) => userWithoutPassword(user)), metadata: { count }
-	}
+		data: users.map(user => userWithoutPassword(user)),
+		metadata: { count }
+	};
 }
 
 export async function getUserById(id: string) {
@@ -41,10 +42,7 @@ export async function createUser(data: Omit<User, 'id'>) {
 	const user = await prisma.user.create({
 		data: {
 			...data,
-			password: crypto
-				.createHash('sha256')
-				.update(data.password)
-				.digest('hex')
+			password: crypto.createHash('sha256').update(data.password).digest('hex')
 		}
 	});
 	return userWithoutPassword(user);
@@ -84,7 +82,10 @@ export default async function handler(
 			const user = await getUserById(id.toString());
 			res.status(200).json(user);
 		} else if (page && numberPerPage) {
-			const users = await getUsers(parseInt(page as string), parseInt(numberPerPage as string));
+			const users = await getUsers(
+				parseInt(page as string),
+				parseInt(numberPerPage as string)
+			);
 			res.status(200).json(users);
 		}
 	} else if (req.method === 'POST') {

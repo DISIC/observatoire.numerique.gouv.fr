@@ -9,12 +9,21 @@ import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
 	user: User;
-	modalProps: { onClick: () => void; },
-	setCurrentUser: Dispatch<SetStateAction<Prisma.UserUpdateInput & { id: string } | Prisma.UserCreateInput>>,
+	modalProps: { onClick: () => void };
+	setCurrentUser: Dispatch<
+		SetStateAction<
+			(Prisma.UserUpdateInput & { id: string }) | Prisma.UserCreateInput
+		>
+	>;
 	onButtonClick: ({ type, user }: OnButtonClickUserParams) => void;
 };
 
-const UserCard = ({ user, onButtonClick, modalProps, setCurrentUser }: Props) => {
+const UserCard = ({
+	user,
+	onButtonClick,
+	modalProps,
+	setCurrentUser
+}: Props) => {
 	const { data: session } = useSession({ required: true });
 	const { cx, classes } = useStyles();
 
@@ -34,11 +43,11 @@ const UserCard = ({ user, onButtonClick, modalProps, setCurrentUser }: Props) =>
 					<span className={classes.userEmail}>{user.email}</span>
 				</div>
 				<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-3')}>
-					{
-						user.created_at ? (
-							<span>{formatDateToFrenchString(user.created_at.toString())}</span>
-						) : 'x'
-					}
+					{user.created_at ? (
+						<span>{formatDateToFrenchString(user.created_at.toString())}</span>
+					) : (
+						'x'
+					)}
 				</div>
 				<div
 					className={cx(
@@ -57,7 +66,11 @@ const UserCard = ({ user, onButtonClick, modalProps, setCurrentUser }: Props) =>
 					>
 						Supprimer
 					</Button>
-					<div onClick={() => { setCurrentUser(user) }}>
+					<div
+						onClick={() => {
+							setCurrentUser(user);
+						}}
+					>
 						<Button
 							priority="secondary"
 							size="small"

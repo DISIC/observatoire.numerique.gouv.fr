@@ -267,4 +267,4 @@ export const Pagination = memo(
 
 Pagination.displayName = 'Pagination';
 
-const useStyles = makeStyles()(() => ({}))
+const useStyles = makeStyles()(() => ({}));

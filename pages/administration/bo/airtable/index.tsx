@@ -94,9 +94,7 @@ export default function Airtable() {
 	};
 
 	if (isPublishing)
-		return (
-			<Loader loadingMessage="Publication de l'édition en cours" />
-		);
+		return <Loader loadingMessage="Publication de l'édition en cours" />;
 
 	return (
 		<div className={cx(classes.root)}>
@@ -196,5 +194,5 @@ const useStyles = makeStyles()(theme => ({
 		['.fr-container']: {
 			maxWidth: 1440
 		}
-	},
+	}
 }));

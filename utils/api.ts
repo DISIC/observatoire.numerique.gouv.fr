@@ -71,7 +71,9 @@ export function useUsers(page: number, numberPerPage: number) {
 		`/api/users?page=${page}&numberPerPage=${numberPerPage}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<{ data: User[], metadata: { count: number } }>(stringify(await res.json()));
+			return superJSONParse<{ data: User[]; metadata: { count: number } }>(
+				stringify(await res.json())
+			);
 		}
 	);
 
