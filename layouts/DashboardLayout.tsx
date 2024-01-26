@@ -67,6 +67,14 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 							target: '_self'
 						},
 						text: 'Mes Éditions'
+					},
+					{
+						isActive: router.pathname.startsWith('/administration/bo/users'),
+						linkProps: {
+							href: '/administration/bo/users',
+							target: '_self'
+						},
+						text: 'Utilisateurs'
 					}
 				]}
 				serviceTagline={serviceTagLine}
