@@ -205,10 +205,10 @@ export default function Editions(props: Props) {
 										classes.boldText
 									)}
 								>
-									<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-3')}>
+									<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-5')}>
 										<span>Utilisateur</span>
 									</div>
-									<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-3')}>
+									<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-2')}>
 										<span>Date de création</span>
 									</div>
 								</div>

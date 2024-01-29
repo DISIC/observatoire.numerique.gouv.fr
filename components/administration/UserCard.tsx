@@ -25,13 +25,13 @@ const UserCard = ({ user, onButtonClick }: Props) => {
 					'fr-grid-row--middle'
 				)}
 			>
-				<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-3')}>
+				<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-5')}>
 					<p className={cx(fr.cx('fr-mb-0'), classes.spanFullName)}>
 						{user.username}
 					</p>
 					<span className={classes.userEmail}>{user.email}</span>
 				</div>
-				<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-3')}>
+				<div className={fr.cx('fr-col', 'fr-col-12', 'fr-col-md-2')}>
 					{user.created_at ? (
 						<span>{formatDateToFrenchString(user.created_at.toString())}</span>
 					) : (
@@ -40,7 +40,7 @@ const UserCard = ({ user, onButtonClick }: Props) => {
 				</div>
 				<div
 					className={cx(
-						fr.cx('fr-col', 'fr-col-12', 'fr-col-md-4'),
+						fr.cx('fr-col', 'fr-col-12', 'fr-col-md-3'),
 						classes.wrapperButtons
 					)}
 				>
