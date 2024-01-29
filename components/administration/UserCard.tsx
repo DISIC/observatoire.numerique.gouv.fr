@@ -9,21 +9,10 @@ import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
 	user: User;
-	modalProps: { onClick: () => void };
-	setCurrentUser: Dispatch<
-		SetStateAction<
-			(Prisma.UserUpdateInput & { id: string }) | Prisma.UserCreateInput
-		>
-	>;
 	onButtonClick: ({ type, user }: OnButtonClickUserParams) => void;
 };
 
-const UserCard = ({
-	user,
-	onButtonClick,
-	modalProps,
-	setCurrentUser
-}: Props) => {
+const UserCard = ({ user, onButtonClick }: Props) => {
 	const { data: session } = useSession({ required: true });
 	const { cx, classes } = useStyles();
 
@@ -66,21 +55,15 @@ const UserCard = ({
 					>
 						Supprimer
 					</Button>
-					<div
-						onClick={() => {
-							setCurrentUser(user);
-						}}
+					<Button
+						priority="secondary"
+						size="small"
+						iconId="fr-icon-edit-line"
+						iconPosition="right"
+						onClick={() => onButtonClick({ type: 'update', user })}
 					>
-						<Button
-							priority="secondary"
-							size="small"
-							iconId="fr-icon-edit-line"
-							iconPosition="right"
-							{...modalProps}
-						>
-							Modifier
-						</Button>
-					</div>
+						Modifier
+					</Button>
 				</div>
 			</div>
 		</div>

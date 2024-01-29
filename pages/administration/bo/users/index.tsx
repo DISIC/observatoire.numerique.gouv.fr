@@ -1,5 +1,6 @@
 import UserCard from '@/components/administration/UserCard';
 import { Loader } from '@/components/generic/Loader';
+import { Modal } from '@/components/generic/Modal';
 import { Pagination } from '@/components/generic/Pagination';
 import { useUsers } from '@/utils/api';
 import { getNbPages } from '@/utils/tools';
@@ -12,7 +13,7 @@ import { Prisma, User } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 
 export type OnButtonClickUserParams =
-	| { type: 'create'; user?: User }
+	| { type: 'update'; user: User }
 	| { type: 'delete'; user: User };
 
 type Props = {
@@ -36,8 +37,10 @@ export default function Editions(props: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [numberPerPage, _] = useState(10);
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [currentUser, setCurrentUser] =
 		useState<UpsertUser>(defaultUserCreation);
+	const [alreadyExists, setAlreadyExists] = useState(false);
 
 	const usernameInputRef = useRef<HTMLInputElement>(null);
 	const emailInputRef = useRef<HTMLInputElement>(null);
@@ -79,19 +82,6 @@ export default function Editions(props: Props) {
 
 	if (!users) return <div>Aucun utilisateur</div>;
 
-	const { UserModal, userModalButtonProps } = createModal({
-		name: 'user',
-		isOpenedByDefault: false
-	});
-
-	// WORKAROUND BESCAUSE THIS IS NOT POSSIBLE ON REACT-DSFR V1
-	const closeModal = () => {
-		const button = document.getElementsByClassName(
-			'fr-link--close'
-		)[0] as HTMLButtonElement;
-		if (button) button.click();
-	};
-
 	const handlePageChange = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
 	};
@@ -116,8 +106,9 @@ export default function Editions(props: Props) {
 			return;
 		}
 
+		let response;
 		if (currentUser.id) {
-			await fetch('/api/users', {
+			response = await fetch('/api/users', {
 				method: 'PUT',
 				body: JSON.stringify({
 					id: currentUser.id,
@@ -130,7 +121,7 @@ export default function Editions(props: Props) {
 				passwordInputRef?.current?.focus();
 				return;
 			}
-			await fetch('/api/users', {
+			response = await fetch('/api/users', {
 				method: 'POST',
 				body: JSON.stringify({
 					username: usernameInputRef?.current?.value,
@@ -140,8 +131,12 @@ export default function Editions(props: Props) {
 			});
 		}
 
-		closeModal();
-		refetchUsers();
+		if (response.status === 409) {
+			setAlreadyExists(true);
+		} else if ([201, 200].includes(response.status)) {
+			setIsModalOpen(false);
+			refetchUsers();
+		}
 	};
 
 	const nbPages = getNbPages(usersCount, numberPerPage);
@@ -162,7 +157,9 @@ export default function Editions(props: Props) {
 					<Button
 						iconId="fr-icon-add-circle-line"
 						type="button"
-						{...userModalButtonProps}
+						onClick={() => {
+							setIsModalOpen(true);
+						}}
 						className={fr.cx('fr-btn--secondary')}
 					>
 						Ajouter un utilisateur
@@ -220,10 +217,12 @@ export default function Editions(props: Props) {
 								<UserCard
 									user={user}
 									key={index}
-									setCurrentUser={setCurrentUser}
-									modalProps={userModalButtonProps}
 									onButtonClick={({ type, user }) => {
 										if (type === 'delete') deleteUser(user);
+										if (type === 'update') {
+											setCurrentUser(user);
+											setIsModalOpen(true);
+										}
 									}}
 								/>
 							))}
@@ -269,57 +268,64 @@ export default function Editions(props: Props) {
 					</div>
 				)}
 			</div>
-			<UserModal
-				title={
-					currentUser.id
-						? "Modification d'un utilisateur"
-						: "Création d'un utilisateur"
-				}
-				buttons={[
-					{
-						onClick: upsertUser,
-						children: currentUser.id
-							? "Modifier l'utilisateur"
-							: "Créer l'utilisateur",
-						doClosesModal: false
+			{isModalOpen && (
+				<Modal
+					onClose={() => {}}
+					title={
+						currentUser.id
+							? "Modification d'un utilisateur"
+							: "Création d'un utilisateur"
 					}
-				]}
-			>
-				<form
-					onSubmit={e => {
-						e.preventDefault();
-						upsertUser();
-					}}
+					buttons={[
+						{
+							onClick: upsertUser,
+							children: currentUser.id
+								? "Modifier l'utilisateur"
+								: "Créer l'utilisateur"
+						}
+					]}
 				>
-					<Input
-						label="Nom complet"
-						nativeInputProps={{
-							name: 'username',
-							ref: usernameInputRef
+					<form
+						onSubmit={e => {
+							e.preventDefault();
+							upsertUser();
 						}}
-					/>
-					<Input
-						label="Email"
-						disabled={!!currentUser.id}
-						nativeInputProps={{
-							name: 'email',
-							type: 'email',
-							ref: emailInputRef
-						}}
-					/>
-					{!currentUser.id && (
+					>
 						<Input
-							label="Mot de passe"
+							label="Nom complet"
 							nativeInputProps={{
-								name: 'password',
-								type: 'password',
-								ref: passwordInputRef
+								name: 'username',
+								ref: usernameInputRef
 							}}
 						/>
-					)}
-					<button type="submit" style={{ display: 'none' }}></button>
-				</form>
-			</UserModal>
+						<Input
+							label="Email"
+							disabled={!!currentUser.id}
+							state={alreadyExists ? 'error' : 'default'}
+							stateRelatedMessage="Un utilisateur avec cette adresse email existe déjà"
+							nativeInputProps={{
+								name: 'email',
+								type: 'email',
+								ref: emailInputRef,
+								onChange: () => {
+									setAlreadyExists(false);
+								}
+							}}
+						/>
+						{!currentUser.id && (
+							<Input
+								label="Mot de passe"
+								nativeInputProps={{
+									name: 'password',
+									type: 'password',
+									ref: passwordInputRef
+								}}
+							/>
+						)}
+						<button type="submit" style={{ display: 'none' }}></button>
+					</form>
+				</Modal>
+			)}
 		</div>
 	);
 }

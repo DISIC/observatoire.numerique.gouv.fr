@@ -39,6 +39,14 @@ export async function getUserById(id: string) {
 }
 
 export async function createUser(data: Omit<User, 'id'>) {
+	const alreadyExists = await prisma.user.findUnique({
+		where: {
+			email: data.email
+		}
+	});
+
+	if (!!alreadyExists) return 409;
+
 	const user = await prisma.user.create({
 		data: {
 			...data,
@@ -91,7 +99,9 @@ export default async function handler(
 	} else if (req.method === 'POST') {
 		const data = JSON.parse(req.body);
 		const user = await createUser(data);
-		res.status(201).json(user);
+
+		if (user === 409) res.status(409).json({ message: 'user already exists' });
+		else res.status(201).json(user);
 	} else if (req.method === 'PUT') {
 		const { id, ...data } = JSON.parse(req.body);
 		const user = await updateUser(id as string, data);
