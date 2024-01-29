@@ -270,7 +270,9 @@ export default function Editions(props: Props) {
 			</div>
 			{isModalOpen && (
 				<Modal
-					onClose={() => {}}
+					onClose={() => {
+						setIsModalOpen(false);
+					}}
 					title={
 						currentUser.id
 							? "Modification d'un utilisateur"
