@@ -8,9 +8,8 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${
-					millions > 1 ? 's' : ''
-				}`;
+				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
+					}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}
@@ -46,4 +45,16 @@ export function formatDateToFrenchString(tmpDate: string) {
 	});
 
 	return formatter.format(date);
+}
+
+export function ISODateFormatToSimplifiedDate(inputDate: string) {
+	const dateObj = new Date(inputDate);
+
+	const year = dateObj.getUTCFullYear();
+	const month = (dateObj.getUTCMonth() + 1).toString().padStart(2, '0');
+	const day = dateObj.getUTCDate().toString().padStart(2, '0');
+
+	const formattedDate = `${year}-${month}-${day}`;
+
+	return formattedDate;
 }

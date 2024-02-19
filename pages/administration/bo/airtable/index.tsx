@@ -10,18 +10,27 @@ import Input from '@codegouvfr/react-dsfr/Input';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { LightSelect } from '@/components/generic/LightSelect';
 import { Loader } from '@/components/generic/Loader';
+import { Modal } from '@/components/generic/Modal';
+import { ISODateFormatToSimplifiedDate } from '@/utils/tools';
+
+type AirtableEdition = { name: string; start_date: string; end_date: string }
 
 export default function Airtable() {
 	const { classes, cx } = useStyles();
 
 	const [procedures, setProcdeures] = useState<ProcedureWithFields[]>([]);
-	const [editions, setEditions] = useState<string[]>([]);
-	const [selectedEdition, setSelectedEdition] = useState<string>('');
+	const [editions, setEditions] = useState<AirtableEdition[]>([]);
+	const [selectedEdition, setSelectedEdition] = useState<AirtableEdition | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isPublishing, setIsPublishing] = useState<boolean>(false);
 	const [published, setIsPublished] = useState<boolean>(false);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
 	const inputRef = useRef<HTMLInputElement>(null);
+	const startDateRef = useRef<HTMLInputElement>(null);
+	const endDateRef = useRef<HTMLInputElement>(null);
+
+	console.log(selectedEdition)
 
 	const yearMonthFr = new Date().toLocaleString('fr-FR', {
 		month: 'long',
@@ -29,11 +38,6 @@ export default function Airtable() {
 	});
 	const defaultEditionName =
 		yearMonthFr.charAt(0).toUpperCase() + yearMonthFr.slice(1);
-
-	const { EditionModal, editionModalButtonProps } = createModal({
-		name: 'edition',
-		isOpenedByDefault: false
-	});
 
 	const getEditionsFromAirtable = async () => {
 		const res = await fetch('/api/airtable/editions');
@@ -44,14 +48,16 @@ export default function Airtable() {
 	};
 
 	const getProceduresFromAirtable = async () => {
-		setIsLoading(true);
-		const res = await fetch(
-			`/api/airtable/demarches?edition=${selectedEdition}`
-		);
-		const json = await res.json();
+		if (selectedEdition) {
+			setIsLoading(true);
+			const res = await fetch(
+				`/api/airtable/demarches?edition=${selectedEdition.name}`
+			);
+			const json = await res.json();
 
-		setProcdeures(json.data);
-		setIsLoading(false);
+			setProcdeures(json.data);
+			setIsLoading(false);
+		}
 	};
 
 	useEffect(() => {
@@ -63,19 +69,27 @@ export default function Airtable() {
 	}, [editions, selectedEdition]);
 
 	const publish = async () => {
-		console.log(inputRef.current?.value);
 		const editionName = !!inputRef.current?.value
 			? inputRef.current?.value
 			: defaultEditionName;
+
+
+		const startDate = startDateRef.current?.value;
+		const endDate = endDateRef.current?.value;
+
+		if (!startDate || !endDate) return;
+
+		setIsModalOpen(false);
 		setIsPublishing(true);
+
 
 		// CREATE EDITION
 		const editionResponse = await fetch('/api/editions', {
 			method: 'POST',
 			body: JSON.stringify({
 				name: editionName,
-				start_date: new Date(new Date().setMonth(new Date().getMonth() - 3)),
-				end_date: new Date(),
+				start_date: new Date(startDate),
+				end_date: new Date(endDate),
 				created_at: new Date()
 			})
 		}).then(r => r.json());
@@ -104,11 +118,13 @@ export default function Airtable() {
 					label="Édition cible du Airtable"
 					id="selecteur-editions"
 					options={editions.map(e => ({
-						label: e,
-						value: e
+						label: e.name,
+						value: e.name
 					}))}
 					onChange={e => {
-						setSelectedEdition(e as string);
+						const matchingEdition = editions.find((edition) => edition.name === e)
+						if (matchingEdition)
+							setSelectedEdition(matchingEdition);
 					}}
 				/>
 				<p>
@@ -139,7 +155,13 @@ export default function Airtable() {
 						</div>
 					)}
 					<div className={cx(fr.cx('fr-container'), classes.controlPanel)}>
-						<Button type="button" {...editionModalButtonProps}>
+						<Button type="button" onClick={() => {
+							setIsModalOpen(true)
+							setTimeout(() => {
+								startDateRef?.current?.setAttribute('value', ISODateFormatToSimplifiedDate(selectedEdition?.start_date || ''));
+								endDateRef?.current?.setAttribute('value', ISODateFormatToSimplifiedDate(selectedEdition?.end_date || ''));
+							}, 200)
+						}}>
 							Publier l&apos;édition
 						</Button>
 					</div>
@@ -151,30 +173,54 @@ export default function Airtable() {
 					</div>
 				</>
 			)}
-
-			<EditionModal
-				title="Création d'une édition"
-				buttons={[
-					{
-						onClick: publish,
-						children: "Publier l'édition"
-					}
-				]}
-			>
-				<form onSubmit={e => e.preventDefault()}>
-					<Input
-						hintText="Le nom de l'édition apparaitra dans le menu déroulant des éditions sur le top 250."
-						label="Nom de l'édition"
-						stateRelatedMessage="Veuillez donner un nom à votre édition"
-						state="default"
-						nativeInputProps={{
-							name: 'editionName',
-							placeholder: defaultEditionName,
-							ref: inputRef
-						}}
-					/>
-				</form>
-			</EditionModal>
+			{isModalOpen && (
+				<Modal
+					title="Création d'une édition"
+					buttons={[]}
+					onClose={() => {
+						setIsModalOpen(false);
+					}}
+				>
+					<form onSubmit={e => e.preventDefault()}>
+						<Input
+							hintText="Le nom de l'édition apparaitra dans le menu déroulant des éditions sur le top 250."
+							label="Nom de l'édition"
+							stateRelatedMessage="Veuillez donner un nom à votre édition"
+							state="default"
+							nativeInputProps={{
+								name: 'editionName',
+								placeholder: defaultEditionName,
+								ref: inputRef,
+							}}
+						/>
+						<Input
+							label="Date de début JDMA"
+							stateRelatedMessage="Veuillez spécifier une date de début"
+							state="default"
+							nativeInputProps={{
+								name: 'start_date',
+								ref: startDateRef,
+								type: "date",
+								required: true
+							}}
+						/>
+						<Input
+							label="Date de fin JDMA"
+							stateRelatedMessage="Veuillez spécifier une date de fin"
+							state="default"
+							nativeInputProps={{
+								name: 'end_date',
+								ref: endDateRef,
+								type: "date",
+								required: true
+							}}
+						/>
+						<Button onClick={publish} type="submit" className={cx(classes.submit)}>
+							Publier
+						</Button>
+					</form>
+				</Modal>
+			)}
 		</div>
 	);
 }
@@ -194,5 +240,11 @@ const useStyles = makeStyles()(theme => ({
 		['.fr-container']: {
 			maxWidth: 1440
 		}
+	},
+	submit: {
+		display: "block",
+		marginLeft: "auto",
+		marginBottom: fr.spacing('8v'),
+		width: '8rem'
 	}
 }));
