@@ -8,8 +8,9 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
-					}`;
+				return `${millions}.${Math.floor(units / 100)} million${
+					millions > 1 ? 's' : ''
+				}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}

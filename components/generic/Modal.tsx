@@ -65,17 +65,19 @@ export const Modal = (props: Props) => {
 							<h1 id={`fr-modal-title-${rNumber}`}>{title}</h1>
 							<div>{children}</div>
 						</div>
-						{
-							!!buttons.length && (
-								<div className={cx(classes.modalFooter)}>
-									{buttons.map((b, index) => (
-										<Button key={index} onClick={b.onClick} type={b.type || 'button'}>
-											{b.children}
-										</Button>
-									))}
-								</div>
-							)
-						}
+						{!!buttons.length && (
+							<div className={cx(classes.modalFooter)}>
+								{buttons.map((b, index) => (
+									<Button
+										key={index}
+										onClick={b.onClick}
+										type={b.type || 'button'}
+									>
+										{b.children}
+									</Button>
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 			</dialog>
