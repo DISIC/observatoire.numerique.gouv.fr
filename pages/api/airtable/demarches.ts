@@ -22,7 +22,7 @@ const field_names = {
 	indicators: {
 		online: '📊 En ligne',
 		satisfaction: '📊 Satisfaction',
-		simplicity: '2️⃣ Complexité du langage',
+		simplicity: '2️⃣ Simplicité du langage',
 		uptime: '2️⃣ Taux de disponibilité',
 		performance: '2️⃣ Temps moyen de chargement',
 		handicap: '📊 Prise en compte du handicap',
