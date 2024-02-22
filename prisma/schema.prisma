@@ -30,6 +30,43 @@ enum IndicatorColor {
   gray
 }
 
+model OldDemarche {
+  id                                           String   @id @default(auto()) @map("_id") @db.ObjectId
+  xwiki_id                                     String
+  xwiki_edition                                String
+  title                                        String
+  statutDemat                                  String
+  ministere                                    String
+  groupes                                      String
+  direction                                    String
+  dateMiseEnLigne_display                      String
+  dateMiseEnLigne_value                        String
+  volumetrie_display                           String
+  volumetrie_value                             Int
+  pourcentageRecoursVoieDematerialisee_display String
+  pourcentageRecoursVoieDematerialisee_value   Int
+  franceConnect_display                        String
+  franceConnect_value                          String
+  adapteMobile_display                         String
+  adapteMobile_value                           String
+  qualiteSupport                               String
+  avisCount_display                            Int
+  avisCount_value                              Int
+  satisfactionIndex_display                    String
+  satisfactionIndex_value                      Float
+  urlScore_display                             String
+  urlScore_value                               String
+  urlDemarche                                  String
+  ditesLeNousUneFois_display                   String
+  ditesLeNousUneFois_value                     Int
+  categoriesPublics_display                    String
+  categoriesPublics_value                      String[]
+  rgaaCompliancyLevel_display                  String
+  rgaaCompliancyLevel_value                    Float
+  accessibilityScore_display                   String
+  accessibilityScore_value                     String
+}
+
 model Edition {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
   name       String      @unique
