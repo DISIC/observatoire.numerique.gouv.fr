@@ -26,23 +26,17 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 			}[value] || 'gray') as IndicatorColor;
 		} else if (type === 'number') {
 			const num = parseInt(value);
-			return isNaN(num)
-				? 'gray'
-				: num < 5
-				? 'red'
-				: num < 8
-				? 'orange'
-				: 'green';
+			if (isNaN(num)) return 'gray';
+			else if (num < 5) return 'red';
+			else if (num < 8) return 'orange';
+			else return 'green';
 		} else {
 			// DLNUF
 			const num = parseInt(value);
-			return isNaN(num)
-				? 'gray'
-				: num > 4
-				? 'red'
-				: num >= 2
-				? 'orange'
-				: 'green';
+			if (isNaN(num)) return 'gray';
+			else if (num > 4) return 'red';
+			else if (num >= 2) return 'orange';
+			else return 'green';
 		}
 	};
 
@@ -113,28 +107,34 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 							'franceConnect_display',
 							'ditesLeNousUneFois_display',
 							'urlScore_display'
-						].map((attr, i) => (
-							<td key={i}>
-								<IndicatorLabel
-									label={
-										(procedure[attr as keyof OldProcedure] as string) || '-'
-									}
-									noBackground={['-', 'n/a'].includes(
-										(procedure[attr as keyof OldProcedure] as string) || '-'
-									)}
-									color={getColor(
-										(procedure[attr as keyof OldProcedure] as string) || '',
-										attr.includes('satisfactionIndex_display') ||
-											attr.includes('urlScore_display')
-											? 'number'
-											: attr.includes('UneFois')
-											? 'dlnuf'
-											: 'text'
-									)}
-									old
-								/>
-							</td>
-						))}
+						].map((attr, i) => {
+							let fieldAttrType: 'number' | 'dlnuf' | 'text' | undefined =
+								'text';
+							if (
+								attr.includes('satisfactionIndex_display') ||
+								attr.includes('urlScore_display')
+							)
+								fieldAttrType = 'number';
+							else if (attr.includes('UneFois')) fieldAttrType = 'dlnuf';
+
+							return (
+								<td key={i}>
+									<IndicatorLabel
+										label={
+											(procedure[attr as keyof OldProcedure] as string) || '-'
+										}
+										noBackground={['-', 'n/a'].includes(
+											(procedure[attr as keyof OldProcedure] as string) || '-'
+										)}
+										color={getColor(
+											(procedure[attr as keyof OldProcedure] as string) || '',
+											fieldAttrType
+										)}
+										old
+									/>
+								</td>
+							);
+						})}
 					</tr>
 				))}
 			</tbody>
