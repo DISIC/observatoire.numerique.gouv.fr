@@ -23,9 +23,19 @@ export function IndicatorLabel(props: Props) {
 				),
 				classes.root,
 				classes[color],
+				old ? classes.old : '',
+				old &&
+					[
+						'< 100 votes',
+						'n/a',
+						'-',
+						'En attente',
+						'En cours de déploiement local'
+					].includes(label)
+					? classes.oldXs
+					: '',
 				noBackground ? classes.noBackground : ''
 			)}
-			style={old ? { display: 'block' } : {}}
 		>
 			{label}
 		</span>
@@ -72,5 +82,11 @@ const useStyles = makeStyles()(theme => ({
 	noBackground: {
 		backgroundColor: 'transparent',
 		fontWeight: 'normal'
+	},
+	old: {
+		display: 'block'
+	},
+	oldXs: {
+		fontSize: '0.75rem !important'
 	}
 }));
