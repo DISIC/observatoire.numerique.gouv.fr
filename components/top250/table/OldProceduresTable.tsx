@@ -118,7 +118,7 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 								fieldAttrType = 'number';
 							else if (attr.includes('UneFois')) fieldAttrType = 'dlnuf';
 
-							const procedureLink = `https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
+							const procedureJdmaLink = `https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
 								.split('.')
 								.join('/')}?view-mode=statistics&date-debut=${
 								procedure.jdma_start_date
@@ -144,11 +144,20 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 									/>
 									{hasLink && procedure.jdma_start_date && (
 										<Link
-											href={procedureLink}
-											className={cx(fr.cx('fr-text--xs'), classes.graphLink)}
+											href={procedureJdmaLink}
+											className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
 											target="_blank"
 										>
 											Graphes
+										</Link>
+									)}
+									{attr === 'statutDemat' && procedure.urlDemarche && (
+										<Link
+											href={procedure.urlDemarche}
+											className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
+											target="_blank"
+										>
+											Voir
 										</Link>
 									)}
 								</td>
@@ -164,10 +173,16 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 const useStyles = makeStyles()(theme => ({
 	table: {
 		['thead th']: {
-			cursor: 'pointer'
+			cursor: 'pointer',
+			':hover': {
+				opacity: '0.7'
+			}
 		},
 		['thead th:not(:first-of-type)']: {
 			...fr.typography[17].style
+		},
+		['thead th:first-of-type']: {
+			...fr.typography[20].style
 		},
 		['thead th:not(:first-of-type), tbody td']: {
 			textAlign: 'center'
@@ -192,7 +207,7 @@ const useStyles = makeStyles()(theme => ({
 		textAlign: 'center',
 		fontWeight: 'bold'
 	},
-	graphLink: {
+	smallLinks: {
 		position: 'absolute',
 		top: '50%',
 		left: '50%',
