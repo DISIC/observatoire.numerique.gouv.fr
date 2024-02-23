@@ -45,13 +45,15 @@ export function PreHeader(props: Props) {
 				/>
 			</div>
 			<div className={cx(classes.section)}>
-				<Link
-					href="/Aide/Observatoire?tab=indicators"
-					className={fr.cx('fr-link')}
-				>
-					Tout comprendre sur les indicateurs{' '}
-					<i className={cx(fr.cx('ri-chat-poll-line'), classes.linkIcon)} />
-				</Link>
+				{!old && (
+					<Link
+						href="/Aide/Observatoire?tab=indicators"
+						className={fr.cx('fr-link')}
+					>
+						Tout comprendre sur les indicateurs{' '}
+						<i className={cx(fr.cx('ri-chat-poll-line'), classes.linkIcon)} />
+					</Link>
+				)}
 			</div>
 		</div>
 	);

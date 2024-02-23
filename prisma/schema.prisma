@@ -65,6 +65,8 @@ model OldProcedure {
   rgaaCompliancyLevel_value                    Float?
   accessibilityScore_display                   String?
   accessibilityScore_value                     String?
+  jdma_start_date                              String?
+  jdma_end_date                                String?
 }
 
 model Edition {

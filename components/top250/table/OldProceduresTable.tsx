@@ -3,6 +3,7 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorColor, OldProcedure } from '@prisma/client';
 import { IndicatorLabel } from './IndicatorLabel';
 import { Dispatch, SetStateAction } from 'react';
+import Link from 'next/link';
 
 type Props = {
 	procedures: OldProcedure[];
@@ -118,7 +119,7 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 							else if (attr.includes('UneFois')) fieldAttrType = 'dlnuf';
 
 							return (
-								<td key={i}>
+								<td key={i} style={{ position: 'relative' }}>
 									<IndicatorLabel
 										label={
 											(procedure[attr as keyof OldProcedure] as string) || '-'
@@ -132,6 +133,22 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 										)}
 										old
 									/>
+									{attr === 'satisfactionIndex_display' &&
+										(procedure.satisfactionIndex_value || -1) >= 0 &&
+										procedure.jdma_start_date &&
+										procedure.jdma_end_date && (
+											<Link
+												href={`https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
+													.split('.')
+													.join('/')}?view-mode=statistics&date-debut=${
+													procedure.jdma_start_date
+												}&date-fin=${procedure.jdma_end_date}`}
+												className={cx(fr.cx('fr-text--xs'), classes.graphLink)}
+												target="_blank"
+											>
+												Graphes
+											</Link>
+										)}
 								</td>
 							);
 						})}
@@ -163,11 +180,24 @@ const useStyles = makeStyles()(theme => ({
 		},
 		['tbody td']: {
 			width: '8.5em'
+		},
+		['tbody tr']: {
+			minHeight: '200px'
 		}
 	},
 	noProcedure: {
 		padding: fr.spacing('30v'),
 		textAlign: 'center',
 		fontWeight: 'bold'
+	},
+	graphLink: {
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translateX(-50%)translateY(-50%)',
+		marginTop: '1.8rem',
+		'::after': {
+			display: 'none'
+		}
 	}
 }));
