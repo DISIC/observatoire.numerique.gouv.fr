@@ -118,6 +118,15 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 								fieldAttrType = 'number';
 							else if (attr.includes('UneFois')) fieldAttrType = 'dlnuf';
 
+							const procedureLink = `https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
+								.split('.')
+								.join('/')}?view-mode=statistics&date-debut=${
+								procedure.jdma_start_date
+							}&date-fin=${procedure.jdma_end_date}`;
+							const hasLink =
+								attr === 'satisfactionIndex_display' &&
+								(procedure.satisfactionIndex_value || -1) >= 0;
+
 							return (
 								<td key={i} style={{ position: 'relative' }}>
 									<IndicatorLabel
@@ -133,22 +142,15 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 										)}
 										old
 									/>
-									{attr === 'satisfactionIndex_display' &&
-										(procedure.satisfactionIndex_value || -1) >= 0 &&
-										procedure.jdma_start_date &&
-										procedure.jdma_end_date && (
-											<Link
-												href={`https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
-													.split('.')
-													.join('/')}?view-mode=statistics&date-debut=${
-													procedure.jdma_start_date
-												}&date-fin=${procedure.jdma_end_date}`}
-												className={cx(fr.cx('fr-text--xs'), classes.graphLink)}
-												target="_blank"
-											>
-												Graphes
-											</Link>
-										)}
+									{hasLink && procedure.jdma_start_date && (
+										<Link
+											href={procedureLink}
+											className={cx(fr.cx('fr-text--xs'), classes.graphLink)}
+											target="_blank"
+										>
+											Graphes
+										</Link>
+									)}
 								</td>
 							);
 						})}
