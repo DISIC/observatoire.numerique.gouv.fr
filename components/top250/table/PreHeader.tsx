@@ -6,24 +6,26 @@ import { useEffect, useState } from 'react';
 
 type Props = {
 	onSort: (value: string | number) => void;
+	old?: boolean;
 };
-
-const sortOptions = [
-	{
-		label: 'Trier par volumétrie (décroissant)',
-		value: 'volume:desc'
-	},
-	{
-		label: 'Trier par volumétrie (croissant)',
-		value: 'volume:asc'
-	}
-];
 
 export function PreHeader(props: Props) {
 	const { classes, cx } = useStyles();
-	const { onSort } = props;
+	const { onSort, old } = props;
+	const volume_slug = old ? 'volumetrie_value' : 'volume';
 
-	const [localSort, setLocalSort] = useState<string>('volume:desc');
+	const sortOptions = [
+		{
+			label: 'Trier par volumétrie (décroissant)',
+			value: `${volume_slug}:desc`
+		},
+		{
+			label: 'Trier par volumétrie (croissant)',
+			value: `${volume_slug}:asc`
+		}
+	];
+
+	const [localSort, setLocalSort] = useState<string>(`${volume_slug}:desc`);
 
 	useEffect(() => {
 		if (localSort && onSort) onSort(localSort);

@@ -6,10 +6,11 @@ type Props = {
 	label: string;
 	color: IndicatorColor;
 	noBackground?: boolean | null;
+	old?: boolean;
 };
 
 export function IndicatorLabel(props: Props) {
-	const { label, color, noBackground } = props;
+	const { label, color, noBackground, old } = props;
 	const { classes, cx } = useStyles();
 
 	return (
@@ -24,6 +25,7 @@ export function IndicatorLabel(props: Props) {
 				classes[color],
 				noBackground ? classes.noBackground : ''
 			)}
+			style={old ? { display: 'block' } : {}}
 		>
 			{label}
 		</span>
