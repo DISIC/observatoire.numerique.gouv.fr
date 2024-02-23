@@ -184,7 +184,7 @@ const useStyles = makeStyles()(theme => ({
 			width: '8.5em'
 		},
 		['tbody tr']: {
-			minHeight: '200px'
+			height: '130px'
 		}
 	},
 	noProcedure: {
