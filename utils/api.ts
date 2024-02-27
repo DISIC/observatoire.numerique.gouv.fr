@@ -1,14 +1,41 @@
 import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
-import { ProcedureHeader, Edition, User } from '@prisma/client';
+import { ProcedureHeader, Edition, User, OldProcedure } from '@prisma/client';
+
+type OldProceduresProps = {
+	xwiki_edition: string;
+	search?: string;
+	sort?: string;
+};
+export function useOldProcedures(props: OldProceduresProps) {
+	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS
+	const fakeProps: { [key: string]: any } = props;
+	Object.keys(fakeProps).forEach(
+		key => fakeProps[key] === undefined && delete fakeProps[key]
+	);
+
+	const searchUrl = new URLSearchParams(fakeProps);
+	const { data, error, isLoading } = useSWR(
+		`/api/old-procedures?${searchUrl}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<OldProcedure[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data,
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
 
 type ProceduresProps = {
 	editionId?: string;
 	search?: string;
 	sort?: string;
 };
-
 export function useProcedures(props: ProceduresProps) {
 	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS
 	const fakeProps: { [key: string]: any } = props;

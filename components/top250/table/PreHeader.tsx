@@ -2,31 +2,34 @@ import { LightSelect } from '@/components/generic/LightSelect';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type Props = {
-	onSort: (value: string | number) => void;
+	sort: string;
+	setSort: Dispatch<SetStateAction<string>>;
+	old?: boolean;
 };
-
-const sortOptions = [
-	{
-		label: 'Trier par volumétrie (décroissant)',
-		value: 'volume:desc'
-	},
-	{
-		label: 'Trier par volumétrie (croissant)',
-		value: 'volume:asc'
-	}
-];
 
 export function PreHeader(props: Props) {
 	const { classes, cx } = useStyles();
-	const { onSort } = props;
+	const { sort, setSort, old } = props;
+	const volume_slug = old ? 'volumetrie_value' : 'volume';
 
-	const [localSort, setLocalSort] = useState<string>('volume:desc');
+	const sortOptions = [
+		{
+			label: 'Trier par volumétrie (décroissant)',
+			value: `${volume_slug}:desc`
+		},
+		{
+			label: 'Trier par volumétrie (croissant)',
+			value: `${volume_slug}:asc`
+		}
+	];
+
+	const [localSort, setLocalSort] = useState<string>(`${volume_slug}:desc`);
 
 	useEffect(() => {
-		if (localSort && onSort) onSort(localSort);
+		if (localSort && setSort) setSort(localSort);
 	}, [localSort]);
 
 	return (
@@ -36,6 +39,7 @@ export function PreHeader(props: Props) {
 					label="Trier la liste des démarches"
 					id="tri-demarche"
 					options={sortOptions}
+					triggerValue={sort}
 					superLight
 					onChange={value => {
 						setLocalSort(value as string);
@@ -43,13 +47,15 @@ export function PreHeader(props: Props) {
 				/>
 			</div>
 			<div className={cx(classes.section)}>
-				<Link
-					href="/Aide/Observatoire?tab=indicators"
-					className={fr.cx('fr-link')}
-				>
-					Tout comprendre sur les indicateurs{' '}
-					<i className={cx(fr.cx('ri-chat-poll-line'), classes.linkIcon)} />
-				</Link>
+				{!old && (
+					<Link
+						href="/Aide/Observatoire?tab=indicators"
+						className={fr.cx('fr-link')}
+					>
+						Tout comprendre sur les indicateurs{' '}
+						<i className={cx(fr.cx('ri-chat-poll-line'), classes.linkIcon)} />
+					</Link>
+				)}
 			</div>
 		</div>
 	);

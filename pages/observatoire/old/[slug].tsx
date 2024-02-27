@@ -1,32 +1,28 @@
-import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
+import { OldProceduresTable } from '@/components/top250/table/OldProceduresTable';
 import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useEditions, useProcedures } from '@/utils/api';
+import { useOldProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+export const oldDefaultSort = 'volumetrie_value:desc';
+
 export default function ObservatoireEdition() {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
-	const { id } = router.query;
+	const { slug } = router.query;
 
 	const [search, setSearch] = useState<string>();
-	const [sort, setSort] = useState<string>('volume:desc');
+	const [sort, setSort] = useState<string>(oldDefaultSort);
 
 	const {
 		data: procedures,
 		isError,
 		isLoading
-	} = useProcedures({ search, sort, editionId: id as string });
-
-	const { data: editions } = useEditions();
-	if (!editions) return;
-	const currentEdition = id
-		? editions.find(edition => edition.id === (id as string))
-		: editions[0];
+	} = useOldProcedures({ search, sort, xwiki_edition: slug as string });
 
 	if (isError) return <div>Une erreur est survenue.</div>;
 
@@ -34,21 +30,17 @@ export default function ObservatoireEdition() {
 		<>
 			<div className={fr.cx('fr-container')}>
 				<Top250Header
-					title={
-						<>
-							Suivi trimestriel de la qualité de
-							<br /> vos démarches essentielles
-						</>
-					}
+					title={<>Anciennes éditions de l&apos;observatoire 1.0</>}
 					searchLabel="Rechercher par ministère, administration, ..."
 					onSearch={value => {
 						setSearch(value);
 					}}
+					old
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<PreHeader sort={sort} setSort={setSort} />
+					<PreHeader sort={sort} setSort={setSort} old />
 				</div>
 				{isLoading || !procedures ? (
 					<div className={cx(classes.loader)}>
@@ -61,10 +53,10 @@ export default function ObservatoireEdition() {
 				) : (
 					<>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
-							<Top250TableSection
-								edition={currentEdition}
+							<OldProceduresTable
 								procedures={procedures}
-								search={search}
+								setSort={setSort}
+								sort={sort}
 							/>
 						</div>
 						<StickyFooter proceduresCount={procedures.length} />

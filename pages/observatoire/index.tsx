@@ -43,11 +43,7 @@ export default function Observatoire() {
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<PreHeader
-						onSort={value => {
-							setSort(value.toString());
-						}}
-					/>
+					<PreHeader sort={sort} setSort={setSort} />
 				</div>
 				{isLoading || !procedures ? (
 					<div className={cx(classes.loader)}>
