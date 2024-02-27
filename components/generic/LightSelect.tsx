@@ -7,6 +7,7 @@ type Props = {
 	options: { label: string; value: string | number; href?: string }[];
 	defaultValue?: string | number;
 	onChange?(value: string | number, href?: string): void;
+	triggerValue?: string | number;
 	placeholder?: string;
 	superLight?: boolean;
 	label: string;
@@ -19,6 +20,7 @@ export function LightSelect(props: Props) {
 		options,
 		placeholder,
 		defaultValue,
+		triggerValue,
 		superLight,
 		label,
 		id
@@ -34,6 +36,10 @@ export function LightSelect(props: Props) {
 		if (value !== undefined && !!onChange)
 			onChange(value, options.find(_ => _.value === value)?.href);
 	}, [value, onChange, options]);
+
+	useEffect(() => {
+		setValue(triggerValue ? triggerValue : '');
+	}, [triggerValue]);
 
 	return (
 		<Select

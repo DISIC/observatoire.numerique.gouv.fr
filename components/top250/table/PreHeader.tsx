@@ -2,16 +2,17 @@ import { LightSelect } from '@/components/generic/LightSelect';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type Props = {
-	onSort: (value: string | number) => void;
+	sort: string;
+	setSort: Dispatch<SetStateAction<string>>;
 	old?: boolean;
 };
 
 export function PreHeader(props: Props) {
 	const { classes, cx } = useStyles();
-	const { onSort, old } = props;
+	const { sort, setSort, old } = props;
 	const volume_slug = old ? 'volumetrie_value' : 'volume';
 
 	const sortOptions = [
@@ -28,7 +29,7 @@ export function PreHeader(props: Props) {
 	const [localSort, setLocalSort] = useState<string>(`${volume_slug}:desc`);
 
 	useEffect(() => {
-		if (localSort && onSort) onSort(localSort);
+		if (localSort && setSort) setSort(localSort);
 	}, [localSort]);
 
 	return (
@@ -38,6 +39,7 @@ export function PreHeader(props: Props) {
 					label="Trier la liste des démarches"
 					id="tri-demarche"
 					options={sortOptions}
+					triggerValue={sort}
 					superLight
 					onChange={value => {
 						setLocalSort(value as string);

@@ -8,13 +8,15 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+export const oldDefaultSort = 'volumetrie_value:desc';
+
 export default function ObservatoireEdition() {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 	const { slug } = router.query;
 
 	const [search, setSearch] = useState<string>();
-	const [sort, setSort] = useState<string>('volumetrie_value:desc');
+	const [sort, setSort] = useState<string>(oldDefaultSort);
 
 	const {
 		data: procedures,
@@ -38,12 +40,7 @@ export default function ObservatoireEdition() {
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<PreHeader
-						onSort={value => {
-							setSort(value.toString());
-						}}
-						old
-					/>
+					<PreHeader sort={sort} setSort={setSort} old />
 				</div>
 				{isLoading || !procedures ? (
 					<div className={cx(classes.loader)}>

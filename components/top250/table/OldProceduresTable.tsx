@@ -4,6 +4,7 @@ import { IndicatorColor, OldProcedure } from '@prisma/client';
 import { IndicatorLabel } from './IndicatorLabel';
 import { Dispatch, SetStateAction } from 'react';
 import Link from 'next/link';
+import { oldDefaultSort } from '@/pages/observatoire/old/[slug]';
 
 type Props = {
 	procedures: OldProcedure[];
@@ -21,7 +22,7 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 		if (type === 'text') {
 			return ({
 				Oui: 'green',
-				'En cours de déploiement local': 'green',
+				'En cours': 'green',
 				Non: 'red',
 				Partiel: 'orange'
 			}[value] || 'gray') as IndicatorColor;
@@ -44,7 +45,7 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 	const handleSort = (key: string) => () =>
 		setSort(
 			sort.includes(key)
-				? `${key}:${sort.includes('asc') ? 'desc' : 'asc'}`
+				? `${sort.includes('asc') ? `${key}:desc` : oldDefaultSort}`
 				: `${key}:asc`
 		);
 
@@ -55,38 +56,64 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 			</p>
 		);
 
+	const headerKeys = [
+		'title',
+		'statutDemat',
+		'satisfactionIndex_value',
+		'accessibilityScore_display',
+		'qualiteSupport',
+		'adapteMobile_display',
+		'franceConnect_display',
+		'ditesLeNousUneFois_value',
+		'urlScore_value'
+	];
+
+	const headerTexts = [
+		'Les démarches',
+		'Réalisable en ligne',
+		'Usagers Satisfaits (/10)',
+		'Prise en compte handicaps',
+		'Aide joignable',
+		'Compatible mobile',
+		'Intégration FranceConnect',
+		'Dites-le nous une fois',
+		'Disponibilité et rapidité'
+	];
+
+	const cellsKeys = [
+		'statutDemat',
+		'satisfactionIndex_display',
+		'accessibilityScore_display',
+		'qualiteSupport',
+		'adapteMobile_display',
+		'franceConnect_display',
+		'ditesLeNousUneFois_display',
+		'urlScore_display'
+	];
+
 	return (
 		<table className={cx(fr.cx('fr-table'), classes.table)}>
 			<thead>
 				<tr>
-					{[
-						'Les démarches',
-						'Réalisable en ligne',
-						'Usagers Satisfaits (/10)',
-						'Prise en compte handicaps',
-						'Aide joignable',
-						'Compatible mobile',
-						'Intégration FranceConnect',
-						'Dites-le nous une fois',
-						'Disponibilité et rapidité'
-					].map((header, i) => (
+					{headerTexts.map((header, i) => (
 						<th
 							key={i}
-							onClick={handleSort(
-								[
-									'title',
-									'statutDemat',
-									'satisfactionIndex_value',
-									'accessibilityScore_display',
-									'qualiteSupport',
-									'adapteMobile_display',
-									'franceConnect_display',
-									'ditesLeNousUneFois_value',
-									'urlScore_value'
-								][i]
+							onClick={handleSort(headerKeys[i])}
+							className={cx(
+								sort.includes(headerKeys[i]) ? classes.sortedHeader : ''
 							)}
 						>
-							{header}
+							{header}{' '}
+							{sort.includes(headerKeys[i]) && (
+								<span
+									className={cx(
+										classes.sortIcon,
+										sort.includes('asc')
+											? 'fr-icon-arrow-down-s-fill'
+											: 'fr-icon-arrow-up-s-fill'
+									)}
+								></span>
+							)}
 						</th>
 					))}
 				</tr>
@@ -105,16 +132,7 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 								ligne)
 							</span>
 						</th>
-						{[
-							'statutDemat',
-							'satisfactionIndex_display',
-							'accessibilityScore_display',
-							'qualiteSupport',
-							'adapteMobile_display',
-							'franceConnect_display',
-							'ditesLeNousUneFois_display',
-							'urlScore_display'
-						].map((attr, i) => {
+						{cellsKeys.map((attr, i) => {
 							let fieldAttrType: 'number' | 'dlnuf' | 'text' | undefined =
 								'text';
 							if (
@@ -188,6 +206,7 @@ const useStyles = makeStyles()(theme => ({
 	table: {
 		['thead th']: {
 			cursor: 'pointer',
+			position: 'relative',
 			':hover': {
 				opacity: '0.7'
 			}
@@ -235,5 +254,13 @@ const useStyles = makeStyles()(theme => ({
 		'::after': {
 			display: 'none'
 		}
+	},
+	sortIcon: {
+		position: 'absolute',
+		right: '5px',
+		top: '5px'
+	},
+	sortedHeader: {
+		paddingRight: '3rem'
 	}
 }));
