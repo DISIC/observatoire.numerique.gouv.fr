@@ -98,6 +98,12 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 							{procedure.title}
 							<br />
 							<small>{procedure.ministere}</small>
+							<br />
+							<span>
+								Volumétrie totale : {procedure.volumetrie_display} (
+								{procedure.pourcentageRecoursVoieDematerialisee_display} en
+								ligne)
+							</span>
 						</th>
 						{[
 							'statutDemat',
@@ -160,6 +166,14 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 											Voir
 										</Link>
 									)}
+									{attr === 'accessibilityScore_display' &&
+										!!procedure.rgaaCompliancyLevel_value && (
+											<span
+												className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
+											>
+												{procedure.rgaaCompliancyLevel_display}
+											</span>
+										)}
 								</td>
 							);
 						})}
@@ -191,6 +205,11 @@ const useStyles = makeStyles()(theme => ({
 			...fr.typography[20].style,
 			small: {
 				...fr.typography[18].style,
+				fontWeight: 'normal',
+				color: '#666'
+			},
+			span: {
+				...fr.typography[17].style,
 				fontWeight: 'normal',
 				color: '#666'
 			}
