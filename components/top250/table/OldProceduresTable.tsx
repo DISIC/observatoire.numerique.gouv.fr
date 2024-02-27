@@ -151,6 +151,10 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 								attr === 'satisfactionIndex_display' &&
 								(procedure.satisfactionIndex_value || -1) >= 0;
 
+							const displayAccessibilityScore =
+								attr === 'accessibilityScore_display' &&
+								!!procedure.rgaaCompliancyLevel_value;
+
 							return (
 								<td key={i} style={{ position: 'relative' }}>
 									<IndicatorLabel
@@ -184,14 +188,13 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 											Voir
 										</Link>
 									)}
-									{attr === 'accessibilityScore_display' &&
-										!!procedure.rgaaCompliancyLevel_value && (
-											<span
-												className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
-											>
-												{procedure.rgaaCompliancyLevel_display}
-											</span>
-										)}
+									{displayAccessibilityScore && (
+										<span
+											className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
+										>
+											{procedure.rgaaCompliancyLevel_display}
+										</span>
+									)}
 								</td>
 							);
 						})}
