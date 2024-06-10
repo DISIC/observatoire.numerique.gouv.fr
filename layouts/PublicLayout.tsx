@@ -1,14 +1,12 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
-import { Display } from '@codegouvfr/react-dsfr/Display';
-import Head from 'next/head';
-import { doesHttpOnlyCookieExist } from '@/utils/cookies';
-import { SocialNetworks } from '@/components/layout/SocialNetworks';
-import { CustomFooter } from '@/components/layout/CustomFooter';
-import { useSession } from 'next-auth/react';
 import { SkipLinks } from '@/components/generic/SkipLinks';
+import { CustomFooter } from '@/components/layout/CustomFooter';
+import { SocialNetworks } from '@/components/layout/SocialNetworks';
+import { fr } from '@codegouvfr/react-dsfr';
+import { Display } from '@codegouvfr/react-dsfr/Display';
+import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { useSession } from 'next-auth/react';
+import { ReactNode } from 'react';
 
 type Props = {
 	children: ReactNode;
