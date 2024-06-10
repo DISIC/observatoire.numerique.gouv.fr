@@ -20,8 +20,6 @@ const PublicLayout = (props: Props) => {
 	const session = useSession();
 	const isLogged = !!session.data;
 
-	const [isXWikiUserLogged, setIsXWikiUserLogged] = useState<boolean>();
-
 	const brandTop = (
 		<>
 			RÉPUBLIQUE
@@ -32,15 +30,6 @@ const PublicLayout = (props: Props) => {
 
 	const serviceTitle = 'Vos démarches essentielles';
 	const serviceTagLine = '';
-
-	useEffect(() => {
-		setIsXWikiUserLogged(
-			doesHttpOnlyCookieExist('JSESSIONID') &&
-				doesHttpOnlyCookieExist('username')
-		);
-	}, []);
-
-	if (isXWikiUserLogged === undefined) return <></>;
 
 	let accessItems: HeaderProps.QuickAccessItem[] = [
 		{
@@ -53,22 +42,10 @@ const PublicLayout = (props: Props) => {
 		{
 			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: '/je-donne-mon-avis/',
+				href: 'https://jedonnemonavis.numerique.gouv.fr',
 				target: '_self'
 			},
-			text: "L'outil Je donne mon avis"
-		},
-		{
-			iconId: isXWikiUserLogged
-				? 'ri-logout-circle-line'
-				: 'ri-login-circle-line',
-			linkProps: {
-				href: isXWikiUserLogged
-					? '/logout/Main/WebHome'
-					: '/login/XWiki/XWikiLogin',
-				target: '_self'
-			},
-			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
+			text: "Nouvelle version JDMA"
 		}
 	];
 
@@ -95,7 +72,7 @@ const PublicLayout = (props: Props) => {
 				className={cx(classes.header)}
 				brandTop={brandTop}
 				homeLinkProps={{
-					href: isXWikiUserLogged ? '/Main' : '/',
+					href: '/',
 					target: '_self',
 					title: 'Accueil - Vos démarches essentielles'
 				}}
