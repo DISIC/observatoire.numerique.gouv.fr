@@ -10,12 +10,30 @@ type Props = {
 	title: ReactNode;
 	searchLabel: string;
 	onSearch: (value: string) => void;
+	old?: boolean;
 };
 
+const oldEditions = [
+	{ slug: '2022-octobre', display: 'Octobre 2022' },
+	{ slug: '2022-juillet', display: 'Juillet 2022' },
+	{ slug: '2022-avril', display: 'Avril 2022' },
+	{ slug: '2022-janvier', display: 'Janvier 2022' },
+	{ slug: '2021-octobre', display: 'Octobre 2021' },
+	{ slug: '2021-juillet', display: 'Juillet 2021' },
+	{ slug: '2021-avril', display: 'Avril 2021' },
+	{ slug: '2021-janvier', display: 'Janvier 2021' },
+	{ slug: '2020-octobre', display: 'Octobre 2020' },
+	{ slug: '2020-juillet', display: 'Juillet 2020' },
+	{ slug: '2020-avril', display: 'Avril 2020' },
+	{ slug: '2020-janvier', display: 'Janvier 2020' },
+	{ slug: '2019-octobre', display: 'Octobre 2019' },
+	{ slug: '2019-juin', display: 'Juin 2019' }
+];
+
 export function Top250Header(props: Props) {
-	const { title, searchLabel, onSearch } = props;
+	const { title, searchLabel, onSearch, old } = props;
 	const router = useRouter();
-	const { id: edition_id } = router.query;
+	const { id: edition_id, slug: old_edition_id } = router.query;
 
 	const { data: editions } = useEditions();
 
@@ -26,43 +44,90 @@ export function Top250Header(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
-			<div className={cx(classes.editionsContainer)}>
-				{editions?.map((e, index) => {
-					const isCurrent =
-						(edition_id && e.id === edition_id) || (!edition_id && index === 0);
-					return (
-						<span
-							key={index}
-							className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
-						>
-							{isCurrent ? (
-								<a
-									className={cx(fr.cx('fr-link'), classes.currentLink)}
-									href={'#'}
-								>
-									{e.name}
-								</a>
-							) : (
-								<Link
-									href={`/observatoire/${e.id}`}
-									className={fr.cx('fr-link')}
-								>
-									{e.name}
-								</Link>
-							)}
-						</span>
-					);
-				})}
-				<span className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}>
-					<a
-						className={fr.cx('fr-link')}
-						href="/observatoire/2022-octobre"
-						target="_blank"
+			{!old && (
+				<div className={cx(classes.editionsContainer)}>
+					{editions?.map((e, index) => {
+						const isCurrent =
+							(edition_id && e.id === edition_id) ||
+							(!edition_id && index === 0);
+						return (
+							<span
+								key={index}
+								className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
+							>
+								{isCurrent ? (
+									<a
+										className={cx(fr.cx('fr-link'), classes.currentLink)}
+										href={'#'}
+									>
+										{e.name}
+									</a>
+								) : (
+									<Link
+										href={`/observatoire/${e.id}`}
+										className={fr.cx('fr-link')}
+									>
+										{e.name}
+									</Link>
+								)}
+							</span>
+						);
+					})}
+					<span
+						className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
 					>
-						Voir les éditions précédentes
-					</a>
-				</span>
-			</div>
+						<a
+							className={fr.cx('fr-link')}
+							href="/observatoire/old/2022-octobre"
+							target="_blank"
+						>
+							Voir les éditions précédentes
+						</a>
+					</span>
+				</div>
+			)}
+			{old && (
+				<div className={cx(classes.editionsContainer)}>
+					{oldEditions.map((edition, index) => {
+						const isCurrent =
+							(old_edition_id && edition.slug === old_edition_id) ||
+							(!old_edition_id && index === 0);
+						return (
+							<span
+								key={index}
+								className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
+							>
+								{isCurrent ? (
+									<a
+										className={cx(fr.cx('fr-link'), classes.currentLink)}
+										href={'#'}
+									>
+										{edition.display}
+									</a>
+								) : (
+									<Link
+										href={`/observatoire/old/${edition.slug}`}
+										className={fr.cx('fr-link')}
+									>
+										{edition.display}
+									</Link>
+								)}
+							</span>
+						);
+					})}
+					<span
+						className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
+					>
+						<a
+							className={fr.cx('fr-link')}
+							href="/observatoire"
+							target="_blank"
+						>
+							Voir les nouvelles éditions
+						</a>
+					</span>
+				</div>
+			)}
 			<form
 				onSubmit={e => {
 					e.preventDefault();
