@@ -43,7 +43,15 @@ const PublicLayout = (props: Props) => {
 				href: 'https://jedonnemonavis.numerique.gouv.fr',
 				target: '_self'
 			},
-			text: "Nouvelle version JDMA"
+			text: "Je donne mon avis"
+		},
+		{
+			iconId: 'ri-user-star-line',
+			linkProps: {
+				href: 'https://jedonnemonavis.numerique.gouv.fr/login',
+				target: '_self'
+			},
+			text: "Connexion"
 		}
 	];
 
