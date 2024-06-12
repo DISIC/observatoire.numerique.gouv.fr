@@ -37,10 +37,7 @@ const Accessibility = () => {
 						<section>
 							<h2>Déclaration d'accessibilité</h2>
 							<p>{ACCESSIBILITE.declaration}</p>
-							<p>
-								A cette fin, il met en œuvre la stratégie et les actions
-								suivantes :
-							</p>
+							<p>{ACCESSIBILITE.introStrategy}</p>
 							<ul>
 								{ACCESSIBILITE.strategy.map((item, index) => (
 									<li key={index}>
@@ -50,10 +47,7 @@ const Accessibility = () => {
 									</li>
 								))}
 							</ul>
-							<p>
-								Cette déclaration d’accessibilité s’applique au service Vos
-								démarches essentielles.
-							</p>
+							<p>{ACCESSIBILITE.strategyEnd}</p>
 						</section>
 						<section>
 							<h3>État de conformité</h3>
@@ -61,10 +55,7 @@ const Accessibility = () => {
 						</section>
 						<section>
 							<h3>Résultats des tests</h3>
-							<p>
-								L’audit de conformité finalisé le 1er juillet 2021 en interne
-								révèle que :
-							</p>
+							<p>{ACCESSIBILITE.testResultIntro}</p>
 							<ul>
 								{ACCESSIBILITE.testResults.map((item, index) => (
 									<li key={index}>{item}</li>
@@ -73,10 +64,7 @@ const Accessibility = () => {
 						</section>
 						<section>
 							<h3>Contenus non accessibles</h3>
-							<p>
-								Les contenus listés ci-dessous ne sont pas accessibles pour les
-								raisons suivantes :
-							</p>
+							<p>{ACCESSIBILITE.nonAccessibleContent.contentIntro}</p>
 							<p>Images</p>
 							<ul>
 								{ACCESSIBILITE.nonAccessibleContent.images.map(
@@ -158,10 +146,7 @@ const Accessibility = () => {
 									<li key={index}>{tech}</li>
 								))}
 							</ul>
-							<p>
-								Les tests des pages web ont été effectués avec les combinaisons
-								de navigateurs web et lecteurs d’écran suivants :
-							</p>
+							<p>{ACCESSIBILITE.testPageIntro}</p>
 						</section>
 						<section>
 							<ul>
@@ -171,7 +156,7 @@ const Accessibility = () => {
 							</ul>
 						</section>
 						<section>
-							<p>Les outils suivants ont été utilisés lors de l’évaluation</p>
+							<p>{ACCESSIBILITE.toolsIntro}</p>
 
 							<ul>
 								{ACCESSIBILITE.toolsEval.map((tool, index) => (
@@ -180,10 +165,7 @@ const Accessibility = () => {
 							</ul>
 						</section>
 						<section>
-							<p>
-								Pages du site ayant fait l’objet de la vérification de
-								conformité
-							</p>
+							<p>{ACCESSIBILITE.verifiedPagesIntro}</p>
 							<ul>
 								{ACCESSIBILITE.verifiedPages.map((page, index) => (
 									<li key={index}>
@@ -202,14 +184,7 @@ const Accessibility = () => {
 						</section>
 						<section>
 							<h3>Défenseur des droits</h3>
-							<p>
-								Si vous constatez un défaut d'accessibilité vous empêchant
-								d'accéder à un contenu ou une fonctionnalité du site, que vous
-								nous le signalez et que vous ne parvenez pas à obtenir une
-								réponse rapide de notre part, vous êtes en droit de faire
-								parvenir vos doléances ou une demande de saisine au Défenseur
-								des droits. Plusieurs moyens sont à votre disposition :
-							</p>
+							<p>{ACCESSIBILITE.defenderOfRightsIntro}</p>
 							<ul>
 								<li>
 									un{' '}
