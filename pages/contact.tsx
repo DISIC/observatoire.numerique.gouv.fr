@@ -33,7 +33,9 @@ const Contact = () => {
 					>
 						<h1 className={fr.cx('fr-mb-5v')}>Nous contacter</h1>
 						<div className={cx(classes.description)}>
-							<p>Vous pouvez nous contacter à l'adresse e-mail suivante :</p>
+							<p>
+								Vous pouvez nous contacter à l&apos;adresse e-mail suivante :
+							</p>
 							<p className={cx(fr.cx('fr-text--bold'), classes.email)}>
 								observatoire@design.numerique.gouv.fr
 							</p>

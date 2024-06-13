@@ -2,12 +2,17 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Head from 'next/head';
 import React from 'react';
 import { CGU } from '../utils/content';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
 const GeneralConditions = () => {
+	const { cx, classes } = useStyles();
+
 	return (
 		<>
 			<Head>
-				<title>Conditions générales d'utilisation | Je donne mon avis</title>
+				<title>
+					Conditions générales d&apos;utilisation | Je donne mon avis
+				</title>
 				<meta
 					name="description"
 					content={`Conditions générales d'utilisation | Je donne mon avis`}
@@ -34,10 +39,12 @@ const GeneralConditions = () => {
 						<p>{CGU.firstPart.firstBlock}</p>
 						<p>{CGU.firstPart.secondBlock}</p>
 						<p>{CGU.firstPart.thirdBlock.firstBlock}</p>
-						<ul>
-							{CGU.firstPart.thirdBlock.secondBlock.map(el => (
-								<li>{el}</li>
-							))}
+						<ul className={cx(classes.rulesList)}>
+							{CGU.firstPart.thirdBlock.secondBlock.map(
+								(el: string, index: number) => (
+									<li key={index}>{el}</li>
+								)
+							)}
 						</ul>
 						<p>{CGU.firstPart.fourthBlock}</p>
 						<p>{CGU.firstPart.fifthBlock.firstBlock}</p>
@@ -73,4 +80,11 @@ const GeneralConditions = () => {
 		</>
 	);
 };
+
+const useStyles = makeStyles()(theme => ({
+	rulesList: {
+		paddingInlineStart: '2.5rem'
+	}
+}));
+
 export default GeneralConditions;

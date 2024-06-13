@@ -4,7 +4,7 @@ import React from 'react';
 import { LegalNotice as LN } from '../utils/content';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
-const legalNotice = () => {
+const LegalNotice = () => {
 	const { cx, classes } = useStyles();
 
 	return (
@@ -78,4 +78,4 @@ const useStyles = makeStyles()(theme => ({
 	}
 }));
 
-export default legalNotice;
+export default LegalNotice;

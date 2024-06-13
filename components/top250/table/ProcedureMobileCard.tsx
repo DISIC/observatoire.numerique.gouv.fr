@@ -89,7 +89,11 @@ export function ProcedureMobileCard(props: Props) {
 
 						if (!field) return <></>;
 						if (isProactive && field.slug === 'satisfaction')
-							return <IndicatorProactive />;
+							return (
+								<div key={index}>
+									<IndicatorProactive />
+								</div>
+							);
 						if (isProactive && field.slug !== 'online') return <></>;
 
 						const canBeSeen = index <= 4 || toogleSwitch;

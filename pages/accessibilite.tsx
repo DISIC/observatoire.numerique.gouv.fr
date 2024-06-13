@@ -35,7 +35,7 @@ const Accessibility = () => {
 					<div className={cx(classes.accessibilityWrapper)}>
 						<h1>Accessibilité</h1>
 						<section>
-							<h2>Déclaration d'accessibilité</h2>
+							<h2>Déclaration d&apos;accessibilité</h2>
 							<p>{ACCESSIBILITE.declaration}</p>
 							<p>{ACCESSIBILITE.introStrategy}</p>
 							<ul>
@@ -82,7 +82,7 @@ const Accessibility = () => {
 								)}
 							</ul>
 							<p>Scripts</p>
-							<p>Dans la page 'Observatoire' :</p>
+							<p>Dans la page &apos;Observatoire&apos; :</p>
 							<ul>
 								{ACCESSIBILITE.nonAccessibleContent.scripts.map(
 									(item, index) => (
@@ -132,11 +132,13 @@ const Accessibility = () => {
 							<p>{ACCESSIBILITE.disproportionateBurden}</p>
 						</section>
 						<section>
-							<h3>Contenus non soumis à l'obligation d'accessibilité</h3>
+							<h3>
+								Contenus non soumis à l&apos;obligation d&apos;accessibilité
+							</h3>
 							<p>{ACCESSIBILITE.notSubjectContent}</p>
 						</section>
 						<section>
-							<h3>Établissement de cette déclaration d'accessibilité</h3>
+							<h3>Établissement de cette déclaration d&apos;accessibilité</h3>
 							<p>{ACCESSIBILITE.establishment}</p>
 						</section>
 						<section>
