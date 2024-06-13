@@ -42,16 +42,16 @@ const LegalNotice = () => {
 									<div className={cx(classes.blockWrapper)}>
 										{Array.isArray(section.content[0])
 											? (section.content as string[][]).map(
-													(subContent, index) => (
-														<div
-															key={index}
-															className={cx(classes.blockWrapper)}
-														>
-															{subContent.map((block, subIndex) => (
-																<p key={subIndex}>{block}</p>
-															))}
-														</div>
-													)
+												(subContent, index) => (
+													<div
+														key={index}
+														className={cx(classes.blockWrapper)}
+													>
+														{subContent.map((block, subIndex) => (
+															<p key={subIndex}>{block}</p>
+														))}
+													</div>
+												)
 											  )
 											: (section.content as string[]).map((block, index) => (
 													<p key={index}>{block}</p>
