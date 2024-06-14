@@ -1,11 +1,11 @@
-import { fr } from '@codegouvfr/react-dsfr';
-import Head from 'next/head';
-import React from 'react';
-import { LegalNotice as LN } from '../utils/content';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { fr } from "@codegouvfr/react-dsfr"
+import Head from "next/head"
+import React from "react"
+import { LegalNotice as LN } from "../utils/content"
+import { makeStyles } from "@codegouvfr/react-dsfr/tss"
 
 const LegalNotice = () => {
-  const { cx, classes } = useStyles();
+  const { cx, classes } = useStyles()
 
   return (
     <>
@@ -18,23 +18,23 @@ const LegalNotice = () => {
       </Head>
       <div
         className={fr.cx(
-          'fr-container',
-          'fr-col-lg-10',
-          'fr-col-xl-8',
-          'fr-pt-20v'
+          "fr-container",
+          "fr-col-lg-10",
+          "fr-col-xl-8",
+          "fr-pt-20v"
         )}
       >
         <div
           className={fr.cx(
-            'fr-grid-row',
-            'fr-grid-row--gutters',
-            'fr-grid-row--middle'
+            "fr-grid-row",
+            "fr-grid-row--gutters",
+            "fr-grid-row--middle"
           )}
         >
-          <div className={'fr-col-lg-12'}>
-            <h1 className={fr.cx('fr-mb-12v')}>{LN.title}</h1>
+          <div className={"fr-col-lg-12"}>
+            <h1 className={fr.cx("fr-mb-12v")}>{LN.title}</h1>
             {Object.keys(LN.sections).map((sectionKey) => {
-              const section = LN.sections[sectionKey];
+              const section = LN.sections[sectionKey]
               return (
                 <div key={sectionKey}>
                   <h2>{sectionKey}</h2>
@@ -58,24 +58,24 @@ const LegalNotice = () => {
                         ))}
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles()((theme) => ({
   blockWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: '2rem',
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "2rem",
     p: {
-      marginBottom: '0 !important',
-    },
-  },
-}));
+      marginBottom: "0 !important"
+    }
+  }
+}))
 
-export default LegalNotice;
+export default LegalNotice
