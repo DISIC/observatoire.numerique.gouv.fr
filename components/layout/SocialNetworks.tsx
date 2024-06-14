@@ -9,13 +9,13 @@ export function SocialNetworks(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container'), classes.content)}>
-				<div className={cx(classes.leftSection)}>
+				<h4 className={cx(classes.leftSection)}>
 					Suivez-nous sur les réseaux sociaux
-				</div>
+				</h4>
 				<ul className={cx(classes.rightSection)}>
 					<li>
 						<a
-							href="https://twitter.com/_DINUM"
+							href="https://twitter.com/Numerique_Gouv"
 							target="_blank"
 							rel="noreferrer"
 							title="Compte Twitter"
@@ -59,12 +59,14 @@ const useStyles = makeStyles()(theme => ({
 	content: {
 		display: 'flex',
 		justifyContent: 'space-between',
+		alignItems: 'center',
 		paddingTop: fr.spacing('10v'),
 		paddingBottom: fr.spacing('10v')
 	},
 	leftSection: {
 		fontWeight: 700,
-		fontSize: fr.typography[22].style.fontSize
+		fontSize: fr.typography[22].style.fontSize,
+		marginBottom: 0
 	},
 	rightSection: {
 		listStyle: 'none',

@@ -14,7 +14,7 @@ export function CustomFooter() {
 			<Footer
 				accessibility="partially compliant"
 				accessibilityLinkProps={{
-					href: '/Main/Accessibilite'
+					href: '/accessibilite'
 				}}
 				brandTop={brandTop}
 				contentDescription="Vos démarches essentielles est un service proposé par l'équipe design des services numériques (DesignGouv) de la direction interministérielle du numérique (DINUM)."
@@ -23,13 +23,10 @@ export function CustomFooter() {
 					title: 'Accueil - Vos démarches essentielles'
 				}}
 				personalDataLinkProps={{
-					href: '/Main/CGU'
+					href: '/cgu'
 				}}
 				termsLinkProps={{
-					href: '/Main/CGU#HMentionslE9gales'
-				}}
-				websiteMapLinkProps={{
-					href: '/Main/plan-site'
+					href: '/legalNotice'
 				}}
 				bottomItems={[{ text: 'Contact', linkProps: { href: '/contact' } }]}
 			/>
