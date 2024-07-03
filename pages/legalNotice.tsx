@@ -10,10 +10,10 @@ const LegalNotice = () => {
 	return (
 		<>
 			<Head>
-				<title>Mentions légales | Je donne mon avis</title>
+				<title>Mentions légales | Vos démarches essentielles</title>
 				<meta
 					name="description"
-					content={`Mentions légales | Je donne mon avis`}
+					content={`Mentions légales | Vos démarches essentielles`}
 				/>
 			</Head>
 			<div
@@ -39,37 +39,64 @@ const LegalNotice = () => {
 							<div key={key} className={cx(classes.blockWrapper)}>
 								<h2>{LN[key].title}</h2>
 								{LN[key].content.map((line, index) => {
-									const isBreakAfter =
-										typeof line === 'object' && line.type === 'breakAfter';
-									const isBreakBoth =
-										typeof line === 'object' && line.type === 'breakBoth';
 									const isLink =
 										typeof line === 'object' && line.type === 'link';
 									const isMailto =
 										typeof line === 'object' && line.type === 'mailto';
+									const isList =
+										typeof line === 'object' && line.type === 'list';
+									const hasNoSpaces =
+										typeof line === 'object' && line.type === 'noSpaces';
+									const isBold =
+										typeof line === 'object' && line.type === 'bold';
 
 									return (
 										<React.Fragment key={index}>
 											{isLink ? (
 												<>
-													<br />
-													<a
-														href={line.href}
-														target="_blank"
-														rel="noopener noreferrer"
-													>
-														{line.text}
-													</a>
+													<p>
+														<a
+															href={line.href}
+															target="_blank"
+															rel="noopener noreferrer"
+														>
+															{line.text}
+														</a>
+													</p>
 												</>
 											) : isMailto ? (
-												<a href={line.href}>{line.text}</a>
+												<p>
+													<a href={line.href}>{line.text}</a>
+												</p>
+											) : isBold ? (
+												<>
+													<p dangerouslySetInnerHTML={{ __html: line.text }} />
+												</>
+											) : isList ? (
+												<ul>
+													<li>{line.text}</li>
+												</ul>
 											) : typeof line === 'string' ? (
-												line
+												<>
+													<p
+														className={cx(
+															hasNoSpaces ? classes.noSpacesParagraph : ''
+														)}
+													>
+														{line}
+													</p>
+												</>
 											) : (
-												line.text
+												<>
+													<p
+														className={cx(
+															hasNoSpaces ? classes.noSpacesParagraph : ''
+														)}
+													>
+														{line.text}
+													</p>
+												</>
 											)}
-											{isMailto ? null : <br />}
-											{isBreakAfter ? <br /> : null}
 										</React.Fragment>
 									);
 								})}
@@ -86,13 +113,17 @@ const useStyles = makeStyles()(theme => ({
 	blockWrapper: {
 		display: 'flex',
 		flexDirection: 'column',
-		marginBottom: '2rem',
-		p: {
-			marginBottom: '0 !important'
-		},
+		marginBottom: '1rem',
+
 		a: {
 			width: 'fit-content'
+		},
+		ul: {
+			margin: '2rem 0 2rem 2rem'
 		}
+	},
+	noSpacesParagraph: {
+		marginBottom: '0 !important'
 	}
 }));
 

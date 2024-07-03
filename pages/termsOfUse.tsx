@@ -1,19 +1,22 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Head from 'next/head';
 import React from 'react';
-import { CGU } from '../utils/content';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { TermsOfUse as TOU } from '../utils/content';
 
-const GeneralConditions = () => {
+const TermsOfUse = () => {
 	const { cx, classes } = useStyles();
 
 	return (
 		<>
 			<Head>
-				<title>Politique de confidentialité | Vos démarches essentielles</title>
+				<title>
+					Modalités d’utilisation de Vos Démarches Essentielles | Vos démarches
+					essentielles
+				</title>
 				<meta
 					name="description"
-					content={`Politique de confidentialité | Vos démarches essentielles`}
+					content={`Modalités d’utilisation de Vos Démarches Essentielles | Vos démarches essentielles`}
 				/>
 			</Head>
 			<div
@@ -33,19 +36,19 @@ const GeneralConditions = () => {
 				>
 					<div className={'fr-col-lg-12'}>
 						<h1 className={fr.cx('fr-mb-12v')}>
-							Politique de confidentialité de Vos Démarches Essentielles
+							Modalités d’utilisation de Vos Démarches Essentielles
 						</h1>
-						{Object.keys(CGU).map(key => (
+						{Object.keys(TOU).map(key => (
 							<div key={key} className={cx(classes.blockWrapper)}>
-								<h2>{CGU[key].title}</h2>
+								<h2>{TOU[key].title}</h2>
 								<div className={'fr-col-lg-10'}>
-									{CGU[key].content.map((line, index) => {
+									{TOU[key].content.map((line, index) => {
 										const isLink =
 											typeof line === 'object' && line.type === 'link';
-										const isMailto =
-											typeof line === 'object' && line.type === 'mailto';
 										const isList =
 											typeof line === 'object' && line.type === 'list';
+										const isSubtitle =
+											typeof line === 'object' && line.type === 'subtitle';
 										const hasNoSpaces =
 											typeof line === 'object' && line.type === 'noSpaces';
 										const isBold =
@@ -53,7 +56,9 @@ const GeneralConditions = () => {
 
 										return (
 											<React.Fragment key={index}>
-												{isLink ? (
+												{isSubtitle ? (
+													<h3 className={classes.subtitle}>{line.text}</h3>
+												) : isLink ? (
 													<>
 														<p>
 															<a
@@ -65,10 +70,6 @@ const GeneralConditions = () => {
 															</a>
 														</p>
 													</>
-												) : isMailto ? (
-													<p>
-														<a href={line.href}>{line.text}</a>
-													</p>
 												) : isBold ? (
 													<>
 														<p
@@ -77,7 +78,9 @@ const GeneralConditions = () => {
 													</>
 												) : isList ? (
 													<ul>
-														<li>{line.text}</li>
+														<li
+															dangerouslySetInnerHTML={{ __html: line.text }}
+														></li>
 													</ul>
 												) : typeof line === 'string' ? (
 													<>
@@ -123,12 +126,15 @@ const useStyles = makeStyles()(theme => ({
 			width: 'fit-content'
 		},
 		ul: {
-			margin: '2rem 0 2rem 2rem'
+			marginLeft: '2rem '
 		}
+	},
+	subtitle: {
+		...fr.typography[3].style
 	},
 	noSpacesParagraph: {
 		marginBottom: '0 !important'
 	}
 }));
 
-export default GeneralConditions;
+export default TermsOfUse;
