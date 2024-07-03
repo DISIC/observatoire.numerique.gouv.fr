@@ -256,7 +256,7 @@ export const TermsOfUse: MainStructure = {
 		]
 	},
 	accessibility: {
-		title: '9.Accessibilité',
+		title: '9. Accessibilité',
 		content: [
 			'Si vous constatez un défaut d’accessibilité vous empêchant d’accéder à un contenu ou une fonctionnalité du service, que vous nous le signalez et que vous ne parvenez pas à obtenir une réponse rapide de notre part, vous êtes en droit de faire parvenir vos doléances ou demande de saisine au défenseur des droits par courrier gratuit, sans affranchissement à l’adresse :',
 			{
