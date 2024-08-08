@@ -22,7 +22,7 @@ const { augmentDocumentWithEmotionCache, withAppEmotionCache } =
 	createEmotionSsrAdvancedApproach({ key: 'css' });
 
 const { withDsfr, dsfrDocumentApi } = createNextDsfrIntegrationApi({
-	defaultColorScheme: 'system',
+	defaultColorScheme: 'light',
 	Link
 });
 
