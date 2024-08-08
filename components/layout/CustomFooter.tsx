@@ -28,7 +28,13 @@ export function CustomFooter() {
 				termsLinkProps={{
 					href: '/legalNotice'
 				}}
-				bottomItems={[{ text: 'Contact', linkProps: { href: '/contact' } }]}
+				bottomItems={[
+					{
+						text: 'Modalités d’utilisation',
+						linkProps: { href: '/termsOfUse' }
+					},
+					{ text: 'Contact', linkProps: { href: '/contact' } }
+				]}
 			/>
 		</>
 	);
