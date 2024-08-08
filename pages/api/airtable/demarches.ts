@@ -23,6 +23,8 @@ const field_names = {
 		online: '📊 En ligne',
 		satisfaction: '📊 Satisfaction',
 		simplicity: '2️⃣ Simplicité du langage',
+		help_reachable: '[Dashlord] - JDMA aide note',
+		help_used: '[Dashlord] - JDMA autonomie note',
 		uptime: '2️⃣ Taux de disponibilité',
 		performance: '2️⃣ Temps moyen de chargement',
 		handicap: '📊 Prise en compte du handicap',
@@ -202,20 +204,50 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'help_reachable',
-			label: 'À venir',
-			color: 'gray',
-			value: null,
+			label: getLabelFromValue(
+				'help_reachable',
+				record.get(field_names.indicators.help_reachable)
+			),
+			color: getColorFromLabel(
+				'help_reachable',
+				getLabelFromValue(
+					'help_reachable',
+					record.get(field_names.indicators.help_reachable)
+				)
+			),
+			value: getRoundedDecimalString(
+				(record.get(field_names.indicators.help_reachable) * 100).toString()
+			),
 			procedureId: 'preview',
-			noBackground: true
+			noBackground:
+				getLabelFromValue(
+					'help_reachable',
+					record.get(field_names.indicators.help_reachable)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
 			slug: 'help_used',
-			label: 'À venir',
-			color: 'gray',
-			value: null,
+			label: getLabelFromValue(
+				'help_used',
+				record.get(field_names.indicators.help_used)
+			),
+			color: getColorFromLabel(
+				'help_used',
+				getLabelFromValue(
+					'help_used',
+					record.get(field_names.indicators.help_used)
+				)
+			),
+			value: getRoundedDecimalString(
+				(record.get(field_names.indicators.help_used) * 100).toString()
+			),
 			procedureId: 'preview',
-			noBackground: true
+			noBackground:
+				getLabelFromValue(
+					'help_used',
+					record.get(field_names.indicators.help_used)
+				) === 'À venir'
 		},
 		{
 			id: 'preview',
