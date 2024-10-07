@@ -43,7 +43,7 @@ const PublicLayout = (props: Props) => {
 				href: 'https://jedonnemonavis.numerique.gouv.fr',
 				target: '_self'
 			},
-			text: "Je donne mon avis"
+			text: 'Je donne mon avis'
 		},
 		{
 			iconId: 'ri-user-star-line',
@@ -51,7 +51,7 @@ const PublicLayout = (props: Props) => {
 				href: 'https://jedonnemonavis.numerique.gouv.fr/login',
 				target: '_self'
 			},
-			text: "Connexion"
+			text: 'Connexion'
 		}
 	];
 
