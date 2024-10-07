@@ -7,44 +7,13 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 const LegalNotice = () => {
 	const { cx, classes } = useStyles();
 
-	const getSectionContent = () => {
-		return Object.keys(LN.sections).map(sectionKey => {
-			const section = LN.sections[sectionKey];
-			let contentElements;
-
-			if (Array.isArray(section.content[0])) {
-				contentElements = (section.content as string[][]).map(
-					(subContent, index) => (
-						<div key={index} className={cx(classes.blockWrapper)}>
-							{subContent.map((block, subIndex) => (
-								<p key={subIndex}>{block}</p>
-							))}
-						</div>
-					)
-				);
-			} else {
-				contentElements = (section.content as string[]).map((block, index) => (
-					<p key={index}>{block}</p>
-				));
-			}
-
-			return (
-				<div key={sectionKey}>
-					<h2>{sectionKey}</h2>
-					{section.title && <p>{section.title}</p>}
-					<div className={cx(classes.blockWrapper)}>{contentElements}</div>
-				</div>
-			);
-		});
-	};
-
 	return (
 		<>
 			<Head>
-				<title>Mentions légales | Je donne mon avis</title>
+				<title>Mentions légales | Vos démarches essentielles</title>
 				<meta
 					name="description"
-					content={`Mentions légales | Je donne mon avis`}
+					content={`Mentions légales | Vos démarches essentielles`}
 				/>
 			</Head>
 			<div
@@ -52,7 +21,7 @@ const LegalNotice = () => {
 					'fr-container',
 					'fr-col-lg-10',
 					'fr-col-xl-8',
-					'fr-pt-20v'
+					'fr-py-20v'
 				)}
 			>
 				<div
@@ -63,8 +32,76 @@ const LegalNotice = () => {
 					)}
 				>
 					<div className={'fr-col-lg-12'}>
-						<h1 className={fr.cx('fr-mb-12v')}>{LN.title}</h1>
-						{getSectionContent()}
+						<h1 className={fr.cx('fr-mb-12v')}>
+							Mentions légales de Vos Démarches Essentielles
+						</h1>
+						{Object.keys(LN).map(key => (
+							<div key={key} className={cx(classes.blockWrapper)}>
+								<h2>{LN[key].title}</h2>
+								{LN[key].content.map((line, index) => {
+									const isLink =
+										typeof line === 'object' && line.type === 'link';
+									const isMailto =
+										typeof line === 'object' && line.type === 'mailto';
+									const isList =
+										typeof line === 'object' && line.type === 'list';
+									const hasNoSpaces =
+										typeof line === 'object' && line.type === 'noSpaces';
+									const isBold =
+										typeof line === 'object' && line.type === 'bold';
+
+									return (
+										<React.Fragment key={index}>
+											{isLink ? (
+												<>
+													<p>
+														<a
+															href={line.href}
+															target="_blank"
+															rel="noopener noreferrer"
+														>
+															{line.text}
+														</a>
+													</p>
+												</>
+											) : isMailto ? (
+												<p>
+													<a href={line.href}>{line.text}</a>
+												</p>
+											) : isBold ? (
+												<>
+													<p dangerouslySetInnerHTML={{ __html: line.text }} />
+												</>
+											) : isList ? (
+												<ul>
+													<li>{line.text}</li>
+												</ul>
+											) : typeof line === 'string' ? (
+												<>
+													<p
+														className={cx(
+															hasNoSpaces ? classes.noSpacesParagraph : ''
+														)}
+													>
+														{line}
+													</p>
+												</>
+											) : (
+												<>
+													<p
+														className={cx(
+															hasNoSpaces ? classes.noSpacesParagraph : ''
+														)}
+													>
+														{line.text}
+													</p>
+												</>
+											)}
+										</React.Fragment>
+									);
+								})}
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
@@ -76,10 +113,17 @@ const useStyles = makeStyles()(theme => ({
 	blockWrapper: {
 		display: 'flex',
 		flexDirection: 'column',
-		marginBottom: '2rem',
-		p: {
-			marginBottom: '0 !important'
+		marginBottom: '1rem',
+
+		a: {
+			width: 'fit-content'
+		},
+		ul: {
+			margin: '2rem 0 2rem 2rem'
 		}
+	},
+	noSpacesParagraph: {
+		marginBottom: '0 !important'
 	}
 }));
 

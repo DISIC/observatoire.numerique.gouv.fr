@@ -29,6 +29,17 @@ export const getLabelFromValue = (
 			}
 			if (!value) return 'À venir';
 			return `${markIntValue.toFixed(1)} / 10`;
+		case 'help_reachable':
+		case 'help_used':
+			const percentIntValue = parseFloat(value) * 10;
+			if (isNaN(percentIntValue) && !!value) {
+				if (['Non applicable', "Nombre d'avis insuffisant"].includes(value))
+					return value;
+				else return 'À venir';
+			}
+			if (!value) return 'À venir';
+			return `${percentIntValue.toFixed(1)}%`;
+
 		case 'uptime':
 			const uptimeIntValue = parseFloat(value);
 			if (isNaN(uptimeIntValue)) return 'À venir';
@@ -96,6 +107,13 @@ export const getColorFromLabel = (
 			if (markIntValue < 5) return 'red';
 			if (markIntValue < 8) return 'yellow';
 			return 'green';
+		case 'help_reachable':
+		case 'help_used':
+			const percentIntValue = parseInt(label.split('%')[0]) / 10;
+			if (isNaN(percentIntValue)) return 'gray';
+			if (percentIntValue < (slug === 'help_reachable' ? 7 : 5)) return 'red';
+			if (percentIntValue < (slug === 'help_reachable' ? 8.5 : 8))
+				return 'yellow';
 		case 'uptime':
 			if (label === 'À venir') return 'gray';
 			if (label === 'Partiel') return 'yellow';

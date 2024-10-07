@@ -28,7 +28,14 @@ export function CustomFooter() {
 				termsLinkProps={{
 					href: '/legalNotice'
 				}}
-				bottomItems={[{ text: 'Contact', linkProps: { href: '/contact' } }, { text: 'Code source', linkProps: { href: 'https://github.com/DISIC/observatoire.numerique.gouv.fr' } }]}
+				bottomItems={[
+					{
+						text: 'Modalités d’utilisation',
+						linkProps: { href: '/termsOfUse' }
+					},
+					{ text: 'Contact', linkProps: { href: '/contact' } },
+					{ text: 'Code source', linkProps: { href: 'https://github.com/DISIC/observatoire.numerique.gouv.fr' } }
+				]}
 			/>
 		</>
 	);
