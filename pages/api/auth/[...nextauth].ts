@@ -67,12 +67,12 @@ const options = {
 
 	cookies: {
 		sessionToken: {
-			name: 'observatoire_auth_token',
+			name: process.env.NEXTAUTH_COOKIENAME || 'observatoire_auth_token',
 			options: {
 				httpOnly: true,
 				sameSite: 'lax',
 				path: '/',
-				secure: true
+				secure: false
 			}
 		}
 	}

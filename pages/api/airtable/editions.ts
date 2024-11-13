@@ -4,6 +4,7 @@ import { tableEditions } from '../../../utils/airtable';
 
 const getEditions = async (_req: NextApiRequest, res: NextApiResponse) => {
 	const token = await getToken({
+		cookieName: process.env.NEXTAUTH_COOKIENAME,
 		req: _req,
 		secret: process.env.JWT_SECRET
 	});

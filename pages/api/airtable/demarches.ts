@@ -282,6 +282,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 
 const getDemarches = async (_req: NextApiRequest, res: NextApiResponse) => {
 	const token = await getToken({
+		cookieName: process.env.NEXTAUTH_COOKIENAME,
 		req: _req,
 		secret: process.env.JWT_SECRET
 	});
