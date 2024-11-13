@@ -75,7 +75,7 @@ const options = {
 				secure: true
 			}
 		}
-	},
+	}
 };
 
 const authHandler: NextApiHandler = (
