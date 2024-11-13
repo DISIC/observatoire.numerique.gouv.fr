@@ -9,6 +9,7 @@ export async function middleware(request: NextRequest) {
 		req: request,
 		secret: process.env.JWT_SECRET
 	});
+	console.log(token)
 
 	if (request.nextUrl.pathname.startsWith('/administration/login') && !!token) {
 		return NextResponse.redirect(
