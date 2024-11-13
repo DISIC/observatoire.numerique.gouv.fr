@@ -63,7 +63,19 @@ const options = {
 		verificationKey: process.env.JWT_VERIFICATION_PUBLIC_KEY,
 		encryptionKey: process.env.JWT_ENCRYPTION_PRIVATE_KEY,
 		decryptionKey: process.env.JWT_DECRYPTION_PUBLIC_KEY
-	}
+	},
+
+	cookies: {
+		sessionToken: {
+			name: 'observatoire_auth_token',
+			options: {
+				httpOnly: true,
+				sameSite: 'lax',
+				path: '/',
+				secure: true
+			}
+		}
+	},
 };
 
 const authHandler: NextApiHandler = (
