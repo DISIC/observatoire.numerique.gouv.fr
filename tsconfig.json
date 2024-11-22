@@ -15,10 +15,16 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"baseUrl": ".",
+		"rootDir": "./src",
 		"paths": {
-			"@/*": ["./*"]
-		}
+			"@/*": ["./src/*"]
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["src/**/*", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
 	"exclude": ["node_modules"]
 }
