@@ -17,7 +17,8 @@
 		"baseUrl": ".",
 		"rootDir": "./src",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@payload-config": ["./src/payload/payload.config.ts"]
 		},
 		"plugins": [
 			{

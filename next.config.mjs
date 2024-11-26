@@ -1,7 +1,12 @@
+import { withPayload } from '@payloadcms/next/withPayload';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	experimental: {
+		esmExternals: true
+	},
 	i18n: {
 		locales: ['fr'],
 		defaultLocale: 'fr'
@@ -13,8 +18,14 @@ const nextConfig = {
 		});
 		return config;
 	},
-	//This option requires Next 13.1 or newer, if you can't update you can use this plugin instead: https://github.com/martpie/next-transpile-modules
+	babel: {
+		presets: [
+			['@babel/preset-env', { targets: { node: 'current' } }],
+			'@babel/preset-typescript',
+			'next/babel'
+		]
+	},
 	transpilePackages: ['@codegouvfr/react-dsfr']
 };
 
-module.exports = nextConfig;
+export default withPayload(nextConfig);
