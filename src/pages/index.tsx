@@ -1,37 +1,35 @@
+import { Loader } from '@/components/generic/Loader';
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { IndicatorsDetails } from '@/components/home/IndicatorsDetails';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
 import { TextWithImage } from '@/components/home/TextWithImage';
 import { useProcedureHeaders } from '@/utils/api';
+import { trpc } from '@/utils/trpc';
 
 export default function Home() {
 	const { data: proceduresTableHeaders } = useProcedureHeaders();
 
+	const { data: homeCMS, isLoading: isLoadingHomeCms } = trpc.cms.home.useQuery();
+
+	const homeTexts = homeCMS?.data
+
+	if (isLoadingHomeCms || !homeTexts) {
+		return <Loader />
+	}
+
 	return (
 		<div>
 			<HomeHeader
-				title={<>Suivez l’amélioration de vos démarches essentielles</>}
-				description={
-					<>
-						Cet outil permet d’évaluer en continu la qualité des démarches et
-						services numériques, afin d’identifier des opportunités
-						d’amélioration à prioriser.
-					</>
-				}
+				title={homeTexts.header.title}
+				description={homeTexts.header.description}
 				button={{
-					text: 'Consulter le tableau de suivi',
+					text: homeTexts.header.button,
 					link: '/observatoire'
 				}}
 			/>
 			<IndicatorsInfos
-				title={<>Comment évaluons-nous la qualité de ces services ?</>}
-				description={
-					<>
-						Nous répertorions les démarches et services numériques les plus
-						fréquemment utilisés, et nous évaluons leur qualité à travers 5
-						indicateurs clés.
-					</>
-				}
+				title={homeTexts.quality.title}
+				description={homeTexts.quality.description}
 			/>
 			<IndicatorsDetails
 				title={<>Zoom sur les indicateurs.</>}

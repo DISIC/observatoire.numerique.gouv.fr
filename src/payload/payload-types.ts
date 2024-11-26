@@ -225,7 +225,15 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Home {
   id: string;
-  heading?: string | null;
+  header: {
+    title: string;
+    description: string;
+    button: string;
+  };
+  quality: {
+    title: string;
+    description: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -234,7 +242,19 @@ export interface Home {
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
-  heading?: T;
+  header?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        button?: T;
+      };
+  quality?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -10,6 +10,7 @@ import { ReactNode, useEffect } from 'react';
 import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
 import '../utils/keyframes.css';
 import { init } from '@socialgouv/matomo-next';
+import { trpc } from '../utils/trpc';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -54,4 +55,4 @@ function App({ Component, pageProps }: AppProps) {
 	);
 }
 
-export default withDsfr(withAppEmotionCache(App));
+export default trpc.withTRPC(withDsfr(withAppEmotionCache(App)));

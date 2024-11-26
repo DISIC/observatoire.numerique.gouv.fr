@@ -3,8 +3,8 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
 
 type Props = {
-	title: JSX.Element;
-	description: JSX.Element;
+	title: JSX.Element | string;
+	description: JSX.Element | string;
 	button: { link: string; text: string };
 };
 

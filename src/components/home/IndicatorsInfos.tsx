@@ -7,8 +7,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 type Props = {
-	title: JSX.Element;
-	description: JSX.Element;
+	title: JSX.Element | string;
+	description: JSX.Element | string;
 };
 
 type CardProps = {
