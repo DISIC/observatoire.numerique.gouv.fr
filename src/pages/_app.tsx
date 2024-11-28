@@ -55,4 +55,4 @@ function App({ Component, pageProps }: AppProps) {
 	);
 }
 
-export default trpc.withTRPC(withDsfr(withAppEmotionCache(App)));
+export default withDsfr(trpc.withTRPC(withAppEmotionCache(App)));

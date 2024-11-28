@@ -14,7 +14,7 @@ export default function Home() {
 	const homeTexts = homeCMS?.data
 
 	if (isLoadingHomeCms || !homeTexts) {
-		return <Loader />
+		return <Loader loadingMessage="Chargement du contenu en cours..." />
 	}
 
 	return (
