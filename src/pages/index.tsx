@@ -1,3 +1,4 @@
+import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { IndicatorsDetails } from '@/components/home/IndicatorsDetails';
@@ -15,7 +16,7 @@ export default function Home() {
 	const homeTexts = homeCMS?.data;
 
 	if (isLoadingHomeCms || !homeTexts) {
-		return <Loader loadingMessage="Chargement du contenu en cours..." />;
+		return <EmptyScreenZone><Loader loadingMessage="Chargement du contenu en cours..." /></EmptyScreenZone>
 	}
 
 	return (
