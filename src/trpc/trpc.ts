@@ -2,7 +2,7 @@ import { initTRPC } from '@trpc/server';
 import superjson from 'superjson';
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
 import { getPayload } from 'payload';
-import config from '@payload-config'
+import config from '@payload-config';
 import { ZodError } from 'zod';
 
 type CreateContextOptions = {
@@ -11,7 +11,7 @@ type CreateContextOptions = {
 
 const createInnerContext = async (opts: CreateContextOptions) => {
 	return {
-		payload: opts.payloadClient,
+		payload: opts.payloadClient
 	};
 };
 
@@ -28,11 +28,10 @@ const t = initTRPC.context<typeof createContext>().create({
 			...shape,
 			data: {
 				...shape.data,
-				zodError:
-					error.cause instanceof ZodError ? error.cause.flatten() : null,
-			},
+				zodError: error.cause instanceof ZodError ? error.cause.flatten() : null
+			}
 		};
-	},
+	}
 });
 
 export const router = t.router;

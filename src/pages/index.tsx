@@ -9,28 +9,19 @@ import { trpc } from '@/utils/trpc';
 export default function Home() {
 	const { data: proceduresTableHeaders } = useProcedureHeaders();
 
-	const { data: homeCMS, isLoading: isLoadingHomeCms } = trpc.cms.home.useQuery();
+	const { data: homeCMS, isLoading: isLoadingHomeCms } =
+		trpc.cms.home.useQuery();
 
-	const homeTexts = homeCMS?.data
+	const homeTexts = homeCMS?.data;
 
 	if (isLoadingHomeCms || !homeTexts) {
-		return <Loader loadingMessage="Chargement du contenu en cours..." />
+		return <Loader loadingMessage="Chargement du contenu en cours..." />;
 	}
 
 	return (
 		<div>
-			<HomeHeader
-				title={homeTexts.header.title}
-				description={homeTexts.header.description}
-				button={{
-					text: homeTexts.header.button,
-					link: '/observatoire'
-				}}
-			/>
-			<IndicatorsInfos
-				title={homeTexts.quality.title}
-				description={homeTexts.quality.description}
-			/>
+			<HomeHeader {...homeTexts.header} />
+			<IndicatorsInfos {...homeTexts.quality} />
 			<IndicatorsDetails
 				title={<>Zoom sur les indicateurs.</>}
 				description={

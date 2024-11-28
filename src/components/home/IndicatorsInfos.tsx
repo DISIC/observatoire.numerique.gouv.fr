@@ -1,24 +1,25 @@
+import { PayloadMedia } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { ProcedureHeader } from '@prisma/client';
-import Button from '@codegouvfr/react-dsfr/Button';
-import { useRouter } from 'next/router';
-import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import PayloadImage from '../generic/PayloadImage';
 
 type Props = {
 	title: JSX.Element | string;
 	description: JSX.Element | string;
+	blocs: {
+		title: string;
+		description: string;
+		buttonText: string;
+		buttonLink: string;
+		image: string | PayloadMedia;
+	}[];
 };
 
 type CardProps = {
-	image: {
-		alt: string;
-		src: string;
-		width: number;
-		height: number;
-	};
-	title: JSX.Element;
+	image: string | PayloadMedia;
+	title: string;
 	description: string;
 	button: {
 		text: string;
@@ -31,16 +32,12 @@ function IndicatorsInfosCard(props: CardProps) {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
+	console.log(props.image);
+
 	return (
 		<div className={classes.explanation}>
 			<div className={classes.explanationTitle}>
-				<Image
-					className={cx(fr.cx('fr-responsive-img'))}
-					src={image.src}
-					alt={image.alt}
-					width={image.width}
-					height={image.height}
-				/>
+				<PayloadImage image={image} />
 				<span>{title}</span>
 			</div>
 			<p>{description}</p>
@@ -55,7 +52,7 @@ function IndicatorsInfosCard(props: CardProps) {
 }
 
 export function IndicatorsInfos(props: Props) {
-	const { title, description } = props;
+	const { title, description, blocs } = props;
 	const { classes, cx } = useStyles();
 
 	return (
@@ -65,44 +62,17 @@ export function IndicatorsInfos(props: Props) {
 				<p>{description}</p>
 			</div>
 			<div className={classes.explainationsContainer}>
-				<IndicatorsInfosCard
-					image={{
-						src: '/assets/data-visualization.svg',
-						alt: '',
-						width: 80,
-						height: 80
-					}}
-					title={
-						<>
-							Une publication trimestrielle
-							<br /> de la qualité des services
-						</>
-					}
-					description="Tous les trois mois, nous mettons à jour l’évaluation de chaque service sur des critères de qualité et de performance."
-					button={{
-						text: 'Comprendre l’évaluation',
-						link: '/Aide/Observatoire?tab=goals'
-					}}
-				/>
-				<IndicatorsInfosCard
-					image={{
-						src: '/assets/city-hall.svg',
-						alt: '',
-						width: 80,
-						height: 80
-					}}
-					title={
-						<>
-							Le recensement des services
-							<br /> numériques essentiels
-						</>
-					}
-					description="L'outil recense les services les plus utilisés, ou donnant accès à une aide financière publique nationale."
-					button={{
-						text: 'Critères de selection',
-						link: '/Aide/Observatoire?tab=criterias'
-					}}
-				/>
+				{blocs.map(bloc => (
+					<IndicatorsInfosCard
+						image={bloc.image}
+						title={bloc.title}
+						description={bloc.description}
+						button={{
+							text: bloc.buttonText,
+							link: bloc.buttonLink
+						}}
+					/>
+				))}
 			</div>
 		</div>
 	);

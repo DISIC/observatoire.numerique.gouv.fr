@@ -1,20 +1,27 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload';
 
 export const Media: CollectionConfig = {
 	slug: 'payload-media',
+	defaultPopulate: {
+		url: true,
+		filename: true,
+		width: true,
+		height: true,
+		alt: true
+	},
 	labels: {
 		singular: 'Media',
 		plural: 'Medias'
 	},
 	access: {
-		read: () => true,
+		read: () => true
 	},
 	fields: [
 		{
 			name: 'alt',
 			type: 'text',
-			required: true,
-		},
+			required: true
+		}
 	],
-	upload: true,
-}
+	upload: true
+};

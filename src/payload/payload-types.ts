@@ -228,11 +228,20 @@ export interface Home {
   header: {
     title: string;
     description: string;
-    button: string;
+    buttonText: string;
+    buttonLink: string;
   };
   quality: {
     title: string;
     description: string;
+    blocs: {
+      image: string | PayloadMedia;
+      title: string;
+      description: string;
+      buttonText: string;
+      buttonLink: string;
+      id?: string | null;
+    }[];
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -247,13 +256,24 @@ export interface HomeSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-        button?: T;
+        buttonText?: T;
+        buttonLink?: T;
       };
   quality?:
     | T
     | {
         title?: T;
         description?: T;
+        blocs?:
+          | T
+          | {
+              image?: T;
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

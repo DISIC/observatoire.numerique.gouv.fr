@@ -5,11 +5,12 @@ import Link from 'next/link';
 type Props = {
 	title: JSX.Element | string;
 	description: JSX.Element | string;
-	button: { link: string; text: string };
+	buttonText: string;
+	buttonLink: string;
 };
 
 export function HomeHeader(props: Props) {
-	const { title, description, button } = props;
+	const { title, description, buttonText, buttonLink } = props;
 	const { classes, cx } = useStyles();
 
 	return (
@@ -17,8 +18,8 @@ export function HomeHeader(props: Props) {
 			<div className={cx(fr.cx('fr-container'), classes.container)}>
 				<h1>{title}</h1>
 				<p>{description}</p>
-				<Link href={button.link} className={fr.cx('fr-btn')}>
-					{button.text}
+				<Link href={buttonLink} className={fr.cx('fr-btn')}>
+					{buttonText}
 				</Link>
 			</div>
 		</div>

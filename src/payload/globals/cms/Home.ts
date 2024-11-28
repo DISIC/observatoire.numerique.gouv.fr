@@ -1,8 +1,10 @@
-import { GlobalConfig } from "payload";
+import { standardFields } from '@/payload/fields/standards';
+import { GlobalConfig } from 'payload';
 
+standardFields.title;
 export const CMSHome: GlobalConfig = {
-	slug: "home",
-	label: "CMS - Accueil",
+	slug: 'home',
+	label: 'CMS - Accueil',
 	fields: [
 		{
 			type: 'tabs',
@@ -11,45 +13,32 @@ export const CMSHome: GlobalConfig = {
 					label: 'En-tête',
 					name: 'header',
 					fields: [
-						{
-							name: "title",
-							label: "Titre",
-							type: 'text',
-							required: true,
-						},
-						{
-							name: "description",
-							label: "Description",
-							type: 'textarea',
-							required: true,
-						},
-						{
-							name: "button",
-							label: "Bouton",
-							type: 'text',
-							required: true,
-						},
-					],
+						standardFields.title,
+						standardFields.description,
+						standardFields.button
+					]
 				},
 				{
 					label: 'Qualimétrie',
 					name: 'quality',
 					fields: [
+						standardFields.title,
+						standardFields.description,
 						{
-							name: "title",
-							label: "Titre",
-							type: 'text',
+							name: 'blocs',
+							label: 'Blocs',
+							type: 'array',
 							required: true,
-						},
-						{
-							name: "description",
-							label: "Description",
-							type: 'textarea',
-							required: true,
-						},
+							fields: [
+								standardFields.image,
+								standardFields.title,
+								standardFields.description,
+								standardFields.button
+							]
+						}
 					]
 				}
 			]
-		},
-	],
+		}
+	]
 };

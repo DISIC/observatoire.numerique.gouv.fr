@@ -1,7 +1,7 @@
 import { router } from './trpc';
 import { cms } from './routers/cms';
 export const appRouter = router({
-	cms,
+	cms
 });
 
 export type AppRouter = typeof appRouter;
