@@ -4,6 +4,9 @@ import { withPayload } from '@payloadcms/next/withPayload';
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	images: {
+		minimumCacheTTL: 604800
+	},
 	experimental: {
 		esmExternals: true
 	},
