@@ -49,6 +49,23 @@ export const CMSHome: GlobalConfig = {
 						standardFields.description,
 						standardFields.button
 					]
+				},
+				{
+					label: 'Redirections',
+					name: 'redirections',
+					fields: [
+						{
+							name: 'textsWithImages',
+							type: 'array',
+							required: true,
+							fields: [
+								standardFields.image,
+								standardFields.title,
+								standardFields.description,
+								standardFields.button,
+							]
+						}
+					]
 				}
 			]
 		}

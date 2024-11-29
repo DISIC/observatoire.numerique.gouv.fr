@@ -293,6 +293,16 @@ export interface Home {
     buttonText: string;
     buttonLink: string;
   };
+  redirections: {
+    textsWithImages: {
+      image: string | PayloadMedia;
+      title: string;
+      description: string;
+      buttonText: string;
+      buttonLink: string;
+      id?: string | null;
+    }[];
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -332,6 +342,20 @@ export interface HomeSelect<T extends boolean = true> {
         description?: T;
         buttonText?: T;
         buttonLink?: T;
+      };
+  redirections?:
+    | T
+    | {
+        textsWithImages?:
+          | T
+          | {
+              image?: T;
+              title?: T;
+              description?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

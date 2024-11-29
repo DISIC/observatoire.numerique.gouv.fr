@@ -2,7 +2,6 @@ import { PayloadMedia } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import PayloadImage from '../generic/PayloadImage';
 
 type Props = {
@@ -29,10 +28,7 @@ type CardProps = {
 
 function IndicatorsInfosCard(props: CardProps) {
 	const { image, title, description, button } = props;
-	const { classes, cx } = useStyles();
-	const router = useRouter();
-
-	console.log(props.image);
+	const { classes } = useStyles();
 
 	return (
 		<div className={classes.explanation}>

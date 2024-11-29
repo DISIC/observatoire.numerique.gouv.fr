@@ -1,32 +1,31 @@
+import { PayloadMedia } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { push } from '@socialgouv/matomo-next';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import PayloadImage from '../generic/PayloadImage';
 
 type Props = {
-	title: JSX.Element;
-	description: JSX.Element;
-	button: {
-		text: string;
-		link: string;
-	};
-	image: {
-		alt: string;
-		src: string;
-		width: number;
-		height: number;
-	};
+	title: string;
+	description: string;
+	buttonText: string;
+	buttonLink: string;
+	image: string | PayloadMedia;
 	imageRight?: boolean;
 	blueBackground?: boolean;
 };
 
 export function TextWithImage(props: Props) {
-	const { title, description, blueBackground, imageRight, image, button } =
-		props;
+	const {
+		title,
+		description,
+		blueBackground,
+		imageRight,
+		image,
+		buttonText,
+		buttonLink
+	} = props;
 	const { classes, cx } = useStyles();
-	const router = useRouter();
 
 	return (
 		<div className={cx(blueBackground ? classes.blueBackground : {})}>
@@ -41,23 +40,17 @@ export function TextWithImage(props: Props) {
 					<h2>{title}</h2>
 					<p>{description}</p>
 					<Link
-						href={button.link}
+						href={buttonLink}
 						onClick={() => {
 							push(['trackEvent', 'home', 'formDemand']);
 						}}
 						className={fr.cx('fr-btn', 'fr-btn--secondary')}
 					>
-						{button.text}
+						{buttonText}
 					</Link>
 				</div>
 				<div className={classes.secondSection}>
-					<Image
-						alt={image.alt}
-						src={image.src}
-						title={image.alt}
-						width={image.width}
-						height={image.height}
-					/>
+					<PayloadImage image={image} width={327} height={255} />
 				</div>
 			</div>
 		</div>
@@ -89,16 +82,18 @@ const useStyles = makeStyles()(theme => ({
 	firstSection: {
 		h2: {
 			...fr.typography[4].style,
-			color: theme.decisions.background.actionHigh.blueFrance.default
+			color: theme.decisions.background.actionHigh.blueFrance.default,
+			paddingRight: fr.spacing('20v')
 		},
 		p: {
-			marginTop: fr.spacing('2v')
+			marginTop: fr.spacing('2v'),
 		},
 		[fr.breakpoints.down('sm')]: {
 			width: '100%'
 		}
 	},
 	secondSection: {
+		width: '60%',
 		[fr.breakpoints.down('sm')]: {
 			width: '100%'
 		}

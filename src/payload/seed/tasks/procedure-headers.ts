@@ -1,28 +1,34 @@
-import { PayloadProcedureHeader } from "@/payload/payload-types";
-import { BasePayload } from "payload"
+import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { BasePayload } from 'payload';
 
-type ProcedureHeaderWithoutSystemFields = Omit<PayloadProcedureHeader, 'id' | 'createdAt' | 'updatedAt'>;
+type ProcedureHeaderWithoutSystemFields = Omit<
+	PayloadProcedureHeader,
+	'id' | 'createdAt' | 'updatedAt'
+>;
 
 const procedureHeadersTask = async (payload: BasePayload) => {
 	const headers: ProcedureHeaderWithoutSystemFields[] = [
 		{
 			slug: 'satisfaction',
 			label: 'Satisfaction Usagers',
-			description: 'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton "je donne mon avis".',
+			description:
+				'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton "je donne mon avis".',
 			icon: 'ri-emotion-happy-line',
 			position: 2
 		},
 		{
 			slug: 'online',
 			label: 'Réalisable en ligne',
-			description: 'Permet d\'évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
+			description:
+				"Permet d'évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.",
 			icon: 'ri-computer-line',
 			position: 1
 		},
 		{
 			slug: 'usage',
 			label: 'Utilisation de la version en ligne',
-			description: 'Mesure le taux d\'utilisation du service numérique, par rapport à l\'utilisation tout canaux confondus',
+			description:
+				"Mesure le taux d'utilisation du service numérique, par rapport à l'utilisation tout canaux confondus",
 			icon: 'ri-direction-line',
 			position: 5
 		},
@@ -57,14 +63,16 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'dlnuf',
 			label: 'Dites-le nous une fois',
-			description: 'Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l\'Administration détient déjà.',
+			description:
+				"Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l'Administration détient déjà.",
 			icon: 'ri-spam-line',
 			position: 4
 		},
 		{
 			slug: 'handicap',
 			label: 'Prise en compte du handicap',
-			description: 'Mesure le niveau d\'accessibilité numérique d\'une démarche, en se basant sur le RGAA (Référentiel Général d\'Amélioration de l\'Accessibilité).',
+			description:
+				"Mesure le niveau d'accessibilité numérique d'une démarche, en se basant sur le RGAA (Référentiel Général d'Amélioration de l'Accessibilité).",
 			icon: 'ri-open-arm-line',
 			position: 3
 		},
@@ -77,7 +85,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		},
 		{
 			slug: 'help_used',
-			label: 'Niveau d\'autonomie',
+			label: "Niveau d'autonomie",
 			description: null,
 			icon: 'ri-chat-smile-line',
 			position: 8
@@ -101,6 +109,6 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 	}
 
 	payload.logger.info('Procedure headers seeded successfully');
-}
+};
 
 export default procedureHeadersTask;

@@ -8,7 +8,7 @@ export const ProcedureHeaders: CollectionConfig = {
 	},
 	admin: {
 		useAsTitle: 'label',
-		defaultColumns: ['label', 'slug', 'position'],
+		defaultColumns: ['label', 'slug', 'position']
 	},
 	access: {
 		read: () => true

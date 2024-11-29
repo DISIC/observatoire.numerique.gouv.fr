@@ -4,10 +4,12 @@ import Image from 'next/image';
 
 type PayloadImageProps = {
 	image: string | PayloadMedia;
+	width?: number;
+	height?: number;
 };
 
 const PayloadImage = (props: PayloadImageProps) => {
-	const { image } = props;
+	const { image, width, height } = props;
 
 	return (
 		typeof image === 'object' && (
@@ -15,8 +17,8 @@ const PayloadImage = (props: PayloadImageProps) => {
 				className={fr.cx('fr-responsive-img')}
 				src={image.url || ''}
 				alt={image.alt || ''}
-				width={image.width || 0}
-				height={image.height || 0}
+				width={width || image.width || 0}
+				height={height || image.height || 0}
 			/>
 		)
 	);
