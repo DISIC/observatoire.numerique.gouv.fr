@@ -26,10 +26,16 @@ Installer les dépendances (npm version >= 18)
 yarn
 ```
 
-Insérer les seed
+Insérer les seed (BDD custom - amenée à disparaitre)
 
 ```
 npx prisma db seed
+```
+
+Insérer les seed (payloadcms)
+
+```
+yarn seed:dev
 ```
 
 Lancer le frontend en local
