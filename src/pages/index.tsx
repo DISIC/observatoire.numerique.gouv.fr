@@ -8,14 +8,19 @@ import { useProcedureHeaders } from '@/utils/api';
 import { trpc } from '@/utils/trpc';
 
 export default function Home() {
-	const { data: proceduresTableHeaders } = useProcedureHeaders();
-
 	const { data: homeCMS, isLoading: isLoadingHomeCms } =
 		trpc.cms.home.useQuery();
 
+	const { data: procdeureHeadersRequest, isLoading: isLoadingProcedureHeaders } =
+		trpc.procedureHeaders.getList.useQuery({
+			page: 1,
+			perPage: 100
+		});
+	const procedureHeaders = procdeureHeadersRequest?.data || []
+
 	const homeTexts = homeCMS?.data;
 
-	if (isLoadingHomeCms || !homeTexts) {
+	if (isLoadingHomeCms || isLoadingProcedureHeaders || !homeTexts || !procedureHeaders.length) {
 		return <EmptyScreenZone><Loader loadingMessage="Chargement du contenu en cours..." /></EmptyScreenZone>
 	}
 
@@ -24,20 +29,8 @@ export default function Home() {
 			<HomeHeader {...homeTexts.header} />
 			<IndicatorsInfos {...homeTexts.quality} />
 			<IndicatorsDetails
-				title={<>Zoom sur les indicateurs.</>}
-				description={
-					<>
-						Nous avons défini 5 indicateurs clés afin de suivre les
-						améliorations des services numériques. Ils couvrent les enjeux de
-						qualité de l’expérience utilisateur, de la proactivité et de la
-						performance.
-					</>
-				}
-				indicators={proceduresTableHeaders || []}
-				button={{
-					text: 'Consulter tous les indicateurs',
-					link: '/Aide/Observatoire?tab=indicators'
-				}}
+				{...homeTexts.procedureHeaders}
+				indicators={procedureHeaders || []}
 			/>
 			<TextWithImage
 				title={

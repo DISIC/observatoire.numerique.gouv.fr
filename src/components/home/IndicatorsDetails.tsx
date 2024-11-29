@@ -1,22 +1,19 @@
+import { PayloadProcedureHeader } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
-import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { ProcedureHeader } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 type Props = {
-	title: JSX.Element;
-	description: JSX.Element;
-	indicators: ProcedureHeader[];
-	button: {
-		text: string;
-		link: string;
-	};
+	title: string;
+	description: string;
+	indicators: PayloadProcedureHeader[];
+	buttonText: string;
+	buttonLink: string;
 };
 
 export function IndicatorsDetails(props: Props) {
-	const { title, description, indicators, button } = props;
+	const { title, description, indicators, buttonText, buttonLink } = props;
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
@@ -40,10 +37,10 @@ export function IndicatorsDetails(props: Props) {
 				</div>
 				<div className={classes.buttonContainer}>
 					<Link
-						href={button.link}
+						href={buttonLink}
 						className={fr.cx('fr-btn', 'fr-btn--secondary')}
 					>
-						{button.text}
+						{buttonText}
 					</Link>
 				</div>
 			</div>

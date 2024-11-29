@@ -37,6 +37,15 @@ export const CMSHome: GlobalConfig = {
 							]
 						}
 					]
+				},
+				{
+					label: 'Indicateurs',
+					name: 'procedureHeaders',
+					fields: [
+						standardFields.title,
+						standardFields.description,
+						standardFields.button
+					]
 				}
 			]
 		}

@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload';
 
 export const ProcedureHeaders: CollectionConfig = {
-	slug: 'procedure-headers',
+	slug: 'payload-procedure-headers',
 	labels: {
 		singular: 'Indicateur',
 		plural: 'Indicateurs'

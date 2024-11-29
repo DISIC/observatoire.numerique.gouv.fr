@@ -13,7 +13,7 @@ export interface Config {
   collections: {
     'payload-admins': PayloadAdmin;
     'payload-media': PayloadMedia;
-    'procedure-headers': ProcedureHeader;
+    'payload-procedure-headers': PayloadProcedureHeader;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -22,7 +22,7 @@ export interface Config {
   collectionsSelect: {
     'payload-admins': PayloadAdminsSelect<false> | PayloadAdminsSelect<true>;
     'payload-media': PayloadMediaSelect<false> | PayloadMediaSelect<true>;
-    'procedure-headers': ProcedureHeadersSelect<false> | ProcedureHeadersSelect<true>;
+    'payload-procedure-headers': PayloadProcedureHeadersSelect<false> | PayloadProcedureHeadersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -101,9 +101,9 @@ export interface PayloadMedia {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "procedure-headers".
+ * via the `definition` "payload-procedure-headers".
  */
-export interface ProcedureHeader {
+export interface PayloadProcedureHeader {
   id: string;
   slug: string;
   label: string;
@@ -140,8 +140,8 @@ export interface PayloadLockedDocument {
         value: string | PayloadMedia;
       } | null)
     | ({
-        relationTo: 'procedure-headers';
-        value: string | ProcedureHeader;
+        relationTo: 'payload-procedure-headers';
+        value: string | PayloadProcedureHeader;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -220,9 +220,9 @@ export interface PayloadMediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "procedure-headers_select".
+ * via the `definition` "payload-procedure-headers_select".
  */
-export interface ProcedureHeadersSelect<T extends boolean = true> {
+export interface PayloadProcedureHeadersSelect<T extends boolean = true> {
   slug?: T;
   label?: T;
   description?: T;
@@ -287,6 +287,12 @@ export interface Home {
       id?: string | null;
     }[];
   };
+  procedureHeaders: {
+    title: string;
+    description: string;
+    buttonText: string;
+    buttonLink: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -318,6 +324,14 @@ export interface HomeSelect<T extends boolean = true> {
               buttonLink?: T;
               id?: T;
             };
+      };
+  procedureHeaders?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        buttonText?: T;
+        buttonLink?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -33,7 +33,13 @@ const homeTask = async (payload: BasePayload) => {
 						image: qualityMediaBloc2.id,
 					}
 				]
-			}
+			},
+			procedureHeaders: {
+				title: 'Zoom sur les indicateurs.',
+				description: 'Nous avons défini 5 indicateurs clés afin de suivre les améliorations des services numériques. Ils couvrent les enjeux de qualité de l’expérience utilisateur, de la proactivité et de la performance.',
+				buttonText: 'Consulter tous les indicateurs',
+				buttonLink: '/Aide/Observatoire?tab=indicators'
+			},
 		}
 	})
 
