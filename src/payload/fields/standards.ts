@@ -16,6 +16,9 @@ export const standardFields: { [key: string]: Field } = {
 	button: {
 		label: 'Lien associé',
 		type: 'collapsible',
+		admin: {
+			initCollapsed: true
+		},
 		required: true,
 		fields: [
 			{

@@ -27,6 +27,9 @@ export const CMSHome: GlobalConfig = {
 						{
 							name: 'blocs',
 							label: 'Blocs',
+							admin: {
+								initCollapsed: true
+							},
 							type: 'array',
 							required: true,
 							fields: [
