@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload';
 
-export const Users: CollectionConfig = {
-	slug: 'payload-users',
+export const Admins: CollectionConfig = {
+	slug: 'payload-admins',
 	labels: {
 		singular: 'Administrateur',
 		plural: 'Administrateurs'

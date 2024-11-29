@@ -1,6 +1,7 @@
-import 'ignore-styles';
 import 'dotenv/config';
+import 'ignore-styles';
 import { getPayloadClient } from "../payload-client";
+import homeTask from './tasks/home';
 
 const argv = process.argv.slice(2);
 const isDev = argv.includes('--dev');
@@ -14,7 +15,7 @@ export const seedData = async () => {
 		if (isDev) {
 			payload.logger.info('Dev mode: Creating admin user...');
 			await payload.create({
-				collection: "payload-users",
+				collection: "payload-admins",
 				data: {
 					email: "admin@test.loc",
 					password: "admin123",
@@ -22,7 +23,7 @@ export const seedData = async () => {
 			});
 		}
 
-
+		await homeTask(payload);
 
 	} catch (e) {
 		console.error(e);
