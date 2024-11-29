@@ -10,6 +10,7 @@ import { Admins } from './collections/Admins';
 import { Media } from './collections/Media';
 import { CMSHome } from './globals/cms/Home';
 import { s3Storage } from '@payloadcms/storage-s3';
+import { ProcedureHeaders } from './collections/ProcedureHeaders';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -21,7 +22,7 @@ export default buildConfig({
 			baseDir: path.resolve(dirname)
 		}
 	},
-	collections: [Admins, Media],
+	collections: [Admins, Media, ProcedureHeaders],
 	globals: [CMSHome],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',

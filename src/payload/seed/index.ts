@@ -2,6 +2,7 @@ import 'dotenv/config';
 import 'ignore-styles';
 import { getPayloadClient } from "../payload-client";
 import homeTask from './tasks/home';
+import procedureHeadersTask from './tasks/procedure-headers';
 
 const argv = process.argv.slice(2);
 const isDev = argv.includes('--dev');
@@ -24,6 +25,7 @@ export const seedData = async () => {
 		}
 
 		await homeTask(payload);
+		await procedureHeadersTask(payload);
 
 	} catch (e) {
 		console.error(e);

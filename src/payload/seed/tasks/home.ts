@@ -36,6 +36,8 @@ const homeTask = async (payload: BasePayload) => {
 			}
 		}
 	})
+
+	payload.logger.info('Home content seeded successfully');
 }
 
 export default homeTask;

@@ -13,6 +13,7 @@ export interface Config {
   collections: {
     'payload-admins': PayloadAdmin;
     'payload-media': PayloadMedia;
+    'procedure-headers': ProcedureHeader;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -21,6 +22,7 @@ export interface Config {
   collectionsSelect: {
     'payload-admins': PayloadAdminsSelect<false> | PayloadAdminsSelect<true>;
     'payload-media': PayloadMediaSelect<false> | PayloadMediaSelect<true>;
+    'procedure-headers': ProcedureHeadersSelect<false> | ProcedureHeadersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -99,6 +101,31 @@ export interface PayloadMedia {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "procedure-headers".
+ */
+export interface ProcedureHeader {
+  id: string;
+  slug: string;
+  label: string;
+  description?: string | null;
+  icon:
+    | 'ri-emotion-happy-line'
+    | 'ri-computer-line'
+    | 'ri-direction-line'
+    | 'ri-rest-time-line'
+    | 'ri-customer-service-2-line'
+    | 'ri-shield-user-line'
+    | 'ri-timer-flash-line'
+    | 'ri-spam-line'
+    | 'ri-open-arm-line'
+    | 'ri-sun-line'
+    | 'ri-chat-smile-line';
+  position: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -111,6 +138,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'payload-media';
         value: string | PayloadMedia;
+      } | null)
+    | ({
+        relationTo: 'procedure-headers';
+        value: string | ProcedureHeader;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -186,6 +217,19 @@ export interface PayloadMediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "procedure-headers_select".
+ */
+export interface ProcedureHeadersSelect<T extends boolean = true> {
+  slug?: T;
+  label?: T;
+  description?: T;
+  icon?: T;
+  position?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
