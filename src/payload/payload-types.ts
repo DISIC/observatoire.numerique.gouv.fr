@@ -32,9 +32,11 @@ export interface Config {
   };
   globals: {
     home: Home;
+    help: Help;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
+    help: HelpSelect<false> | HelpSelect<true>;
   };
   locale: null;
   user: PayloadAdmin & {
@@ -308,6 +310,79 @@ export interface Home {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "help".
+ */
+export interface Help {
+  id: string;
+  header: {
+    title: string;
+  };
+  goals: {
+    title: string;
+    wysiwyg?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  criterias: {
+    title: string;
+    wysiwyg?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    buttonText: string;
+    buttonLink: string;
+  };
+  indicators: {
+    title: string;
+    keyIndicators: {
+      keyIndicatorsTitle: string;
+      keyIndicatorsDescription?: string | null;
+      keyIndicatorsList?:
+        | {
+            indicator: string | PayloadProcedureHeader;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    additionnalIndicators: {
+      additionnalIndicatorsTitle: string;
+      additionnalIndicatorsDescription?: string | null;
+      additionnalIndicatorsList?:
+        | {
+            indicator: string | PayloadProcedureHeader;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -355,6 +430,63 @@ export interface HomeSelect<T extends boolean = true> {
               buttonText?: T;
               buttonLink?: T;
               id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "help_select".
+ */
+export interface HelpSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        title?: T;
+      };
+  goals?:
+    | T
+    | {
+        title?: T;
+        wysiwyg?: T;
+      };
+  criterias?:
+    | T
+    | {
+        title?: T;
+        wysiwyg?: T;
+        buttonText?: T;
+        buttonLink?: T;
+      };
+  indicators?:
+    | T
+    | {
+        title?: T;
+        keyIndicators?:
+          | T
+          | {
+              keyIndicatorsTitle?: T;
+              keyIndicatorsDescription?: T;
+              keyIndicatorsList?:
+                | T
+                | {
+                    indicator?: T;
+                    id?: T;
+                  };
+            };
+        additionnalIndicators?:
+          | T
+          | {
+              additionnalIndicatorsTitle?: T;
+              additionnalIndicatorsDescription?: T;
+              additionnalIndicatorsList?:
+                | T
+                | {
+                    indicator?: T;
+                    id?: T;
+                  };
             };
       };
   updatedAt?: T;

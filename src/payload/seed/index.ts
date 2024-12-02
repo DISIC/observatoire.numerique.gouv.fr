@@ -3,6 +3,7 @@ import 'ignore-styles';
 import { getPayloadClient } from '../payload-client';
 import homeTask from './tasks/home';
 import procedureHeadersTask from './tasks/procedure-headers';
+import helpTask from './tasks/help';
 
 const argv = process.argv.slice(2);
 const isDev = argv.includes('--dev');
@@ -24,8 +25,9 @@ export const seedData = async () => {
 			});
 		}
 
-		await homeTask(payload);
 		await procedureHeadersTask(payload);
+		await homeTask(payload);
+		await helpTask(payload);
 	} catch (e) {
 		console.error(e);
 	} finally {

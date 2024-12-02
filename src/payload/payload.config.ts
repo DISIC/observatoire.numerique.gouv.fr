@@ -11,6 +11,7 @@ import { Media } from './collections/Media';
 import { CMSHome } from './globals/cms/Home';
 import { s3Storage } from '@payloadcms/storage-s3';
 import { ProcedureHeaders } from './collections/ProcedureHeaders';
+import { CMSHelp } from './globals/cms/Help';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -23,7 +24,7 @@ export default buildConfig({
 		}
 	},
 	collections: [Admins, Media, ProcedureHeaders],
-	globals: [CMSHome],
+	globals: [CMSHome, CMSHelp],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',
 	typescript: {
@@ -41,6 +42,7 @@ export default buildConfig({
 			acl: 'public-read',
 			bucket: process.env.S3_BUCKET_NAME ?? '',
 			config: {
+				region: process.env.S3_REGION ?? 'eu',
 				endpoint: process.env.CELLAR_ADDON_HOST,
 				credentials: {
 					accessKeyId: process.env.CELLAR_ADDON_KEY_ID ?? '',

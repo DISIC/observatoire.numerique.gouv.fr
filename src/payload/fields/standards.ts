@@ -13,6 +13,11 @@ export const standardFields: { [key: string]: Field } = {
 		type: 'textarea',
 		required: true
 	},
+	wysiwyg: {
+		name: 'wysiwyg',
+		label: 'Texte',
+		type: 'richText',
+	},
 	button: {
 		label: 'Lien associé',
 		type: 'collapsible',
