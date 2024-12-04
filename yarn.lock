@@ -2756,7 +2756,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.26.2":
+"@floating-ui/react@npm:^0.26.23":
   version: 0.26.28
   resolution: "@floating-ui/react@npm:0.26.28"
   dependencies:
@@ -3983,9 +3983,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@payloadcms/db-mongodb@npm:^3.0.2":
-  version: 3.2.2
-  resolution: "@payloadcms/db-mongodb@npm:3.2.2"
+"@payloadcms/db-mongodb@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/db-mongodb@npm:3.3.0"
   dependencies:
     http-status: "npm:1.6.2"
     mongoose: "npm:8.8.1"
@@ -3994,25 +3994,25 @@ __metadata:
     prompts: "npm:2.4.2"
     uuid: "npm:10.0.0"
   peerDependencies:
-    payload: 3.2.2
-  checksum: 10c0/bd833cc91167197a8074808d066b3ea1863c2205f5b076c386fdd84cbc179fbecadb049d5daf975a2d78ea9b78427ba2463d3f86b21573573279428190da0b3a
+    payload: 3.3.0
+  checksum: 10c0/784386c4b9be2870a6a40aae2a29bb88815c6871e248759a53ff90cc24c99ad46380b963c7ef57f5a3c1941025ce846de5bd036d74bc1920da9ca1979b4e5cef
   languageName: node
   linkType: hard
 
-"@payloadcms/email-nodemailer@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@payloadcms/email-nodemailer@npm:3.2.2"
+"@payloadcms/email-nodemailer@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/email-nodemailer@npm:3.3.0"
   dependencies:
     nodemailer: "npm:6.9.10"
   peerDependencies:
-    payload: 3.2.2
-  checksum: 10c0/92aceb6202e3951645d51b9d60dfc514e8a11d8f0da438ea6bc374845cf9bd16c6338140ede6f584391a99d9ca4268418fdf14e9e3fea5459436d7881139f4fe
+    payload: 3.3.0
+  checksum: 10c0/d1704af95a9f6e734474f3b49648e7ef30d96fe48ef97d2689cbf309347c57d613e4b22b99655b5a04d873bad5886f28d21c6190252db1d034dcbbc261e4d4b2
   languageName: node
   linkType: hard
 
-"@payloadcms/graphql@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@payloadcms/graphql@npm:3.2.2"
+"@payloadcms/graphql@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/graphql@npm:3.3.0"
   dependencies:
     graphql-scalars: "npm:1.22.2"
     pluralize: "npm:8.0.0"
@@ -4020,21 +4020,21 @@ __metadata:
     tsx: "npm:4.19.2"
   peerDependencies:
     graphql: ^16.8.1
-    payload: 3.2.2
+    payload: 3.3.0
   bin:
     payload-graphql: bin.js
-  checksum: 10c0/bbdf000c5668e21aa08fddbbf02e31203738e6338f88df3cde0836a9ca2df6bc84bd83140eb12122bccbc19539ab6cf687297f4b1e6ca37ced5ca04495a3ede2
+  checksum: 10c0/704c5ef61aa35613ba1e3517c83135c38f0a7c2a8925fb9aac134914467368fdf11eb88f7270a2369aa1dfdabf7285a5bf7d8c21911a6f4e1ed38e11ad2a63f0
   languageName: node
   linkType: hard
 
-"@payloadcms/next@npm:^3.0.2":
-  version: 3.2.2
-  resolution: "@payloadcms/next@npm:3.2.2"
+"@payloadcms/next@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/next@npm:3.3.0"
   dependencies:
     "@dnd-kit/core": "npm:6.0.8"
-    "@payloadcms/graphql": "npm:3.2.2"
-    "@payloadcms/translations": "npm:3.2.2"
-    "@payloadcms/ui": "npm:3.2.2"
+    "@payloadcms/graphql": "npm:3.3.0"
+    "@payloadcms/translations": "npm:3.3.0"
+    "@payloadcms/ui": "npm:3.3.0"
     busboy: "npm:^1.6.0"
     file-type: "npm:19.3.0"
     graphql-http: "npm:^1.22.0"
@@ -4044,37 +4044,37 @@ __metadata:
     qs-esm: "npm:7.0.2"
     react-diff-viewer-continued: "npm:3.2.6"
     sass: "npm:1.77.4"
-    sonner: "npm:^1.5.0"
+    sonner: "npm:^1.7.0"
     uuid: "npm:10.0.0"
   peerDependencies:
     graphql: ^16.8.1
     next: ^15.0.0
-    payload: 3.2.2
-  checksum: 10c0/6b3e673f12df0c26633104780ecfe4fb49cc21ec1d1fdd0566eec6ec9763e1b6de77da6edecbed00205f2ed06f3aba16a3f6d07509920f31744bda1faf496ca1
+    payload: 3.3.0
+  checksum: 10c0/fa739defaf35f84224e6cb0f2401a282b42c2a6fba9b150033953052f0677dad899ace6bbd5eccbe7fc9f411604e0dcc610cbc74b7864288fbac614e39140e95
   languageName: node
   linkType: hard
 
-"@payloadcms/payload-cloud@npm:^3.0.2":
-  version: 3.2.2
-  resolution: "@payloadcms/payload-cloud@npm:3.2.2"
+"@payloadcms/payload-cloud@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/payload-cloud@npm:3.3.0"
   dependencies:
     "@aws-sdk/client-cognito-identity": "npm:^3.614.0"
     "@aws-sdk/client-s3": "npm:^3.614.0"
     "@aws-sdk/credential-providers": "npm:^3.614.0"
     "@aws-sdk/lib-storage": "npm:^3.614.0"
-    "@payloadcms/email-nodemailer": "npm:3.2.2"
+    "@payloadcms/email-nodemailer": "npm:3.3.0"
     amazon-cognito-identity-js: "npm:^6.1.2"
     nodemailer: "npm:6.9.10"
     resend: "npm:^0.17.2"
   peerDependencies:
-    payload: 3.2.2
-  checksum: 10c0/e374d4ea66d11884bf2796879d7566308778ece549f5a6241a19b618ca3f10fc504264d0f2210da3c0072efafbb897d4e32d6d9f4bdb439280bb785ac60f27ce
+    payload: 3.3.0
+  checksum: 10c0/9485f778f01036ed2016d27f0a3e2fabc61be9091c4c4c09e6ac907c8678205d63960aa0babaf1c96bf34bb399e7ade3ca49c0788451042fb9985c69e0f95028
   languageName: node
   linkType: hard
 
-"@payloadcms/plugin-cloud-storage@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@payloadcms/plugin-cloud-storage@npm:3.2.2"
+"@payloadcms/plugin-cloud-storage@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/plugin-cloud-storage@npm:3.3.0"
   dependencies:
     find-node-modules: "npm:^2.1.3"
     range-parser: "npm:^1.2.1"
@@ -4085,7 +4085,7 @@ __metadata:
     "@azure/storage-blob": ^12.11.0
     "@google-cloud/storage": ^7.7.0
     "@vercel/blob": ^0.22.3
-    payload: 3.2.2
+    payload: 3.3.0
   peerDependenciesMeta:
     "@aws-sdk/client-s3":
       optional: true
@@ -4099,13 +4099,13 @@ __metadata:
       optional: true
     "@vercel/blob":
       optional: true
-  checksum: 10c0/8fbae299e825107dbc89061b6f62507bd16229333f453766dab63292456dbe654902fa5f2dd9620c9949f97d3056d1a25285bd0bc6bd90c0896f3e3d4db466da
+  checksum: 10c0/3d599c5c95115e40b4e095b5596e700ec0340ce81e06aa3ac4ca2372404398ca3e6486bbd17bba52ea5c3891fe879a69f3d771b6144794fff8a0221ae14ace5b
   languageName: node
   linkType: hard
 
-"@payloadcms/richtext-lexical@npm:^3.0.2":
-  version: 3.2.2
-  resolution: "@payloadcms/richtext-lexical@npm:3.2.2"
+"@payloadcms/richtext-lexical@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/richtext-lexical@npm:3.3.0"
   dependencies:
     "@lexical/headless": "npm:0.20.0"
     "@lexical/link": "npm:0.20.0"
@@ -4115,8 +4115,8 @@ __metadata:
     "@lexical/rich-text": "npm:0.20.0"
     "@lexical/selection": "npm:0.20.0"
     "@lexical/utils": "npm:0.20.0"
-    "@payloadcms/translations": "npm:3.2.2"
-    "@payloadcms/ui": "npm:3.2.2"
+    "@payloadcms/translations": "npm:3.3.0"
+    "@payloadcms/ui": "npm:3.3.0"
     "@types/uuid": "npm:10.0.0"
     acorn: "npm:8.12.1"
     bson-objectid: "npm:2.0.4"
@@ -4141,40 +4141,40 @@ __metadata:
     "@lexical/selection": 0.20.0
     "@lexical/table": 0.20.0
     "@lexical/utils": 0.20.0
-    "@payloadcms/next": 3.2.2
+    "@payloadcms/next": 3.3.0
     lexical: 0.20.0
-    payload: 3.2.2
+    payload: 3.3.0
     react: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
     react-dom: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
-  checksum: 10c0/a1db79898a19c8f175845af46fd03787cc39cf0771d8fbb05c435b79e510731fd1e98d3f1451892290853b4b92dfc67189712809eda718ae4634ea708bc5804d
+  checksum: 10c0/764c43952b69645fb89cb518ff4093c1c562d5fbd125a549b3160b854c5f49bcb86353764faac726609f7bbb4658e692e3d8ea8a65cbd7c04015263ca8d94cbe
   languageName: node
   linkType: hard
 
-"@payloadcms/storage-s3@npm:^3.0.2":
-  version: 3.2.2
-  resolution: "@payloadcms/storage-s3@npm:3.2.2"
+"@payloadcms/storage-s3@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/storage-s3@npm:3.3.0"
   dependencies:
     "@aws-sdk/client-s3": "npm:^3.614.0"
     "@aws-sdk/lib-storage": "npm:^3.614.0"
-    "@payloadcms/plugin-cloud-storage": "npm:3.2.2"
+    "@payloadcms/plugin-cloud-storage": "npm:3.3.0"
   peerDependencies:
-    payload: 3.2.2
-  checksum: 10c0/1d4300e6a4860f8516df5f3e1e484addb533a706a50471361908c84070f832a99dca0cdf8082c4a6a9352be41551736b8251fa989400d89e792ed33305661d42
+    payload: 3.3.0
+  checksum: 10c0/c531c2223b396aa5243eadaf9c77a064fa1aa785d5b7598722e2bd7b340898086d1535ffc665cc0fc7f42cf93f5a5c7f42382076f5a4c53ccc9842889ac32577
   languageName: node
   linkType: hard
 
-"@payloadcms/translations@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@payloadcms/translations@npm:3.2.2"
+"@payloadcms/translations@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/translations@npm:3.3.0"
   dependencies:
     date-fns: "npm:4.1.0"
-  checksum: 10c0/31ceae81475c50ddb66d1aaf002b6dd43e5e3ca0128215b496684c1c431ac5b4381722b51a92e6727a2ae037dd9d76f53487911c84ff68d7a86b9fb8f00a9ef2
+  checksum: 10c0/8ec85f0415663bb838f30b875291e3cb430e058cb76bf32e6e66b9c676159046ec218909cca805ce50bce79baacb0e5f35544e6c66e9d4df523e36946ac6be06
   languageName: node
   linkType: hard
 
-"@payloadcms/ui@npm:3.2.2":
-  version: 3.2.2
-  resolution: "@payloadcms/ui@npm:3.2.2"
+"@payloadcms/ui@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@payloadcms/ui@npm:3.3.0"
   dependencies:
     "@dnd-kit/core": "npm:6.0.8"
     "@dnd-kit/sortable": "npm:7.0.2"
@@ -4182,7 +4182,7 @@ __metadata:
     "@faceless-ui/scroll-info": "npm:2.0.0-beta.0"
     "@faceless-ui/window-info": "npm:3.0.0-beta.0"
     "@monaco-editor/react": "npm:4.6.0"
-    "@payloadcms/translations": "npm:3.2.2"
+    "@payloadcms/translations": "npm:3.3.0"
     body-scroll-lock: "npm:4.0.0-beta.0"
     bson-objectid: "npm:2.0.4"
     date-fns: "npm:4.1.0"
@@ -4190,20 +4190,20 @@ __metadata:
     md5: "npm:2.3.0"
     object-to-formdata: "npm:4.5.1"
     qs-esm: "npm:7.0.2"
-    react-datepicker: "npm:6.9.0"
+    react-datepicker: "npm:7.5.0"
     react-image-crop: "npm:10.1.8"
-    react-select: "npm:5.8.0"
-    scheduler: "npm:0.0.0-experimental-3edc000d-20240926"
-    sonner: "npm:^1.5.0"
+    react-select: "npm:5.8.3"
+    scheduler: "npm:0.25.0-rc-66855b96-20241106"
+    sonner: "npm:^1.7.0"
     ts-essentials: "npm:10.0.3"
     use-context-selector: "npm:2.0.0"
     uuid: "npm:10.0.0"
   peerDependencies:
     next: ^15.0.0
-    payload: 3.2.2
+    payload: 3.3.0
     react: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
     react-dom: ^19.0.0 || ^19.0.0-rc-65a56d0e-20241020
-  checksum: 10c0/afeb3d2776a5c5147097b5e9ef8eb30ff2f6e876b36be169ef7b50f4decc0b5bf548c0433fa9892deb321677da83a1cf5f4c407cb51fe1956eaf2ba79c63c29b
+  checksum: 10c0/bfefe84c809e39f636dbe545bae508611097f0d409de7f60fc8d349239b71c0c5c27652dab9f7cfbdcbfa2b0da31f8ccb93668abe632887048abdb88f4cb5942
   languageName: node
   linkType: hard
 
@@ -6897,7 +6897,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^2.1.0":
+"clsx@npm:^2.1.1":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
   checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
@@ -7422,7 +7422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^3.3.1":
+"date-fns@npm:^3.6.0":
   version: 3.6.0
   resolution: "date-fns@npm:3.6.0"
   checksum: 10c0/0b5fb981590ef2f8e5a3ba6cd6d77faece0ea7f7158948f2eaae7bbb7c80a8f63ae30b01236c2923cf89bb3719c33aeb150c715ea4fe4e86e37dcf06bed42fb6
@@ -13339,11 +13339,11 @@ __metadata:
     "@lhci/cli": "npm:^0.11.0"
     "@lhci/server": "npm:^0.11.0"
     "@next/font": "npm:13.1.6"
-    "@payloadcms/db-mongodb": "npm:^3.0.2"
-    "@payloadcms/next": "npm:^3.0.2"
-    "@payloadcms/payload-cloud": "npm:^3.0.2"
-    "@payloadcms/richtext-lexical": "npm:^3.0.2"
-    "@payloadcms/storage-s3": "npm:^3.0.2"
+    "@payloadcms/db-mongodb": "npm:^3.3.0"
+    "@payloadcms/next": "npm:^3.3.0"
+    "@payloadcms/payload-cloud": "npm:^3.3.0"
+    "@payloadcms/richtext-lexical": "npm:^3.3.0"
+    "@payloadcms/storage-s3": "npm:^3.3.0"
     "@prisma/client": "npm:^4.11.0"
     "@socialgouv/matomo-next": "npm:^1.6.1"
     "@tanstack/react-query": "npm:4"
@@ -13376,7 +13376,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.5.0"
     next: "npm:^15.0.3"
     next-auth: "npm:4.24.5"
-    payload: "npm:^3.0.2"
+    payload: "npm:^3.3.0"
     prettier: "npm:^2.8.4"
     prisma: "npm:^4.11.0"
     react: "npm:19.0.0-rc-65a56d0e-20241020"
@@ -13719,13 +13719,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"payload@npm:^3.0.2":
-  version: 3.2.2
-  resolution: "payload@npm:3.2.2"
+"payload@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "payload@npm:3.3.0"
   dependencies:
     "@monaco-editor/react": "npm:4.6.0"
     "@next/env": "npm:^15.0.0"
-    "@payloadcms/translations": "npm:3.2.2"
+    "@payloadcms/translations": "npm:3.3.0"
     "@types/busboy": "npm:1.5.4"
     ajv: "npm:8.17.1"
     bson-objectid: "npm:2.0.4"
@@ -13754,7 +13754,7 @@ __metadata:
     graphql: ^16.8.1
   bin:
     payload: bin.js
-  checksum: 10c0/5800f0db7b1e7df40496c311f72f2162a31f949019828079897c8e7b11d724ff0b0f92b2e5f45e022a0a3d261988ab3335b44df65ab0f6f598f989365aea7f0e
+  checksum: 10c0/0518ae07c969c5f2e901f9502d7e90192038e1b5a7aafb8a942e1cfde5fd7ff2538b7901172a2012fd0ab6a74822c34bc8373217d539ee2e3ac341f7952c3c15
   languageName: node
   linkType: hard
 
@@ -14089,7 +14089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -14277,19 +14277,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datepicker@npm:6.9.0":
-  version: 6.9.0
-  resolution: "react-datepicker@npm:6.9.0"
+"react-datepicker@npm:7.5.0":
+  version: 7.5.0
+  resolution: "react-datepicker@npm:7.5.0"
   dependencies:
-    "@floating-ui/react": "npm:^0.26.2"
-    clsx: "npm:^2.1.0"
-    date-fns: "npm:^3.3.1"
-    prop-types: "npm:^15.7.2"
-    react-onclickoutside: "npm:^6.13.0"
+    "@floating-ui/react": "npm:^0.26.23"
+    clsx: "npm:^2.1.1"
+    date-fns: "npm:^3.6.0"
+    prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ^16.9.0 || ^17 || ^18
     react-dom: ^16.9.0 || ^17 || ^18
-  checksum: 10c0/aed97871a60071bf00dd1447a7c4a3841a05db6f57bd24b3e499c9ef8c20bc5c46a826b6b0667ae804c4ddd2bb88319bd8115a08bb670c2a57505b0a7a18bec6
+  checksum: 10c0/6e94a609654b8a0eaa9b2e8c4fab803aa954e78df9729f05337ae97c4e910b1488129ee8d4b11dea575dbe0992242c078cb692ed0cba4e5d98414d8ba393972d
   languageName: node
   linkType: hard
 
@@ -14391,19 +14390,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-onclickoutside@npm:^6.13.0":
-  version: 6.13.1
-  resolution: "react-onclickoutside@npm:6.13.1"
-  peerDependencies:
-    react: ^15.5.x || ^16.x || ^17.x || ^18.x
-    react-dom: ^15.5.x || ^16.x || ^17.x || ^18.x
-  checksum: 10c0/93b02c493332ca7f8b480a1e185386c4af55d1daf33af2f68ddf440e4fc9b22ad13f59d7e204694aa31c1c2e332f0766c7ee302fe3b0cecbd0e0b45d55905c96
-  languageName: node
-  linkType: hard
-
-"react-select@npm:5.8.0":
-  version: 5.8.0
-  resolution: "react-select@npm:5.8.0"
+"react-select@npm:5.8.3":
+  version: 5.8.3
+  resolution: "react-select@npm:5.8.3"
   dependencies:
     "@babel/runtime": "npm:^7.12.0"
     "@emotion/cache": "npm:^11.4.0"
@@ -14417,7 +14406,7 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/b4b98aaf117ee5cc4642871b7bd51fd0e2697988d0b880f30b21e933ca90258959147117d8aada36713b622e0e4cb06bd18ec02069f3f108896e0d31e69e3c16
+  checksum: 10c0/25aaf0ad964a31dcf991be8b9eb478f94b2ff5dfd2e74a894f692c6dec9247f6ded6258fbf875984d2ada5aeb0ee742b85c6a94f58fae89112e913526cfd0577
   languageName: node
   linkType: hard
 
@@ -15011,17 +15000,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:0.0.0-experimental-3edc000d-20240926":
-  version: 0.0.0-experimental-3edc000d-20240926
-  resolution: "scheduler@npm:0.0.0-experimental-3edc000d-20240926"
-  checksum: 10c0/f5812005e9b1a20efbe96eca7baf145c64cf54a35ecf4e98d97329ce6d9f3b38053701823ec920516b6ccf66c2e4425221357962913d3e14fa9dd6d2c553f2a6
-  languageName: node
-  linkType: hard
-
 "scheduler@npm:0.25.0-rc-65a56d0e-20241020":
   version: 0.25.0-rc-65a56d0e-20241020
   resolution: "scheduler@npm:0.25.0-rc-65a56d0e-20241020"
   checksum: 10c0/0af8bef9b23d26f6d8929ef3eb3c78ac3af8edbd1a54d522c2bbd8da236f3639ab2201a8f2612bf349b1e8f5ace5816f51d751f29f97d390de707670f01ed816
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:0.25.0-rc-66855b96-20241106":
+  version: 0.25.0-rc-66855b96-20241106
+  resolution: "scheduler@npm:0.25.0-rc-66855b96-20241106"
+  checksum: 10c0/65f1187d4b472ad674b91d98661c54dfc312e0ba850713b57411a05db722b5a9cdc7a46683c776116668c251c90cd4d3973b9f021d3821762fa224f94275c85a
   languageName: node
   linkType: hard
 
@@ -15410,7 +15399,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sonner@npm:^1.5.0":
+"sonner@npm:^1.7.0":
   version: 1.7.0
   resolution: "sonner@npm:1.7.0"
   peerDependencies:
