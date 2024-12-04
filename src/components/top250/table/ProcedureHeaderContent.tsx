@@ -1,76 +1,58 @@
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { IndicatorColor, IndicatorSlug } from '@prisma/client';
 import { IndicatorLabel } from './IndicatorLabel';
 import { fr } from '@codegouvfr/react-dsfr';
-import { indicatorsDescriptions } from '@/utils/indicators';
-import { remark } from 'remark';
-import html from 'remark-html';
 import React from 'react';
+import { PayloadProcedureHeader } from '@/payload/payload-types';
 
 type Props = {
-	slug: IndicatorSlug;
+	indicator: PayloadProcedureHeader;
 	isFull?: boolean;
 };
 
 export const ProcedureHeaderContent = (props: Props) => {
-	const [description, setDescription] = React.useState<string | undefined>(
-		undefined
-	);
-	const { slug, isFull } = props;
+	const { indicator, isFull } = props;
 	const { classes, cx } = useStyles();
-
-	const content = indicatorsDescriptions.find(i => i.slug === slug);
-
-	const renderMarkdown = async (str: string) => {
-		const result = await remark().use(html).process(str);
-		return result.toString();
-	};
-
-	React.useEffect(() => {
-		if (content && content.description)
-			renderMarkdown(content.description).then(res => setDescription(res));
-	}, [content]);
-
-	if (!content) return <p>À venir...</p>;
 
 	return (
 		<div className={cx(classes.root)}>
-			<h4>{content.title}</h4>
-			{isFull && content.description && (
+			{isFull && indicator.description_html && (
 				<div
 					className={cx(classes.description)}
-					dangerouslySetInnerHTML={{ __html: description as string }}
+					dangerouslySetInnerHTML={{ __html: indicator.description_html }}
 				/>
 			)}
-			{isFull && content.moreInfos && (
-				<div
-					className={cx(
-						classes.moreInfos,
-						content.isMoreInfosBlue ? classes.moreInfosBlue : {}
-					)}
-				>
-					{content.moreInfos_title && <b>{content.moreInfos_title}</b>}
-					<p>{content.moreInfos}</p>
+			{isFull && indicator.moreInfos && (
+				<div className={cx(classes.moreInfos)}>
+					{indicator.moreInfosTitle && <b>{indicator.moreInfosTitle}</b>}
+					<p>{indicator.moreInfos}</p>
 				</div>
 			)}
-			{content.indicators_intro && (
-				<p>
-					<b>{content.indicators_intro}</b>
-				</p>
-			)}
+			<p>
+				<b>{indicator.levels?.docs?.length} niveaux d'évaluation</b>
+			</p>
 			<ul className={cx(classes.indicatorContainer)}>
-				{content.indicators.map((indicator, index) => (
-					<li key={index} className={classes.indicatorItem}>
-						<span className={cx(classes.label)}>
-							<IndicatorLabel
-								label={indicator.label}
-								color={indicator.color as IndicatorColor}
-								noBackground={indicator.noBackground}
-							/>
-						</span>{' '}
-						<span>{indicator.description}</span>
-					</li>
-				))}
+				{indicator.levels?.docs &&
+					indicator.levels.docs
+						.sort((a, b) =>
+							typeof a === 'string' || typeof b === 'string'
+								? 0
+								: a.position - b.position
+						)
+						.map((level, index) => {
+							if (typeof level === 'string') return;
+							return (
+								<li key={index} className={classes.indicatorItem}>
+									<span className={cx(classes.label)}>
+										<IndicatorLabel
+											label={level.label}
+											color={level.color}
+											noBackground={level.noBackround}
+										/>
+									</span>{' '}
+									<span>{level.description}</span>
+								</li>
+							);
+						})}
 			</ul>
 		</div>
 	);

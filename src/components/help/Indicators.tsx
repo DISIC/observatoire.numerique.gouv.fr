@@ -24,7 +24,6 @@ export function HelpIndicators(props: Props) {
 					{keyIndicators.keyIndicatorsList &&
 						keyIndicators.keyIndicatorsList.map(({ indicator }, id) => {
 							if (typeof indicator === 'string') return;
-
 							return (
 								<AccordionWithIcon
 									key={indicator.id}
@@ -32,10 +31,7 @@ export function HelpIndicators(props: Props) {
 									icon={indicator.icon as RiIconClassName}
 									label={indicator.label}
 								>
-									<ProcedureHeaderContent
-										slug={indicator.slug as IndicatorSlug}
-										isFull
-									/>
+									<ProcedureHeaderContent indicator={indicator} isFull />
 								</AccordionWithIcon>
 							);
 						})}
@@ -60,10 +56,7 @@ export function HelpIndicators(props: Props) {
 										icon={indicator.icon as RiIconClassName}
 										label={indicator.label}
 									>
-										<ProcedureHeaderContent
-											slug={indicator.slug as IndicatorSlug}
-											isFull
-										/>
+										<ProcedureHeaderContent indicator={indicator} isFull />
 									</AccordionWithIcon>
 								);
 							}

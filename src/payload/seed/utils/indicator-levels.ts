@@ -20,7 +20,7 @@ export const indicatorLevels: Record<
 		},
 
 		{
-			label: 'En cours de déploiement',
+			label: 'En cours de déploiement local',
 			color: 'green',
 			description: 'La démarche est en cours de déploiement sur le territoire.',
 			position: 2
@@ -40,7 +40,7 @@ export const indicatorLevels: Record<
 		},
 		{
 			label: 'Démarche proactive',
-			color: 'green',
+			color: 'blue',
 			description:
 				'Grâce au partage d’informations entre administrations, ce service attribue automatiquement les droits aux personnes concernées.',
 			position: 5

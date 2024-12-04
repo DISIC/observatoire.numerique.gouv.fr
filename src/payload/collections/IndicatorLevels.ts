@@ -5,7 +5,9 @@ export const IndicatorLevels: CollectionConfig = {
 	defaultPopulate: {
 		label: true,
 		color: true,
-		description: true
+		description: true,
+		position: true,
+		noBackround: true
 	},
 	labels: {
 		singular: "Niveau d'indicateur",

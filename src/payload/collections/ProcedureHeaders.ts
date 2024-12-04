@@ -11,7 +11,10 @@ export const ProcedureHeaders: CollectionConfig = {
 		icon: true,
 		label: true,
 		slug: true,
-		description: true,
+		description_obj: true,
+		description_html: true,
+		moreInfos: true,
+		moreInfosTitle: true,
 		levels: true
 	},
 	labels: {
@@ -92,7 +95,8 @@ export const ProcedureHeaders: CollectionConfig = {
 			type: 'join',
 			collection: 'payload-indicator-levels',
 			on: 'procedureHeader',
-			hasMany: true
+			hasMany: true,
+			maxDepth: 2
 		}
 	],
 	timestamps: true
