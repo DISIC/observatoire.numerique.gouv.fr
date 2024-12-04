@@ -29,7 +29,7 @@
 		"*": "prettier --write"
 	},
 	"prisma": {
-		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./prisma/seed.ts"
+		"seed": "tsx ./prisma/seed.ts"
 	},
 	"dependencies": {
 		"@codegouvfr/react-dsfr": "^0.48.0",
