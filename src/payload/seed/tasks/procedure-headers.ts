@@ -13,6 +13,7 @@ import {
 	usageOnlineIndicatorWysiwygContent,
 	userSatifactionWysiwygContent
 } from '../utils/wysiwyg-content';
+import { indicatorLevels } from '../utils/indicator-levels';
 
 type ProcedureHeaderWithoutSystemFields = Omit<
 	PayloadProcedureHeader,
@@ -134,10 +135,30 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 	});
 
 	for (const header of headers) {
-		await payload.create({
-			collection: 'payload-procedure-headers',
-			data: header
-		});
+		await payload
+			.create({
+				collection: 'payload-procedure-headers',
+				data: header
+			})
+			.then(createdHeader => {
+				// get the levels for this header slug or an empty array if not found
+				const levels =
+					Object.entries(indicatorLevels).find(
+						([slug]) => slug === header.slug
+					)?.[1] || [];
+				// create the levels for this header
+				return Promise.all(
+					levels.map(level =>
+						payload.create({
+							collection: 'payload-indicator-levels',
+							data: {
+								...level,
+								procedureHeader: createdHeader.id
+							}
+						})
+					)
+				);
+			});
 	}
 
 	payload.logger.info('Procedure headers seeded successfully');

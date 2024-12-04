@@ -13,7 +13,7 @@ export const IndicatorLevels: CollectionConfig = {
 	},
 	admin: {
 		useAsTitle: 'label',
-		defaultColumns: ['label', 'color', 'description']
+		defaultColumns: ['label', 'color', 'description', 'position']
 	},
 	access: {
 		read: () => true
