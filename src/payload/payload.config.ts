@@ -12,6 +12,7 @@ import { CMSHome } from './globals/cms/Home';
 import { s3Storage } from '@payloadcms/storage-s3';
 import { ProcedureHeaders } from './collections/ProcedureHeaders';
 import { CMSHelp } from './globals/cms/Help';
+import IndicatorLevels from './collections/IndicatorLevels';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -23,7 +24,7 @@ export default buildConfig({
 			baseDir: path.resolve(dirname)
 		}
 	},
-	collections: [Admins, Media, ProcedureHeaders],
+	collections: [Admins, Media, ProcedureHeaders, IndicatorLevels],
 	globals: [CMSHome, CMSHelp],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',

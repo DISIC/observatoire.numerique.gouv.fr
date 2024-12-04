@@ -1,3 +1,8 @@
+import {
+	HTMLConverterFeature,
+	lexicalEditor,
+	lexicalHTML
+} from '@payloadcms/richtext-lexical';
 import type { CollectionConfig } from 'payload';
 
 export const ProcedureHeaders: CollectionConfig = {
@@ -6,7 +11,8 @@ export const ProcedureHeaders: CollectionConfig = {
 		icon: true,
 		label: true,
 		slug: true,
-		description: true
+		description: true,
+		levels: true
 	},
 	labels: {
 		singular: 'Indicateur',
@@ -33,10 +39,17 @@ export const ProcedureHeaders: CollectionConfig = {
 			label: 'Libellé'
 		},
 		{
-			name: 'description',
-			type: 'textarea',
-			label: 'Description'
+			name: 'description_obj',
+			type: 'richText',
+			label: 'Description',
+			editor: lexicalEditor({
+				features: ({ defaultFeatures }) => [
+					...defaultFeatures,
+					HTMLConverterFeature({})
+				]
+			})
 		},
+		lexicalHTML('description_obj', { name: 'description_html' }),
 		{
 			name: 'icon',
 			type: 'select',
@@ -62,6 +75,24 @@ export const ProcedureHeaders: CollectionConfig = {
 			admin: {
 				step: 1
 			}
+		},
+		{
+			name: 'moreInfosTitle',
+			type: 'text',
+			label: 'Titre des informations supplémentaires'
+		},
+		{
+			name: 'moreInfos',
+			type: 'textarea',
+			label: 'Informations supplémentaires'
+		},
+		{
+			name: 'levels',
+			label: "Niveaux d'évaluation",
+			type: 'join',
+			collection: 'payload-indicator-levels',
+			on: 'procedureHeader',
+			hasMany: true
 		}
 	],
 	timestamps: true

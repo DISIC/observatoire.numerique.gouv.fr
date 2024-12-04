@@ -14,15 +14,21 @@ export interface Config {
     'payload-admins': PayloadAdmin;
     'payload-media': PayloadMedia;
     'payload-procedure-headers': PayloadProcedureHeader;
+    'payload-indicator-levels': PayloadIndicatorLevel;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    'payload-procedure-headers': {
+      levels: 'payload-indicator-levels';
+    };
+  };
   collectionsSelect: {
     'payload-admins': PayloadAdminsSelect<false> | PayloadAdminsSelect<true>;
     'payload-media': PayloadMediaSelect<false> | PayloadMediaSelect<true>;
     'payload-procedure-headers': PayloadProcedureHeadersSelect<false> | PayloadProcedureHeadersSelect<true>;
+    'payload-indicator-levels': PayloadIndicatorLevelsSelect<false> | PayloadIndicatorLevelsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -109,7 +115,22 @@ export interface PayloadProcedureHeader {
   id: string;
   slug: string;
   label: string;
-  description?: string | null;
+  description_obj?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  description_html?: string | null;
   icon:
     | 'ri-emotion-happy-line'
     | 'ri-computer-line'
@@ -123,6 +144,27 @@ export interface PayloadProcedureHeader {
     | 'ri-sun-line'
     | 'ri-chat-smile-line';
   position: number;
+  moreInfosTitle?: string | null;
+  moreInfos?: string | null;
+  levels?: {
+    docs?: (string | PayloadIndicatorLevel)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-indicator-levels".
+ */
+export interface PayloadIndicatorLevel {
+  id: string;
+  label: string;
+  color: 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'orange';
+  description: string;
+  procedureHeader: string | PayloadProcedureHeader;
+  position: number;
+  noBackround?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -144,6 +186,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'payload-procedure-headers';
         value: string | PayloadProcedureHeader;
+      } | null)
+    | ({
+        relationTo: 'payload-indicator-levels';
+        value: string | PayloadIndicatorLevel;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -227,9 +273,27 @@ export interface PayloadMediaSelect<T extends boolean = true> {
 export interface PayloadProcedureHeadersSelect<T extends boolean = true> {
   slug?: T;
   label?: T;
-  description?: T;
+  description_obj?: T;
+  description_html?: T;
   icon?: T;
   position?: T;
+  moreInfosTitle?: T;
+  moreInfos?: T;
+  levels?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-indicator-levels_select".
+ */
+export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
+  label?: T;
+  color?: T;
+  description?: T;
+  procedureHeader?: T;
+  position?: T;
+  noBackround?: T;
   updatedAt?: T;
   createdAt?: T;
 }
