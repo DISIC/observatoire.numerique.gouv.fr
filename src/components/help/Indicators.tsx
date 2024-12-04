@@ -1,58 +1,73 @@
 import { RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import AccordionWithIcon from '../generic/AccordionWithIcon';
-import { useProcedureHeaders } from '@/utils/api';
-import { indicatorsDescriptions } from '@/utils/indicators';
 import { ProcedureHeaderContent } from '../top250/table/ProcedureHeaderContent';
+import { Help } from '@/payload/payload-types';
+import { IndicatorSlug } from '@prisma/client';
 
-type Props = {};
+type Props = Help['indicators'];
 
 export function HelpIndicators(props: Props) {
+	const { keyIndicators, additionnalIndicators } = props;
 	const { classes, cx } = useStyles();
-
-	const { data: proceduresTableHeaders } = useProcedureHeaders();
-
-	if (!proceduresTableHeaders || !proceduresTableHeaders.length) return <></>;
 
 	return (
 		<div className={classes.root}>
 			<div className={classes.primarySection}>
-				<h2 className={cx(fr.cx('fr-h2'))}>Les indicateurs clés</h2>
-				<p></p>
+				<h2 className={cx(fr.cx('fr-h2'))}>
+					{keyIndicators.keyIndicatorsTitle}
+				</h2>
+				<p>{keyIndicators.keyIndicatorsDescription}</p>
 				<div
 					className={cx(fr.cx('fr-accordions-group'), classes.accordionGroup)}
 				>
-					{proceduresTableHeaders.slice(0, 5).map(pth => (
-						<AccordionWithIcon
-							key={pth.id}
-							className={classes.accordion}
-							icon={pth.icon as RiIconClassName}
-							label={pth.label}
-						>
-							<ProcedureHeaderContent slug={pth.slug} isFull />
-						</AccordionWithIcon>
-					))}
+					{keyIndicators.keyIndicatorsList &&
+						keyIndicators.keyIndicatorsList.map(({ indicator }, id) => {
+							if (typeof indicator === 'string') return;
+
+							return (
+								<AccordionWithIcon
+									key={indicator.id}
+									className={classes.accordion}
+									icon={indicator.icon as RiIconClassName}
+									label={indicator.label}
+								>
+									<ProcedureHeaderContent
+										slug={indicator.slug as IndicatorSlug}
+										isFull
+									/>
+								</AccordionWithIcon>
+							);
+						})}
 				</div>
 			</div>
 			<div className={classes.secondarySection}>
-				<h2 className={cx(fr.cx('fr-h2'))}>Les indicateurs complémentaires</h2>
-				<p>
-					Des indicateurs complémentaires permettent aux équipes d’affiner
-					l’identification d’opportunités d’améliorations.
-				</p>
+				<h2 className={cx(fr.cx('fr-h2'))}>
+					{additionnalIndicators.additionnalIndicatorsTitle}
+				</h2>
+				<p>{additionnalIndicators.additionnalIndicatorsDescription}</p>
 				<div
 					className={cx(fr.cx('fr-accordions-group'), classes.accordionGroup)}
 				>
-					{proceduresTableHeaders.slice(5).map(pth => (
-						<AccordionWithIcon
-							key={pth.id}
-							className={classes.accordion}
-							icon={pth.icon as RiIconClassName}
-							label={pth.label}
-						>
-							<ProcedureHeaderContent slug={pth.slug} isFull />
-						</AccordionWithIcon>
-					))}
+					{additionnalIndicators.additionnalIndicatorsList &&
+						additionnalIndicators.additionnalIndicatorsList.map(
+							({ indicator }, id) => {
+								if (typeof indicator === 'string') return;
+								return (
+									<AccordionWithIcon
+										key={indicator.id}
+										className={classes.accordion}
+										icon={indicator.icon as RiIconClassName}
+										label={indicator.label}
+									>
+										<ProcedureHeaderContent
+											slug={indicator.slug as IndicatorSlug}
+											isFull
+										/>
+									</AccordionWithIcon>
+								);
+							}
+						)}
 				</div>
 			</div>
 		</div>

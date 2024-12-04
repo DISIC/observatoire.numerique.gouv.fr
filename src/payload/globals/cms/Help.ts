@@ -1,4 +1,5 @@
 import { standardFields } from '@/payload/fields/standards';
+import { lexicalHTML } from '@payloadcms/richtext-lexical';
 import { GlobalConfig } from 'payload';
 
 standardFields.title;
@@ -12,24 +13,24 @@ export const CMSHelp: GlobalConfig = {
 				{
 					label: 'En-tête',
 					name: 'header',
-					fields: [
-						standardFields.title,
-					]
+					fields: [standardFields.title]
 				},
 				{
 					label: 'Objectifs et méthodologie',
 					name: 'goals',
 					fields: [
 						standardFields.title,
-						standardFields.wysiwyg
+						standardFields.wysiwyg,
+						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
 					]
 				},
 				{
-					label: 'Critères d\'entrée des services',
+					label: "Critères d'entrée des services",
 					name: 'criterias',
 					fields: [
 						standardFields.title,
 						standardFields.wysiwyg,
+						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' }),
 						standardFields.button
 					]
 				},
@@ -39,12 +40,12 @@ export const CMSHelp: GlobalConfig = {
 					fields: [
 						standardFields.title,
 						{
-							type:'group',
+							type: 'group',
 							name: 'keyIndicators',
 							label: 'Indicateurs Clés',
-							fields:[
+							fields: [
 								{
-									name:'keyIndicatorsTitle',
+									name: 'keyIndicatorsTitle',
 									label: 'Titre des indicateurs clés',
 									type: 'text',
 									required: true
@@ -52,7 +53,7 @@ export const CMSHelp: GlobalConfig = {
 								{
 									name: 'keyIndicatorsDescription',
 									label: 'Description des indicateurs clés',
-									type: 'textarea',
+									type: 'textarea'
 								},
 								{
 									type: 'array',
@@ -73,12 +74,12 @@ export const CMSHelp: GlobalConfig = {
 							]
 						},
 						{
-							type:'group',
+							type: 'group',
 							name: 'additionnalIndicators',
 							label: 'Indicateurs Complémentaires',
-							fields:[
+							fields: [
 								{
-									name:'additionnalIndicatorsTitle',
+									name: 'additionnalIndicatorsTitle',
 									label: 'Titre des indicateurs complémentaires',
 									type: 'text',
 									required: true
@@ -86,7 +87,7 @@ export const CMSHelp: GlobalConfig = {
 								{
 									name: 'additionnalIndicatorsDescription',
 									label: 'Description des indicateurs complémentaires',
-									type: 'textarea',
+									type: 'textarea'
 								},
 								{
 									type: 'array',
@@ -107,7 +108,7 @@ export const CMSHelp: GlobalConfig = {
 							]
 						}
 					]
-				},
+				}
 			]
 		}
 	]

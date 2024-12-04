@@ -334,6 +334,7 @@ export interface Help {
       };
       [k: string]: unknown;
     } | null;
+    wysiwyg_html?: string | null;
   };
   criterias: {
     title: string;
@@ -352,6 +353,7 @@ export interface Help {
       };
       [k: string]: unknown;
     } | null;
+    wysiwyg_html?: string | null;
     buttonText: string;
     buttonLink: string;
   };
@@ -451,12 +453,14 @@ export interface HelpSelect<T extends boolean = true> {
     | {
         title?: T;
         wysiwyg?: T;
+        wysiwyg_html?: T;
       };
   criterias?:
     | T
     | {
         title?: T;
         wysiwyg?: T;
+        wysiwyg_html?: T;
         buttonText?: T;
         buttonLink?: T;
       };

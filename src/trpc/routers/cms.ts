@@ -11,5 +11,14 @@ export const cms = router({
 		return {
 			data: homeCms
 		};
+	}),
+	help: publicProcedure.query(async ({ ctx, input }) => {
+		const helpCms = await ctx.payload.findGlobal({
+			slug: 'help'
+		});
+
+		return {
+			data: helpCms
+		};
 	})
 });

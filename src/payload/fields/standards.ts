@@ -1,3 +1,7 @@
+import {
+	HTMLConverterFeature,
+	lexicalEditor
+} from '@payloadcms/richtext-lexical';
 import { Field } from 'payload';
 
 export const standardFields: { [key: string]: Field } = {
@@ -17,7 +21,14 @@ export const standardFields: { [key: string]: Field } = {
 		name: 'wysiwyg',
 		label: 'Texte',
 		type: 'richText',
+		editor: lexicalEditor({
+			features: ({ defaultFeatures }) => [
+				...defaultFeatures,
+				HTMLConverterFeature({})
+			]
+		})
 	},
+
 	button: {
 		label: 'Lien associé',
 		type: 'collapsible',
