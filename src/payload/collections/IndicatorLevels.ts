@@ -14,6 +14,7 @@ export const IndicatorLevels: CollectionConfig = {
 		plural: 'Niveaux des indicateurs'
 	},
 	admin: {
+		hidden: true,
 		useAsTitle: 'label',
 		defaultColumns: ['label', 'color', 'description', 'position']
 	},

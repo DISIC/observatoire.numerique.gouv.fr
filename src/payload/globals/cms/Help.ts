@@ -59,8 +59,12 @@ export const CMSHelp: GlobalConfig = {
 									type: 'array',
 									name: 'keyIndicatorsList',
 									label: 'Liste des indicateurs clés',
+									labels: {
+										singular: 'Indicateur',
+										plural: 'Indicateurs'
+									},
 									admin: {
-										initCollapsed: true
+										initCollapsed: true,
 									},
 									fields: [
 										{
@@ -93,6 +97,10 @@ export const CMSHelp: GlobalConfig = {
 									type: 'array',
 									name: 'additionnalIndicatorsList',
 									label: 'Liste des indicateurs complémentaires',
+									labels: {
+										singular: 'Indicateur',
+										plural: 'Indicateurs'
+									},
 									admin: {
 										initCollapsed: true
 									},
@@ -113,3 +121,7 @@ export const CMSHelp: GlobalConfig = {
 		}
 	]
 };
+function useRowLabel<T>(): { data: any; rowNumber: any; } {
+	throw new Error('Function not implemented.');
+}
+

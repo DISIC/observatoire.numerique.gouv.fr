@@ -13,6 +13,9 @@ export const Media: CollectionConfig = {
 		singular: 'Media',
 		plural: 'Medias'
 	},
+	admin: {
+		hidden: true
+	},
 	access: {
 		read: () => true
 	},
