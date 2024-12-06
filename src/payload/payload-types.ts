@@ -115,6 +115,7 @@ export interface PayloadProcedureHeader {
   id: string;
   slug: string;
   label: string;
+  description?: string | null;
   description_obj?: {
     root: {
       type: string;
@@ -273,6 +274,7 @@ export interface PayloadMediaSelect<T extends boolean = true> {
 export interface PayloadProcedureHeadersSelect<T extends boolean = true> {
   slug?: T;
   label?: T;
+  description?: T;
   description_obj?: T;
   description_html?: T;
   icon?: T;

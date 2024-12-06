@@ -25,6 +25,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'satisfaction',
 			label: 'Satisfaction Usagers',
+			description: 'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton “je donne mons avis“.',
 			description_obj: userSatifactionWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -35,6 +36,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'online',
 			label: 'Réalisable en ligne',
+			description: 'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
 			description_obj: onlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-computer-line',
 			position: 1
@@ -42,6 +44,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'usage',
 			label: 'Utilisation de la version en ligne',
+			description: 'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
 			description_obj: usageOnlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-direction-line',
 			position: 5
@@ -49,6 +52,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'uptime',
 			label: 'Disponibilité du service',
+			description: null,
 			description_obj: uptimeIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -59,6 +63,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'help_reachable',
 			label: 'Aide joignable et efficace',
+			description: null,
 			description_obj: helpReachableWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -69,6 +74,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'auth',
 			label: 'Authentification',
+			description: null,
 			description_obj: authIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-shield-user-line',
 			position: 11
@@ -76,6 +82,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'performance',
 			label: 'Temps de chargement des pages',
+			description: null,
 			description_obj: performanceIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -86,6 +93,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'dlnuf',
 			label: 'Dites-le nous une fois',
+			description: 'Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l\'Administration détient déjà.',
 			description_obj: dlnufWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -96,6 +104,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'handicap',
 			label: 'Prise en compte du handicap',
+			description: 'Mesure le niveau d’accessibilité numérique d’une démarche, en se basant sur le RGAA (Référentiel Général d\'Amélioration de l\'Accessibilité).',
 			description_obj: handicapIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -106,6 +115,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'simplicity',
 			label: 'Simplicité du langage',
+			description: null,
 			description_obj: simplicityLanguageWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -116,6 +126,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 		{
 			slug: 'help_used',
 			label: "Niveau d'autonomie",
+			description: null,
 			description_obj: helpUsedIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:

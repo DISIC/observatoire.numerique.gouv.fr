@@ -42,9 +42,14 @@ export const ProcedureHeaders: CollectionConfig = {
 			label: 'Libellé'
 		},
 		{
+			name: 'description',
+			type: 'textarea',
+			label: 'Description succincte'
+		},
+		{
 			name: 'description_obj',
 			type: 'richText',
-			label: 'Description',
+			label: 'Description complète',
 			editor: lexicalEditor({
 				features: ({ defaultFeatures }) => [
 					...defaultFeatures,
