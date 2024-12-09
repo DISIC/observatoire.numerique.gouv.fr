@@ -3,10 +3,11 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
 import PayloadImage from '../generic/PayloadImage';
+import { ReactNode } from 'react';
 
 type Props = {
-	title: JSX.Element | string;
-	description: JSX.Element | string;
+	title: ReactNode | string;
+	description: ReactNode | string;
 	blocs: {
 		title: string;
 		description: string;

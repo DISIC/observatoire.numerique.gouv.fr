@@ -1,7 +1,8 @@
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { ReactNode } from 'react';
 
 type Props = {
-	children?: JSX.Element;
+	children?: ReactNode;
 };
 
 export const EmptyScreenZone = (props: Props) => {

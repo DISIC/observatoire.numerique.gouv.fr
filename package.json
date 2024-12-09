@@ -4,7 +4,7 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
+		"dev": "only-include-used-icons && next dev",
 		"build": "next build",
 		"start": "next start",
 		"lint": "prettier --check .",

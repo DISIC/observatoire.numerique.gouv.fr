@@ -13,6 +13,7 @@ import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
 import { Edition } from '@prisma/client';
+import { PayloadProcedureHeader } from '@/payload/payload-types';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -123,13 +124,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				  scrollRef.current.scrollLeft -
-				  _firstColSize -
-				  20
+				scrollRef.current.scrollLeft -
+				_firstColSize -
+				20
 				: _containerWidth -
-				  _firstColSize -
-				  _arrowSlideSize +
-				  scrollRef.current.scrollLeft;
+				_firstColSize -
+				_arrowSlideSize +
+				scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -170,7 +171,7 @@ export function ProceduresTable(props: Props) {
 										infos={{
 											content: (
 												<>
-													<ProcedureHeaderContent slug={pth.slug} />
+													<ProcedureHeaderContent indicator={pth as unknown as PayloadProcedureHeader} />
 												</>
 											),
 											title: pth.label

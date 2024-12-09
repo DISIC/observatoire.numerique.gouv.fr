@@ -2,7 +2,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Edition, IndicatorSlug } from '@prisma/client';
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 type Props = {
 	slug: IndicatorSlug;
@@ -23,7 +23,7 @@ const acceptedSlugValues: IndicatorSlug[] = [
 	'performance'
 ];
 
-function IndicatorValueDisplay(props: Props): JSX.Element {
+function IndicatorValueDisplay(props: Props): ReactNode {
 	const {
 		slug,
 		value,
@@ -74,9 +74,8 @@ function IndicatorValueDisplay(props: Props): JSX.Element {
 
 		let datesParam = `date-debut=2022-04-01&date-fin=2023-03-31`;
 		if (edition)
-			datesParam = `date-debut=${
-				edition.start_date.toString().split('T')[0]
-			}&date-fin=${edition.end_date.toString().split('T')[0]}`;
+			datesParam = `date-debut=${edition.start_date.toString().split('T')[0]
+				}&date-fin=${edition.end_date.toString().split('T')[0]}`;
 
 		return (
 			<Link

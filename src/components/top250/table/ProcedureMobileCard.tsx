@@ -11,6 +11,7 @@ import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
 import Button from '@codegouvfr/react-dsfr/Button';
+import { PayloadProcedureHeader } from '@/payload/payload-types';
 
 type Props = {
 	procedure: ProcedureWithFields;
@@ -110,7 +111,7 @@ export function ProcedureMobileCard(props: Props) {
 											icon={pth.icon as FrIconClassName | RiIconClassName}
 											text={pth.label}
 											infos={{
-												content: <ProcedureHeaderContent slug={pth.slug} />,
+												content: <ProcedureHeaderContent indicator={pth as unknown as PayloadProcedureHeader} />,
 												title: pth.label
 											}}
 											isMobile
