@@ -1,6 +1,6 @@
 import { router } from './trpc';
 import { cms } from './routers/cms';
-import { indicators } from './routers/porcedureHeaders';
+import { indicators } from './routers/indicators';
 
 export const appRouter = router({
 	cms,
