@@ -12,20 +12,20 @@ export default function Home() {
 
 	const {
 		data: procdeureHeadersRequest,
-		isLoading: isLoadingProcedureHeaders
-	} = trpc.procedureHeaders.getList.useQuery({
+		isLoading: isLoadingIndicators
+	} = trpc.indicators.getList.useQuery({
 		page: 1,
 		perPage: 100
 	});
-	const procedureHeaders = procdeureHeadersRequest?.data || [];
+	const indicators = procdeureHeadersRequest?.data || [];
 
 	const homeTexts = homeCMS?.data;
 
 	if (
 		isLoadingHomeCms ||
-		isLoadingProcedureHeaders ||
+		isLoadingIndicators ||
 		!homeTexts ||
-		!procedureHeaders.length
+		!indicators.length
 	) {
 		return (
 			<EmptyScreenZone>
@@ -39,8 +39,8 @@ export default function Home() {
 			<HomeHeader {...homeTexts.header} />
 			<IndicatorsInfos {...homeTexts.quality} />
 			<IndicatorsDetails
-				{...homeTexts.procedureHeaders}
-				indicators={procedureHeaders || []}
+				{...homeTexts.indicators}
+				indicators={indicators || []}
 			/>
 			{homeTexts.redirections.textsWithImages.map((textWithImage, index) => (
 				<TextWithImage {...textWithImage} blueBackground={index % 2 !== 0} imageRight={index % 2 !== 0}

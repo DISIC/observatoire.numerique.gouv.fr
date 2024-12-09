@@ -43,7 +43,7 @@ export const CMSHome: GlobalConfig = {
 				},
 				{
 					label: 'Indicateurs',
-					name: 'procedureHeaders',
+					name: 'indicators',
 					fields: [
 						standardFields.title,
 						standardFields.description,

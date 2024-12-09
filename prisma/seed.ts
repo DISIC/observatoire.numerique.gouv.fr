@@ -3,21 +3,21 @@ import {
 	IndicatorSlug,
 	PrismaClient,
 	Procedure,
-	ProcedureHeader,
+	Indicator,
 	User
 } from '@prisma/client';
 import { procedures } from './seeds/procedures';
-import { procedureHeaders } from './seeds/procedure-headers';
+import { indicators } from './seeds/indicators';
 import { users } from './seeds/users';
 
 const prisma = new PrismaClient();
 
 async function main() {
-	const promises: Promise<ProcedureHeader | Procedure | User>[] = [];
+	const promises: Promise<Indicator | Procedure | User>[] = [];
 
-	procedureHeaders.forEach(procedure_header => {
+	indicators.forEach(procedure_header => {
 		promises.push(
-			prisma.procedureHeader.upsert({
+			prisma.indicator.upsert({
 				where: {
 					slug: procedure_header.slug as IndicatorSlug
 				},
@@ -67,7 +67,7 @@ async function main() {
 	});
 
 	Promise.all(promises).then(responses => {
-		let log: { [key: string]: ProcedureHeader | Procedure | User } = {};
+		let log: { [key: string]: Indicator | Procedure | User } = {};
 		responses.forEach(r => {
 			if ('slug' in r) log[`header ${r.slug}`] = r;
 			else if ('title' in r) log[`demarche ${r.title}`] = r;

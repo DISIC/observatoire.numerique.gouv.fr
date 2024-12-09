@@ -1,4 +1,4 @@
-import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { PayloadIndicator } from '@/payload/payload-types';
 import { BasePayload } from 'payload';
 import {
 	authIndicatorWysiwygContent,
@@ -15,13 +15,13 @@ import {
 } from '../utils/wysiwyg-content';
 import { indicatorLevels } from '../utils/indicator-levels';
 
-type ProcedureHeaderWithoutSystemFields = Omit<
-	PayloadProcedureHeader,
+type IndicatorWithoutSystemFields = Omit<
+	PayloadIndicator,
 	'id' | 'createdAt' | 'updatedAt'
 >;
 
-const procedureHeadersTask = async (payload: BasePayload) => {
-	const headers: ProcedureHeaderWithoutSystemFields[] = [
+const indicatorsTask = async (payload: BasePayload) => {
+	const headers: IndicatorWithoutSystemFields[] = [
 		{
 			slug: 'satisfaction',
 			label: 'Satisfaction Usagers',
@@ -137,7 +137,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 	];
 
 	await payload.delete({
-		collection: 'payload-procedure-headers',
+		collection: 'payload-indicators',
 		where: {
 			id: {
 				exists: true
@@ -148,7 +148,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 	for (const header of headers) {
 		await payload
 			.create({
-				collection: 'payload-procedure-headers',
+				collection: 'payload-indicators',
 				data: header
 			})
 			.then(createdHeader => {
@@ -164,7 +164,7 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 							collection: 'payload-indicator-levels',
 							data: {
 								...level,
-								procedureHeader: createdHeader.id
+								indicator: createdHeader.id
 							}
 						})
 					)
@@ -175,4 +175,4 @@ const procedureHeadersTask = async (payload: BasePayload) => {
 	payload.logger.info('Procedure headers seeded successfully');
 };
 
-export default procedureHeadersTask;
+export default indicatorsTask;

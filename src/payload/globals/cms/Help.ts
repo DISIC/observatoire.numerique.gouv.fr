@@ -70,7 +70,7 @@ export const CMSHelp: GlobalConfig = {
 										{
 											name: 'indicator',
 											type: 'relationship',
-											relationTo: 'payload-procedure-headers',
+											relationTo: 'payload-indicators',
 											required: true
 										}
 									]
@@ -108,7 +108,7 @@ export const CMSHelp: GlobalConfig = {
 										{
 											name: 'indicator',
 											type: 'relationship',
-											relationTo: 'payload-procedure-headers',
+											relationTo: 'payload-indicators',
 											required: true
 										}
 									]

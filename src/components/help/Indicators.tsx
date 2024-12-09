@@ -1,7 +1,7 @@
 import { RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import AccordionWithIcon from '../generic/AccordionWithIcon';
-import { ProcedureHeaderContent } from '../top250/table/ProcedureHeaderContent';
+import { IndicatorContent } from '../top250/table/IndicatorContent';
 import { Help } from '@/payload/payload-types';
 import { IndicatorSlug } from '@prisma/client';
 
@@ -31,7 +31,7 @@ export function HelpIndicators(props: Props) {
 									icon={indicator.icon as RiIconClassName}
 									label={indicator.label}
 								>
-									<ProcedureHeaderContent indicator={indicator} isFull />
+									<IndicatorContent indicator={indicator} isFull />
 								</AccordionWithIcon>
 							);
 						})}
@@ -56,7 +56,7 @@ export function HelpIndicators(props: Props) {
 										icon={indicator.icon as RiIconClassName}
 										label={indicator.label}
 									>
-										<ProcedureHeaderContent indicator={indicator} isFull />
+										<IndicatorContent indicator={indicator} isFull />
 									</AccordionWithIcon>
 								);
 							}

@@ -6,7 +6,7 @@ import {
 
 const helpTask = async (payload: BasePayload) => {
 	const indicators = await payload.find({
-		collection: 'payload-procedure-headers',
+		collection: 'payload-indicators',
 		limit: 20
 	});
 

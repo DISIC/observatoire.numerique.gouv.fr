@@ -1,5 +1,5 @@
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { PayloadIndicator } from '@/payload/payload-types';
 import { getDisplayedVolume } from '@/utils/tools';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
@@ -11,16 +11,16 @@ import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
 import { IndicatorProactive } from './IndicatorProactive';
 import { IndicatorValue } from './IndicatorValue';
-import { ProcedureHeaderContent } from './ProcedureHeaderContent';
+import { IndicatorContent } from './IndicatorContent';
 
 type Props = {
 	procedure: ProcedureWithFields;
-	proceduresTableHeaders: PayloadProcedureHeader[];
+	indicators: PayloadIndicator[];
 	edition?: Edition;
 };
 
 export function ProcedureMobileCard(props: Props) {
-	const { procedure, proceduresTableHeaders, edition } = props;
+	const { procedure, indicators, edition } = props;
 	const { classes, cx } = useStyles();
 
 	const [toogleSwitch, setToogleSwitch] = useState<boolean>(false);
@@ -83,10 +83,10 @@ export function ProcedureMobileCard(props: Props) {
 			</div>
 			<hr className={fr.cx('fr-pb-1v', 'fr-mt-3v')} />
 			<TransitionGroup className={cx(classes.fields)}>
-				{proceduresTableHeaders
+				{indicators
 					.map(f => ({ ...f, nodeRef: createRef<HTMLDivElement>() }))
-					.map((pth, index) => {
-						const field = procedure.fields.find(f => pth.slug === f.slug);
+					.map((indicator, index) => {
+						const field = procedure.fields.find(f => indicator.slug === f.slug);
 
 						if (!field) return <></>;
 						if (isProactive && field.slug === 'satisfaction')
@@ -101,18 +101,18 @@ export function ProcedureMobileCard(props: Props) {
 						return (
 							canBeSeen && (
 								<CSSTransition
-									nodeRef={pth.nodeRef}
+									nodeRef={indicator.nodeRef}
 									timeout={300}
 									key={field.slug}
 									classNames={classes.fieldTransition}
 								>
-									<div className={cx(classes.field)} ref={pth.nodeRef}>
+									<div className={cx(classes.field)} ref={indicator.nodeRef}>
 										<ColumnHeaderDefinition
-											icon={pth.icon as FrIconClassName | RiIconClassName}
-											text={pth.label}
+											icon={indicator.icon as FrIconClassName | RiIconClassName}
+											text={indicator.label}
 											infos={{
-												content: <ProcedureHeaderContent indicator={pth} />,
-												title: pth.label
+												content: <IndicatorContent indicator={indicator} />,
+												title: indicator.label
 											}}
 											isMobile
 										/>

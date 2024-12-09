@@ -13,21 +13,21 @@ export interface Config {
   collections: {
     'payload-admins': PayloadAdmin;
     'payload-media': PayloadMedia;
-    'payload-procedure-headers': PayloadProcedureHeader;
+    'payload-indicators': PayloadIndicator;
     'payload-indicator-levels': PayloadIndicatorLevel;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
-    'payload-procedure-headers': {
+    'payload-indicators': {
       levels: 'payload-indicator-levels';
     };
   };
   collectionsSelect: {
     'payload-admins': PayloadAdminsSelect<false> | PayloadAdminsSelect<true>;
     'payload-media': PayloadMediaSelect<false> | PayloadMediaSelect<true>;
-    'payload-procedure-headers': PayloadProcedureHeadersSelect<false> | PayloadProcedureHeadersSelect<true>;
+    'payload-indicators': PayloadIndicatorsSelect<false> | PayloadIndicatorsSelect<true>;
     'payload-indicator-levels': PayloadIndicatorLevelsSelect<false> | PayloadIndicatorLevelsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -109,9 +109,9 @@ export interface PayloadMedia {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-procedure-headers".
+ * via the `definition` "payload-indicators".
  */
-export interface PayloadProcedureHeader {
+export interface PayloadIndicator {
   id: string;
   slug: string;
   label: string;
@@ -163,7 +163,7 @@ export interface PayloadIndicatorLevel {
   label: string;
   color: 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'orange';
   description: string;
-  procedureHeader: string | PayloadProcedureHeader;
+  indicator: string | PayloadIndicator;
   position: number;
   noBackround?: boolean | null;
   updatedAt: string;
@@ -185,8 +185,8 @@ export interface PayloadLockedDocument {
         value: string | PayloadMedia;
       } | null)
     | ({
-        relationTo: 'payload-procedure-headers';
-        value: string | PayloadProcedureHeader;
+        relationTo: 'payload-indicators';
+        value: string | PayloadIndicator;
       } | null)
     | ({
         relationTo: 'payload-indicator-levels';
@@ -269,9 +269,9 @@ export interface PayloadMediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "payload-procedure-headers_select".
+ * via the `definition` "payload-indicators_select".
  */
-export interface PayloadProcedureHeadersSelect<T extends boolean = true> {
+export interface PayloadIndicatorsSelect<T extends boolean = true> {
   slug?: T;
   label?: T;
   description?: T;
@@ -293,7 +293,7 @@ export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
   label?: T;
   color?: T;
   description?: T;
-  procedureHeader?: T;
+  indicator?: T;
   position?: T;
   noBackround?: T;
   updatedAt?: T;
@@ -355,7 +355,7 @@ export interface Home {
       id?: string | null;
     }[];
   };
-  procedureHeaders: {
+  indicators: {
     title: string;
     description: string;
     buttonText: string;
@@ -430,7 +430,7 @@ export interface Help {
       keyIndicatorsDescription?: string | null;
       keyIndicatorsList?:
         | {
-            indicator: string | PayloadProcedureHeader;
+            indicator: string | PayloadIndicator;
             id?: string | null;
           }[]
         | null;
@@ -440,7 +440,7 @@ export interface Help {
       additionnalIndicatorsDescription?: string | null;
       additionnalIndicatorsList?:
         | {
-            indicator: string | PayloadProcedureHeader;
+            indicator: string | PayloadIndicator;
             id?: string | null;
           }[]
         | null;
@@ -478,7 +478,7 @@ export interface HomeSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  procedureHeaders?:
+  indicators?:
     | T
     | {
         title?: T;

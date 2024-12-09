@@ -62,7 +62,7 @@ const homeTask = async (payload: BasePayload) => {
 					}
 				]
 			},
-			procedureHeaders: {
+			indicators: {
 				title: 'Zoom sur les indicateurs.',
 				description:
 					'Nous avons défini 5 indicateurs clés afin de suivre les améliorations des services numériques. Ils couvrent les enjeux de qualité de l’expérience utilisateur, de la proactivité et de la performance.',

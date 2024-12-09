@@ -5,14 +5,14 @@ import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
-import { ProcedureHeaderContent } from './ProcedureHeaderContent';
+import { IndicatorContent } from './IndicatorContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
 import { Edition } from '@prisma/client';
-import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { PayloadIndicator } from '@/payload/payload-types';
 import { trpc } from '@/utils/trpc';
 
 type Props = {
@@ -76,14 +76,14 @@ export function ProceduresTable(props: Props) {
 
 	const {
 		data: procdeureHeadersRequest,
-		isLoading: isLoadingProcedureHeaders
-	} = trpc.procedureHeaders.getList.useQuery({
+		isLoading: isLoadingIndicators
+	} = trpc.indicators.getList.useQuery({
 		page: 1,
 		perPage: 100
 	});
-	const procedureHeaders = procdeureHeadersRequest?.data || [];
+	const indicators = procdeureHeadersRequest?.data || [];
 
-	if (isLoadingProcedureHeaders)
+	if (isLoadingIndicators)
 		return (
 			<div className={cx(classes.loader)}>
 				<div>
@@ -93,7 +93,7 @@ export function ProceduresTable(props: Props) {
 				<p className={fr.cx('fr-pt-4v')}>Chargement du tableau...</p>
 			</div>
 		);
-	if (!procedureHeaders) return <div>Aucune colonne de démarche</div>;
+	if (!indicators) return <div>Aucune colonne de démarche</div>;
 
 	const getClosestColScrollPosition = (scrollPosition: number): number => {
 		if (!scrollRef.current || !tableRef.current) return scrollPosition;
@@ -165,19 +165,19 @@ export function ProceduresTable(props: Props) {
 						<th ref={firstColRef}>
 							<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
 						</th>
-						{procedureHeaders.map((pth, index) => {
+						{indicators.map((indicator, index) => {
 							return (
-								<th key={pth.label} scope="col">
+								<th key={indicator.label} scope="col">
 									<ColumnHeaderDefinition
-										icon={pth.icon as FrIconClassName | RiIconClassName}
-										text={pth.label}
+										icon={indicator.icon as FrIconClassName | RiIconClassName}
+										text={indicator.label}
 										infos={{
 											content: (
 												<>
-													<ProcedureHeaderContent indicator={pth} />
+													<IndicatorContent indicator={indicator} />
 												</>
 											),
-											title: pth.label
+											title: indicator.label
 										}}
 										onFocus={() => {
 											if (index >= 5) handleScrollX(true, true);
@@ -237,7 +237,7 @@ export function ProceduresTable(props: Props) {
 										</div>
 									</div>
 								</th>
-								{procedureHeaders.map((pth, index) => {
+								{indicators.map((indicator, index) => {
 									const isProactive = p.fields.some(
 										f => f.slug === 'online' && f.label === 'Démarche proactive'
 									);
@@ -247,7 +247,7 @@ export function ProceduresTable(props: Props) {
 									const isNotOnline = p.fields.some(
 										f => f.slug === 'online' && f.label === 'Non'
 									);
-									const field = p.fields.find(f => f.slug === pth.slug);
+									const field = p.fields.find(f => f.slug === indicator.slug);
 
 									if (!field) return <>No</>;
 
@@ -255,7 +255,7 @@ export function ProceduresTable(props: Props) {
 										return (
 											<td
 												colSpan={index === 1 ? 4 : 6}
-												key={`${p.title} ${pth.label}`}
+												key={`${p.title} ${indicator.label}`}
 											>
 												<IndicatorProactive />
 											</td>
@@ -264,7 +264,7 @@ export function ProceduresTable(props: Props) {
 
 									if (isToCome && field.slug !== 'online')
 										return (
-											<td key={`${p.title} ${pth.label}`}>
+											<td key={`${p.title} ${indicator.label}`}>
 												<IndicatorLabel
 													color="gray"
 													label="À venir"
@@ -275,13 +275,13 @@ export function ProceduresTable(props: Props) {
 
 									if (isNotOnline && field.slug !== 'online')
 										return (
-											<td key={`${p.title} ${pth.label}`}>
+											<td key={`${p.title} ${indicator.label}`}>
 												<IndicatorLabel color="gray" label="-" noBackground />
 											</td>
 										);
 
 									return (
-										<td key={`${p.title} ${pth.label}`}>
+										<td key={`${p.title} ${indicator.label}`}>
 											<IndicatorLabel {...field} />
 											{field.value && !isNotOnline && (
 												<IndicatorValue

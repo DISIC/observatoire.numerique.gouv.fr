@@ -16,23 +16,23 @@ export function ProceduresTableMobile(props: Props) {
 
 	const {
 		data: procdeureHeadersRequest,
-		error: procedureHeadersError,
-		isLoading: isLoadingProcedureHeaders
-	} = trpc.procedureHeaders.getList.useQuery({
+		error: indicatorsError,
+		isLoading: isLoadingIndicators
+	} = trpc.indicators.getList.useQuery({
 		page: 1,
 		perPage: 100
 	});
-	const procedureHeaders = procdeureHeadersRequest?.data || [];
-	if (procedureHeadersError) return <div>Une erreur est survenue.</div>;
-	if (isLoadingProcedureHeaders) return <div>...</div>;
-	if (!procedureHeaders) return <div>Aucune colonne de démarche</div>;
+	const indicators = procdeureHeadersRequest?.data || [];
+	if (indicatorsError) return <div>Une erreur est survenue.</div>;
+	if (isLoadingIndicators) return <div>...</div>;
+	if (!indicators) return <div>Aucune colonne de démarche</div>;
 
 	return (
 		<div className={cx(classes.root)}>
 			{procedures.map(procedure => {
 				return (
 					<ProcedureMobileCard
-						proceduresTableHeaders={procedureHeaders}
+						indicators={indicators}
 						key={procedure.id}
 						procedure={procedure}
 						edition={edition}

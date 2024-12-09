@@ -2,21 +2,21 @@ import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 import { ZGetListParams } from '../types';
 
-export const procedureHeaders = router({
+export const indicators = router({
 	getList: publicProcedure
 		.input(ZGetListParams)
 		.query(async ({ ctx, input }) => {
 			const { page, perPage } = input;
 
-			const procedureHeaders = await ctx.payload.find({
-				collection: 'payload-procedure-headers',
+			const indicators = await ctx.payload.find({
+				collection: 'payload-indicators',
 				limit: perPage,
 				page: page,
 				sort: 'position'
 			});
 
 			return {
-				data: procedureHeaders.docs
+				data: indicators.docs
 			};
 		}),
 
@@ -28,13 +28,13 @@ export const procedureHeaders = router({
 		.query(async ({ ctx, input }) => {
 			const { id } = input;
 
-			const procedureHeader = await ctx.payload.findByID({
-				collection: 'payload-procedure-headers',
+			const indicator = await ctx.payload.findByID({
+				collection: 'payload-indicators',
 				id
 			});
 
 			return {
-				data: procedureHeader
+				data: indicator
 			};
 		})
 });

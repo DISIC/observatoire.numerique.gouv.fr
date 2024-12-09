@@ -5,8 +5,8 @@ import {
 } from '@payloadcms/richtext-lexical';
 import type { CollectionConfig } from 'payload';
 
-export const ProcedureHeaders: CollectionConfig = {
-	slug: 'payload-procedure-headers',
+export const Indicators: CollectionConfig = {
+	slug: 'payload-indicators',
 	defaultPopulate: {
 		icon: true,
 		label: true,
@@ -99,7 +99,7 @@ export const ProcedureHeaders: CollectionConfig = {
 			label: "Niveaux d'évaluation",
 			type: 'join',
 			collection: 'payload-indicator-levels',
-			on: 'procedureHeader',
+			on: 'indicator',
 			hasMany: true,
 			maxDepth: 2
 		}
@@ -107,4 +107,4 @@ export const ProcedureHeaders: CollectionConfig = {
 	timestamps: true
 };
 
-export default ProcedureHeaders;
+export default Indicators;

@@ -49,9 +49,9 @@ export const IndicatorLevels: CollectionConfig = {
 			required: true
 		},
 		{
-			name: 'procedureHeader',
+			name: 'indicator',
 			type: 'relationship',
-			relationTo: 'payload-procedure-headers',
+			relationTo: 'payload-indicators',
 			label: 'Indicateur associé',
 			required: true
 		},

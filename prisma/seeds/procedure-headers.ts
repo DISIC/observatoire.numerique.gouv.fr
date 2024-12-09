@@ -1,4 +1,4 @@
-export const procedureHeaders = [
+export const indicators = [
 	{
 		slug: 'online',
 		label: 'Réalisable en ligne',

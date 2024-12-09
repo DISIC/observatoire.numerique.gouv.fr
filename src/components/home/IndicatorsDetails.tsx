@@ -1,4 +1,4 @@
-import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { PayloadIndicator } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 type Props = {
 	title: string;
 	description: string;
-	indicators: PayloadProcedureHeader[];
+	indicators: PayloadIndicator[];
 	buttonText: string;
 	buttonLink: string;
 };

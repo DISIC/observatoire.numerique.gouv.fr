@@ -2,7 +2,7 @@ import 'dotenv/config';
 import 'ignore-styles';
 import { getPayloadClient } from '../payload-client';
 import homeTask from './tasks/home';
-import procedureHeadersTask from './tasks/procedure-headers';
+import indicatorsTask from './tasks/indicators';
 import helpTask from './tasks/help';
 
 const argv = process.argv.slice(2);
@@ -25,7 +25,7 @@ export const seedData = async () => {
 			});
 		}
 
-		await procedureHeadersTask(payload);
+		await indicatorsTask(payload);
 		await homeTask(payload);
 		await helpTask(payload);
 	} catch (e) {

@@ -2,14 +2,14 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorLabel } from './IndicatorLabel';
 import { fr } from '@codegouvfr/react-dsfr';
 import React from 'react';
-import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { PayloadIndicator } from '@/payload/payload-types';
 
 type Props = {
-	indicator: PayloadProcedureHeader;
+	indicator: PayloadIndicator;
 	isFull?: boolean;
 };
 
-export const ProcedureHeaderContent = (props: Props) => {
+export const IndicatorContent = (props: Props) => {
 	const { indicator, isFull } = props;
 	const { classes, cx } = useStyles();
 

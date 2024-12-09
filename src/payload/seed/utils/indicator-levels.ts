@@ -1,12 +1,12 @@
-import { PayloadIndicatorLevel, PayloadProcedureHeader } from '@/payload/payload-types';
+import { PayloadIndicatorLevel, PayloadIndicator } from '@/payload/payload-types';
 
 type IndicatorLevelWithoutSystemFields = Omit<
 	PayloadIndicatorLevel,
-	'id' | 'createdAt' | 'updatedAt' | 'procedureHeader'
+	'id' | 'createdAt' | 'updatedAt' | 'indicator'
 >;
 
 export const indicatorLevels: Record<
-	PayloadProcedureHeader['slug'],
+	PayloadIndicator['slug'],
 	IndicatorLevelWithoutSystemFields[]
 > = {
 	online: [
