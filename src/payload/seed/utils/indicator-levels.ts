@@ -1,5 +1,4 @@
-import { PayloadIndicatorLevel } from '@/payload/payload-types';
-import { ProcedureHeader } from '@prisma/client';
+import { PayloadIndicatorLevel, PayloadProcedureHeader } from '@/payload/payload-types';
 
 type IndicatorLevelWithoutSystemFields = Omit<
 	PayloadIndicatorLevel,
@@ -7,7 +6,7 @@ type IndicatorLevelWithoutSystemFields = Omit<
 >;
 
 export const indicatorLevels: Record<
-	ProcedureHeader['slug'],
+	PayloadProcedureHeader['slug'],
 	IndicatorLevelWithoutSystemFields[]
 > = {
 	online: [

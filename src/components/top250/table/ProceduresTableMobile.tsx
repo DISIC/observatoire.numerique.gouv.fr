@@ -1,10 +1,9 @@
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { Edition } from '@prisma/client';
 import { ProcedureMobileCard } from './ProcedureMobileCard';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { Edition, ProcedureHeader } from '@prisma/client';
-import { useProcedureHeaders } from '@/utils/api';
-import { trpc } from '@/utils/trpc';
 
 type Props = {
 	procedures: ProcedureWithFields[];

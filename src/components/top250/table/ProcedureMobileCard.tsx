@@ -1,17 +1,17 @@
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { getDisplayedVolume } from '@/utils/tools';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
+import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { IndicatorLabel } from './IndicatorLabel';
-import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
-import { IndicatorValue } from './IndicatorValue';
+import { Edition, Field } from '@prisma/client';
 import { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { Edition, Field, ProcedureHeader } from '@prisma/client';
-import { ProcedureHeaderContent } from './ProcedureHeaderContent';
-import { getDisplayedVolume } from '@/utils/tools';
+import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
+import { IndicatorLabel } from './IndicatorLabel';
 import { IndicatorProactive } from './IndicatorProactive';
-import Button from '@codegouvfr/react-dsfr/Button';
-import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { IndicatorValue } from './IndicatorValue';
+import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 
 type Props = {
 	procedure: ProcedureWithFields;

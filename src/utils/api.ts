@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
-import { ProcedureHeader, Edition, User, OldProcedure } from '@prisma/client';
+import { Edition, User, OldProcedure } from '@prisma/client';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -58,22 +58,6 @@ export function useProcedures(props: ProceduresProps) {
 		data,
 		isError: error,
 		isLoading: (!error && !data) || isLoading
-	};
-}
-
-export function useProcedureHeaders() {
-	const { data, error } = useSWR(
-		`/api/procedure-headers`,
-		async function (input: RequestInfo, init?: RequestInit) {
-			const res = await fetch(input, init);
-			return superJSONParse<ProcedureHeader[]>(stringify(await res.json()));
-		}
-	);
-
-	return {
-		data,
-		isError: error,
-		isLoading: !error && !data
 	};
 }
 

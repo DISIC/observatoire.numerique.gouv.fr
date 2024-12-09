@@ -5,7 +5,6 @@ import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { IndicatorValue } from './IndicatorValue';
-import { useProcedureHeaders } from '@/utils/api';
 import { ProcedureHeaderContent } from './ProcedureHeaderContent';
 import { getDisplayedVolume } from '@/utils/tools';
 import { IndicatorProactive } from './IndicatorProactive';

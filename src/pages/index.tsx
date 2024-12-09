@@ -4,7 +4,6 @@ import { HomeHeader } from '@/components/home/HomeHeader';
 import { IndicatorsDetails } from '@/components/home/IndicatorsDetails';
 import { IndicatorsInfos } from '@/components/home/IndicatorsInfos';
 import { TextWithImage } from '@/components/home/TextWithImage';
-import { useProcedureHeaders } from '@/utils/api';
 import { trpc } from '@/utils/trpc';
 
 export default function Home() {

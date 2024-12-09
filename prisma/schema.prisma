@@ -104,15 +104,6 @@ model Field {
   procedureId  String         @db.ObjectId
 }
 
-model ProcedureHeader {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  slug        IndicatorSlug @unique
-  label       String
-  description String?
-  icon        String
-  position    Int           @unique
-}
-
 // Next auth
 model User {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
