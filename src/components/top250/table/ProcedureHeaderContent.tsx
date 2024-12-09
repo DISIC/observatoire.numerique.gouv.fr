@@ -15,6 +15,12 @@ export const ProcedureHeaderContent = (props: Props) => {
 
 	return (
 		<div className={cx(classes.root)}>
+			{!isFull && indicator.description && (
+				<>
+					<p><b>Description</b></p>
+					<p>{indicator.description}</p>
+				</>
+			)}
 			{isFull && indicator.description_html && (
 				<div
 					className={cx(classes.description)}

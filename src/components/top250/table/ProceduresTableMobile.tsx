@@ -4,6 +4,7 @@ import { ProcedureMobileCard } from './ProcedureMobileCard';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { Edition, ProcedureHeader } from '@prisma/client';
 import { useProcedureHeaders } from '@/utils/api';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -15,20 +16,24 @@ export function ProceduresTableMobile(props: Props) {
 	const { classes, cx } = useStyles();
 
 	const {
-		data: proceduresTableHeaders,
-		isError,
-		isLoading
-	} = useProcedureHeaders();
-	if (isError) return <div>Une erreur est survenue.</div>;
-	if (isLoading) return <div>...</div>;
-	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
+		data: procdeureHeadersRequest,
+		error: procedureHeadersError,
+		isLoading: isLoadingProcedureHeaders
+	} = trpc.procedureHeaders.getList.useQuery({
+		page: 1,
+		perPage: 100
+	});
+	const procedureHeaders = procdeureHeadersRequest?.data || [];
+	if (procedureHeadersError) return <div>Une erreur est survenue.</div>;
+	if (isLoadingProcedureHeaders) return <div>...</div>;
+	if (!procedureHeaders) return <div>Aucune colonne de démarche</div>;
 
 	return (
 		<div className={cx(classes.root)}>
 			{procedures.map(procedure => {
 				return (
 					<ProcedureMobileCard
-						proceduresTableHeaders={proceduresTableHeaders}
+						proceduresTableHeaders={procedureHeaders}
 						key={procedure.id}
 						procedure={procedure}
 						edition={edition}

@@ -14,6 +14,7 @@ import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
 import { Edition } from '@prisma/client';
 import { PayloadProcedureHeader } from '@/payload/payload-types';
+import { trpc } from '@/utils/trpc';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -75,12 +76,15 @@ export function ProceduresTable(props: Props) {
 	}, []);
 
 	const {
-		data: proceduresTableHeaders,
-		isError,
-		isLoading
-	} = useProcedureHeaders();
-	if (isError) return <div>Une erreur est survenue.</div>;
-	if (isLoading)
+		data: procdeureHeadersRequest,
+		isLoading: isLoadingProcedureHeaders
+	} = trpc.procedureHeaders.getList.useQuery({
+		page: 1,
+		perPage: 100
+	});
+	const procedureHeaders = procdeureHeadersRequest?.data || [];
+
+	if (isLoadingProcedureHeaders)
 		return (
 			<div className={cx(classes.loader)}>
 				<div>
@@ -90,7 +94,7 @@ export function ProceduresTable(props: Props) {
 				<p className={fr.cx('fr-pt-4v')}>Chargement du tableau...</p>
 			</div>
 		);
-	if (!proceduresTableHeaders) return <div>Aucune colonne de démarche</div>;
+	if (!procedureHeaders) return <div>Aucune colonne de démarche</div>;
 
 	const getClosestColScrollPosition = (scrollPosition: number): number => {
 		if (!scrollRef.current || !tableRef.current) return scrollPosition;
@@ -162,7 +166,7 @@ export function ProceduresTable(props: Props) {
 						<th ref={firstColRef}>
 							<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
 						</th>
-						{proceduresTableHeaders.map((pth, index) => {
+						{procedureHeaders.map((pth, index) => {
 							return (
 								<th key={pth.label} scope="col">
 									<ColumnHeaderDefinition
@@ -171,7 +175,7 @@ export function ProceduresTable(props: Props) {
 										infos={{
 											content: (
 												<>
-													<ProcedureHeaderContent indicator={pth as unknown as PayloadProcedureHeader} />
+													<ProcedureHeaderContent indicator={pth} />
 												</>
 											),
 											title: pth.label
@@ -234,7 +238,7 @@ export function ProceduresTable(props: Props) {
 										</div>
 									</div>
 								</th>
-								{proceduresTableHeaders.map((pth, index) => {
+								{procedureHeaders.map((pth, index) => {
 									const isProactive = p.fields.some(
 										f => f.slug === 'online' && f.label === 'Démarche proactive'
 									);

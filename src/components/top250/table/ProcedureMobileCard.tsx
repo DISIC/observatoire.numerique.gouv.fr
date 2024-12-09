@@ -15,7 +15,7 @@ import { PayloadProcedureHeader } from '@/payload/payload-types';
 
 type Props = {
 	procedure: ProcedureWithFields;
-	proceduresTableHeaders: ProcedureHeader[];
+	proceduresTableHeaders: PayloadProcedureHeader[];
 	edition?: Edition;
 };
 
@@ -111,7 +111,7 @@ export function ProcedureMobileCard(props: Props) {
 											icon={pth.icon as FrIconClassName | RiIconClassName}
 											text={pth.label}
 											infos={{
-												content: <ProcedureHeaderContent indicator={pth as unknown as PayloadProcedureHeader} />,
+												content: <ProcedureHeaderContent indicator={pth} />,
 												title: pth.label
 											}}
 											isMobile
