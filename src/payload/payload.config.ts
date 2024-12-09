@@ -44,7 +44,7 @@ export default buildConfig({
 			bucket: process.env.S3_BUCKET_NAME ?? '',
 			config: {
 				region: process.env.S3_REGION ?? 'eu',
-				endpoint: process.env.CELLAR_ADDON_HOST,
+				endpoint: `https://${process.env.CELLAR_ADDON_HOST}`,
 				credentials: {
 					accessKeyId: process.env.CELLAR_ADDON_KEY_ID ?? '',
 					secretAccessKey: process.env.CELLAR_ADDON_KEY_SECRET ?? ''
