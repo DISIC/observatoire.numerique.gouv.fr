@@ -3,12 +3,11 @@ import { useAuth } from '@/providers/Auth';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Header } from '@codegouvfr/react-dsfr/Header';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
-	const { classes, cx } = useStyles();
+	const { classes } = useStyles();
 
 	const router = useRouter();
 
@@ -27,7 +26,6 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 
 	const signOut = async () => {
 		await logout()
-		deleteCookie(process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt")
 		router.push('/')
 	}
 
@@ -73,6 +71,14 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 							target: '_self'
 						},
 						text: 'Mes Éditions'
+					},
+					{
+						isActive: false,
+						linkProps: {
+							href: '/admin',
+							target: '_blank'
+						},
+						text: 'Payload CMS'
 					}
 				]}
 				serviceTagline={serviceTagLine}

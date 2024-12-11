@@ -15,11 +15,12 @@ export function LoginForm() {
 	const [password, setPassword] = useState<string>('');
 	const [errorStatus, setErrorStatus] = useState<number | null>(null)
 
-	const storeUserCookie = (token?: string, exp?: number) => {
-		setCookie(process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt", token || "", {
-			expires: new Date((exp as number) * 1000),
-			sameSite: "lax",
-		});
+	const storeUserCookie = async (token?: string, exp?: number) => {
+		await fetch(`/api/auth/setCookie?token=${token}&exp=${exp}`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
 		router.push('/administration/bo/airtable')
 	};
 

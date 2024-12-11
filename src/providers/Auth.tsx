@@ -42,10 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	}
 
 	const logout = async () => {
-		const { slug } = await getTokenInfos();
-
-		await fetch(`/api/${slug}/logout`, {
-			method: 'POST',
+		await fetch(`/api/auth/removeCookie`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
@@ -55,21 +52,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	}
 
 	const fetchMe = async () => {
-		const { jwtToken, slug } = await getTokenInfos();
-
 		try {
-			const result = await fetch(`/api/${slug}/me`, {
-				headers: {
-					Authorization: `Bearer ${jwtToken}`,
-				},
-			}).then((req) => req.json());
+			const result = await fetch(`/api/payload-admins/me`).then((req) => req.json());
 
 			if (result && result.user !== null) {
 				setUser(result.user);
 			} else {
 				setUser(null);
-				deleteCookie(process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt");
-				router.push("/administration/bo/airtable");
+				router.push("/");
 			}
 		} catch (e) {
 			console.log("error : ", e);
@@ -86,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 				user,
 				setUser,
 				logout,
-				refetchUser: fetchMe,
+				refetchUser: fetchMe
 			}}
 		>
 			{children}
