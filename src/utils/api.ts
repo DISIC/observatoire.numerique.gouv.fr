@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
-import { Edition, User, OldProcedure } from '@prisma/client';
+import { Edition, OldProcedure } from '@prisma/client';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -72,25 +72,6 @@ export function useEditions() {
 
 	return {
 		data,
-		isError: error,
-		isLoading: !error && !data
-	};
-}
-
-export function useUsers(page: number, numberPerPage: number) {
-	const { data, error, mutate } = useSWR(
-		`/api/users?page=${page}&numberPerPage=${numberPerPage}`,
-		async function (input: RequestInfo, init?: RequestInit) {
-			const res = await fetch(input, init);
-			return superJSONParse<{ data: User[]; metadata: { count: number } }>(
-				stringify(await res.json())
-			);
-		}
-	);
-
-	return {
-		data,
-		mutate,
 		isError: error,
 		isLoading: !error && !data
 	};
