@@ -1,16 +1,18 @@
-import { ReactNode } from 'react';
-import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Header } from '@codegouvfr/react-dsfr/Header';
-import { signOut } from 'next-auth/react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { CustomFooter } from '@/components/layout/CustomFooter';
+import { useAuth } from '@/providers/Auth';
+import { fr } from '@codegouvfr/react-dsfr';
+import { Header } from '@codegouvfr/react-dsfr/Header';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { deleteCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+import { ReactNode } from 'react';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const { classes, cx } = useStyles();
 
 	const router = useRouter();
+
+	const { logout } = useAuth();
 
 	const brandTop = (
 		<>
@@ -22,6 +24,12 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 
 	const serviceTitle = 'Administration';
 	const serviceTagLine = 'de vos démarches essentielles';
+
+	const signOut = async () => {
+		await logout()
+		deleteCookie(process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt")
+		router.push('/')
+	}
 
 	return (
 		<>
@@ -44,9 +52,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 					{
 						iconId: 'ri-service-fill',
 						buttonProps: {
-							onClick: () => {
-								signOut();
-							}
+							onClick: signOut
 						},
 						text: 'Déconnexion'
 					}
@@ -67,14 +73,6 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 							target: '_self'
 						},
 						text: 'Mes Éditions'
-					},
-					{
-						isActive: router.pathname.startsWith('/administration/bo/users'),
-						linkProps: {
-							href: '/administration/bo/users',
-							target: '_self'
-						},
-						text: 'Utilisateurs'
 					}
 				]}
 				serviceTagline={serviceTagLine}

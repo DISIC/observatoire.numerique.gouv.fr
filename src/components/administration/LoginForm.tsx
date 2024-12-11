@@ -1,29 +1,51 @@
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Input } from '@codegouvfr/react-dsfr/Input';
+import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import React, { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { Input } from '@codegouvfr/react-dsfr/Input';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
-type Props = {
-	error?: string;
-};
-
-export function LoginForm(props: Props) {
-	const { error } = props;
+export function LoginForm() {
+	const router = useRouter()
 	const { classes, cx } = useStyles();
 
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
+	const [errorStatus, setErrorStatus] = useState<number | null>(null)
+
+	const storeUserCookie = (token?: string, exp?: number) => {
+		setCookie(process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt", token || "", {
+			expires: new Date((exp as number) * 1000),
+			sameSite: "lax",
+		});
+		router.push('/administration/bo/airtable')
+	};
+
+	const { mutate: login } = trpc.admins.login.useMutation({
+		onSuccess: ({ data }) => {
+			storeUserCookie(data.token, data.exp)
+		},
+		onError: (e) => {
+			setErrorStatus(e.data?.httpStatus || null)
+		}
+	})
 
 	const submitForm = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
-		const result = await signIn('credentials', { email, password });
-		console.log(result);
+		login({
+			email,
+			password
+		})
 	};
 
-	const displayError =
-		error && error === 'CredentialsSignin' && password === '' && email === '';
+	useEffect(() => {
+		setErrorStatus(null)
+	}, [email, password])
+
+	const displayError = !!errorStatus;
+	const errorMessage = errorStatus === 401 ? "Identifiants incorrects" : "Erreur coté serveur"
 
 	return (
 		<div className={cx(fr.cx(), classes.root)}>
@@ -32,7 +54,7 @@ export function LoginForm(props: Props) {
 				<Input
 					label="Email"
 					state={displayError ? 'error' : 'default'}
-					stateRelatedMessage="Identifiants incorrects"
+					stateRelatedMessage={errorMessage}
 					nativeInputProps={{
 						name: 'email',
 						onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +65,7 @@ export function LoginForm(props: Props) {
 				<Input
 					label="Mot de passe"
 					state={displayError ? 'error' : 'default'}
-					stateRelatedMessage="Identifiants incorrects"
+					stateRelatedMessage={errorMessage}
 					nativeInputProps={{
 						name: 'password',
 						type: 'password',

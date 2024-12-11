@@ -1,15 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getToken } from 'next-auth/jwt';
 import { tableEditions } from '../../../utils/airtable';
 
 const getEditions = async (_req: NextApiRequest, res: NextApiResponse) => {
-	const token = await getToken({
-		cookieName: process.env.NEXTAUTH_COOKIENAME,
-		req: _req,
-		secret: process.env.JWT_SECRET
-	});
-	if (!token || (token.exp as number) > new Date().getTime())
+	const jwtCookie = _req.cookies[
+		process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt"
+	];
+	if (!jwtCookie) {
 		return res.status(401).json({ msg: 'You shall not pass.' });
+	}
 
 	try {
 		let editions: { name: string; start_date: string; end_date: string }[] = [];

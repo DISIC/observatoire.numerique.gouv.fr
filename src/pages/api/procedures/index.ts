@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
-import { getToken } from 'next-auth/jwt';
 
 const prisma = new PrismaClient();
 
@@ -93,13 +92,12 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (['POST', 'PUT', 'DELETE'].includes(req.method || '')) {
-		const token = await getToken({
-			cookieName: process.env.NEXTAUTH_COOKIENAME,
-			req,
-			secret: process.env.JWT_SECRET
-		});
-		if (!token || (token.exp as number) > new Date().getTime())
+		const jwtCookie = req.cookies[
+			process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt"
+		];
+		if (!jwtCookie) {
 			return res.status(401).json({ msg: 'You shall not pass.' });
+		}
 	}
 
 	if (req.method === 'GET') {

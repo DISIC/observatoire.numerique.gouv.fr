@@ -1,11 +1,11 @@
 import { SkipLinks } from '@/components/generic/SkipLinks';
 import { CustomFooter } from '@/components/layout/CustomFooter';
 import { SocialNetworks } from '@/components/layout/SocialNetworks';
+import { useAuth } from '@/providers/Auth';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Display } from '@codegouvfr/react-dsfr/Display';
 import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { useSession } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -15,8 +15,9 @@ type Props = {
 const PublicLayout = (props: Props) => {
 	const { children } = props;
 	const { classes, cx } = useStyles();
-	const session = useSession();
-	const isLogged = !!session.data;
+
+	const { user } = useAuth();
+	const isLogged = !!user;
 
 	const brandTop = (
 		<>
@@ -41,17 +42,9 @@ const PublicLayout = (props: Props) => {
 			iconId: 'ri-user-star-line',
 			linkProps: {
 				href: 'https://jedonnemonavis.numerique.gouv.fr',
-				target: '_self'
+				target: '_blank'
 			},
 			text: 'Je donne mon avis'
-		},
-		{
-			iconId: 'ri-user-star-line',
-			linkProps: {
-				href: 'https://jedonnemonavis.numerique.gouv.fr/login',
-				target: '_self'
-			},
-			text: 'Connexion'
 		}
 	];
 

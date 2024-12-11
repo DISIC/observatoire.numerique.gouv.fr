@@ -2,7 +2,6 @@ import { ObservatoireHead } from '@/components/layout/ObservatoireHead';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import PublicLayout from '@/layouts/PublicLayout';
 import { createNextDsfrIntegrationApi } from '@codegouvfr/react-dsfr/next-pagesdir';
-import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -11,6 +10,7 @@ import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
 import '../utils/keyframes.css';
 import { init } from '@socialgouv/matomo-next';
 import { trpc } from '../utils/trpc';
+import { AuthProvider } from '@/providers/Auth';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -48,10 +48,10 @@ function App({ Component, pageProps }: AppProps) {
 	};
 
 	return (
-		<SessionProvider session={pageProps.session}>
+		<AuthProvider>
 			<ObservatoireHead />
 			{getLayout(<Component {...pageProps} />)}
-		</SessionProvider>
+		</AuthProvider>
 	);
 }
 
