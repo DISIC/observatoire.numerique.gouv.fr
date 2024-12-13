@@ -77,6 +77,7 @@ export interface PayloadAdminAuthOperations {
  */
 export interface PayloadAdmin {
   id: string;
+  totpSecret?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -239,6 +240,7 @@ export interface PayloadMigration {
  * via the `definition` "payload-admins_select".
  */
 export interface PayloadAdminsSelect<T extends boolean = true> {
+  totpSecret?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
