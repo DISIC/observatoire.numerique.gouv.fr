@@ -457,6 +457,25 @@ export interface Help {
  */
 export interface Legal {
   id: string;
+  'legal-a11y': {
+    title: string;
+    wysiwyg?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    wysiwyg_html?: string | null;
+  };
   'legal-mentions': {
     title: string;
     wysiwyg?: {
@@ -636,6 +655,13 @@ export interface HelpSelect<T extends boolean = true> {
  * via the `definition` "legals_select".
  */
 export interface LegalsSelect<T extends boolean = true> {
+  'legal-a11y'?:
+    | T
+    | {
+        title?: T;
+        wysiwyg?: T;
+        wysiwyg_html?: T;
+      };
   'legal-mentions'?:
     | T
     | {

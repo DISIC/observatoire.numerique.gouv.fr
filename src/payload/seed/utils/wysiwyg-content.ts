@@ -3514,3 +3514,1777 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 		version: 1
 	}
 }
+
+export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
+	root: {
+		children: [
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Déclaration d'accessibilité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "La direction interministérielle du numérique (DINUM) s’engage à rendre ses sites internet accessibles conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "À cette fin, il met en œuvre la stratégie et les actions suivantes :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "Consulter le schéma pluriannuel d’accessibilité 2020-2022 (pdf - 1,7 Mo)",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://www.numerique.gouv.fr/uploads/DINUM_SchemaPluriannuel_2020.pdf"
+								},
+								id: "6760522f98ad5c03a427a450"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "Consulter le plan annuel d’accessibilité 2021 (pdf - 900 Ko)",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://www.numerique.gouv.fr/uploads/DINUM-plan-annuel-2021.pdf"
+								},
+								id: "6760522f98ad5c03a427a451"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Cette déclaration d’accessibilité s’applique au service Vos démarches essentielles.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "État de conformité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Le service Vos démarches essentielles est en conformité partielle avec le référentiel général d'amélioration de l'accessibilité (RGAA), version 4.1. Les non-conformités sont énumérées ci-dessous.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Résultats des tests",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "L’audit de conformité finalisé le 1er juillet 2021 en interne révèle que :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "53,4 % des critères RGAA sont respectés.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Le taux moyen de conformité du service en ligne s’élève à 78,2%.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Contenus non accessibles",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Les contenus listés ci-dessous ne sont pas accessibles pour les raisons suivantes :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Images",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Des images informatives n’ont pas une alternative textuelle pertinente.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Sur les pages dédiées aux démarches, certains graphiques n’ont pas les descriptions détaillées nécessaires pour retranscrire les données chiffrées affichées.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Couleurs",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Certains boutons de formulaire et certains textes présentent des problèmes de contraste.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Scripts",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Dans la page 'Observatoire' :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Des attributs ARIA manquent pour les sous-menus, le tableau listant les démarches et enfin les boutons affichant les détails sur une démarche.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Lorsqu'on active les boutons 'Trier par' et 'Édition avril 2021' avec la touche Espace, les sous-menus sont affichés durant un court instant seulement.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Dans la page “Conditions générales d’utilisation” :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Lorsqu’on active le bouton “Refuser le suivi de votre navigation”, la page se recharge sans que l’utilisateur en ait été averti au préalable.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Structuration",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "La zone de contenu principal n’est pas indiquée dans le code.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "La zone de navigation principale n’est pas bien indiquée dans le code pour les lecteurs d’écran.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Certaines listes sont mal structurées, dans le menu de navigation et sur les pages de connexion ('Accès administration') et d’inscription.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 3
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Présentation de l’information",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "La prise de focus est peu ou non visible sur certains liens et boutons sur Safari.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Dans la page 'Observatoire', le tableau n’est pas adapté aux tailles d’écrans mobiles. De même, sur les pages dédiées aux démarches, certains graphiques ne sont pas adaptés.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Dans la page d’accueil, lorsque l’on zoome à 200%, certains textes débordent des cadres et ne sont plus lisibles.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 3
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Formulaires",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Les messages d’erreurs n’indiquent pas nommément les champs erronés ou ne sont pas assez précis.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Navigation",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Le site propose un seul moyen de navigation, à savoir le menu principal.",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Dérogations pour charge disproportionnée",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Pas de contenu concerné",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Contenus non soumis à l'obligation d'accessibilité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Pas de contenu concerné",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Établissement de cette déclaration d'accessibilité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Cette déclaration a été établie le 01/07/2021.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Technologies utilisées pour la réalisation du site web",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "HTML5",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "CSS",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "JavaScript",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 3
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "jQuery",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 4
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Les tests des pages web ont été effectués avec les combinaisons de navigateurs web et lecteurs d’écran suivants :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "NVDA 2021.4 et Firefox 89.0.2",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Jaws 2021 et Firefox 89.0.2",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "VoiceOver et Safari, OS 11.0.1",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 3
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Les outils suivants ont été utilisés lors de l’évaluation",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Barre d’outil Web Developer",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "Extensions : WAVE, WCAG Color contrast checker et HeadingsMaps",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Pages du site ayant fait l’objet de la vérification de conformité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "Accueil",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://observatoire.numerique.gouv.fr/"
+								},
+								id: "6760522f98ad5c03a427a452"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "Conditions générales d’utilisation",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://observatoire.numerique.gouv.fr/cgu"
+								},
+								id: "6760522f98ad5c03a427a453"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					},
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "Accessibilité",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://observatoire.numerique.gouv.fr/accessibilite"
+								},
+								id: "6760522f98ad5c03a427a454"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 3
+					},
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "L’observatoire",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://observatoire.numerique.gouv.fr/observatoire"
+								},
+								id: "6760522f98ad5c03a427a455"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 4
+					},
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "En savoir plus sur nos critères d'évaluation",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://observatoire.numerique.gouv.fr/Aide/Observatoire"
+								},
+								id: "6760522f98ad5c03a427a456"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 5
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Droit à compensation",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Dans l’attente d’une mise en conformité totale, vous pouvez obtenir une version accessible des documents ou des informations qui y seraient contenues en envoyant un courriel à ",
+						type: "text",
+						version: 1
+					},
+					{
+						type: "autolink",
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "communication.dinum@modernisation.gouv.fr",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						fields: {
+							linkType: "custom",
+							url: "mailto:communication.dinum@modernisation.gouv.fr"
+						},
+						format: "",
+						indent: 0,
+						version: 2
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: " en indiquant le nom du document concerné et/ou les informations que vous souhaiteriez obtenir. Les informations demandées vous seront transmises dans les plus bref délais.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Amélioration et contact",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Vous pouvez nous aider à améliorer l’accessibilité du site en nous signalant les problèmes éventuels que vous rencontrez. Pour ce faire, envoyez-nous un courriel à ",
+						type: "text",
+						version: 1
+					},
+					{
+						type: "autolink",
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "communication.dinum@modernisation.gouv.fr",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						fields: {
+							linkType: "custom",
+							url: "mailto:communication.dinum@modernisation.gouv.fr"
+						},
+						format: "",
+						indent: 0,
+						version: 2
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: ".",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Défenseur des droits",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h3"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Si vous constatez un défaut d'accessibilité vous empêchant d'accéder à un contenu ou une fonctionnalité du site, que vous nous le signalez et que vous ne parvenez pas à obtenir une réponse rapide de notre part, vous êtes en droit de faire parvenir vos doléances ou une demande de saisine au Défenseur des droits. Plusieurs moyens sont à votre disposition :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "un ",
+								type: "text",
+								version: 1
+							},
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "formulaire de contact ;",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://www.defenseurdesdroits.fr/nous-contacter-355"
+								},
+								id: "6760522f98ad5c03a427a457"
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 1
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "la ",
+								type: "text",
+								version: 1
+							},
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: "normal",
+										style: "",
+										text: "liste des délégués de votre région ",
+										type: "text",
+										version: 1
+									}
+								],
+								direction: "ltr",
+								format: "",
+								indent: 0,
+								type: "link",
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: "custom",
+									newTab: false,
+									url: "https://www.defenseurdesdroits.fr/carte-des-delegues"
+								},
+								id: "6760522f98ad5c03a427a458"
+							},
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "avec leurs informations de contact directs ;",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 2
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "un numéro de téléphone : le 09 69 39 00 00 du lundi au vendredi de 8h00 à 20h00 (coût d'un appel local)",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 3
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "une adresse postal (envoi de courrier gratuit, ne pas mettre de timbre) : Défenseur des droits - Libre réponse 71120 - 75342 Paris CEDEX 07",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "listitem",
+						version: 1,
+						value: 4
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "list",
+				version: 1,
+				listType: "bullet",
+				start: 1,
+				tag: "ul"
+			}
+		],
+		direction: "ltr",
+		format: "",
+		indent: 0,
+		type: "root",
+		version: 1
+	}
+}

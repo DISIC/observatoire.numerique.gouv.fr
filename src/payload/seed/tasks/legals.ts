@@ -1,5 +1,6 @@
 import { BasePayload } from 'payload';
 import {
+	legalsA11yWysiwygContent,
 	legalsMentionsWysiwygContent,
 	legalsPcWysiwygContent,
 	legalsTermsWysiwygContent
@@ -9,6 +10,10 @@ const legalsTask = async (payload: BasePayload) => {
 	await payload.updateGlobal({
 		slug: 'legals',
 		data: {
+			"legal-a11y": {
+				title: "Accessibilité",
+				wysiwyg: legalsA11yWysiwygContent as any,
+			},
 			"legal-mentions": {
 				title: 'Mentions légales de Vos Démarches Essentielles',
 				wysiwyg: legalsMentionsWysiwygContent as any,

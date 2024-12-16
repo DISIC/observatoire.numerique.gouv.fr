@@ -5,10 +5,22 @@ import { GlobalConfig } from 'payload';
 export const CMSLegals: GlobalConfig = {
 	slug: 'legals',
 	label: 'CMS - Pages du footer',
+	access: {
+		read: () => true
+	},
 	fields: [
 		{
 			type: 'tabs',
 			tabs: [
+				{
+					label: 'Accessibilité',
+					name: 'legal-a11y',
+					fields: [
+						standardFields.title,
+						standardFields.wysiwyg,
+						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
+					]
+				},
 				{
 					label: 'Mentions légales',
 					name: 'legal-mentions',
