@@ -4,10 +4,10 @@ interface MainStructure {
 		content: (
 			| string
 			| {
-					text: string;
-					type?: 'noSpaces' | 'link' | 'mailto' | 'list' | 'subtitle' | 'bold';
-					href?: string;
-			  }
+				text: string;
+				type?: 'noSpaces' | 'link' | 'mailto' | 'list' | 'subtitle' | 'bold';
+				href?: string;
+			}
 		)[];
 	};
 }
@@ -59,84 +59,6 @@ export const CGU: MainStructure = {
 				text: 'Cookies : les outils pour les maîtriser',
 				type: 'link',
 				href: 'https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser'
-			}
-		]
-	}
-};
-
-export const LegalNotice: MainStructure = {
-	editeur: {
-		title: 'Éditeur de la plateforme',
-		content: [
-			{
-				text: 'La plateforme <strong>Vos Démarches Essentielles</strong> est éditée par la Direction interministérielle du numérique de l’Etat (DINUM) située :',
-				type: 'bold'
-			},
-			{ text: '20 avenue de Ségur', type: 'noSpaces' },
-			{ text: '75007 Paris', type: 'noSpaces' },
-			'Tel. Accueil : 01.71.21.01.70',
-			{
-				text: 'SIRET : 12000101100010 (secrétariat général du gouvernement)',
-				type: 'noSpaces'
-			},
-			'SIREN : 120 001 011'
-		]
-	},
-	directeurPublication: {
-		title: 'Directeur de la publication',
-		content: [
-			'La directrice de la publication est Madame Stéphanie Schaer, Directrice interministérielle du numérique.'
-		]
-	},
-	hebergement: {
-		title: 'Hébergement de la plateforme',
-		content: [
-			'La plateforme est hébergée par Clever Cloud situé :',
-			{ text: 'RCS Nantes B 524 172 699', type: 'noSpaces' },
-			{ text: 'Code APE : 6311Z', type: 'noSpaces' },
-			{ text: 'N°TVA : FR 87 524 172 699', type: 'noSpaces' },
-			{ text: 'Siège social : 4 rue Voltaire', type: 'noSpaces' },
-			{ text: '44000 Nantes', type: 'noSpaces' },
-			'France'
-		]
-	},
-	accessibilite: {
-		title: 'Accessibilité',
-		content: ['L’accessibilité de la plateforme est partiellement conforme.']
-	},
-	moreInfo: {
-		title: 'En savoir plus',
-		content: [
-			'Pour en savoir plus sur la politique d’accessibilité numérique de l’État : ',
-			{
-				text: 'https://accessibilite.numerique.gouv.fr/',
-				type: 'link',
-				href: 'https://accessibilite.numerique.gouv.fr/'
-			}
-		]
-	},
-	securite: {
-		title: 'Sécurité',
-		content: [
-			'La plateforme est protégée par un certificat électronique, matérialisé pour la grande majorité des navigateurs par un cadenas. Cette protection participe à la confidentialité des échanges.',
-			'En aucun cas les services associés à la plateforme ne seront à l’origine d’envoi de courriels pour demander la saisie d’informations personnelles.'
-		]
-	},
-	service: {
-		title: 'Service',
-		content: [
-			'Le suivi éditorial et graphique est assuré par la DINUM.',
-			'Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien (y compris profond) vers les informations diffusées sur le site.'
-		]
-	},
-	contact: {
-		title: 'Contact',
-		content: [
-			'L’adresse courriel de contact est la suivante : ',
-			{
-				text: 'observatoire@design.numerique.gouv.fr ',
-				type: 'mailto',
-				href: 'mailto:observatoire@design.numerique.gouv.fr '
 			}
 		]
 	}

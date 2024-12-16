@@ -74,8 +74,9 @@ function IndicatorValueDisplay(props: Props): ReactNode {
 
 		let datesParam = `date-debut=2022-04-01&date-fin=2023-03-31`;
 		if (edition)
-			datesParam = `date-debut=${edition.start_date.toString().split('T')[0]
-				}&date-fin=${edition.end_date.toString().split('T')[0]}`;
+			datesParam = `date-debut=${
+				edition.start_date.toString().split('T')[0]
+			}&date-fin=${edition.end_date.toString().split('T')[0]}`;
 
 		return (
 			<Link

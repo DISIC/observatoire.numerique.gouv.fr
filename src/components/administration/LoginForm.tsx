@@ -8,45 +8,46 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 export function LoginForm() {
-	const router = useRouter()
+	const router = useRouter();
 	const { classes, cx } = useStyles();
 
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
-	const [errorStatus, setErrorStatus] = useState<number | null>(null)
+	const [errorStatus, setErrorStatus] = useState<number | null>(null);
 
 	const storeUserCookie = async (token?: string, exp?: number) => {
 		await fetch(`/api/auth/setCookie?token=${token}&exp=${exp}`, {
 			headers: {
-				'Content-Type': 'application/json',
-			},
-		})
-		router.push('/administration/bo/airtable')
+				'Content-Type': 'application/json'
+			}
+		});
+		router.push('/administration/bo/airtable');
 	};
 
 	const { mutate: login } = trpc.admins.login.useMutation({
 		onSuccess: ({ data }) => {
-			storeUserCookie(data.token, data.exp)
+			storeUserCookie(data.token, data.exp);
 		},
-		onError: (e) => {
-			setErrorStatus(e.data?.httpStatus || null)
+		onError: e => {
+			setErrorStatus(e.data?.httpStatus || null);
 		}
-	})
+	});
 
 	const submitForm = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
 		login({
 			email,
 			password
-		})
+		});
 	};
 
 	useEffect(() => {
-		setErrorStatus(null)
-	}, [email, password])
+		setErrorStatus(null);
+	}, [email, password]);
 
 	const displayError = !!errorStatus;
-	const errorMessage = errorStatus === 401 ? "Identifiants incorrects" : "Erreur coté serveur"
+	const errorMessage =
+		errorStatus === 401 ? 'Identifiants incorrects' : 'Erreur coté serveur';
 
 	return (
 		<div className={cx(fr.cx(), classes.root)}>

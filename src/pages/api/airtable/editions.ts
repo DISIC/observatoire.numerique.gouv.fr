@@ -2,9 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { tableEditions } from '../../../utils/airtable';
 
 const getEditions = async (_req: NextApiRequest, res: NextApiResponse) => {
-	const jwtCookie = _req.cookies[
-		process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt"
-	];
+	const jwtCookie =
+		_req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
 	if (!jwtCookie) {
 		return res.status(401).json({ msg: 'You shall not pass.' });
 	}

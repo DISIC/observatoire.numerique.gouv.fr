@@ -2,7 +2,6 @@ import { standardFields } from '@/payload/fields/standards';
 import { lexicalHTML } from '@payloadcms/richtext-lexical';
 import { GlobalConfig } from 'payload';
 
-standardFields.title;
 export const CMSHelp: GlobalConfig = {
 	slug: 'help',
 	label: 'CMS - Aide Observatoire',
@@ -64,7 +63,7 @@ export const CMSHelp: GlobalConfig = {
 										plural: 'Indicateurs'
 									},
 									admin: {
-										initCollapsed: true,
+										initCollapsed: true
 									},
 									fields: [
 										{
@@ -121,7 +120,3 @@ export const CMSHelp: GlobalConfig = {
 		}
 	]
 };
-function useRowLabel<T>(): { data: any; rowNumber: any; } {
-	throw new Error('Function not implemented.');
-}
-

@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
 	req: NextApiRequest,
@@ -27,7 +27,9 @@ export default async function handler(
 	}
 
 	res.setHeader('Set-Cookie', [
-		`${process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt"}=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}`
+		`${
+			process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'
+		}=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}`
 	]);
 
 	return res.status(200).json({ message: 'Token set successfully' });

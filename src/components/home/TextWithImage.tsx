@@ -86,7 +86,7 @@ const useStyles = makeStyles()(theme => ({
 			paddingRight: fr.spacing('20v')
 		},
 		p: {
-			marginTop: fr.spacing('2v'),
+			marginTop: fr.spacing('2v')
 		},
 		[fr.breakpoints.down('sm')]: {
 			width: '100%'

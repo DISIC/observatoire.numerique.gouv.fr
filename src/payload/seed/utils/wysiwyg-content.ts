@@ -1515,3 +1515,607 @@ export const helpUsedIndicatorWysiwygContent: DefaultTypedEditorState = {
 		version: 1
 	}
 };
+
+export const legalsMentionsWysiwygContent: DefaultTypedEditorState = {
+	root: {
+		children: [
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Éditeur de la plateforme",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "La plateforme ",
+						type: "text",
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 1,
+						mode: "normal",
+						style: "",
+						text: "Vos Démarches Essentielles",
+						type: "text",
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: " est éditée par la Direction interministérielle du numérique de l'Etat (DINUM) située :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "20 avenue de Ségur",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "75007 Paris",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Tel. Accueil : 01.71.21.01.70",
+						type: "text",
+						version: 1
+					},
+
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "SIRET : 12000101100010 (secrétariat général du gouvernement)",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "SIREN : 120 001 011",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Directeur de la publication",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "La directrice de la publication est Madame Stéphanie Schaer, Directrice interministérielle du numérique.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Hébergement de la plateforme",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "La plateforme est hébergée par Clever Cloud situé :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "RCS Nantes B 524 172 699",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Code APE : 6311Z",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "N°TVA : FR 87 524 172 699",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Siège social : 4 rue Voltaire",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "44000 Nantes",
+						type: "text",
+						version: 1
+					},
+					{
+						"type": "linebreak",
+						"version": 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "France",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Accessibilité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "L'accessibilité de la plateforme est partiellement conforme.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "En savoir plus",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Pour en savoir plus sur la politique d'accessibilité numérique de l'État :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "https://accessibilite.numerique.gouv.fr/",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "link",
+						version: 3,
+						fields: {
+							doc: null,
+							linkType: "custom",
+							newTab: true,
+							url: "https://accessibilite.numerique.gouv.fr/"
+						},
+						id: "67603b3d340b20d1baabd8af"
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Sécurité",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "La plateforme est protégée par un certificat électronique, matérialisé pour la grande majorité des navigateurs par un cadenas. Cette protection participe à la confidentialité des échanges.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "En aucun cas les services associés à la plateforme ne seront à l'origine d'envoi de courriels pour demander la saisie d'informations personnelles.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Service",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Le suivi éditorial et graphique est assuré par la DINUM.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien (y compris profond) vers les informations diffusées sur le site.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Contact",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h2"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "L'adresse courriel de contact est la suivante :",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: "normal",
+								style: "",
+								text: "observatoire@design.numerique.gouv.fr",
+								type: "text",
+								version: 1
+							}
+						],
+						direction: "ltr",
+						format: "",
+						indent: 0,
+						type: "link",
+						version: 3,
+						fields: {
+							doc: null,
+							linkType: "custom",
+							newTab: false,
+							url: "mailto:observatoire@design.numerique.gouv.fr"
+						},
+						id: "67603b3d340b20d1baabd8b0"
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			}
+		],
+		direction: "ltr",
+		format: "",
+		indent: 0,
+		type: "root",
+		version: 1
+	}
+}

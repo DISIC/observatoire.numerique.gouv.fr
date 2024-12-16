@@ -23,7 +23,7 @@ export const Indicators: CollectionConfig = {
 	},
 	admin: {
 		useAsTitle: 'label',
-		defaultColumns: ['label', 'slug', 'position'],
+		defaultColumns: ['label', 'slug', 'position']
 	},
 	defaultSort: 'position',
 	access: {

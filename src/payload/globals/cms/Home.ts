@@ -1,7 +1,6 @@
 import { standardFields } from '@/payload/fields/standards';
 import { GlobalConfig } from 'payload';
 
-standardFields.title;
 export const CMSHome: GlobalConfig = {
 	slug: 'home',
 	label: 'CMS - Accueil',
@@ -62,7 +61,7 @@ export const CMSHome: GlobalConfig = {
 								standardFields.image,
 								standardFields.title,
 								standardFields.description,
-								standardFields.button,
+								standardFields.button
 							]
 						}
 					]

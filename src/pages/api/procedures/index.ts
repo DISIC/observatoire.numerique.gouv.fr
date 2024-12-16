@@ -92,9 +92,8 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (['POST', 'PUT', 'DELETE'].includes(req.method || '')) {
-		const jwtCookie = req.cookies[
-			process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt"
-		];
+		const jwtCookie =
+			req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
 		if (!jwtCookie) {
 			return res.status(401).json({ msg: 'You shall not pass.' });
 		}

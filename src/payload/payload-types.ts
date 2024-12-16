@@ -39,10 +39,12 @@ export interface Config {
   globals: {
     home: Home;
     help: Help;
+    legals: Legal;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     help: HelpSelect<false> | HelpSelect<true>;
+    legals: LegalsSelect<false> | LegalsSelect<true>;
   };
   locale: null;
   user: PayloadAdmin & {
@@ -451,6 +453,34 @@ export interface Help {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legals".
+ */
+export interface Legal {
+  id: string;
+  'legal-mentions': {
+    title: string;
+    wysiwyg?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    wysiwyg_html?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -558,6 +588,22 @@ export interface HelpSelect<T extends boolean = true> {
                     id?: T;
                   };
             };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legals_select".
+ */
+export interface LegalsSelect<T extends boolean = true> {
+  'legal-mentions'?:
+    | T
+    | {
+        title?: T;
+        wysiwyg?: T;
+        wysiwyg_html?: T;
       };
   updatedAt?: T;
   createdAt?: T;

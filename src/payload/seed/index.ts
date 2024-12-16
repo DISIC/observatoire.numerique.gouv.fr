@@ -4,6 +4,7 @@ import { getPayloadClient } from '../payload-client';
 import homeTask from './tasks/home';
 import indicatorsTask from './tasks/indicators';
 import helpTask from './tasks/help';
+import legalsTask from './tasks/legals';
 
 const argv = process.argv.slice(2);
 const isDev = argv.includes('--dev');
@@ -28,6 +29,7 @@ export const seedData = async () => {
 		await indicatorsTask(payload);
 		await homeTask(payload);
 		await helpTask(payload);
+		await legalsTask(payload);
 	} catch (e) {
 		console.error(e);
 	} finally {

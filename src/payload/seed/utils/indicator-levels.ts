@@ -1,4 +1,7 @@
-import { PayloadIndicatorLevel, PayloadIndicator } from '@/payload/payload-types';
+import {
+	PayloadIndicatorLevel,
+	PayloadIndicator
+} from '@/payload/payload-types';
 
 type IndicatorLevelWithoutSystemFields = Omit<
 	PayloadIndicatorLevel,
