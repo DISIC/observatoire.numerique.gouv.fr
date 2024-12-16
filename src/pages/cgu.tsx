@@ -1,19 +1,34 @@
+import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
+import { Loader } from '@/components/generic/Loader';
+import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Head from 'next/head';
-import React from 'react';
-import { CGU } from '../utils/content';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
-const GeneralConditions = () => {
-	const { cx, classes } = useStyles();
+const TermsOfUse = () => {
+	const { data: legalsCMS, isLoading: isLoadingLegalsCMS } =
+		trpc.cms.legals.useQuery();
+	const legalsTexts = legalsCMS?.data;
+
+	if (
+		isLoadingLegalsCMS
+	) {
+		return (
+			<EmptyScreenZone>
+				<Loader loadingMessage="Chargement du contenu en cours..." />
+			</EmptyScreenZone>
+		);
+	}
 
 	return (
 		<>
 			<Head>
-				<title>Politique de confidentialité | Vos démarches essentielles</title>
+				<title>
+					Modalités d’utilisation de Vos Démarches Essentielles | Vos démarches
+					essentielles
+				</title>
 				<meta
 					name="description"
-					content={`Politique de confidentialité | Vos démarches essentielles`}
+					content={`Modalités d’utilisation de Vos Démarches Essentielles | Vos démarches essentielles`}
 				/>
 			</Head>
 			<div
@@ -33,79 +48,11 @@ const GeneralConditions = () => {
 				>
 					<div className={'fr-col-lg-12'}>
 						<h1 className={fr.cx('fr-mb-12v')}>
-							Politique de confidentialité de Vos Démarches Essentielles
+							{legalsTexts?.['legal-pc'].title}
 						</h1>
-						{Object.keys(CGU).map(key => (
-							<div key={key} className={cx(classes.blockWrapper)}>
-								<h2>{CGU[key].title}</h2>
-								<div className={'fr-col-lg-10'}>
-									{CGU[key].content.map((line, index) => {
-										const isLink =
-											typeof line === 'object' && line.type === 'link';
-										const isMailto =
-											typeof line === 'object' && line.type === 'mailto';
-										const isList =
-											typeof line === 'object' && line.type === 'list';
-										const hasNoSpaces =
-											typeof line === 'object' && line.type === 'noSpaces';
-										const isBold =
-											typeof line === 'object' && line.type === 'bold';
-
-										return (
-											<React.Fragment key={index}>
-												{isLink ? (
-													<>
-														<p>
-															<a
-																href={line.href}
-																target="_blank"
-																rel="noopener noreferrer"
-															>
-																{line.text}
-															</a>
-														</p>
-													</>
-												) : isMailto ? (
-													<p>
-														<a href={line.href}>{line.text}</a>
-													</p>
-												) : isBold ? (
-													<>
-														<p
-															dangerouslySetInnerHTML={{ __html: line.text }}
-														/>
-													</>
-												) : isList ? (
-													<ul>
-														<li>{line.text}</li>
-													</ul>
-												) : typeof line === 'string' ? (
-													<>
-														<p
-															className={cx(
-																hasNoSpaces ? classes.noSpacesParagraph : ''
-															)}
-														>
-															{line}
-														</p>
-													</>
-												) : (
-													<>
-														<p
-															className={cx(
-																hasNoSpaces ? classes.noSpacesParagraph : ''
-															)}
-														>
-															{line.text}
-														</p>
-													</>
-												)}
-											</React.Fragment>
-										);
-									})}
-								</div>
-							</div>
-						))}
+						{legalsTexts?.['legal-pc'].wysiwyg_html && (
+							<div dangerouslySetInnerHTML={{ __html: legalsTexts?.['legal-pc'].wysiwyg_html }} />
+						)}
 					</div>
 				</div>
 			</div>
@@ -113,22 +60,4 @@ const GeneralConditions = () => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
-	blockWrapper: {
-		display: 'flex',
-		flexDirection: 'column',
-		marginBottom: '1rem',
-
-		a: {
-			width: 'fit-content'
-		},
-		ul: {
-			margin: '2rem 0 2rem 2rem'
-		}
-	},
-	noSpacesParagraph: {
-		marginBottom: '0 !important'
-	}
-}));
-
-export default GeneralConditions;
+export default TermsOfUse;

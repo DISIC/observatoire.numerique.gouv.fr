@@ -476,6 +476,44 @@ export interface Legal {
     } | null;
     wysiwyg_html?: string | null;
   };
+  'legal-pc': {
+    title: string;
+    wysiwyg?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    wysiwyg_html?: string | null;
+  };
+  'legal-terms': {
+    title: string;
+    wysiwyg?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    wysiwyg_html?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -599,6 +637,20 @@ export interface HelpSelect<T extends boolean = true> {
  */
 export interface LegalsSelect<T extends boolean = true> {
   'legal-mentions'?:
+    | T
+    | {
+        title?: T;
+        wysiwyg?: T;
+        wysiwyg_html?: T;
+      };
+  'legal-pc'?:
+    | T
+    | {
+        title?: T;
+        wysiwyg?: T;
+        wysiwyg_html?: T;
+      };
+  'legal-terms'?:
     | T
     | {
         title?: T;

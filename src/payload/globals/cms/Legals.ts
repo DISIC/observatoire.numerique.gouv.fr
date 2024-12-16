@@ -17,6 +17,24 @@ export const CMSLegals: GlobalConfig = {
 						standardFields.wysiwyg,
 						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
 					]
+				},
+				{
+					label: 'Politique de confidentialité',
+					name: 'legal-pc',
+					fields: [
+						standardFields.title,
+						standardFields.wysiwyg,
+						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
+					]
+				},
+				{
+					label: "Modalités d'utilisation",
+					name: 'legal-terms',
+					fields: [
+						standardFields.title,
+						standardFields.wysiwyg,
+						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
+					]
 				}
 			]
 		}

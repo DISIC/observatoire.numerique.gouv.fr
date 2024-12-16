@@ -1,16 +1,23 @@
+import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
+import { Loader } from '@/components/generic/Loader';
+import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Head from 'next/head';
-import React from 'react';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { trpc } from '@/utils/trpc';
 
 const LegalNotice = () => {
-	const { cx, classes } = useStyles();
-
-
 	const { data: legalsCMS, isLoading: isLoadingLegalsCMS } =
 		trpc.cms.legals.useQuery();
 	const legalsTexts = legalsCMS?.data;
+
+	if (
+		isLoadingLegalsCMS
+	) {
+		return (
+			<EmptyScreenZone>
+				<Loader loadingMessage="Chargement du contenu en cours..." />
+			</EmptyScreenZone>
+		);
+	}
 
 	return (
 		<>
@@ -49,23 +56,5 @@ const LegalNotice = () => {
 		</>
 	);
 };
-
-const useStyles = makeStyles()(theme => ({
-	blockWrapper: {
-		display: 'flex',
-		flexDirection: 'column',
-		marginBottom: '1rem',
-
-		a: {
-			width: 'fit-content'
-		},
-		ul: {
-			margin: '2rem 0 2rem 2rem'
-		}
-	},
-	noSpacesParagraph: {
-		marginBottom: '0 !important'
-	}
-}));
 
 export default LegalNotice;
