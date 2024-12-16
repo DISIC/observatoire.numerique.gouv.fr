@@ -4,6 +4,7 @@ import React from 'react';
 import { trpc } from '@/utils/trpc';
 import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
+import WysiwygInterpretor from '@/components/generic/WysiwygInterpretor';
 
 const Accessibility = () => {
 	const { data: legalsCMS, isLoading: isLoadingLegalsCMS } =
@@ -50,7 +51,7 @@ const Accessibility = () => {
 							{legalsTexts?.['legal-a11y'].title}
 						</h1>
 						{legalsTexts?.['legal-a11y'].wysiwyg_html && (
-							<div dangerouslySetInnerHTML={{ __html: legalsTexts?.['legal-a11y'].wysiwyg_html }} />
+							<WysiwygInterpretor wysiwyg_html={legalsTexts?.['legal-a11y'].wysiwyg_html} />
 						)}
 					</div>
 				</div>

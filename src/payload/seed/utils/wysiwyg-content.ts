@@ -111,7 +111,7 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						fields: {
 							doc: null,
 							linkType: 'custom',
-							newTab: false,
+							newTab: true,
 							url: 'http://localhost:3000/Aide/Observatoire?tab=indicators'
 						},
 						id: '674ecb83f768a9377a8b59f3'
@@ -3599,7 +3599,7 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 								fields: {
 									doc: null,
 									linkType: "custom",
-									newTab: false,
+									newTab: true,
 									url: "https://www.numerique.gouv.fr/uploads/DINUM_SchemaPluriannuel_2020.pdf"
 								},
 								id: "6760522f98ad5c03a427a450"
@@ -3634,7 +3634,7 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 								fields: {
 									doc: null,
 									linkType: "custom",
-									newTab: false,
+									newTab: true,
 									url: "https://www.numerique.gouv.fr/uploads/DINUM-plan-annuel-2021.pdf"
 								},
 								id: "6760522f98ad5c03a427a451"
@@ -5166,7 +5166,7 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 								fields: {
 									doc: null,
 									linkType: "custom",
-									newTab: false,
+									newTab: true,
 									url: "https://www.defenseurdesdroits.fr/nous-contacter-355"
 								},
 								id: "6760522f98ad5c03a427a457"
@@ -5197,7 +5197,7 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 										format: 0,
 										mode: "normal",
 										style: "",
-										text: "liste des délégués de votre région ",
+										text: "liste des délégués de votre région",
 										type: "text",
 										version: 1
 									}
@@ -5210,7 +5210,7 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 								fields: {
 									doc: null,
 									linkType: "custom",
-									newTab: false,
+									newTab: true,
 									url: "https://www.defenseurdesdroits.fr/carte-des-delegues"
 								},
 								id: "6760522f98ad5c03a427a458"

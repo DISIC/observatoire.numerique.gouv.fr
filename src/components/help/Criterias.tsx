@@ -2,6 +2,7 @@ import { Help } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
+import WysiwygInterpretor from '../generic/WysiwygInterpretor';
 
 type Props = Help['criterias'];
 
@@ -12,7 +13,7 @@ export function HelpCriterias(props: Props) {
 	return (
 		<div className={classes.root}>
 			{wysiwyg_html && (
-				<div dangerouslySetInnerHTML={{ __html: wysiwyg_html }} />
+				<WysiwygInterpretor wysiwyg_html={wysiwyg_html} />
 			)}
 			<Link className={fr.cx('fr-btn', 'fr-mt-4v')} href={buttonLink}>
 				{buttonText}

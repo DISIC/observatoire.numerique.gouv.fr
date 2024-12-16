@@ -1,5 +1,6 @@
 import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
+import WysiwygInterpretor from '@/components/generic/WysiwygInterpretor';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Head from 'next/head';
@@ -51,7 +52,7 @@ const TermsOfUse = () => {
 							{legalsTexts?.['legal-terms'].title}
 						</h1>
 						{legalsTexts?.['legal-terms'].wysiwyg_html && (
-							<div dangerouslySetInnerHTML={{ __html: legalsTexts?.['legal-terms'].wysiwyg_html }} />
+							<WysiwygInterpretor wysiwyg_html={legalsTexts?.['legal-terms'].wysiwyg_html} />
 						)}
 					</div>
 				</div>
