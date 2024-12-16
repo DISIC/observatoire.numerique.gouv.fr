@@ -25,9 +25,9 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const serviceTagLine = 'de vos démarches essentielles';
 
 	const signOut = async () => {
-		await logout()
-		router.push('/')
-	}
+		await logout();
+		router.push('/');
+	};
 
 	return (
 		<>

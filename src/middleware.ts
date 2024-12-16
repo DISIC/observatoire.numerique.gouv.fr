@@ -5,10 +5,13 @@ import type { NextRequest } from 'next/server';
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
 	const jwtCookie = request.cookies.get(
-		process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? "obs-jwt"
+		process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'
 	);
 
-	if (request.nextUrl.pathname.startsWith('/administration/login') && !!jwtCookie) {
+	if (
+		request.nextUrl.pathname.startsWith('/administration/login') &&
+		!!jwtCookie
+	) {
 		return NextResponse.redirect(
 			new URL('/administration/bo/airtable', request.url)
 		);

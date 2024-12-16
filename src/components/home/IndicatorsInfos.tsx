@@ -59,8 +59,9 @@ export function IndicatorsInfos(props: Props) {
 				<p>{description}</p>
 			</div>
 			<div className={classes.explainationsContainer}>
-				{blocs.map(bloc => (
+				{blocs.map((bloc, index) => (
 					<IndicatorsInfosCard
+						key={index}
 						image={bloc.image}
 						title={bloc.title}
 						description={bloc.description}
