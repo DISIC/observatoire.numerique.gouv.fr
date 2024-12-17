@@ -36,7 +36,7 @@ export const IndicatorContent = (props: Props) => {
 				</div>
 			)}
 			<p>
-				<b>Status</b>
+				<b>Niveaux d'évaluation</b>
 			</p>
 			<ul className={cx(classes.indicatorContainer)}>
 				{indicator.levels?.docs &&
