@@ -47,6 +47,14 @@ export const CMSLegals: GlobalConfig = {
 						standardFields.wysiwyg,
 						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
 					]
+				},
+				{
+					label: "Contact",
+					name: 'legal-contact',
+					fields: [
+						standardFields.title,
+						standardFields.description
+					]
 				}
 			]
 		}

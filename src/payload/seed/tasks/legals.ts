@@ -26,6 +26,10 @@ const legalsTask = async (payload: BasePayload) => {
 				title: "Modalités d'utilisation de Vos Démarches Essentielles",
 				wysiwyg: legalsTermsWysiwygContent as any,
 			},
+			"legal-contact": {
+				title: "Nous contacter",
+				description: "Vous pouvez nous contacter à l'adresse e-mail suivante : observatoire@design.numerique.gouv.fr"
+			},
 		}
 	});
 

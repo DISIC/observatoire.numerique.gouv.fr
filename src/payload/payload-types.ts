@@ -533,6 +533,10 @@ export interface Legal {
     } | null;
     wysiwyg_html?: string | null;
   };
+  'legal-contact': {
+    title: string;
+    description: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -682,6 +686,12 @@ export interface LegalsSelect<T extends boolean = true> {
         title?: T;
         wysiwyg?: T;
         wysiwyg_html?: T;
+      };
+  'legal-contact'?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;
