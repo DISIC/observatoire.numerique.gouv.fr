@@ -48,13 +48,24 @@ export function PreHeader(props: Props) {
 			</div>
 			<div className={cx(classes.section)}>
 				{!old && (
-					<Link
-						href="/Aide/Observatoire?tab=indicators"
-						className={fr.cx('fr-link')}
-					>
-						Tout comprendre sur les indicateurs{' '}
-						<i className={cx(fr.cx('ri-chat-poll-line'), classes.linkIcon)} />
-					</Link>
+					<>
+						<Link
+							href="/Aide/Observatoire?tab=indicators"
+							className={fr.cx('fr-link')}
+						>
+							<i className={cx(fr.cx('ri-chat-poll-line'), classes.linkIcon)} />{' '}
+							Tout comprendre sur les indicateurs
+						</Link>
+						<a
+							href="https://www.data.gouv.fr/fr/datasets/observatoire-de-la-qualite-des-demarches-en-ligne/"
+							target="_blank"
+							rel="noreferrer"
+							className={fr.cx('fr-link')}
+						>
+							<i className={cx(fr.cx('ri-database-2-line'), classes.linkIcon)} />
+							Accéder aux données ouvertes sur data.gouv.fr
+						</a>
+					</>
 				)}
 			</div>
 		</div>
@@ -75,12 +86,12 @@ const useStyles = makeStyles()(theme => ({
 	},
 	section: {
 		display: 'flex',
+		gap: fr.spacing('6v'),
 		alignItems: 'center',
 		fontWeight: 500,
 		[fr.breakpoints.down('lg')]: {
-			['&:first-of-type']: {
-				marginBottom: fr.spacing('8v')
-			}
+			flexDirection: 'column',
+			marginTop: fr.spacing('10v')
 		}
 	},
 	linkIcon: {

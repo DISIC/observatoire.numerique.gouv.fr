@@ -1,7 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ProceduresTable } from './table/ProceduresTable';
-import { PreFooter } from './table/PreFooter';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -101,7 +100,7 @@ export function Top250TableSection(props: Props) {
 						procedures={displayedProcedures}
 					/>
 				</div>
-				<PreFooter id="table-footer" />
+				<div id="table-footer" />
 			</>
 		);
 	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
