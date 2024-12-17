@@ -10,13 +10,11 @@ export default function Home() {
 	const { data: homeCMS, isLoading: isLoadingHomeCms } =
 		trpc.cms.home.useQuery();
 
-	const {
-		data: procdeureHeadersRequest,
-		isLoading: isLoadingIndicators
-	} = trpc.indicators.getList.useQuery({
-		page: 1,
-		perPage: 100
-	});
+	const { data: procdeureHeadersRequest, isLoading: isLoadingIndicators } =
+		trpc.indicators.getList.useQuery({
+			page: 1,
+			perPage: 100
+		});
 	const indicators = procdeureHeadersRequest?.data || [];
 
 	const homeTexts = homeCMS?.data;
@@ -43,7 +41,10 @@ export default function Home() {
 				indicators={indicators || []}
 			/>
 			{homeTexts.redirections.textsWithImages.map((textWithImage, index) => (
-				<TextWithImage {...textWithImage} blueBackground={index % 2 !== 0} imageRight={index % 2 !== 0}
+				<TextWithImage
+					{...textWithImage}
+					blueBackground={index % 2 !== 0}
+					imageRight={index % 2 !== 0}
 				/>
 			))}
 		</div>

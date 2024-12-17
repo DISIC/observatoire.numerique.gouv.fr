@@ -25,7 +25,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'satisfaction',
 			label: 'Satisfaction Usagers',
-			description: 'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton “je donne mons avis“.',
+			description:
+				'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton “je donne mons avis“.',
 			description_obj: userSatifactionWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -36,7 +37,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'online',
 			label: 'Réalisable en ligne',
-			description: 'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
+			description:
+				'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
 			description_obj: onlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-computer-line',
 			position: 1
@@ -44,7 +46,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'usage',
 			label: 'Utilisation de la version en ligne',
-			description: 'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
+			description:
+				'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
 			description_obj: usageOnlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-direction-line',
 			position: 5
@@ -93,7 +96,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'dlnuf',
 			label: 'Dites-le nous une fois',
-			description: 'Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l\'Administration détient déjà.',
+			description:
+				"Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l'Administration détient déjà.",
 			description_obj: dlnufWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
@@ -104,7 +108,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'handicap',
 			label: 'Prise en compte du handicap',
-			description: 'Mesure le niveau d’accessibilité numérique d’une démarche, en se basant sur le RGAA (Référentiel Général d\'Amélioration de l\'Accessibilité).',
+			description:
+				"Mesure le niveau d’accessibilité numérique d’une démarche, en se basant sur le RGAA (Référentiel Général d'Amélioration de l'Accessibilité).",
 			description_obj: handicapIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:

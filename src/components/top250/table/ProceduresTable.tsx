@@ -74,13 +74,11 @@ export function ProceduresTable(props: Props) {
 		window.addEventListener('scroll', fixedHeader);
 	}, []);
 
-	const {
-		data: procdeureHeadersRequest,
-		isLoading: isLoadingIndicators
-	} = trpc.indicators.getList.useQuery({
-		page: 1,
-		perPage: 100
-	});
+	const { data: procdeureHeadersRequest, isLoading: isLoadingIndicators } =
+		trpc.indicators.getList.useQuery({
+			page: 1,
+			perPage: 100
+		});
 	const indicators = procdeureHeadersRequest?.data || [];
 
 	if (isLoadingIndicators)
@@ -127,13 +125,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				scrollRef.current.scrollLeft -
-				_firstColSize -
-				20
+				  scrollRef.current.scrollLeft -
+				  _firstColSize -
+				  20
 				: _containerWidth -
-				_firstColSize -
-				_arrowSlideSize +
-				scrollRef.current.scrollLeft;
+				  _firstColSize -
+				  _arrowSlideSize +
+				  scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 

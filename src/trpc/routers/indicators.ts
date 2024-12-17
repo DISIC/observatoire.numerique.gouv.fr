@@ -20,11 +20,12 @@ export const indicators = router({
 			};
 		}),
 
-
 	getById: publicProcedure
-		.input(z.object({
-			id: z.string()
-		}))
+		.input(
+			z.object({
+				id: z.string()
+			})
+		)
 		.query(async ({ ctx, input }) => {
 			const { id } = input;
 

@@ -17,7 +17,9 @@ export const IndicatorContent = (props: Props) => {
 		<div className={cx(classes.root)}>
 			{!isFull && indicator.description && (
 				<>
-					<p><b>Description</b></p>
+					<p>
+						<b>Description</b>
+					</p>
 					<p>{indicator.description}</p>
 				</>
 			)}

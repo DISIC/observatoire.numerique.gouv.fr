@@ -31,7 +31,44 @@ export async function login(_: any, formData: FormData) {
 			error: false
 		};
 	} catch (e) {
-		console.error('Error while login', e);
+		return {
+			error: true,
+			success: false
+		};
+	}
+}
+
+export async function checkOTP(_: any, formData: FormData) {
+	const payload = await getPayload({
+		config: payloadConfig
+	});
+
+	try {
+		try {
+			const users = await payload.find({
+				collection: 'payload-admins',
+				where: {
+					email: { equals: formData.get('email') as string }
+				}
+			});
+			const user = users.docs[0];
+
+			return {
+				success: true,
+				error: false,
+				hasOTP: !!user.totpSecret,
+				message: 'ok'
+			};
+		} catch (e) {
+			return {
+				success: false,
+				error: true,
+				hasOTP: false,
+				message: 'Identifiants incorrects'
+			};
+		}
+	} catch (e) {
+		console.error('Error while checking OTP', e);
 		return {
 			error: true,
 			success: false

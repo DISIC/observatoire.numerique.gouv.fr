@@ -64,7 +64,7 @@ export const CMSHelp: GlobalConfig = {
 										plural: 'Indicateurs'
 									},
 									admin: {
-										initCollapsed: true,
+										initCollapsed: true
 									},
 									fields: [
 										{
@@ -121,7 +121,6 @@ export const CMSHelp: GlobalConfig = {
 		}
 	]
 };
-function useRowLabel<T>(): { data: any; rowNumber: any; } {
+function useRowLabel<T>(): { data: any; rowNumber: any } {
 	throw new Error('Function not implemented.');
 }
-

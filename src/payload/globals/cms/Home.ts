@@ -62,7 +62,7 @@ export const CMSHome: GlobalConfig = {
 								standardFields.image,
 								standardFields.title,
 								standardFields.description,
-								standardFields.button,
+								standardFields.button
 							]
 						}
 					]
