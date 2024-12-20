@@ -72,23 +72,11 @@ const OTPForm = memo(
 		onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 	}) => (
 		<form onSubmit={onSubmit}>
-			<Input
-				label="Code d'authentification"
-				state={displayError ? 'error' : 'default'}
-				stateRelatedMessage={errorMessage}
-				nativeInputProps={{
-					name: 'otp',
-					pattern: '[0-9]*',
-					inputMode: 'numeric',
-					value: otpCode,
-					onChange: e => onOTPChange(e.target.value)
-				}}
-			/>
-
 			{!isOTPDefined && qrCodeSvg && (
 				<div className="fr-my-4">
 					<p className="fr-text--sm fr-mb-2">
-						Scannez ce QR code avec votre application d'authentification
+						Pour votre première connexion, scannez ce QR code avec votre
+						application d'authentification puis entrez le code.
 					</p>
 					<div
 						style={{
@@ -102,6 +90,19 @@ const OTPForm = memo(
 					/>
 				</div>
 			)}
+
+			<Input
+				label="Code d'authentification"
+				state={displayError ? 'error' : 'default'}
+				stateRelatedMessage={errorMessage}
+				nativeInputProps={{
+					name: 'otp',
+					pattern: '[0-9]*',
+					inputMode: 'numeric',
+					value: otpCode,
+					onChange: e => onOTPChange(e.target.value)
+				}}
+			/>
 
 			<Button type="submit">Se connecter</Button>
 		</form>
