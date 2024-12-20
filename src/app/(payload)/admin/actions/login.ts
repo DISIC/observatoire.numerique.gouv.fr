@@ -1,4 +1,3 @@
-// ./src/app/(payload)/admin/login/actions/login.ts
 'use server';
 
 import payloadConfig from '@payload-config';

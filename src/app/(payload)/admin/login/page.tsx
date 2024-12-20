@@ -33,10 +33,7 @@ const LoginForm = ({
 	credentialsData,
 	setCredentialsData
 }: LoginFormProps) => (
-	<form
-		className="login__form form"
-		action={formActionCredentials}
-	>
+	<form className="login__form form" action={formActionCredentials}>
 		<div className="login__form__inputWrap">
 			<div className="field-type email" style={{ flex: '1 1 auto' }}>
 				<label className="field-label" htmlFor="field-email">
@@ -108,11 +105,13 @@ const OTPForm = ({
 	goBack,
 	qrCodeSvg
 }: OTPFormProps) => (
-	<form className="login__form form" action={formActionLogin} >
+	<form className="login__form form" action={formActionLogin}>
 		<input type="hidden" name="email" value={email} />
 		<input type="hidden" name="password" value={password} />
 		<div className="login__form__inputWrap">
-			<button onClick={goBack} type="button">Retour</button>
+			<button onClick={goBack} type="button">
+				Retour
+			</button>
 			{!isOTPDefined && qrCodeSvg && (
 				<div className="field-type text mt-4" style={{ flex: '1 1 auto' }}>
 					<label className="field-label" style={{ textAlign: 'center' }}>
@@ -236,27 +235,29 @@ const LoginPage = () => {
 						marginBottom: 50
 					}}
 				/>
-				{
-					isLoading ? <div style={{ textAlign: 'center', marginTop: 100 }}>Chargement...</div> : !showOTP ? (
-						<LoginForm
-							formActionCredentials={formActionCredentials}
-							credentialsData={credentialsData}
-							setCredentialsData={setCredentialsData}
-						/>
-					) : (
-						<OTPForm
-							formActionLogin={formActionLogin}
-							email={credentialsData.email}
-							password={credentialsData.password}
-							totpSecret={totpSecret}
-							isOTPDefined={isOTPDefined}
-							goBack={() => {
-								setShowOTP(false);
-							}}
-							qrCodeSvg={qrCodeSvg}
-						/>
-					)
-				}
+				{isLoading ? (
+					<div style={{ textAlign: 'center', marginTop: 100 }}>
+						Chargement...
+					</div>
+				) : !showOTP ? (
+					<LoginForm
+						formActionCredentials={formActionCredentials}
+						credentialsData={credentialsData}
+						setCredentialsData={setCredentialsData}
+					/>
+				) : (
+					<OTPForm
+						formActionLogin={formActionLogin}
+						email={credentialsData.email}
+						password={credentialsData.password}
+						totpSecret={totpSecret}
+						isOTPDefined={isOTPDefined}
+						goBack={() => {
+							setShowOTP(false);
+						}}
+						qrCodeSvg={qrCodeSvg}
+					/>
+				)}
 			</div>
 			<Toaster />
 		</section>
