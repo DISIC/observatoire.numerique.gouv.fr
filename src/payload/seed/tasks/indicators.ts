@@ -21,7 +21,7 @@ type IndicatorWithoutSystemFields = Omit<
 >;
 
 const indicatorsTask = async (payload: BasePayload) => {
-	const headers: IndicatorWithoutSystemFields[] = [
+	const indicators: IndicatorWithoutSystemFields[] = [
 		{
 			slug: 'satisfaction',
 			label: 'Satisfaction Usagers',
@@ -150,26 +150,24 @@ const indicatorsTask = async (payload: BasePayload) => {
 		}
 	});
 
-	for (const header of headers) {
+	for (const indicator of indicators) {
 		await payload
 			.create({
 				collection: 'payload-indicators',
-				data: header
+				data: indicator
 			})
-			.then(createdHeader => {
-				// get the levels for this header slug or an empty array if not found
+			.then(createdIndicator => {
 				const levels =
 					Object.entries(indicatorLevels).find(
-						([slug]) => slug === header.slug
+						([slug]) => slug === indicator.slug
 					)?.[1] || [];
-				// create the levels for this header
 				return Promise.all(
 					levels.map(level =>
 						payload.create({
 							collection: 'payload-indicator-levels',
 							data: {
 								...level,
-								indicator: createdHeader.id
+								indicator: createdIndicator.id
 							}
 						})
 					)
@@ -177,7 +175,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			});
 	}
 
-	payload.logger.info('Procedure headers seeded successfully');
+	payload.logger.info('Indicators seeded successfully');
 };
 
 export default indicatorsTask;

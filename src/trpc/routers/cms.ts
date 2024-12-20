@@ -20,5 +20,14 @@ export const cms = router({
 		return {
 			data: helpCms
 		};
+	}),
+	legals: publicProcedure.query(async ({ ctx, input }) => {
+		const legalsCms = await ctx.payload.findGlobal({
+			slug: 'legals'
+		});
+
+		return {
+			data: legalsCms
+		};
 	})
 });

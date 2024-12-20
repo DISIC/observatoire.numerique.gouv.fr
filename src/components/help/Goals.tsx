@@ -1,6 +1,7 @@
 import { Help } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import WysiwygInterpretor from '../generic/WysiwygInterpretor';
 
 type Props = Help['goals'];
 
@@ -11,7 +12,7 @@ export function HelpGoals(props: Props) {
 	return (
 		<div className={classes.root}>
 			{wysiwyg_html && (
-				<div dangerouslySetInnerHTML={{ __html: wysiwyg_html }} />
+				<WysiwygInterpretor wysiwyg_html={wysiwyg_html} />
 			)}
 		</div>
 	);

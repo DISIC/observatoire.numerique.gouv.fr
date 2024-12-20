@@ -3,9 +3,26 @@ import Head from 'next/head';
 import React from 'react';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Image from 'next/image';
+import { trpc } from '@/utils/trpc';
+import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
+import { Loader } from '@/components/generic/Loader';
 
 const Contact = () => {
 	const { cx, classes } = useStyles();
+
+	const { data: legalsCMS, isLoading: isLoadingLegalsCMS } =
+		trpc.cms.legals.useQuery();
+	const legalsTexts = legalsCMS?.data;
+
+	if (
+		isLoadingLegalsCMS
+	) {
+		return (
+			<EmptyScreenZone>
+				<Loader loadingMessage="Chargement du contenu en cours..." />
+			</EmptyScreenZone>
+		);
+	}
 
 	return (
 		<>
@@ -31,13 +48,10 @@ const Contact = () => {
 					<div
 						className={fr.cx('fr-col-12', 'fr-col-md-6', 'fr-col-offset-lg-1')}
 					>
-						<h1 className={fr.cx('fr-mb-5v')}>Nous contacter</h1>
+						<h1 className={fr.cx('fr-mb-5v')}>{legalsTexts?.['legal-contact'].title}</h1>
 						<div className={cx(classes.description)}>
 							<p>
-								Vous pouvez nous contacter à l&apos;adresse e-mail suivante :
-							</p>
-							<p className={cx(fr.cx('fr-text--bold'), classes.email)}>
-								observatoire@design.numerique.gouv.fr
+								{legalsTexts?.['legal-contact'].description}
 							</p>
 						</div>
 					</div>

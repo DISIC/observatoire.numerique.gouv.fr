@@ -25,6 +25,7 @@ export const Indicators: CollectionConfig = {
 		useAsTitle: 'label',
 		defaultColumns: ['label', 'slug', 'position']
 	},
+	defaultSort: 'position',
 	access: {
 		read: () => true
 	},
