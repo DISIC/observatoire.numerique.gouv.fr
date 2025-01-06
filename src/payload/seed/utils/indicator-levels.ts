@@ -216,6 +216,23 @@ export const indicatorLevels: Record<
 			position: 2
 		}
 	],
+	help_efficient: [
+		{
+			label: '50%',
+			color: 'gray',
+			description:
+				"Pourcentage d'usagers n'ayant pas réussi à contacter le service.",
+			position: 1
+		},
+		{
+			label: 'À venir',
+			color: 'gray',
+			noBackround: true,
+			description:
+				"L'accès à une aide joignable et efficace n'est pas encore évaluée.",
+			position: 2
+		}
+	],
 	help_used: [
 		{
 			label: '50%',

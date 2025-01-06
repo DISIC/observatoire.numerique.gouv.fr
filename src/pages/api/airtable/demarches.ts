@@ -22,7 +22,8 @@ const field_names = {
 		online: '📊 En ligne',
 		satisfaction: '📊 Satisfaction',
 		simplicity: '2️⃣ Simplicité du langage',
-		help_reachable: '[Dashlord] - JDMA aide note',
+		help_reachable: 'Aide joignable',
+		help_efficient: 'Aide efficace',
 		help_used: '[Dashlord] - JDMA autonomie note',
 		uptime: '2️⃣ Taux de disponibilité',
 		performance: '2️⃣ Temps moyen de chargement',
@@ -203,11 +204,52 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'help_reachable',
-			label: 'À venir',
-			color: 'gray',
-			value: null,
+			label: getLabelFromValue(
+				'help_reachable',
+				record.get(field_names.indicators.help_reachable)
+			),
+			color: getColorFromLabel(
+				'help_reachable',
+				getLabelFromValue(
+					'help_reachable',
+					record.get(field_names.indicators.help_reachable)
+				)
+			),
+			value: getRoundedDecimalString(
+				record.get(field_names.indicators.help_reachable)
+			),
 			procedureId: 'preview',
-			noBackground: true
+			noBackground: ['À venir', "Nombre d'avis insuffisant"].includes(
+				getLabelFromValue(
+					'help_reachable',
+					record.get(field_names.indicators.help_reachable)
+				)
+			)
+		},
+		{
+			id: 'preview',
+			slug: 'help_efficient',
+			label: getLabelFromValue(
+				'help_efficient',
+				record.get(field_names.indicators.help_efficient)
+			),
+			color: getColorFromLabel(
+				'help_efficient',
+				getLabelFromValue(
+					'help_efficient',
+					record.get(field_names.indicators.help_efficient)
+				)
+			),
+			value: getRoundedDecimalString(
+				record.get(field_names.indicators.help_efficient)
+			),
+			procedureId: 'preview',
+			noBackground: ['À venir', "Nombre d'avis insuffisant"].includes(
+				getLabelFromValue(
+					'help_efficient',
+					record.get(field_names.indicators.help_efficient)
+				)
+			)
 		},
 		{
 			id: 'preview',

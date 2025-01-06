@@ -61,11 +61,11 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				"On obtient ce taux de disponibilité en divisant la durée durant laquelle ledit service est opérationnel par la durée totale durant laquelle on aurait souhaité qu'il le soit. Cet indicateur est calculé sur une durée de 3 mois précédant la publication de l’Observatoire.",
 			icon: 'ri-rest-time-line',
-			position: 9
+			position: 10
 		},
 		{
 			slug: 'help_reachable',
-			label: 'Aide joignable et efficace',
+			label: 'Aide joignable',
 			description: null,
 			description_obj: helpReachableWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
@@ -75,12 +75,23 @@ const indicatorsTask = async (payload: BasePayload) => {
 			position: 7
 		},
 		{
+			slug: 'help_efficient',
+			label: 'Aide efficace',
+			description: null,
+			description_obj: helpReachableWysiwygContent as any, // TODO: Fix this type when payload update
+			moreInfosTitle: 'Méthode de calcul',
+			moreInfos:
+				'Cette évaluation correspond à la somme des usagers ayant répondu, avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.',
+			icon: 'ri-customer-service-2-line',
+			position: 8
+		},
+		{
 			slug: 'auth',
 			label: 'Authentification',
 			description: null,
 			description_obj: authIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-shield-user-line',
-			position: 11
+			position: 12
 		},
 		{
 			slug: 'performance',
@@ -91,7 +102,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				'Afin de calculer cette vitesse d’affichage d’une page (ou “temps de réponse d’une page”), des tests sont réalisés par un outil automatique qui interroge 24 heures sur 24 les adresses URL des sites afin de calculer ce temps de réponse.',
 			icon: 'ri-timer-flash-line',
-			position: 10
+			position: 11
 		},
 		{
 			slug: 'dlnuf',
@@ -137,7 +148,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				'Comme la note de satisfaction usager, cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton «je donne mon avis», qui se trouve à la fin de la démarche).',
 			icon: 'ri-chat-smile-line',
-			position: 8
+			position: 9
 		}
 	];
 

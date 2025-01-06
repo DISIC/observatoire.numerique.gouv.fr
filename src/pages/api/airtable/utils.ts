@@ -21,6 +21,7 @@ export const getLabelFromValue = (
 			return 'Non';
 		case 'satisfaction':
 		case 'simplicity':
+		case 'help_efficient':
 			const markIntValue = parseFloat(value);
 			if (isNaN(markIntValue) && !!value) {
 				if (['Non applicable', "Nombre d'avis insuffisant"].includes(value))
@@ -29,7 +30,6 @@ export const getLabelFromValue = (
 			}
 			if (!value) return 'À venir';
 			return `${markIntValue.toFixed(1)} / 10`;
-		case 'help_reachable':
 		case 'help_used':
 			const percentIntValue = parseFloat(value) * 10;
 			if (isNaN(percentIntValue) && !!value) {
@@ -71,9 +71,8 @@ export const getLabelFromValue = (
 		case 'usage':
 			const usageFloatValue = parseFloat(value);
 			if (isNaN(usageFloatValue)) return 'À venir';
-			return `${
-				getRoundedDecimalString((usageFloatValue * 100).toString()) || '0'
-			}%`;
+			return `${getRoundedDecimalString((usageFloatValue * 100).toString()) || '0'
+				}%`;
 		case 'auth':
 			if (
 				['FranceConnect', 'FranceConnect +', 'Non', 'Non applicable'].includes(
@@ -82,6 +81,7 @@ export const getLabelFromValue = (
 			)
 				return value;
 			return 'À venir';
+		case 'help_reachable':
 		default:
 			return value;
 	}
@@ -102,6 +102,7 @@ export const getColorFromLabel = (
 			return 'red';
 		case 'satisfaction':
 		case 'simplicity':
+		case 'help_efficient':
 			const markIntValue = parseInt(label.split(' ')[0]);
 			if (isNaN(markIntValue)) return 'gray';
 			if (markIntValue < 5) return 'red';
