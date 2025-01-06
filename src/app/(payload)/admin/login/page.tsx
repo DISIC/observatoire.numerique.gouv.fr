@@ -221,7 +221,7 @@ const LoginPage = () => {
 	useEffect(() => {
 		if (showOTP && !isOTPDefined) {
 			const totp = new OTPAuth.TOTP({
-				issuer: 'Observatoire',
+				issuer: 'Vos démarches essentielles',
 				label: credentialsData.email,
 				algorithm: 'SHA1',
 				digits: 6,

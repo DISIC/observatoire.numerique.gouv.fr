@@ -145,7 +145,7 @@ export function LoginForm() {
 
 				if (!hasOTP) {
 					const totp = new OTPAuth.TOTP({
-						issuer: 'Your Application',
+						issuer: 'Vos démarches essentielles',
 						label: formState.email,
 						algorithm: 'SHA1',
 						digits: 6,

@@ -35,7 +35,7 @@ export const Admins: CollectionConfig = {
 				}
 
 				let totpHelpers = new OTPAuth.TOTP({
-					issuer: 'Observatoire',
+					issuer: 'Vos démarches essentielles',
 					label: email,
 					algorithm: 'SHA1',
 					digits: 6,
