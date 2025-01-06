@@ -26,12 +26,6 @@ Installer les dépendances (npm version >= 18)
 yarn
 ```
 
-Insérer les seed (BDD custom - amenée à disparaitre)
-
-```
-npx prisma db seed
-```
-
 Insérer les seed (payloadcms)
 
 ```
