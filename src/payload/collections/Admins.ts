@@ -28,6 +28,8 @@ export const Admins: CollectionConfig = {
 				const { email, totpSecret } = args.user;
 				const { totp, totpSecret: tmpTotpSecret } = args.context;
 
+				if (process.env.NODE_ENV === 'development') return;
+
 				if (typeof totp !== 'string' || totp.trim().length !== 6) {
 					throw new Error('Invalid TOTP');
 				}

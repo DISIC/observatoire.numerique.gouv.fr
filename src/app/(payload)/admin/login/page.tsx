@@ -4,7 +4,7 @@ import { checkOTP, login } from '@/app/(payload)/admin/actions/login';
 import encodeQR from '@paulmillr/qr';
 import { redirect } from 'next/navigation';
 import * as OTPAuth from 'otpauth';
-import { useActionState, useEffect, useState } from 'react';
+import { startTransition, useActionState, useEffect, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 
 interface CredentialsData {
@@ -195,19 +195,28 @@ const LoginPage = () => {
 		if (stateLogin.success) {
 			redirect('/admin');
 		} else if (stateLogin.error) {
-			toast.error('Mot de passe ou code temporaire invalide');
+			toast.error(process.env.NODE_ENV === 'development' ? 'Identifiants invalides' : 'Mot de passe ou code temporaire invalide');
 			setShowOTP(false);
 		}
 	}, [stateLogin]);
 
 	useEffect(() => {
 		if (stateCredentials.success) {
-			setIsOTPDefined(!!stateCredentials.hasOTP);
-			setShowOTP(true);
+			if (process.env.NODE_ENV === 'development') {
+				startTransition(() => {
+					const formData = new FormData();
+					formData.append('email', credentialsData.email);
+					formData.append('password', credentialsData.password);
+					formActionLogin(formData);
+				});
+			} else {
+				setIsOTPDefined(!!stateCredentials.hasOTP);
+				setShowOTP(true);
+			}
 		} else if (stateLogin.error) {
 			toast.error(stateCredentials.message);
 		}
-	}, [stateCredentials]);
+	}, [stateCredentials, formActionLogin]);
 
 	useEffect(() => {
 		if (showOTP && !isOTPDefined) {
