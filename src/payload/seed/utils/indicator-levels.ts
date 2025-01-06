@@ -201,36 +201,70 @@ export const indicatorLevels: Record<
 	],
 	help_reachable: [
 		{
-			label: '50%',
-			color: 'gray',
-			description:
-				"Pourcentage d'usagers n'ayant pas réussi à contacter le service.",
+			label: "XX %",
+			color: "green",
+			description: "85% des usagers ou plus ont réussi à joindre l'administration en la contactant",
 			position: 1
 		},
 		{
-			label: 'À venir',
-			color: 'gray',
-			noBackround: true,
-			description:
-				"L'accès à une aide joignable et efficace n'est pas encore évaluée.",
+			label: "XX %",
+			color: "yellow",
+			description: "Entre 70% (inclus) et 85% (exclu) des usagers ont réussi à joindre l'administration en la contactant",
 			position: 2
+		},
+		{
+			label: "XX %",
+			color: "red",
+			description: "Moins de 70% des usagers ont réussi à joindre l'administration en la contactant",
+			position: 3
+		},
+		{
+			label: "À venir",
+			color: "gray",
+			description: "La démarche ne permet pas encore le recueil des avis",
+			position: 4,
+			noBackround: false
+		},
+		{
+			label: "Nombre d'avis insuffisant",
+			color: "gray",
+			description: "Le service n'a pas recueilli le minimum de 100 avis pour que le taux soit représentatif",
+			position: 5,
+			noBackround: false
 		}
 	],
 	help_efficient: [
 		{
-			label: '50%',
-			color: 'gray',
-			description:
-				"Pourcentage d'usagers n'ayant pas réussi à contacter le service.",
+			label: "X / 10",
+			color: "green",
+			description: "La moyenne des notes est supérieure ou égale à 8/10",
 			position: 1
 		},
 		{
-			label: 'À venir',
-			color: 'gray',
-			noBackround: true,
-			description:
-				"L'accès à une aide joignable et efficace n'est pas encore évaluée.",
+			label: "X / 10",
+			color: "yellow",
+			description: "La moyenne des notes est comprise entre 5/10 (inclus) et 8/10 (exclu)",
 			position: 2
+		},
+		{
+			label: "X / 10",
+			color: "red",
+			description: "La moyenne des notes est inférieure à 5/10",
+			position: 3
+		},
+		{
+			label: "À venir",
+			color: "gray",
+			description: "La démarche ne permet pas encore le recueil des avis",
+			position: 4,
+			noBackround: false
+		},
+		{
+			label: "Nombre d'avis insuffisant",
+			color: "gray",
+			description: "Le service n'a pas recueilli le minimum de 100 avis pour que le taux soit représentatif",
+			position: 5,
+			noBackround: false
 		}
 	],
 	help_used: [

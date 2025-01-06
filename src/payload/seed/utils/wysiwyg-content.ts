@@ -1086,47 +1086,97 @@ export const helpReachableWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: 'normal',
-						style: '',
-						text: 'Examine le pourcentage des usagers déclarant n’ayant pas réussi à contacter le service pour recevoir de l’aide.',
-						type: 'text',
+						mode: "normal",
+						style: "",
+						text: "Indique le taux d'usagers ayant réussi à joindre l'administration (téléphone, guichet, tchat, etc.) au regard du nombre total de répondants.",
+						type: "text",
 						version: 1
 					}
 				],
-				direction: 'ltr',
-				format: '',
+				direction: "ltr",
+				format: "",
 				indent: 0,
-				type: 'heading',
+				type: "heading",
 				version: 1,
-				tag: 'h4'
+				tag: "h4"
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: 'normal',
-						style: '',
-						text: 'Cet indicateur est récent et sera certainement en cours de calcul. La mention «À venir» est alors visible dans l’attente d’un minimum de 100 votes. Cette évaluation est issue des réponses des usagers à la question «Avez-vous tenté de contacter le service pour de l’aide ?». Question présente dans le formulaire de satisfaction «je donne mon avis», qui se trouve à la fin de la démarche.',
-						type: 'text',
+						mode: "normal",
+						style: "",
+						text: "Ce taux est calculé sur la base d'avis usagers collectés via le questionnaire de satisfaction « Je donne mon avis », situé en fin de démarche. ",
+						type: "text",
 						version: 1
 					}
 				],
-				direction: 'ltr',
-				format: '',
+				direction: "ltr",
+				format: "start",
 				indent: 0,
-				type: 'paragraph',
+				type: "paragraph",
 				version: 1,
-				textFormat: 0
+				textFormat: 0,
 			}
 		],
-		direction: 'ltr',
-		format: '',
+		direction: "ltr",
+		format: "",
 		indent: 0,
-		type: 'root',
+		type: "root",
 		version: 1
 	}
 };
+
+export const helpEfficientWysiwygContent: DefaultTypedEditorState = {
+	root: {
+		children: [
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Evalue le niveau de qualité de l'aide obtenue de la part de l'administration.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "",
+				indent: 0,
+				type: "heading",
+				version: 1,
+				tag: "h4"
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: "normal",
+						style: "",
+						text: "Cette note est calculée sur la base d'avis usagers collectés via le questionnaire de satisfaction « Je donne mon avis », situé en fin de démarche.",
+						type: "text",
+						version: 1
+					}
+				],
+				direction: "ltr",
+				format: "start",
+				indent: 0,
+				type: "paragraph",
+				version: 1,
+				textFormat: 0,
+			}
+		],
+		direction: "ltr",
+		format: "",
+		indent: 0,
+		type: "root",
+		version: 1
+	}
+}
 
 export const authIndicatorWysiwygContent: DefaultTypedEditorState = {
 	root: {

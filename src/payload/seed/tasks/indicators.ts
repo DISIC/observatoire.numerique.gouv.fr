@@ -4,6 +4,7 @@ import {
 	authIndicatorWysiwygContent,
 	dlnufWysiwygContent,
 	handicapIndicatorWysiwygContent,
+	helpEfficientWysiwygContent,
 	helpReachableWysiwygContent,
 	helpUsedIndicatorWysiwygContent,
 	onlineIndicatorWysiwygContent,
@@ -70,7 +71,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			description_obj: helpReachableWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
-				'Cette évaluation correspond à la somme des usagers ayant répondu, avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.',
+				"Il s’agit du ratio entre le nombre d’usagers ayant réussi à joindre le contact d’aide et le nombre de répondants à la question « Quand vous avez cherché de l'aide, avez-vous réussi à joindre l'administration ? ». La note publiée s’établit sur 12 mois glissants. Elle s'affiche si au moins 100 avis ont été déposés sur cette période.",
 			icon: 'ri-customer-service-2-line',
 			position: 7
 		},
@@ -78,10 +79,19 @@ const indicatorsTask = async (payload: BasePayload) => {
 			slug: 'help_efficient',
 			label: 'Aide efficace',
 			description: null,
-			description_obj: helpReachableWysiwygContent as any, // TODO: Fix this type when payload update
+			description_obj: helpEfficientWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
-				'Cette évaluation correspond à la somme des usagers ayant répondu, avoir eu l’intention de contacter le service mais qui n’aurait , soit pas réussi à trouver le moyen de le joindre ou pas pu faire aboutir cette prise de contact, cela sur le nombre total d’usagers ayant répondu au questionnaire.',
+				`
+				Une échelle à 5 valeurs est proposée en réponse à la question « Comment évaluez-vous la qualité de l'aide que vous avez obtenue de la part de l'administration ? ». Le résultat est ramené à une note moyenne sur 10. 
+				Les valeurs sont pondérées de la façon suivante :
+				-	Très mauvaise = 0/10 ; 
+				-	Mauvaise = 2,5/10 ; 
+				-	Ni bonne, ni mauvaise = 5 /10 ; 
+				-	Bonne = 7,5/10 ; 
+				-	Excellente = 10/10. 
+				La note publiée s’établit sur 12 mois glissants. Elle s'affiche si au moins 100 avis ont été déposés sur cette période
+				`,
 			icon: 'ri-customer-service-2-line',
 			position: 8
 		},
