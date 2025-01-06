@@ -101,7 +101,8 @@ const useStyles = makeStyles()(theme => ({
 		backgroundColor: theme.decisions.background.default.grey.hover,
 		p: {
 			marginBottom: 0,
-			marginTop: fr.spacing('1v')
+			marginTop: fr.spacing('1v'),
+			whiteSpace: 'pre-wrap'
 		}
 	},
 	moreInfosBlue: {
