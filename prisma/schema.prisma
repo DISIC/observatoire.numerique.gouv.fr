@@ -15,6 +15,7 @@ enum IndicatorSlug {
   usage
   simplicity
   help_reachable
+  help_efficient
   help_used
   uptime
   performance
