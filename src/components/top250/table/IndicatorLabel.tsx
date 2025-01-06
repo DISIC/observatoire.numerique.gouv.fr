@@ -80,6 +80,7 @@ const useStyles = makeStyles()(theme => ({
 		backgroundColor: theme.decisions.background.default.grey.hover
 	},
 	noBackground: {
+		textAlign: 'left',
 		backgroundColor: 'transparent',
 		fontWeight: 'normal'
 	},
