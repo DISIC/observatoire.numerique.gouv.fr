@@ -11,7 +11,7 @@ import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
-import { Edition } from '@prisma/client';
+import { Edition, IndicatorSlug } from '@prisma/client';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { trpc } from '@/utils/trpc';
 
@@ -20,12 +20,18 @@ type Props = {
 	edition?: Edition;
 };
 
+export type ProcedureHeaderSort = {
+	slug: IndicatorSlug;
+	direction: 'up' | 'down';
+}
+
 export function ProceduresTable(props: Props) {
 	useWindowResize();
 	const { procedures, edition } = props;
 	const { classes, cx } = useStyles();
 
 	const [isRight, setIsRight] = useState<boolean>(false);
+	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort>()
 
 	const stickyHeaderRef = useRef<HTMLTableRowElement | null>(null);
 	const tableRef = useRef<HTMLTableElement | null>(null);
@@ -125,13 +131,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				  scrollRef.current.scrollLeft -
-				  _firstColSize -
-				  20
+				scrollRef.current.scrollLeft -
+				_firstColSize -
+				20
 				: _containerWidth -
-				  _firstColSize -
-				  _arrowSlideSize +
-				  scrollRef.current.scrollLeft;
+				_firstColSize -
+				_arrowSlideSize +
+				scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -146,6 +152,10 @@ export function ProceduresTable(props: Props) {
 
 		setIsRight(hasReachedMaxScroll);
 	};
+
+	const onSort = (sortObject: ProcedureHeaderSort) => {
+		setCurrentSort(sortObject)
+	}
 
 	return (
 		<div className={cx(classes.root)} ref={scrollRef}>
@@ -167,6 +177,7 @@ export function ProceduresTable(props: Props) {
 							return (
 								<th key={indicator.label} scope="col">
 									<ColumnHeaderDefinition
+										slug={indicator.slug as IndicatorSlug}
 										icon={indicator.icon as FrIconClassName | RiIconClassName}
 										text={indicator.label}
 										infos={{
@@ -181,6 +192,8 @@ export function ProceduresTable(props: Props) {
 											if (index >= 5) handleScrollX(true, true);
 											else handleScrollX(false, true);
 										}}
+										onSort={onSort}
+										currentSort={currentSort}
 									/>
 								</th>
 							);

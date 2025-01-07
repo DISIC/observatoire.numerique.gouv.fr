@@ -9,8 +9,11 @@ import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { push } from '@socialgouv/matomo-next';
 import React, { ReactNode, useState } from 'react';
 import { useRouter } from 'next/router';
+import { IndicatorSlug } from '@prisma/client';
+import { ProcedureHeaderSort } from './ProceduresTable';
 
 type Props = {
+	slug: IndicatorSlug;
 	icon: FrIconClassName | RiIconClassName;
 	text: ReactNode;
 	infos: {
@@ -19,10 +22,12 @@ type Props = {
 	};
 	isMobile?: boolean;
 	onFocus?: () => void;
+	onSort?: (sortObject: ProcedureHeaderSort) => void;
+	currentSort?: ProcedureHeaderSort;
 };
 
 export function ColumnHeaderDefinition(props: Props) {
-	const { icon, text, infos, isMobile, onFocus } = props;
+	const { slug, icon, text, infos, isMobile, onFocus, onSort, currentSort } = props;
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
@@ -72,6 +77,22 @@ export function ColumnHeaderDefinition(props: Props) {
 					/>
 				</span>
 			</Button>
+			{
+				onSort && (
+					<div className={cx(classes.sortContainer)}>
+						<Button priority="tertiary no outline" onClick={() => {
+							onSort({ slug, direction: 'up' })
+						}}>
+							<i className={cx(fr.cx('ri-arrow-drop-down-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'up' ? 'inherit' : 'gray' }} />
+						</Button>
+						<Button priority="tertiary no outline" onClick={() => {
+							onSort({ slug, direction: 'down' })
+						}}>
+							<i className={cx(fr.cx('ri-arrow-drop-up-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'down' ? 'inherit' : 'gray' }} />
+						</Button>
+					</div>
+				)
+			}
 			{openModal && (
 				<Modal
 					title={infos.title}
@@ -98,7 +119,7 @@ const useStyles = makeStyles()(theme => ({
 	root: {
 		width: '90%',
 		height: 'auto',
-		minHeight: '90%',
+		minHeight: '65%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'start',
@@ -146,5 +167,9 @@ const useStyles = makeStyles()(theme => ({
 				marginLeft: fr.spacing('1v')
 			}
 		}
+	},
+	sortContainer: {
+		display: 'flex',
+		justifyContent: 'center'
 	}
 }));
