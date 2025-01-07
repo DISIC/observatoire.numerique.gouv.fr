@@ -81,14 +81,18 @@ export function ColumnHeaderDefinition(props: Props) {
 				onSort && (
 					<div className={cx(classes.sortContainer)}>
 						<Button priority="tertiary no outline" onClick={() => {
-							onSort({ slug, direction: 'up' })
+							onSort({ slug, direction: 'down' })
+						}} nativeButtonProps={{
+							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`
 						}}>
-							<i className={cx(fr.cx('ri-arrow-drop-down-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'up' ? 'inherit' : 'gray' }} />
+							<i className={cx(fr.cx('ri-arrow-drop-down-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'down' ? 'inherit' : 'gray' }} />
 						</Button>
 						<Button priority="tertiary no outline" onClick={() => {
-							onSort({ slug, direction: 'down' })
+							onSort({ slug, direction: 'up' })
+						}} nativeButtonProps={{
+							title: `Trier les démarches par rapport à la valeur de "${text}" de manière descendante`
 						}}>
-							<i className={cx(fr.cx('ri-arrow-drop-up-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'down' ? 'inherit' : 'gray' }} />
+							<i className={cx(fr.cx('ri-arrow-drop-up-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'up' ? 'inherit' : 'gray' }} />
 						</Button>
 					</div>
 				)
