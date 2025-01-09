@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
+import { ObjectId } from "bson";
 
 const prisma = new PrismaClient();
 
@@ -38,12 +39,13 @@ export async function getProcedures(
 
 	if (sort) {
 		const values = sort.split(':');
-		if (values.length === 2)
+		if (values.length === 2) {
 			orderBy = [
 				{
 					[values[0]]: values[1]
 				}
 			];
+		}
 	}
 
 	const procedures = await prisma.procedure.findMany({
@@ -51,6 +53,7 @@ export async function getProcedures(
 		where: whereRequest,
 		include: { fields: true, edition: true }
 	});
+
 	return procedures;
 }
 

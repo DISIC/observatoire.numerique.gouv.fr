@@ -18,20 +18,21 @@ import { trpc } from '@/utils/trpc';
 type Props = {
 	procedures: ProcedureWithFields[];
 	edition?: Edition;
+	onSortApply: (sortObject: ProcedureHeaderSort | null) => void;
 };
 
 export type ProcedureHeaderSort = {
 	slug: IndicatorSlug;
-	direction: 'up' | 'down';
+	direction: 'asc' | 'desc';
 }
 
 export function ProceduresTable(props: Props) {
 	useWindowResize();
-	const { procedures, edition } = props;
+	const { procedures, edition, onSortApply } = props;
 	const { classes, cx } = useStyles();
 
 	const [isRight, setIsRight] = useState<boolean>(false);
-	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort>()
+	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort | null>(null)
 
 	const stickyHeaderRef = useRef<HTMLTableRowElement | null>(null);
 	const tableRef = useRef<HTMLTableElement | null>(null);
@@ -57,6 +58,10 @@ export function ProceduresTable(props: Props) {
 			stickyHeaderRef.current.addEventListener('scroll', headerScrollContent);
 		}
 	}, [stickyHeaderRef.current, scrollRef.current]);
+
+	useEffect(() => {
+		onSortApply(currentSort)
+	}, [currentSort])
 
 	useLayoutEffect(() => {
 		const fixedHeader = () => {
@@ -153,7 +158,7 @@ export function ProceduresTable(props: Props) {
 		setIsRight(hasReachedMaxScroll);
 	};
 
-	const onSort = (sortObject: ProcedureHeaderSort) => {
+	const onSort = (sortObject: ProcedureHeaderSort | null) => {
 		setCurrentSort(sortObject)
 	}
 
@@ -304,7 +309,6 @@ export function ProceduresTable(props: Props) {
 													procedureTitle={p.title}
 													edition={edition}
 													onLinkFocus={() => {
-														console.log('focus!');
 														scrollRef.current?.scrollTo({ left: 0 });
 													}}
 												/>

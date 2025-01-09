@@ -22,8 +22,8 @@ type Props = {
 	};
 	isMobile?: boolean;
 	onFocus?: () => void;
-	onSort?: (sortObject: ProcedureHeaderSort) => void;
-	currentSort?: ProcedureHeaderSort;
+	onSort?: (sortObject: ProcedureHeaderSort | null) => void;
+	currentSort?: ProcedureHeaderSort | null;
 };
 
 export function ColumnHeaderDefinition(props: Props) {
@@ -81,18 +81,18 @@ export function ColumnHeaderDefinition(props: Props) {
 				onSort && (
 					<div className={cx(classes.sortContainer)}>
 						<Button priority="tertiary no outline" onClick={() => {
-							onSort({ slug, direction: 'down' })
-						}} nativeButtonProps={{
-							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`
-						}}>
-							<i className={cx(fr.cx('ri-arrow-drop-down-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'down' ? 'inherit' : 'gray' }} />
-						</Button>
-						<Button priority="tertiary no outline" onClick={() => {
-							onSort({ slug, direction: 'up' })
+							onSort(currentSort?.slug === slug && currentSort?.direction === 'desc' ? null : { slug, direction: 'desc' })
 						}} nativeButtonProps={{
 							title: `Trier les démarches par rapport à la valeur de "${text}" de manière descendante`
 						}}>
-							<i className={cx(fr.cx('ri-arrow-drop-up-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'up' ? 'inherit' : 'gray' }} />
+							<i className={cx(fr.cx('ri-arrow-drop-down-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'desc' ? 'inherit' : 'gray' }} />
+						</Button>
+						<Button priority="tertiary no outline" onClick={() => {
+							onSort(currentSort?.slug === slug && currentSort?.direction === 'asc' ? null : { slug, direction: 'asc' })
+						}} nativeButtonProps={{
+							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`
+						}}>
+							<i className={cx(fr.cx('ri-arrow-drop-up-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'asc' ? 'inherit' : 'gray' }} />
 						</Button>
 					</div>
 				)
