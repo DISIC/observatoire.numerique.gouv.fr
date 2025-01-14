@@ -92,6 +92,8 @@ model Procedure {
   noJdma              Boolean
   edition             Edition? @relation(fields: [editionId], references: [id])
   editionId           String?  @db.ObjectId
+
+  @@index([editionId])
 }
 
 model Field {
@@ -103,4 +105,6 @@ model Field {
   noBackground Boolean?
   procedure    Procedure      @relation(fields: [procedureId], references: [id])
   procedureId  String         @db.ObjectId
+
+  @@index([procedureId, slug])
 }

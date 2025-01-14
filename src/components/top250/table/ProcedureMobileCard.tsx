@@ -4,7 +4,7 @@ import { getDisplayedVolume } from '@/utils/tools';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Edition, Field } from '@prisma/client';
+import { Edition, Field, IndicatorColor, IndicatorSlug } from '@prisma/client';
 import { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
@@ -108,6 +108,7 @@ export function ProcedureMobileCard(props: Props) {
 								>
 									<div className={cx(classes.field)} ref={indicator.nodeRef}>
 										<ColumnHeaderDefinition
+											slug={indicator.slug as IndicatorSlug}
 											icon={indicator.icon as FrIconClassName | RiIconClassName}
 											text={indicator.label}
 											infos={{

@@ -1,12 +1,13 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { ProceduresTable } from './table/ProceduresTable';
+import { ProcedureHeaderSort, ProceduresTable } from './table/ProceduresTable';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SkipLinks } from '../generic/SkipLinks';
 import { push } from '@socialgouv/matomo-next';
 import { Edition } from '@prisma/client';
+import { sortProcedures } from '@/utils/tools';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
@@ -20,10 +21,31 @@ export function Top250TableSection(props: Props) {
 	const { classes, cx } = useStyles();
 	const numberPerPage = isAdmin ? 300 : 20;
 
+	const [currentSortObject, setCurrentSortObject] = useState<ProcedureHeaderSort | null>(null);
+	const currentSortObjectRef = useRef<ProcedureHeaderSort | null>(null);
+
+	const [savedBaseSortProcedures, setSavedBasSortProcedures] = useState<ProcedureWithFields[]>([]);
+
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
 	const displayedProceduresRef = useRef(displayedProcedures);
+
+	const onSortApply = (sortObject: ProcedureHeaderSort | null) => {
+		setCurrentSortObject(sortObject)
+		if (!sortObject) {
+			setDisplayedProcedures(savedBaseSortProcedures);
+			setSavedBasSortProcedures([])
+		} else {
+			if (!savedBaseSortProcedures.length) {
+				setSavedBasSortProcedures([...displayedProcedures])
+			}
+
+			const currentDisplayedProcedures = displayedProceduresRef.current;
+			const sortedProcedures = sortProcedures(procedures || [], sortObject).slice(0, currentDisplayedProcedures.length);
+			setDisplayedProcedures([...sortedProcedures])
+		}
+	}
 
 	const handleScroll = () => {
 		const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -36,7 +58,7 @@ export function Top250TableSection(props: Props) {
 		) {
 			setDisplayedProcedures([
 				...currentDisplayedProcedures,
-				...procedures.slice(
+				...sortProcedures(procedures, currentSortObjectRef.current).slice(
 					currentDisplayedProcedures.length,
 					currentDisplayedProcedures.length + numberPerPage
 				)
@@ -58,6 +80,10 @@ export function Top250TableSection(props: Props) {
 	useEffect(() => {
 		displayedProceduresRef.current = displayedProcedures;
 	}, [displayedProcedures]);
+
+	useEffect(() => {
+		currentSortObjectRef.current = currentSortObject;
+	}, [currentSortObject]);
 
 	useEffect(() => {
 		if (procedures && procedures.length) {
@@ -85,14 +111,13 @@ export function Top250TableSection(props: Props) {
 				</p>
 			);
 		}
-
 		return (
 			<>
 				<SkipLinks
 					links={[{ text: 'Aller au pied du tableau', href: '#table-footer' }]}
 				/>
 				<div className={classes.tableDesktop}>
-					<ProceduresTable edition={edition} procedures={displayedProcedures} />
+					<ProceduresTable edition={edition} procedures={displayedProcedures} onSortApply={onSortApply} />
 				</div>
 				<div className={classes.tableMobile}>
 					<ProceduresTableMobile

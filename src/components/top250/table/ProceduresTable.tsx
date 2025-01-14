@@ -11,21 +11,28 @@ import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
-import { Edition } from '@prisma/client';
+import { Edition, IndicatorSlug } from '@prisma/client';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { trpc } from '@/utils/trpc';
 
 type Props = {
 	procedures: ProcedureWithFields[];
 	edition?: Edition;
+	onSortApply: (sortObject: ProcedureHeaderSort | null) => void;
 };
+
+export type ProcedureHeaderSort = {
+	slug: IndicatorSlug;
+	direction: 'asc' | 'desc';
+}
 
 export function ProceduresTable(props: Props) {
 	useWindowResize();
-	const { procedures, edition } = props;
+	const { procedures, edition, onSortApply } = props;
 	const { classes, cx } = useStyles();
 
 	const [isRight, setIsRight] = useState<boolean>(false);
+	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort | null>(null)
 
 	const stickyHeaderRef = useRef<HTMLTableRowElement | null>(null);
 	const tableRef = useRef<HTMLTableElement | null>(null);
@@ -51,6 +58,10 @@ export function ProceduresTable(props: Props) {
 			stickyHeaderRef.current.addEventListener('scroll', headerScrollContent);
 		}
 	}, [stickyHeaderRef.current, scrollRef.current]);
+
+	useEffect(() => {
+		onSortApply(currentSort)
+	}, [currentSort])
 
 	useLayoutEffect(() => {
 		const fixedHeader = () => {
@@ -125,13 +136,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				  scrollRef.current.scrollLeft -
-				  _firstColSize -
-				  20
+				scrollRef.current.scrollLeft -
+				_firstColSize -
+				20
 				: _containerWidth -
-				  _firstColSize -
-				  _arrowSlideSize +
-				  scrollRef.current.scrollLeft;
+				_firstColSize -
+				_arrowSlideSize +
+				scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -146,6 +157,10 @@ export function ProceduresTable(props: Props) {
 
 		setIsRight(hasReachedMaxScroll);
 	};
+
+	const onSort = (sortObject: ProcedureHeaderSort | null) => {
+		setCurrentSort(sortObject)
+	}
 
 	return (
 		<div className={cx(classes.root)} ref={scrollRef}>
@@ -167,6 +182,7 @@ export function ProceduresTable(props: Props) {
 							return (
 								<th key={indicator.label} scope="col">
 									<ColumnHeaderDefinition
+										slug={indicator.slug as IndicatorSlug}
 										icon={indicator.icon as FrIconClassName | RiIconClassName}
 										text={indicator.label}
 										infos={{
@@ -181,6 +197,8 @@ export function ProceduresTable(props: Props) {
 											if (index >= 5) handleScrollX(true, true);
 											else handleScrollX(false, true);
 										}}
+										onSort={onSort}
+										currentSort={currentSort}
 									/>
 								</th>
 							);
@@ -291,7 +309,6 @@ export function ProceduresTable(props: Props) {
 													procedureTitle={p.title}
 													edition={edition}
 													onLinkFocus={() => {
-														console.log('focus!');
 														scrollRef.current?.scrollTo({ left: 0 });
 													}}
 												/>
