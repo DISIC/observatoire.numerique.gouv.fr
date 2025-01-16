@@ -4,7 +4,6 @@ import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useEditions } from '@/utils/api';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
 
@@ -60,14 +59,20 @@ export function Top250Header(props: Props) {
 			group: edition.name.split(' ')[1]
 		})) || [];
 
+	const oldEditionsOptions =
+		oldEditions.map(edition => ({
+			label: edition.display,
+			value: edition.slug,
+			group: edition.display.split(' ')[1]
+		})) || [];
+
 	const departmentOptions = [
 		{ label: 'Tous les ministères', value: 'all' },
-		...departments.map(department => ({
+		...departments?.map(department => ({
 			label: department,
 			value: department
 		}))
 	];
-
 	const [department, setDepartment] = useState<string>('');
 	const [editionId, setEditionId] = useState<string>();
 	const [search, setSearch] = useState<string>('');
@@ -117,36 +122,33 @@ export function Top250Header(props: Props) {
 				</form>
 			)}
 			{old && (
-				<div className={cx(classes.editionsContainer)}>
-					{oldEditions.map((edition, index) => {
-						const isCurrent =
-							(old_edition_id && edition.slug === old_edition_id) ||
-							(!old_edition_id && index === 0);
-						return (
-							<span
-								key={index}
-								className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
-							>
-								{isCurrent ? (
-									<a
-										className={cx(fr.cx('fr-link'), classes.currentLink)}
-										href={'#'}
-									>
-										{edition.display}
-									</a>
-								) : (
-									<Link
-										href={`/observatoire/old/${edition.slug}`}
-										className={fr.cx('fr-link')}
-									>
-										{edition.display}
-									</Link>
-								)}
-							</span>
-						);
-					})}
+				<form
+					className={cx(classes.editionsWrapper)}
+					onSubmit={e => {
+						e.preventDefault();
+						router.push(`/observatoire/old/${editionId}`);
+					}}
+				>
+					<LightSelect
+						label="Edition"
+						id="select-edition"
+						options={oldEditionsOptions}
+						triggerValue={old_edition_id}
+						size="small"
+						optgroup
+						onChange={value => setEditionId(value as string)}
+						className={cx(fr.cx('fr-mb-0'))}
+					/>
+					<Button
+						iconId="fr-icon-checkbox-circle-line"
+						type="submit"
+						title="Filter apply button"
+					/>
 					<span
-						className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
+						className={cx(
+							fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-mb-1v'),
+							classes.linkTag
+						)}
 					>
 						<a
 							className={fr.cx('fr-link')}
@@ -156,7 +158,7 @@ export function Top250Header(props: Props) {
 							Voir les nouvelles éditions
 						</a>
 					</span>
-				</div>
+				</form>
 			)}
 			<form
 				className={cx(classes.filterWrapper)}
@@ -235,7 +237,8 @@ const useStyles = makeStyles()(theme => ({
 	editionsWrapper: {
 		display: 'flex',
 		alignItems: 'end',
-		gap: fr.spacing('4v')
+		gap: fr.spacing('4v'),
+		flexWrap: 'wrap'
 	},
 	linkTag: {
 		textAlign: 'center',
@@ -267,14 +270,28 @@ const useStyles = makeStyles()(theme => ({
 	filterWrapper: {
 		display: 'flex',
 		alignItems: 'end',
+		justifyContent: 'center',
 		gap: fr.spacing('6v'),
-		marginTop: fr.spacing('4w')
+		flexWrap: 'wrap',
+		marginTop: fr.spacing('4w'),
+		[fr.breakpoints.down('md')]: {
+			border: `1px solid ${theme.decisions.border.default.grey.default}`,
+			borderRadius: fr.spacing('1v'),
+			padding: fr.spacing('2w')
+		}
 	},
 	filterItem: {
-		flex: 1
+		[fr.breakpoints.up('md')]: {
+			flex: 1
+		}
 	},
 	filterSelect: {
-		width: '50%',
+		['select.fr-select']: {
+			width: '100%'
+		},
+		[fr.breakpoints.up('md')]: {
+			width: '50%'
+		},
 		marginBottom: '0!important'
 	}
 }));

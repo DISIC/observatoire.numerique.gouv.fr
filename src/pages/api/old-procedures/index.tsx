@@ -6,10 +6,12 @@ const prisma = new PrismaClient();
 export async function getOldProcedures(
 	xwiki_edition: string,
 	search?: string,
-	sort?: string
+	sort?: string,
+	department?: string
 ) {
 	let whereRequest: Prisma.OldProcedureWhereInput = {
-		xwiki_edition: xwiki_edition
+		xwiki_edition: xwiki_edition,
+		ministere: department && department !== 'all' ? department : undefined
 	};
 
 	if (search)
@@ -42,12 +44,13 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (req.method === 'GET') {
-		const { xwiki_edition, search, sort } = req.query;
+		const { xwiki_edition, search, sort, department } = req.query;
 
 		const oldProcedures = await getOldProcedures(
 			xwiki_edition as string,
 			search as string,
-			sort as string
+			sort as string,
+			department as string
 		);
 
 		res.status(200).json(oldProcedures);

@@ -2,7 +2,7 @@ import { Top250Header } from '@/components/top250/Top250Header';
 import { OldProceduresTable } from '@/components/top250/table/OldProceduresTable';
 import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useOldProcedures } from '@/utils/api';
+import { useDepartments, useOldProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
@@ -17,12 +17,20 @@ export default function ObservatoireEdition() {
 
 	const [search, setSearch] = useState<string>();
 	const [sort, setSort] = useState<string>(oldDefaultSort);
+	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
 
 	const {
 		data: procedures,
 		isError,
 		isLoading
-	} = useOldProcedures({ search, sort, xwiki_edition: slug as string });
+	} = useOldProcedures({
+		search,
+		sort,
+		xwiki_edition: slug as string,
+		department: selectedDepartment
+	});
+
+	const { data: departments } = useDepartments('old');
 
 	if (isError) return <div>Une erreur est survenue.</div>;
 
@@ -35,6 +43,8 @@ export default function ObservatoireEdition() {
 					onSearch={value => {
 						setSearch(value);
 					}}
+					departments={departments}
+					setSelectedDepartment={setSelectedDepartment}
 					old
 				/>
 			</div>

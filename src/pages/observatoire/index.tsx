@@ -12,7 +12,7 @@ export default function Observatoire() {
 
 	const [search, setSearch] = useState<string>();
 	const [sort, setSort] = useState<string>('volume:desc');
-	const [selectedDepartment, setSelectedDepartment] = useState<string>('');
+	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
 
 	const {
 		data: procedures,

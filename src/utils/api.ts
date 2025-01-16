@@ -7,6 +7,7 @@ type OldProceduresProps = {
 	xwiki_edition: string;
 	search?: string;
 	sort?: string;
+	department?: string;
 };
 export function useOldProcedures(props: OldProceduresProps) {
 	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS
@@ -94,9 +95,9 @@ export function useEdition(id: String) {
 	};
 }
 
-export function useDepartments() {
+export function useDepartments(kind: 'base' | 'old' = 'base') {
 	const { data, error, isLoading } = useSWR(
-		`/api/departments`,
+		`/api/departments?kind=${kind}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<string[]>(stringify(await res.json()));
