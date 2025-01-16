@@ -35,6 +35,7 @@ type ProceduresProps = {
 	editionId?: string;
 	search?: string;
 	sort?: string;
+	department?: string;
 };
 export function useProcedures(props: ProceduresProps) {
 	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS
@@ -90,5 +91,21 @@ export function useEdition(id: String) {
 		data,
 		isError: error,
 		isLoading: !error && !data
+	};
+}
+
+export function useDepartments() {
+	const { data, error, isLoading } = useSWR(
+		`/api/departments`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
 	};
 }

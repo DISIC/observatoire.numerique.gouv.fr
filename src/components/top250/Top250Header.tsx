@@ -1,16 +1,21 @@
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { fr } from '@codegouvfr/react-dsfr';
-import { ReactNode, useState } from 'react';
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useEditions } from '@/utils/api';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Select from '@codegouvfr/react-dsfr/Select';
+import { LightSelect } from '../generic/LightSelect';
+import Button from '@codegouvfr/react-dsfr/Button';
 
 type Props = {
 	title: ReactNode;
 	searchLabel: string;
 	onSearch: (value: string) => void;
 	old?: boolean;
+	departments: string[];
+	setSelectedDepartment: Dispatch<SetStateAction<string>>;
 };
 
 const oldEditions = [
@@ -31,7 +36,14 @@ const oldEditions = [
 ];
 
 export function Top250Header(props: Props) {
-	const { title, searchLabel, onSearch, old } = props;
+	const {
+		title,
+		searchLabel,
+		onSearch,
+		old,
+		departments,
+		setSelectedDepartment
+	} = props;
 	const router = useRouter();
 	const { id: edition_id, slug: old_edition_id } = router.query;
 
@@ -39,6 +51,15 @@ export function Top250Header(props: Props) {
 
 	const { classes, cx } = useStyles();
 
+	const departmentOptions = [
+		{ label: 'Tous les ministères', value: 'all' },
+		...departments.map(department => ({
+			label: department,
+			value: department
+		}))
+	];
+
+	const [department, setDepartment] = useState<string>('');
 	const [search, setSearch] = useState<string>('');
 
 	return (
@@ -129,20 +150,32 @@ export function Top250Header(props: Props) {
 				</div>
 			)}
 			<form
+				className={cx(classes.filterWrapper)}
 				onSubmit={e => {
 					e.preventDefault();
 					onSearch(search);
+					setSelectedDepartment(department);
 				}}
 			>
+				<LightSelect
+					label="Ministère"
+					id="select-ministere"
+					options={departmentOptions}
+					size="small"
+					onChange={value => setDepartment(value as string)}
+					className={cx(classes.filterItem, classes.filterSelect)}
+				/>
 				<SearchBar
-					className={cx(classes.search)}
+					className={cx(classes.filterItem, classes.search)}
 					label={searchLabel}
 					nativeInputProps={{
-						onChange: e => {
-							setSearch(e.target.value);
-							if (!e.target.value) onSearch('');
-						}
+						onChange: e => setSearch(e.target.value)
 					}}
+				/>
+				<Button
+					iconId="fr-icon-checkbox-circle-line"
+					type="submit"
+					title="Filter apply button"
 				/>
 			</form>
 		</div>
@@ -168,7 +201,6 @@ const useStyles = makeStyles()(theme => ({
 	},
 	search: {
 		width: '50%',
-		marginTop: fr.spacing('8w'),
 		['input.fr-input']: {
 			backgroundColor: theme.decisions.background.alt.blueFrance.default,
 			['::placeholder, ::-ms-input-placeholder']: {
@@ -177,6 +209,9 @@ const useStyles = makeStyles()(theme => ({
 		},
 		[fr.breakpoints.down('lg')]: {
 			width: '100%'
+		},
+		['button.fr-btn']: {
+			display: 'none'
 		}
 	},
 	editionsContainer: {
@@ -209,5 +244,18 @@ const useStyles = makeStyles()(theme => ({
 	},
 	currentLink: {
 		textDecoration: 'underline'
+	},
+	filterWrapper: {
+		display: 'flex',
+		alignItems: 'end',
+		gap: fr.spacing('6v'),
+		marginTop: fr.spacing('8w')
+	},
+	filterItem: {
+		flex: 1
+	},
+	filterSelect: {
+		width: '50%',
+		marginBottom: '0!important'
 	}
 }));

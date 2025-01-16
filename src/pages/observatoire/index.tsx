@@ -2,7 +2,7 @@ import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useEditions, useProcedures } from '@/utils/api';
+import { useDepartments, useEditions, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useState } from 'react';
@@ -12,12 +12,15 @@ export default function Observatoire() {
 
 	const [search, setSearch] = useState<string>();
 	const [sort, setSort] = useState<string>('volume:desc');
+	const [selectedDepartment, setSelectedDepartment] = useState<string>('');
 
 	const {
 		data: procedures,
 		isError,
 		isLoading
-	} = useProcedures({ search, sort });
+	} = useProcedures({ search, sort, department: selectedDepartment });
+
+	const { data: departments } = useDepartments();
 
 	const { data: editions } = useEditions();
 	if (!editions) return;
@@ -36,9 +39,9 @@ export default function Observatoire() {
 						</>
 					}
 					searchLabel="Rechercher par ministère, administration, ..."
-					onSearch={value => {
-						setSearch(value);
-					}}
+					onSearch={value => setSearch(value)}
+					departments={departments}
+					setSelectedDepartment={setSelectedDepartment}
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">

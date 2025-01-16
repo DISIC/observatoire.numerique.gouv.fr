@@ -12,6 +12,8 @@ type Props = {
 	superLight?: boolean;
 	label: string;
 	id?: string;
+	className?: string;
+	size?: 'small' | 'medium';
 };
 
 export function LightSelect(props: Props) {
@@ -22,6 +24,8 @@ export function LightSelect(props: Props) {
 		defaultValue,
 		triggerValue,
 		superLight,
+		className,
+		size = 'medium',
 		label,
 		id
 	} = props;
@@ -44,7 +48,12 @@ export function LightSelect(props: Props) {
 	return (
 		<Select
 			label={label}
-			className={cx(classes.root, superLight ? classes.rootSuperLight : {})}
+			className={cx(
+				classes.root,
+				superLight ? classes.rootSuperLight : {},
+				size === 'small' ? classes.rootSmall : {},
+				className
+			)}
 			nativeSelectProps={{
 				id,
 				onChange: event => setValue(event.target.value),
@@ -107,6 +116,13 @@ const useStyles = makeStyles()(theme => ({
 			clip: 'rect(0, 0, 0, 0)',
 			whiteSpace: 'nowrap',
 			border: 0
+		}
+	},
+	rootSmall: {
+		['select']: {
+			padding: fr.spacing('2v'),
+			...fr.typography[18].style,
+			marginBottom: 0
 		}
 	}
 }));

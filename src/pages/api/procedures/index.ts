@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
-import { ObjectId } from "bson";
 
 const prisma = new PrismaClient();
 
 export async function getProcedures(
 	editionId?: string,
 	search?: string,
-	sort?: string
+	sort?: string,
+	department?: string
 ) {
 	let tmpEditionId = editionId;
 
@@ -23,7 +23,8 @@ export async function getProcedures(
 	}
 
 	let whereRequest: Prisma.ProcedureWhereInput = {
-		editionId: tmpEditionId || null
+		editionId: tmpEditionId || null,
+		ministere: department && department !== 'all' ? department : undefined
 	};
 
 	if (search)
@@ -103,7 +104,7 @@ export default async function handler(
 	}
 
 	if (req.method === 'GET') {
-		const { id, editionId, search, sort } = req.query;
+		const { id, editionId, search, sort, department } = req.query;
 		if (id) {
 			const procedure = await getProcedureById(id.toString());
 			res.status(200).json(procedure);
@@ -111,7 +112,8 @@ export default async function handler(
 			const procedures = await getProcedures(
 				editionId as string,
 				search as string,
-				sort as string
+				sort as string,
+				department as string
 			);
 			res.status(200).json(procedures);
 		}
