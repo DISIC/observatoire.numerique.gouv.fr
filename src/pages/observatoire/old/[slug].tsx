@@ -31,7 +31,7 @@ export default function ObservatoireEdition() {
 			<div className={fr.cx('fr-container')}>
 				<Top250Header
 					title={<>Anciennes éditions de l&apos;observatoire 1.0</>}
-					searchLabel="Rechercher par ministère, administration, ..."
+					searchLabel="Rechercher par mots clés..."
 					onSearch={value => {
 						setSearch(value);
 					}}

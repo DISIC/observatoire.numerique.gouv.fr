@@ -3,8 +3,15 @@ import { useEffect, useState } from 'react';
 import { Select } from '@codegouvfr/react-dsfr/Select';
 import { fr } from '@codegouvfr/react-dsfr';
 
+type Option = {
+	label: string;
+	value: string | number;
+	href?: string;
+	group?: string;
+};
+
 type Props = {
-	options: { label: string; value: string | number; href?: string }[];
+	options: Option[];
 	defaultValue?: string | number;
 	onChange?(value: string | number, href?: string): void;
 	triggerValue?: string | number;
@@ -14,6 +21,7 @@ type Props = {
 	id?: string;
 	className?: string;
 	size?: 'small' | 'medium';
+	optgroup?: boolean;
 };
 
 export function LightSelect(props: Props) {
@@ -26,6 +34,7 @@ export function LightSelect(props: Props) {
 		superLight,
 		className,
 		size = 'medium',
+		optgroup,
 		label,
 		id
 	} = props;
@@ -35,6 +44,14 @@ export function LightSelect(props: Props) {
 	const [value, setValue] = useState<string | number>(
 		defaultValue ? defaultValue : ''
 	);
+
+	const optionsGrouped = options.reduce((acc, opt) => {
+		if (optgroup && opt.group) {
+			if (!acc[opt.group]) acc[opt.group] = [];
+			acc[opt.group].push(opt);
+		}
+		return acc;
+	}, {} as { [key: string]: Option[] });
 
 	useEffect(() => {
 		if (value !== undefined && !!onChange)
@@ -65,11 +82,23 @@ export function LightSelect(props: Props) {
 					{placeholder}
 				</option>
 			)}
-			{options.map(opt => (
-				<option key={`key-${opt.value}`} value={opt.value}>
-					{opt.label}
-				</option>
-			))}
+			{optgroup
+				? Object.entries(optionsGrouped)
+						.sort(([a], [b]) => parseInt(b) - parseInt(a))
+						.map(([key, group]) => (
+							<optgroup key={`optgroup-${key}`} label={key}>
+								{group.map(opt => (
+									<option key={`key-${opt.value}`} value={opt.value}>
+										{opt.label}
+									</option>
+								))}
+							</optgroup>
+						))
+				: options.map(opt => (
+						<option key={`key-${opt.value}`} value={opt.value}>
+							{opt.label}
+						</option>
+				  ))}
 		</Select>
 	);
 }
@@ -121,6 +150,7 @@ const useStyles = makeStyles()(theme => ({
 	rootSmall: {
 		['select']: {
 			padding: fr.spacing('2v'),
+			paddingRight: fr.spacing('4v'),
 			...fr.typography[18].style,
 			marginBottom: 0
 		}

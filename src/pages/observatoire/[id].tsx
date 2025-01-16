@@ -48,7 +48,7 @@ export default function ObservatoireEdition() {
 							<br /> vos démarches essentielles
 						</>
 					}
-					searchLabel="Rechercher par ministère, administration, ..."
+					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
 					departments={departments}
 					setSelectedDepartment={setSelectedDepartment}

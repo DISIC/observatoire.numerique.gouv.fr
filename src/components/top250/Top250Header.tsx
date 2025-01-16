@@ -5,7 +5,6 @@ import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useEditions } from '@/utils/api';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Select from '@codegouvfr/react-dsfr/Select';
 import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
 
@@ -45,11 +44,21 @@ export function Top250Header(props: Props) {
 		setSelectedDepartment
 	} = props;
 	const router = useRouter();
-	const { id: edition_id, slug: old_edition_id } = router.query;
+	const { id: edition_id, slug: old_edition_id } = router.query as {
+		id: string | undefined;
+		slug: string;
+	};
+
+	const { classes, cx } = useStyles();
 
 	const { data: editions } = useEditions();
 
-	const { classes, cx } = useStyles();
+	const editionOptions =
+		editions?.map((edition, index) => ({
+			label: edition.name,
+			value: index !== 0 ? edition.id : 'current',
+			group: edition.name.split(' ')[1]
+		})) || [];
 
 	const departmentOptions = [
 		{ label: 'Tous les ministères', value: 'all' },
@@ -60,42 +69,42 @@ export function Top250Header(props: Props) {
 	];
 
 	const [department, setDepartment] = useState<string>('');
+	const [editionId, setEditionId] = useState<string>();
 	const [search, setSearch] = useState<string>('');
 
 	return (
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
 			{!old && (
-				<div className={cx(classes.editionsContainer)}>
-					{editions?.map((e, index) => {
-						const isCurrent =
-							(edition_id && e.id === edition_id) ||
-							(!edition_id && index === 0);
-						return (
-							<span
-								key={index}
-								className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
-							>
-								{isCurrent ? (
-									<a
-										className={cx(fr.cx('fr-link'), classes.currentLink)}
-										href={'#'}
-									>
-										{e.name}
-									</a>
-								) : (
-									<Link
-										href={`/observatoire/${e.id}`}
-										className={fr.cx('fr-link')}
-									>
-										{e.name}
-									</Link>
-								)}
-							</span>
+				<form
+					className={cx(classes.editionsWrapper)}
+					onSubmit={e => {
+						e.preventDefault();
+						router.push(
+							`/observatoire${editionId !== 'current' ? `/${editionId}` : ''}`
 						);
-					})}
+					}}
+				>
+					<LightSelect
+						label="Edition"
+						id="select-edition"
+						options={editionOptions}
+						triggerValue={edition_id || 'current'}
+						size="small"
+						optgroup
+						onChange={value => setEditionId(value as string)}
+						className={cx(fr.cx('fr-mb-0'))}
+					/>
+					<Button
+						iconId="fr-icon-checkbox-circle-line"
+						type="submit"
+						title="Filter apply button"
+					/>
 					<span
-						className={cx(fr.cx('fr-px-1w', 'fr-py-0-5v'), classes.linkTag)}
+						className={cx(
+							fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-mb-1v'),
+							classes.linkTag
+						)}
 					>
 						<a
 							className={fr.cx('fr-link')}
@@ -105,7 +114,7 @@ export function Top250Header(props: Props) {
 							Voir les éditions précédentes
 						</a>
 					</span>
-				</div>
+				</form>
 			)}
 			{old && (
 				<div className={cx(classes.editionsContainer)}>
@@ -165,13 +174,18 @@ export function Top250Header(props: Props) {
 					onChange={value => setDepartment(value as string)}
 					className={cx(classes.filterItem, classes.filterSelect)}
 				/>
-				<SearchBar
-					className={cx(classes.filterItem, classes.search)}
-					label={searchLabel}
-					nativeInputProps={{
-						onChange: e => setSearch(e.target.value)
-					}}
-				/>
+				<div className={cx(classes.filterItem, classes.search)}>
+					<label className={cx('fr-label', fr.cx('fr-mb-2v'))} htmlFor="search">
+						Mots clés
+					</label>
+					<SearchBar
+						className={cx(classes.filterItem)}
+						label={searchLabel}
+						nativeInputProps={{
+							onChange: e => setSearch(e.target.value)
+						}}
+					/>
+				</div>
 				<Button
 					iconId="fr-icon-checkbox-circle-line"
 					type="submit"
@@ -218,6 +232,11 @@ const useStyles = makeStyles()(theme => ({
 		display: 'flex',
 		flexWrap: 'wrap'
 	},
+	editionsWrapper: {
+		display: 'flex',
+		alignItems: 'end',
+		gap: fr.spacing('4v')
+	},
 	linkTag: {
 		textAlign: 'center',
 		fontWeight: 'bold',
@@ -249,7 +268,7 @@ const useStyles = makeStyles()(theme => ({
 		display: 'flex',
 		alignItems: 'end',
 		gap: fr.spacing('6v'),
-		marginTop: fr.spacing('8w')
+		marginTop: fr.spacing('4w')
 	},
 	filterItem: {
 		flex: 1
