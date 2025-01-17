@@ -104,7 +104,7 @@ export function Top250Header(props: Props) {
 						iconId="fr-icon-checkbox-circle-line"
 						type="submit"
 						title="Filter apply button"
-					/>
+					>Charger l'édition</Button>
 					<span
 						className={cx(
 							fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-mb-1v'),
@@ -143,7 +143,7 @@ export function Top250Header(props: Props) {
 						iconId="fr-icon-checkbox-circle-line"
 						type="submit"
 						title="Filter apply button"
-					/>
+					>Charger l'édition</Button>
 					<span
 						className={cx(
 							fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-mb-1v'),
@@ -160,6 +160,7 @@ export function Top250Header(props: Props) {
 					</span>
 				</form>
 			)}
+			<hr className={cx(classes.filterHr)} />
 			<form
 				className={cx(classes.filterWrapper)}
 				onSubmit={e => {
@@ -192,7 +193,7 @@ export function Top250Header(props: Props) {
 					iconId="fr-icon-checkbox-circle-line"
 					type="submit"
 					title="Filter apply button"
-				/>
+				>Appliquer les filtres</Button>
 			</form>
 		</div>
 	);
@@ -267,13 +268,17 @@ const useStyles = makeStyles()(theme => ({
 	currentLink: {
 		textDecoration: 'underline'
 	},
+	filterHr: {
+		marginTop: fr.spacing('6w'),
+		marginBottom: fr.spacing('6w'),
+		paddingBottom: 1,
+	},
 	filterWrapper: {
 		display: 'flex',
 		alignItems: 'end',
 		justifyContent: 'center',
 		gap: fr.spacing('6v'),
 		flexWrap: 'wrap',
-		marginTop: fr.spacing('4w'),
 		[fr.breakpoints.down('md')]: {
 			border: `1px solid ${theme.decisions.border.default.grey.default}`,
 			borderRadius: fr.spacing('1v'),
