@@ -7,7 +7,7 @@ import { PageTitleHeader } from '@/components/layout/PageTitleHeader';
 import { Help } from '@/payload/payload-types';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
-import { Tabs } from '@codegouvfr/react-dsfr/Tabs';
+import Tabs from '@/components/generic/Tabs';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
