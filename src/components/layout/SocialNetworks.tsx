@@ -9,9 +9,9 @@ export function SocialNetworks(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container'), classes.content)}>
-				<h4 className={cx(classes.leftSection)}>
+				<h2 className={cx(classes.leftSection)}>
 					Suivez-nous sur les réseaux sociaux
-				</h4>
+				</h2>
 				<ul className={cx(classes.rightSection)}>
 					<li>
 						<a
