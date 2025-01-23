@@ -2,7 +2,6 @@ import { PayloadIndicator } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 type Props = {
 	title: string;
@@ -15,7 +14,6 @@ type Props = {
 export function IndicatorsDetails(props: Props) {
 	const { title, description, indicators, buttonText, buttonLink } = props;
 	const { classes, cx } = useStyles();
-	const router = useRouter();
 
 	return (
 		<div className={classes.root}>
@@ -30,7 +28,7 @@ export function IndicatorsDetails(props: Props) {
 							<span>
 								<i className={indicator.icon} />
 							</span>
-							<span>{indicator.label}</span>
+							<h3>{indicator.label}</h3>
 							{indicator.description && <p>{indicator.description}</p>}
 						</div>
 					))}
@@ -88,7 +86,7 @@ const useStyles = makeStyles()(theme => ({
 					display: 'none'
 				}
 			},
-			['& > span:first-of-type']: {
+			['& > span']: {
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
@@ -104,7 +102,7 @@ const useStyles = makeStyles()(theme => ({
 					margin: `0 auto ${fr.spacing('5v')} auto`
 				}
 			},
-			['& > span:not(:first-of-type)']: {
+			['& > h3']: {
 				display: 'block',
 				...fr.typography[20].style,
 				color: theme.decisions.background.actionHigh.blueFrance.default,
