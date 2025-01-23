@@ -70,7 +70,7 @@ export function ProcedureMobileCard(props: Props) {
 			}}
 		>
 			<div className={cx(classes.mainInfos)}>
-				<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>{procedure.title}</div>
+				<h2 className={fr.cx('fr-text--sm', 'fr-mb-0')}>{procedure.title}</h2>
 				<div className={fr.cx('fr-text--xs', 'fr-mb-0')}>
 					<div>{procedure.ministere}</div>
 					<div className={fr.cx('fr-mt-3v')}>
@@ -152,7 +152,7 @@ const useStyles = makeStyles()(theme => ({
 		position: 'relative'
 	},
 	mainInfos: {
-		['& > div:first-of-type']: {
+		['& > h2']: {
 			fontWeight: 500
 		}
 	},
