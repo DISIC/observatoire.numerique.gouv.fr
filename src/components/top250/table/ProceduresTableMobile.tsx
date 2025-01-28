@@ -28,18 +28,20 @@ export function ProceduresTableMobile(props: Props) {
 	if (!indicators) return <div>Aucune colonne de démarche</div>;
 
 	return (
-		<div className={cx(classes.root)}>
+		<ul className={cx(classes.root)}>
 			{procedures.map(procedure => {
 				return (
-					<ProcedureMobileCard
-						indicators={indicators}
-						key={procedure.id}
-						procedure={procedure}
-						edition={edition}
-					/>
+					<li key={procedure.id}>
+						<ProcedureMobileCard
+							key={procedure.id}
+							indicators={indicators}
+							procedure={procedure}
+							edition={edition}
+						/>
+					</li>
 				);
 			})}
-		</div>
+		</ul>
 	);
 }
 
@@ -48,6 +50,8 @@ const useStyles = tss.withName(ProceduresTableMobile.name).create(() => ({
 		[fr.breakpoints.down('lg')]: {
 			marginTop: `-${fr.spacing('10v')}`,
 			marginBottom: fr.spacing('2v')
-		}
+		},
+		listStyleType: 'none',
+		paddingLeft: 0
 	}
 }));
