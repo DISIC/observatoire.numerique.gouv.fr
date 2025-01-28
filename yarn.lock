@@ -2238,17 +2238,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codegouvfr/react-dsfr@npm:^0.48.0":
-  version: 0.48.4
-  resolution: "@codegouvfr/react-dsfr@npm:0.48.4"
+"@codegouvfr/react-dsfr@npm:^1.17.0":
+  version: 1.17.0
+  resolution: "@codegouvfr/react-dsfr@npm:1.17.0"
   dependencies:
-    tsafe: "npm:^1.6.0"
+    tsafe: "npm:^1.8.5"
+    yargs-parser: "npm:^21.1.1"
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    "@gouvfr/dsfr-chart": ^1.0.0
+  peerDependenciesMeta:
+    "@gouvfr/dsfr-chart":
+      optional: true
   bin:
     copy-dsfr-to-public: bin/copy-dsfr-to-public.js
     only-include-used-icons: bin/only-include-used-icons.js
-  checksum: 10c0/5b41c9bb37cc1a2bbe5629af4609594fee5dba23bc7a361c9deb450e3bf996fdc8e046a8fda776450157f7fe676658c9cd51b651349d9014cdb21d1d33c50335
+    react-dsfr: bin/react-dsfr.js
+  checksum: 10c0/79aa9cf72917e06efca733bc78087bd4da7ec4f5d318ae982272ef029ae5a661e0a715adf2b71dac3a916036810ce789e01e5f0fde2b25c371898b81c125a8b6
   languageName: node
   linkType: hard
 
@@ -13614,7 +13619,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.20.2"
     "@babel/preset-react": "npm:^7.18.6"
     "@babel/preset-typescript": "npm:^7.21.0"
-    "@codegouvfr/react-dsfr": "npm:^0.48.0"
+    "@codegouvfr/react-dsfr": "npm:^1.17.0"
     "@emotion/react": "npm:^11.10.6"
     "@emotion/server": "npm:^11.10.0"
     "@lhci/cli": "npm:^0.11.0"
@@ -16624,7 +16629,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsafe@npm:^1.6.0, tsafe@npm:^1.8.5":
+"tsafe@npm:^1.8.5":
   version: 1.8.5
   resolution: "tsafe@npm:1.8.5"
   checksum: 10c0/5eb88061c640a11035aa8f7d9713cf9d1e9d479b417ed5f7094151d891b76160d17dd3a8718d624b95a77240e1221fd2a6b6064a25447ca9983088f92442450b

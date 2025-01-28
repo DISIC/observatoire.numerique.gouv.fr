@@ -22,13 +22,14 @@ export function CustomFooter() {
 					href: '/',
 					title: 'Accueil - Vos démarches essentielles'
 				}}
-				personalDataLinkProps={{
-					href: '/cgu'
-				}}
 				termsLinkProps={{
 					href: '/legalNotice'
 				}}
 				bottomItems={[
+					{
+						text: 'Données personnelles',
+						linkProps: { href: '/cgu' }
+					},
 					{
 						text: 'Modalités d’utilisation',
 						linkProps: { href: '/termsOfUse' }

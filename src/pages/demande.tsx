@@ -170,14 +170,14 @@ const useStyles = makeStyles()(theme => ({
 	},
 	lightInfoAlert: {
 		boxShadow: 'none',
-		padding: `0 0 0 ${fr.spacing('5v')}`,
+		// padding: `0 0 0 ${fr.spacing('5v')}`,
 		color: theme.decisions.background.flat.info.default,
 		marginTop: `-${fr.spacing('9v')}`,
-		['&::before']: {
-			color: theme.decisions.background.flat.info.default,
-			'--icon-size': '1rem',
-			margin: `2px 0 0 0`
-		},
+		// ['&::before']: {
+		// 	color: theme.decisions.background.flat.info.default,
+		// 	'--icon-size': '1rem',
+		// 	margin: `2px 0 0 0`
+		// },
 		['.fr-alert__title']: {
 			display: 'none'
 		},

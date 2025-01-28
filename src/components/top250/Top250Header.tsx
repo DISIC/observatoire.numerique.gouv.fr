@@ -6,6 +6,7 @@ import { useEditions } from '@/utils/api';
 import { useRouter } from 'next/router';
 import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
+import assert from 'assert';
 
 type Props = {
 	title: ReactNode;
@@ -51,6 +52,10 @@ export function Top250Header(props: Props) {
 	const { classes, cx } = useStyles();
 
 	const { data: editions } = useEditions();
+
+	const [inputElement, setInputElement] = useState<HTMLInputElement | null>(
+		null
+	);
 
 	const editionOptions =
 		editions?.map((edition, index) => ({
@@ -104,7 +109,9 @@ export function Top250Header(props: Props) {
 						iconId="fr-icon-checkbox-circle-line"
 						type="submit"
 						title="Filter apply button"
-					>Charger l'édition</Button>
+					>
+						Charger l'édition
+					</Button>
 					<span
 						className={cx(
 							fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-mb-1v'),
@@ -143,7 +150,9 @@ export function Top250Header(props: Props) {
 						iconId="fr-icon-checkbox-circle-line"
 						type="submit"
 						title="Filter apply button"
-					>Charger l'édition</Button>
+					>
+						Charger l'édition
+					</Button>
 					<span
 						className={cx(
 							fr.cx('fr-px-1w', 'fr-py-0-5v', 'fr-mb-1v'),
@@ -184,16 +193,32 @@ export function Top250Header(props: Props) {
 					<SearchBar
 						className={cx(classes.filterItem)}
 						label={searchLabel}
-						nativeInputProps={{
-							onChange: e => setSearch(e.target.value)
-						}}
+						renderInput={({ className, id, placeholder, type }) => (
+							<input
+								ref={setInputElement}
+								className={className}
+								id={id}
+								placeholder={placeholder}
+								type={type}
+								value={search}
+								onChange={event => setSearch(event.currentTarget.value)}
+								onKeyDown={event => {
+									if (event.key === 'Escape' && inputElement !== null) {
+										assert(inputElement !== null);
+										inputElement.blur();
+									}
+								}}
+							/>
+						)}
 					/>
 				</div>
 				<Button
 					iconId="fr-icon-checkbox-circle-line"
 					type="submit"
 					title="Filter apply button"
-				>Appliquer les filtres</Button>
+				>
+					Appliquer les filtres
+				</Button>
 			</form>
 		</div>
 	);
@@ -271,7 +296,7 @@ const useStyles = makeStyles()(theme => ({
 	filterHr: {
 		marginTop: fr.spacing('6w'),
 		marginBottom: fr.spacing('6w'),
-		paddingBottom: 1,
+		paddingBottom: 1
 	},
 	filterWrapper: {
 		display: 'flex',
