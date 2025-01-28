@@ -76,7 +76,7 @@ const PublicLayout = (props: Props) => {
 					title: 'Accueil - Vos démarches essentielles'
 				}}
 				quickAccessItems={accessItems}
-				serviceTagline={serviceTagLine}
+				// serviceTagline={serviceTagLine}
 				serviceTitle={serviceTitle}
 			/>
 			<main id="main" role="main">
