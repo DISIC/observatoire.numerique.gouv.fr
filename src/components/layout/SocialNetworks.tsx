@@ -1,5 +1,5 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 
 type Props = {};
 
@@ -52,9 +52,9 @@ export function SocialNetworks(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(SocialNetworks.name).create(() => ({
 	root: {
-		backgroundColor: theme.decisions.background.alt.blueFrance.default
+		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default
 	},
 	content: {
 		display: 'flex',
@@ -79,7 +79,7 @@ const useStyles = makeStyles()(theme => ({
 				backgroundImage: 'none',
 				maxWidth: fr.spacing('6v'),
 				maxHeight: fr.spacing('6v'),
-				color: theme.decisions.background.actionHigh.blueFrance.default,
+				color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 				['&:before']: {},
 				['&::after']: {
 					'--icon-size': '0 !important',

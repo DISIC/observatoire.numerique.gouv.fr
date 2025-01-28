@@ -1,9 +1,9 @@
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Edition } from '@prisma/client';
 import { ProcedureMobileCard } from './ProcedureMobileCard';
+import { tss } from 'tss-react';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -43,7 +43,7 @@ export function ProceduresTableMobile(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(ProceduresTableMobile.name).create(() => ({
 	root: {
 		[fr.breakpoints.down('lg')]: {
 			marginTop: `-${fr.spacing('10v')}`,

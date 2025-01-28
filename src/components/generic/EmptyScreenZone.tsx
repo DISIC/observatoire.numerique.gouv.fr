@@ -1,4 +1,4 @@
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -12,7 +12,7 @@ export const EmptyScreenZone = (props: Props) => {
 	return <div className={cx(classes.container)}>{children}</div>;
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(EmptyScreenZone.name).create(() => ({
 	container: {
 		minHeight: '85vh',
 		display: 'flex',

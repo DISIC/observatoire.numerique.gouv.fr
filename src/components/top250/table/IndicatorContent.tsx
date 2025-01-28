@@ -1,8 +1,8 @@
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorLabel } from './IndicatorLabel';
 import { fr } from '@codegouvfr/react-dsfr';
 import React from 'react';
 import { PayloadIndicator } from '@/payload/payload-types';
+import { tss } from 'tss-react';
 
 type Props = {
 	indicator: PayloadIndicator;
@@ -66,7 +66,7 @@ export const IndicatorContent = (props: Props) => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(IndicatorContent.name).create(() => ({
 	root: {
 		h5: {
 			fontSize: '20px'
@@ -98,7 +98,7 @@ const useStyles = makeStyles()(theme => ({
 	moreInfos: {
 		padding: fr.spacing('2v'),
 		marginBottom: fr.spacing('6v'),
-		backgroundColor: theme.decisions.background.default.grey.hover,
+		backgroundColor: fr.colors.decisions.background.default.grey.hover,
 		p: {
 			marginBottom: 0,
 			marginTop: fr.spacing('1v'),
@@ -106,9 +106,9 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	moreInfosBlue: {
-		backgroundColor: theme.decisions.background.contrast.info.default,
+		backgroundColor: fr.colors.decisions.background.contrast.info.default,
 		b: {
-			color: theme.decisions.background.flat.info.default
+			color: fr.colors.decisions.background.flat.info.default
 		}
 	}
 }));

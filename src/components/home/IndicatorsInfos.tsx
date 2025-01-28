@@ -1,6 +1,6 @@
 import { PayloadMedia } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 import Link from 'next/link';
 import PayloadImage from '../generic/PayloadImage';
 import { ReactNode } from 'react';
@@ -76,7 +76,7 @@ export function IndicatorsInfos(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(IndicatorsInfos.name).create(() => ({
 	root: {
 		maxWidth: '62rem',
 		paddingTop: fr.spacing('14v'),
@@ -86,7 +86,7 @@ const useStyles = makeStyles()(theme => ({
 		h2: {
 			...fr.typography[3].style,
 			textAlign: 'center',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			marginBottom: fr.spacing('6v')
 		},
 		p: {
@@ -150,7 +150,7 @@ const useStyles = makeStyles()(theme => ({
 		},
 		span: {
 			...fr.typography[20].style,
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			fontWeight: 500,
 			margin: `0 0 0 ${fr.spacing('4v')}`
 		},

@@ -1,4 +1,5 @@
 import Footer from '@codegouvfr/react-dsfr/Footer';
+import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display';
 
 export function CustomFooter() {
 	const brandTop = (
@@ -41,7 +42,8 @@ export function CustomFooter() {
 							href: 'https://github.com/DISIC/observatoire.numerique.gouv.fr',
 							title: 'Code source, nouvelle fenêtre'
 						}
-					}
+					},
+					headerFooterDisplayItem
 				]}
 			/>
 		</>

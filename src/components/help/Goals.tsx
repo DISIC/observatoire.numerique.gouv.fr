@@ -1,7 +1,7 @@
 import { Help } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import WysiwygInterpretor from '../generic/WysiwygInterpretor';
+import { tss } from 'tss-react';
 
 type Props = Help['goals'];
 
@@ -11,17 +11,15 @@ export function HelpGoals(props: Props) {
 
 	return (
 		<div className={classes.root}>
-			{wysiwyg_html && (
-				<WysiwygInterpretor wysiwyg_html={wysiwyg_html} />
-			)}
+			{wysiwyg_html && <WysiwygInterpretor wysiwyg_html={wysiwyg_html} />}
 		</div>
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(HelpGoals.name).create(() => ({
 	root: {
 		h2: {
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			['&:not(:first-of-type)']: {
 				marginTop: fr.spacing('10v')
 			}

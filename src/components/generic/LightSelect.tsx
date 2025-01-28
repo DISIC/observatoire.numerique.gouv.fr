@@ -1,4 +1,4 @@
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 import { useEffect, useState } from 'react';
 import { Select } from '@codegouvfr/react-dsfr/Select';
 import { fr } from '@codegouvfr/react-dsfr';
@@ -103,15 +103,15 @@ export function LightSelect(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(LightSelect.name).create(() => ({
 	root: {
 		['select']: {
 			width: 'auto',
 			backgroundColor: 'transparent',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			fontWeight: 'bold',
 			boxShadow: 'none',
-			border: `1px solid ${theme.decisions.border.default.grey.default}`,
+			border: `1px solid ${fr.colors.decisions.border.default.grey.default}`,
 			...fr.typography[20].style,
 			padding: fr.spacing('3v'),
 			paddingLeft: fr.spacing('6v'),

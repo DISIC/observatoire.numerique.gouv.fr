@@ -4,7 +4,7 @@ import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { Input } from '@codegouvfr/react-dsfr/Input';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState, memo } from 'react';
 import * as OTPAuth from 'otpauth';
@@ -242,7 +242,7 @@ export function LoginForm() {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(LoginForm.name).create(() => ({
 	root: {
 		width: '36em',
 		margin: 'auto',

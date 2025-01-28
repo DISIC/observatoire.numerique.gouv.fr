@@ -1,10 +1,10 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorColor, OldProcedure } from '@prisma/client';
 import { IndicatorLabel } from './IndicatorLabel';
 import { Dispatch, SetStateAction } from 'react';
 import Link from 'next/link';
 import { oldDefaultSort } from '@/pages/observatoire/old/[slug]';
+import { tss } from 'tss-react';
 
 type Props = {
 	procedures: OldProcedure[];
@@ -205,7 +205,7 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(OldProceduresTable.name).create(() => ({
 	table: {
 		['thead th']: {
 			cursor: 'pointer',

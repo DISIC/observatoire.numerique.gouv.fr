@@ -8,9 +8,9 @@ import { Help } from '@/payload/payload-types';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Tabs } from '@codegouvfr/react-dsfr/Tabs';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { tss } from 'tss-react';
 
 type TabsType = keyof Pick<Help, 'goals' | 'criterias' | 'indicators'>;
 
@@ -87,7 +87,7 @@ export default function AideObservatoire() {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(AideObservatoire.name).create(() => ({
 	root: {},
 	tabsContainer: {
 		maxWidth: '50rem',

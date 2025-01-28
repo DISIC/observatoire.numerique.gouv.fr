@@ -1,9 +1,9 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import FocusTrap from 'focus-trap-react';
 import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { tss } from 'tss-react';
 
 type Props = {
 	title: string;
@@ -86,7 +86,7 @@ export const Modal = (props: Props) => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Modal.name).create(() => ({
 	root: {
 		width: '100vw',
 		height: '100vh',
@@ -119,7 +119,7 @@ const useStyles = makeStyles()(theme => ({
 		maxHeight: '95vh',
 		overflowY: 'auto',
 		height: 'auto',
-		backgroundColor: theme.decisions.background.default.grey.default,
+		backgroundColor: fr.colors.decisions.background.default.grey.default,
 		[fr.breakpoints.down('lg')]: {
 			width: '100%',
 			maxWidth: '100%',

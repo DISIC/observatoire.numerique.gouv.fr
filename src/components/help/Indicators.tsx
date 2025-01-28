@@ -1,9 +1,8 @@
 import { RiIconClassName, fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import AccordionWithIcon from '../generic/AccordionWithIcon';
 import { IndicatorContent } from '../top250/table/IndicatorContent';
 import { Help } from '@/payload/payload-types';
-import { IndicatorSlug } from '@prisma/client';
+import { tss } from 'tss-react';
 
 type Props = Help['indicators'];
 
@@ -67,10 +66,10 @@ export function HelpIndicators(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(HelpIndicators.name).create(() => ({
 	root: {
 		h2: {
-			color: theme.decisions.background.actionHigh.blueFrance.default
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default
 		}
 	},
 	primarySection: {},
@@ -82,21 +81,21 @@ const useStyles = makeStyles()(theme => ({
 	},
 	accordion: {
 		['button.fr-accordion__btn']: {
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			fontWeight: 500,
 			fontSize: fr.typography[20].style.fontSize,
 			['& > span:first-of-type']: {
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
-				backgroundColor: theme.decisions.background.alt.blueFrance.default,
+				backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
 				width: fr.spacing('20v'),
 				height: fr.spacing('20v'),
 				borderRadius: '50%',
 				marginRight: fr.spacing('5v'),
 				['i::before']: {
 					'--icon-size': fr.spacing('10v'),
-					color: theme.decisions.background.actionHigh.blueFrance.default
+					color: fr.colors.decisions.background.actionHigh.blueFrance.default
 				}
 			}
 		}

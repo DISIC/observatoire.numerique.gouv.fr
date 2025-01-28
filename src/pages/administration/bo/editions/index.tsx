@@ -1,8 +1,8 @@
 import Card from '@codegouvfr/react-dsfr/Card';
 import Badge from '@codegouvfr/react-dsfr/Badge';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useEditions } from '@/utils/api';
+import { tss } from 'tss-react';
 
 type Props = {
 	error?: string;
@@ -70,7 +70,7 @@ export default function Editions(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Editions.name).create(() => ({
 	root: {
 		paddingTop: fr.spacing('10v'),
 		paddingBottom: fr.spacing('10v')

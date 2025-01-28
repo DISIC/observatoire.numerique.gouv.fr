@@ -1,8 +1,8 @@
 import { LightSelect } from '@/components/generic/LightSelect';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { tss } from 'tss-react';
 
 type Props = {
 	sort: string;
@@ -62,7 +62,9 @@ export function PreHeader(props: Props) {
 							rel="noreferrer"
 							className={fr.cx('fr-link')}
 						>
-							<i className={cx(fr.cx('ri-database-2-line'), classes.linkIcon)} />
+							<i
+								className={cx(fr.cx('ri-database-2-line'), classes.linkIcon)}
+							/>
 							Accéder aux données ouvertes sur data.gouv.fr
 						</a>
 					</>
@@ -72,7 +74,7 @@ export function PreHeader(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(PreHeader.name).create(() => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'space-between',

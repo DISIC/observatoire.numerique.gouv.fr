@@ -1,6 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorColor } from '@prisma/client';
+import { tss } from 'tss-react';
 
 type Props = {
 	label: string;
@@ -42,7 +43,7 @@ export function IndicatorLabel(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(IndicatorLabel.name).create(() => ({
 	root: {
 		textAlign: 'center',
 		fontWeight: 'bold',
@@ -55,29 +56,30 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	blue: {
-		color: theme.decisions.background.flat.info.default,
-		backgroundColor: theme.decisions.background.contrast.info.default
+		color: fr.colors.decisions.background.flat.info.default,
+		backgroundColor: fr.colors.decisions.background.contrast.info.default
 	},
 	red: {
-		color: theme.decisions.background.flat.error.default,
-		backgroundColor: theme.decisions.background.contrast.error.default
+		color: fr.colors.decisions.background.flat.error.default,
+		backgroundColor: fr.colors.decisions.background.contrast.error.default
 	},
 	yellow: {
-		color: theme.decisions.background.actionHigh.yellowTournesol.default,
-		backgroundColor: theme.decisions.background.contrast.yellowTournesol.default
+		color: fr.colors.decisions.background.actionHigh.yellowTournesol.default,
+		backgroundColor:
+			fr.colors.decisions.background.contrast.yellowTournesol.default
 	},
 	orange: {
-		color: theme.decisions.background.flat.warning.default,
+		color: fr.colors.decisions.background.flat.warning.default,
 		backgroundColor:
-			theme.decisions.background.contrast.orangeTerreBattue.default
+			fr.colors.decisions.background.contrast.orangeTerreBattue.default
 	},
 	green: {
-		color: theme.decisions.background.flat.success.default,
-		backgroundColor: theme.decisions.background.contrast.success.default
+		color: fr.colors.decisions.background.flat.success.default,
+		backgroundColor: fr.colors.decisions.background.contrast.success.default
 	},
 	gray: {
-		color: theme.decisions.background.flat.grey.default,
-		backgroundColor: theme.decisions.background.default.grey.hover
+		color: fr.colors.decisions.background.flat.grey.default,
+		backgroundColor: fr.colors.decisions.background.default.grey.hover
 	},
 	noBackground: {
 		textAlign: 'left',

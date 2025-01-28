@@ -1,9 +1,9 @@
 import { PayloadMedia } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { push } from '@socialgouv/matomo-next';
 import Link from 'next/link';
 import PayloadImage from '../generic/PayloadImage';
+import { tss } from 'tss-react';
 
 type Props = {
 	title: string;
@@ -63,7 +63,7 @@ export function TextWithImage(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(TextWithImage.name).create(() => ({
 	root: {
 		maxWidth: '62rem',
 		paddingTop: fr.spacing('14v'),
@@ -83,12 +83,12 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	blueBackground: {
-		backgroundColor: theme.decisions.background.alt.blueFrance.default
+		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default
 	},
 	firstSection: {
 		h2: {
 			...fr.typography[4].style,
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			paddingRight: fr.spacing('20v')
 		},
 		p: {
@@ -105,6 +105,6 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	contactButton: {
-		backgroundColor: theme.decisions.background.default.grey.default
+		backgroundColor: fr.colors.decisions.background.default.grey.default
 	}
 }));

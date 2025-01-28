@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ReactNode } from 'react';
+import { tss } from 'tss-react';
 
 type Props = {
 	title: ReactNode;
@@ -30,7 +30,7 @@ export function Questions(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Questions.name).create(() => ({
 	root: {
 		maxWidth: '62rem',
 		paddingTop: fr.spacing('14v'),
@@ -38,13 +38,13 @@ const useStyles = makeStyles()(theme => ({
 		textAlign: 'center',
 		h2: {
 			...fr.typography[4].style,
-			color: theme.decisions.background.actionHigh.blueFrance.default
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default
 		},
 		p: {
 			marginTop: fr.spacing('2v')
 		}
 	},
 	contactButton: {
-		backgroundColor: theme.decisions.background.default.grey.default
+		backgroundColor: fr.colors.decisions.background.default.grey.default
 	}
 }));

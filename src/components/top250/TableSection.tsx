@@ -1,5 +1,4 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ProcedureHeaderSort, ProceduresTable } from './table/ProceduresTable';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
@@ -8,6 +7,7 @@ import { SkipLinks } from '../generic/SkipLinks';
 import { push } from '@socialgouv/matomo-next';
 import { Edition } from '@prisma/client';
 import { sortProcedures } from '@/utils/tools';
+import { tss } from 'tss-react';
 
 type Props = {
 	procedures?: ProcedureWithFields[];
@@ -21,10 +21,13 @@ export function Top250TableSection(props: Props) {
 	const { classes, cx } = useStyles();
 	const numberPerPage = isAdmin ? 300 : 20;
 
-	const [currentSortObject, setCurrentSortObject] = useState<ProcedureHeaderSort | null>(null);
+	const [currentSortObject, setCurrentSortObject] =
+		useState<ProcedureHeaderSort | null>(null);
 	const currentSortObjectRef = useRef<ProcedureHeaderSort | null>(null);
 
-	const [savedBaseSortProcedures, setSavedBasSortProcedures] = useState<ProcedureWithFields[]>([]);
+	const [savedBaseSortProcedures, setSavedBasSortProcedures] = useState<
+		ProcedureWithFields[]
+	>([]);
 
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
@@ -32,20 +35,23 @@ export function Top250TableSection(props: Props) {
 	const displayedProceduresRef = useRef(displayedProcedures);
 
 	const onSortApply = (sortObject: ProcedureHeaderSort | null) => {
-		setCurrentSortObject(sortObject)
+		setCurrentSortObject(sortObject);
 		if (!sortObject) {
 			setDisplayedProcedures(savedBaseSortProcedures);
-			setSavedBasSortProcedures([])
+			setSavedBasSortProcedures([]);
 		} else {
 			if (!savedBaseSortProcedures.length) {
-				setSavedBasSortProcedures([...displayedProcedures])
+				setSavedBasSortProcedures([...displayedProcedures]);
 			}
 
 			const currentDisplayedProcedures = displayedProceduresRef.current;
-			const sortedProcedures = sortProcedures(procedures || [], sortObject).slice(0, currentDisplayedProcedures.length);
-			setDisplayedProcedures([...sortedProcedures])
+			const sortedProcedures = sortProcedures(
+				procedures || [],
+				sortObject
+			).slice(0, currentDisplayedProcedures.length);
+			setDisplayedProcedures([...sortedProcedures]);
 		}
-	}
+	};
 
 	const handleScroll = () => {
 		const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
@@ -117,7 +123,11 @@ export function Top250TableSection(props: Props) {
 					links={[{ text: 'Aller au pied du tableau', href: '#table-footer' }]}
 				/>
 				<div className={classes.tableDesktop}>
-					<ProceduresTable edition={edition} procedures={displayedProcedures} onSortApply={onSortApply} />
+					<ProceduresTable
+						edition={edition}
+						procedures={displayedProcedures}
+						onSortApply={onSortApply}
+					/>
 				</div>
 				<div className={classes.tableMobile}>
 					<ProceduresTableMobile
@@ -133,7 +143,7 @@ export function Top250TableSection(props: Props) {
 	return <div className={cx(classes.root)}>{table}</div>;
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Top250TableSection.name).create(() => ({
 	root: {
 		paddingBottom: fr.spacing('12v'),
 		width: '100%'

@@ -1,10 +1,10 @@
 import Button from '@codegouvfr/react-dsfr/Button';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { useEdition, useEditions, useProcedures } from '@/utils/api';
+import { useEdition, useProcedures } from '@/utils/api';
 import { useRouter } from 'next/router';
 import { Top250TableSection } from '@/components/top250/TableSection';
 import Link from 'next/link';
+import { tss } from 'tss-react';
 
 type Props = {
 	error?: string;
@@ -91,11 +91,11 @@ export default function Editions(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Editions.name).create(() => ({
 	root: {},
 	tableContainer: {
 		paddingTop: fr.spacing('6v'),
-		backgroundColor: theme.decisions.background.contrast.info.default,
+		backgroundColor: fr.colors.decisions.background.contrast.info.default,
 		['.fr-container']: {
 			maxWidth: 1440
 		}
@@ -105,10 +105,10 @@ const useStyles = makeStyles()(theme => ({
 		justifyContent: 'end',
 		button: {
 			backgroundColor:
-				theme.decisions.background.actionHigh.redMarianne.default,
+				fr.colors.decisions.background.actionHigh.redMarianne.default,
 			['&:hover']: {
 				backgroundColor:
-					theme.decisions.background.actionHigh.redMarianne.hover +
+					fr.colors.decisions.background.actionHigh.redMarianne.hover +
 					' !important'
 			}
 		}
@@ -122,7 +122,7 @@ const useStyles = makeStyles()(theme => ({
 		i: {
 			display: 'inline-block',
 			animation: 'spin 1s linear infinite;',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			['&::before']: {
 				'--icon-size': '2rem'
 			}

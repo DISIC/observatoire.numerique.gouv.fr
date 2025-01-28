@@ -1,10 +1,10 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 
 type Props = {};
 
 export function IndicatorProactive(props: Props) {
-	const { classes, cx } = useStyles();
+	const { classes } = useStyles();
 	return (
 		<div className={classes.root}>
 			<i className={fr.cx('ri-dvd-line')} />
@@ -16,7 +16,7 @@ export function IndicatorProactive(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(IndicatorProactive.name).create(() => ({
 	root: {
 		display: 'flex',
 		textAlign: 'left',

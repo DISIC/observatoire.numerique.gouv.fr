@@ -1,5 +1,5 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 
 type Props = {
 	links: {
@@ -31,7 +31,7 @@ export function SkipLinks(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(SkipLinks.name).create(() => ({
 	skipLinkList: {
 		display: 'flex',
 		flexDirection: 'row',

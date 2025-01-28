@@ -1,11 +1,11 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Head from 'next/head';
 import React from 'react';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Image from 'next/image';
 import { trpc } from '@/utils/trpc';
 import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
+import { tss } from 'tss-react';
 
 const Contact = () => {
 	const { cx, classes } = useStyles();
@@ -14,9 +14,7 @@ const Contact = () => {
 		trpc.cms.legals.useQuery();
 	const legalsTexts = legalsCMS?.data;
 
-	if (
-		isLoadingLegalsCMS
-	) {
+	if (isLoadingLegalsCMS) {
 		return (
 			<EmptyScreenZone>
 				<Loader loadingMessage="Chargement du contenu en cours..." />
@@ -48,11 +46,11 @@ const Contact = () => {
 					<div
 						className={fr.cx('fr-col-12', 'fr-col-md-6', 'fr-col-offset-lg-1')}
 					>
-						<h1 className={fr.cx('fr-mb-5v')}>{legalsTexts?.['legal-contact'].title}</h1>
+						<h1 className={fr.cx('fr-mb-5v')}>
+							{legalsTexts?.['legal-contact'].title}
+						</h1>
 						<div className={cx(classes.description)}>
-							<p>
-								{legalsTexts?.['legal-contact'].description}
-							</p>
+							<p>{legalsTexts?.['legal-contact'].description}</p>
 						</div>
 					</div>
 					<div className={cx(fr.cx('fr-col-12', 'fr-col-md-6', 'fr-col-lg-5'))}>
@@ -70,7 +68,7 @@ const Contact = () => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Contact.name).create(() => ({
 	description: {
 		p: {
 			marginBottom: '0 !important',

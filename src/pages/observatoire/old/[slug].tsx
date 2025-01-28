@@ -4,9 +4,9 @@ import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { useDepartments, useOldProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { tss } from 'tss-react';
 
 export const oldDefaultSort = 'volumetrie_value:desc';
 
@@ -77,9 +77,9 @@ export default function ObservatoireEdition() {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(ObservatoireEdition.name).create(() => ({
 	tableContainer: {
-		backgroundColor: theme.decisions.background.contrast.info.default,
+		backgroundColor: fr.colors.decisions.background.contrast.info.default,
 		['.fr-container']: {
 			maxWidth: 1440
 		}
@@ -93,7 +93,7 @@ const useStyles = makeStyles()(theme => ({
 		i: {
 			display: 'inline-block',
 			animation: 'spin 1s linear infinite;',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			['&::before']: {
 				'--icon-size': '2rem'
 			}

@@ -1,6 +1,6 @@
 import { PayloadIndicator } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 import Link from 'next/link';
 
 type Props = {
@@ -46,9 +46,9 @@ export function IndicatorsDetails(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(IndicatorsDetails.name).create(() => ({
 	root: {
-		backgroundColor: theme.decisions.background.alt.blueFrance.default
+		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default
 	},
 	container: {
 		maxWidth: '62rem',
@@ -59,7 +59,7 @@ const useStyles = makeStyles()(theme => ({
 		h2: {
 			...fr.typography[3].style,
 			textAlign: 'center',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			marginBottom: fr.spacing('6v')
 		},
 		p: {
@@ -90,13 +90,13 @@ const useStyles = makeStyles()(theme => ({
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
-				backgroundColor: theme.decisions.background.default.grey.default,
+				backgroundColor: fr.colors.decisions.background.default.grey.default,
 				width: fr.spacing('20v'),
 				height: fr.spacing('20v'),
 				borderRadius: '50%',
 				['i::before']: {
 					'--icon-size': fr.spacing('10v'),
-					color: theme.decisions.background.actionHigh.blueFrance.default
+					color: fr.colors.decisions.background.actionHigh.blueFrance.default
 				},
 				[fr.breakpoints.down('sm')]: {
 					margin: `0 auto ${fr.spacing('5v')} auto`
@@ -105,7 +105,7 @@ const useStyles = makeStyles()(theme => ({
 			['& > h3']: {
 				display: 'block',
 				...fr.typography[20].style,
-				color: theme.decisions.background.actionHigh.blueFrance.default,
+				color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 				fontWeight: 500,
 				marginTop: fr.spacing('4v'),
 				marginBottom: fr.spacing('3v'),

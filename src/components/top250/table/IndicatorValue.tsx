@@ -1,8 +1,8 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Edition, IndicatorSlug } from '@prisma/client';
 import Link from 'next/link';
 import { ReactNode, useEffect, useRef } from 'react';
+import { tss } from 'tss-react';
 
 type Props = {
 	slug: IndicatorSlug;
@@ -111,7 +111,7 @@ export function IndicatorValue(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(IndicatorValue.name).create(() => ({
 	root: {
 		fontSize: fr.typography[17].style.fontSize,
 		marginTop: fr.spacing('4v'),

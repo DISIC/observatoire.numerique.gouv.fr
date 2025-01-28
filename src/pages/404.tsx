@@ -1,9 +1,9 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import Link from 'next/link';
+import { tss } from 'tss-react';
 
 export default function NotFound() {
-	const { classes, cx } = useStyles();
+	const { classes } = useStyles();
 	return (
 		<div className={classes.root}>
 			<h1>Oups, cette page n&apos;existe pas</h1>
@@ -16,7 +16,7 @@ export default function NotFound() {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(NotFound.name).create(() => ({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',

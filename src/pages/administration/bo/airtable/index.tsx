@@ -3,15 +3,14 @@ import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import Alert from '@codegouvfr/react-dsfr/Alert';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useEffect, useRef, useState } from 'react';
-import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import Input from '@codegouvfr/react-dsfr/Input';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { LightSelect } from '@/components/generic/LightSelect';
 import { Loader } from '@/components/generic/Loader';
 import { Modal } from '@/components/generic/Modal';
 import { ISODateFormatToSimplifiedDate } from '@/utils/tools';
+import { tss } from 'tss-react';
 
 type AirtableEdition = { name: string; start_date: string; end_date: string };
 
@@ -242,7 +241,7 @@ export default function Airtable() {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Airtable.name).create(() => ({
 	root: {
 		paddingTop: fr.spacing('10v')
 	},
@@ -253,7 +252,7 @@ const useStyles = makeStyles()(theme => ({
 	},
 	tableContainer: {
 		paddingTop: fr.spacing('6v'),
-		backgroundColor: theme.decisions.background.contrast.info.default,
+		backgroundColor: fr.colors.decisions.background.contrast.info.default,
 		['.fr-container']: {
 			maxWidth: 1440
 		}

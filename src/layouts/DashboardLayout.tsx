@@ -2,9 +2,9 @@ import { CustomFooter } from '@/components/layout/CustomFooter';
 import { useAuth } from '@/providers/Auth';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Header } from '@codegouvfr/react-dsfr/Header';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
+import { tss } from 'tss-react';
 
 const PublicLayout = ({ children }: { children: ReactNode }) => {
 	const { classes } = useStyles();
@@ -90,7 +90,7 @@ const PublicLayout = ({ children }: { children: ReactNode }) => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(PublicLayout.name).create(() => ({
 	header: {
 		[fr.breakpoints.up('lg')]: {
 			['.fr-btn::before']: {

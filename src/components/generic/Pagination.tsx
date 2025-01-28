@@ -11,7 +11,6 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { tss } from 'tss-react/dsfr';
 import Link from 'next/link';
 import { RegisterLink } from '@codegouvfr/react-dsfr/next-pagesdir';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 
 type HTMLAnchorProps = DetailedHTMLProps<
 	AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -267,4 +266,4 @@ export const Pagination = memo(
 
 Pagination.displayName = 'Pagination';
 
-const useStyles = makeStyles()(() => ({}));
+const useStyles = tss.withName(Pagination.name).create(() => ({}));

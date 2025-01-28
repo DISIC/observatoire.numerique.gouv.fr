@@ -3,10 +3,10 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Alert from '@codegouvfr/react-dsfr/Alert';
 import Button from '@codegouvfr/react-dsfr/Button';
 import Input from '@codegouvfr/react-dsfr/Input';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Form, Formik } from 'formik';
 import Link from 'next/link';
 import { useState } from 'react';
+import { tss } from 'tss-react';
 import * as Yup from 'yup';
 
 export default function Demande() {
@@ -139,7 +139,7 @@ export default function Demande() {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Demande.name).create(() => ({
 	root: {},
 	formContainer: {
 		padding: `0 0 ${fr.spacing('16v')} 0`,
@@ -161,7 +161,7 @@ const useStyles = makeStyles()(theme => ({
 		h1: {
 			...fr.typography[11].style,
 			marginBottom: 0,
-			color: theme.decisions.background.actionHigh.blueFrance.default
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default
 		},
 		[fr.breakpoints.down('lg')]: {
 			paddingLeft: fr.spacing('4v'),
@@ -171,10 +171,10 @@ const useStyles = makeStyles()(theme => ({
 	lightInfoAlert: {
 		boxShadow: 'none',
 		// padding: `0 0 0 ${fr.spacing('5v')}`,
-		color: theme.decisions.background.flat.info.default,
+		color: fr.colors.decisions.background.flat.info.default,
 		marginTop: `-${fr.spacing('9v')}`,
 		// ['&::before']: {
-		// 	color: theme.decisions.background.flat.info.default,
+		// 	color: fr.colors.decisions.background.flat.info.default,
 		// 	'--icon-size': '1rem',
 		// 	margin: `2px 0 0 0`
 		// },

@@ -5,12 +5,12 @@ import {
 	type RiIconClassName
 } from '@codegouvfr/react-dsfr';
 import { Button } from '@codegouvfr/react-dsfr/Button';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { push } from '@socialgouv/matomo-next';
 import React, { ReactNode, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IndicatorSlug } from '@prisma/client';
 import { ProcedureHeaderSort } from './ProceduresTable';
+import { tss } from 'tss-react';
 
 type Props = {
 	slug: IndicatorSlug;
@@ -27,7 +27,8 @@ type Props = {
 };
 
 export function ColumnHeaderDefinition(props: Props) {
-	const { slug, icon, text, infos, isMobile, onFocus, onSort, currentSort } = props;
+	const { slug, icon, text, infos, isMobile, onFocus, onSort, currentSort } =
+		props;
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
@@ -77,26 +78,57 @@ export function ColumnHeaderDefinition(props: Props) {
 					/>
 				</span>
 			</Button>
-			{
-				onSort && (
-					<div className={cx(classes.sortContainer)}>
-						<Button priority="tertiary no outline" onClick={() => {
-							onSort(currentSort?.slug === slug && currentSort?.direction === 'desc' ? null : { slug, direction: 'desc' })
-						}} nativeButtonProps={{
+			{onSort && (
+				<div className={cx(classes.sortContainer)}>
+					<Button
+						priority="tertiary no outline"
+						onClick={() => {
+							onSort(
+								currentSort?.slug === slug && currentSort?.direction === 'desc'
+									? null
+									: { slug, direction: 'desc' }
+							);
+						}}
+						nativeButtonProps={{
 							title: `Trier les démarches par rapport à la valeur de "${text}" de manière descendante`
-						}}>
-							<i className={cx(fr.cx('ri-arrow-drop-down-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'desc' ? 'inherit' : 'gray' }} />
-						</Button>
-						<Button priority="tertiary no outline" onClick={() => {
-							onSort(currentSort?.slug === slug && currentSort?.direction === 'asc' ? null : { slug, direction: 'asc' })
-						}} nativeButtonProps={{
+						}}
+					>
+						<i
+							className={cx(fr.cx('ri-arrow-drop-down-line'))}
+							style={{
+								color:
+									currentSort?.slug === slug &&
+									currentSort?.direction === 'desc'
+										? 'inherit'
+										: 'gray'
+							}}
+						/>
+					</Button>
+					<Button
+						priority="tertiary no outline"
+						onClick={() => {
+							onSort(
+								currentSort?.slug === slug && currentSort?.direction === 'asc'
+									? null
+									: { slug, direction: 'asc' }
+							);
+						}}
+						nativeButtonProps={{
 							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`
-						}}>
-							<i className={cx(fr.cx('ri-arrow-drop-up-line'))} style={{ color: currentSort?.slug === slug && currentSort?.direction === 'asc' ? 'inherit' : 'gray' }} />
-						</Button>
-					</div>
-				)
-			}
+						}}
+					>
+						<i
+							className={cx(fr.cx('ri-arrow-drop-up-line'))}
+							style={{
+								color:
+									currentSort?.slug === slug && currentSort?.direction === 'asc'
+										? 'inherit'
+										: 'gray'
+							}}
+						/>
+					</Button>
+				</div>
+			)}
 			{openModal && (
 				<Modal
 					title={infos.title}
@@ -119,7 +151,7 @@ export function ColumnHeaderDefinition(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 	root: {
 		width: '90%',
 		height: 'auto',
@@ -131,7 +163,7 @@ const useStyles = makeStyles()(theme => ({
 		padding: fr.spacing('2v'),
 		marginTop: fr.spacing('2v'),
 		marginBottom: fr.spacing('2v'),
-		color: theme.decisions.text.actionHigh.blueFrance.default,
+		color: fr.colors.decisions.text.actionHigh.blueFrance.default,
 		fontWeight: 'bold',
 		textAlign: 'center',
 		cursor: 'pointer',
@@ -139,7 +171,7 @@ const useStyles = makeStyles()(theme => ({
 		backgroundColor: 'transparent',
 		[':hover']: {
 			backgroundColor:
-				theme.decisions.background.alt.blueFrance.default + ' !important'
+				fr.colors.decisions.background.alt.blueFrance.default + ' !important'
 		},
 		[fr.breakpoints.down('lg')]: {
 			minHeight: 0,

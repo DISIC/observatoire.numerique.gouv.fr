@@ -1,4 +1,3 @@
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
@@ -7,6 +6,7 @@ import { useRouter } from 'next/router';
 import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
 import assert from 'assert';
+import { tss } from 'tss-react';
 
 type Props = {
 	title: ReactNode;
@@ -224,7 +224,7 @@ export function Top250Header(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Top250Header.name).create(theme => ({
 	root: {
 		paddingTop: fr.spacing('20v'),
 		paddingBottom: fr.spacing('18v'),
@@ -234,7 +234,7 @@ const useStyles = makeStyles()(theme => ({
 	},
 	title: {
 		...fr.typography[11].style,
-		color: theme.decisions.background.actionHigh.blueFrance.default,
+		color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 		marginBottom: fr.spacing('3w'),
 		[fr.breakpoints.down('lg')]: {
 			fontSize: `${fr.typography[4].style.fontSize} !important`,
@@ -244,9 +244,9 @@ const useStyles = makeStyles()(theme => ({
 	search: {
 		width: '50%',
 		['input.fr-input']: {
-			backgroundColor: theme.decisions.background.alt.blueFrance.default,
+			backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
 			['::placeholder, ::-ms-input-placeholder']: {
-				color: theme.decisions.background.actionHigh.blueFrance.default
+				color: fr.colors.decisions.background.actionHigh.blueFrance.default
 			}
 		},
 		[fr.breakpoints.down('lg')]: {
@@ -273,9 +273,9 @@ const useStyles = makeStyles()(theme => ({
 		marginRight: fr.spacing('4v'),
 		marginBottom: fr.spacing('4v'),
 		textTransform: 'uppercase',
-		backgroundColor: theme.decisions.background.contrast.info.default,
+		backgroundColor: fr.colors.decisions.background.contrast.info.default,
 		['.fr-link']: {
-			color: theme.decisions.background.flat.info.default,
+			color: fr.colors.decisions.background.flat.info.default,
 			fontSize: fr.typography[18].style.fontSize,
 			backgroundImage: 'none',
 			['&:hover']: {
@@ -305,7 +305,7 @@ const useStyles = makeStyles()(theme => ({
 		gap: fr.spacing('6v'),
 		flexWrap: 'wrap',
 		[fr.breakpoints.down('md')]: {
-			border: `1px solid ${theme.decisions.border.default.grey.default}`,
+			border: `1px solid ${fr.colors.decisions.border.default.grey.default}`,
 			borderRadius: fr.spacing('1v'),
 			padding: fr.spacing('2w')
 		}

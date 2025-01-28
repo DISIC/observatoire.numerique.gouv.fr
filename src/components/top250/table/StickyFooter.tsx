@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { push } from '@socialgouv/matomo-next';
+import { tss } from 'tss-react';
 
 type Props = {
 	proceduresCount: number;
@@ -49,7 +49,7 @@ export function StickyFooter(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(StickyFooter.name).create(() => ({
 	root: {
 		position: 'sticky',
 		bottom: 0,
@@ -58,9 +58,10 @@ const useStyles = makeStyles()(theme => ({
 		justifyContent: 'space-between',
 		padding: `${fr.spacing('3v')} ${fr.spacing('8v')}`,
 		paddingLeft: 0,
-		backgroundColor: theme.decisions.background.actionLow.blueFrance.default,
+		backgroundColor:
+			fr.colors.decisions.background.actionLow.blueFrance.default,
 		[fr.breakpoints.down('lg')]: {
-			backgroundColor: theme.decisions.background.default.grey.default
+			backgroundColor: fr.colors.decisions.background.default.grey.default
 		}
 	},
 	leftSection: {
@@ -83,7 +84,7 @@ const useStyles = makeStyles()(theme => ({
 		}
 	},
 	button: {
-		backgroundColor: theme.decisions.background.default.grey.default,
+		backgroundColor: fr.colors.decisions.background.default.grey.default,
 		[fr.breakpoints.down('lg')]: { display: 'none' }
 	},
 	buttonIcon: {

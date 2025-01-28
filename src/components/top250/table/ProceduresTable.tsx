@@ -1,6 +1,5 @@
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorLabel } from './IndicatorLabel';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -12,8 +11,8 @@ import { SkipLinks } from '@/components/generic/SkipLinks';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useWindowResize } from '@/utils/hooks';
 import { Edition, IndicatorSlug } from '@prisma/client';
-import { PayloadIndicator } from '@/payload/payload-types';
 import { trpc } from '@/utils/trpc';
+import { tss } from 'tss-react';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -342,7 +341,7 @@ export function ProceduresTable(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => {
+const useStyles = tss.withName(ProceduresTable.name).create(() => {
 	const _userViewportAvailable = window.innerWidth - 40;
 	const _containerWidth =
 		_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
@@ -371,7 +370,8 @@ const useStyles = makeStyles()(theme => {
 			thead: {
 				tr: {
 					th: {
-						backgroundColor: theme.decisions.background.default.grey.default,
+						backgroundColor:
+							fr.colors.decisions.background.default.grey.default,
 						height: '100%',
 						['&:nth-of-type(-n + 5)']: {
 							width: (_containerWidth - _firstColSize) / 5
@@ -386,7 +386,8 @@ const useStyles = makeStyles()(theme => {
 						['&:first-of-type']: {
 							position: 'sticky',
 							left: 0,
-							backgroundColor: theme.decisions.background.contrast.info.default,
+							backgroundColor:
+								fr.colors.decisions.background.contrast.info.default,
 							zIndex: 11
 						},
 						['&:nth-of-type(2), &:nth-of-type(7)']: {
@@ -417,7 +418,7 @@ const useStyles = makeStyles()(theme => {
 						zIndex: 99,
 						maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 						th: {
-							borderBottom: `3px solid ${theme.decisions.background.contrast.info.default}`,
+							borderBottom: `3px solid ${fr.colors.decisions.background.contrast.info.default}`,
 							borderTopLeftRadius: _thRadius
 						},
 						['th:nth-of-type(2)']: {
@@ -433,10 +434,11 @@ const useStyles = makeStyles()(theme => {
 							minWidth: _arrowSlideSize
 						},
 						['th:first-of-type']: {
-							borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
+							borderRight: `2px solid ${fr.colors.decisions.background.contrast.info.default}`,
 							minWidth: _firstColSize,
-							backgroundColor: theme.decisions.background.default.grey.default,
-							color: theme.decisions.background.default.grey.default
+							backgroundColor:
+								fr.colors.decisions.background.default.grey.default,
+							color: fr.colors.decisions.background.default.grey.default
 						},
 						['th > button:first-of-type']: {
 							fontWeight: 500,
@@ -449,20 +451,20 @@ const useStyles = makeStyles()(theme => {
 					['&:hover']: {
 						['td:not(:first-of-type)']: {
 							borderTopColor:
-								theme.decisions.background.actionHigh.blueFrance.hover,
+								fr.colors.decisions.background.actionHigh.blueFrance.hover,
 							borderBottomColor:
-								theme.decisions.background.actionHigh.blueFrance.hover,
+								fr.colors.decisions.background.actionHigh.blueFrance.hover,
 							['&:last-child > div']: {
-								border: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+								border: `1px solid ${fr.colors.decisions.background.actionHigh.blueFrance.hover}`,
 								borderLeftWidth: 0
 							}
 						},
 						['td:first-of-type ']: {
-							borderRight: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+							borderRight: `1px solid ${fr.colors.decisions.background.actionHigh.blueFrance.hover}`,
 							['& > div']: {
-								borderLeft: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-								borderTop: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
-								borderBottom: `1px solid ${theme.decisions.background.actionHigh.blueFrance.hover}`,
+								borderLeft: `1px solid ${fr.colors.decisions.background.actionHigh.blueFrance.hover}`,
+								borderTop: `1px solid ${fr.colors.decisions.background.actionHigh.blueFrance.hover}`,
+								borderBottom: `1px solid ${fr.colors.decisions.background.actionHigh.blueFrance.hover}`,
 								borderTopLeftRadius: _thRadius,
 								borderBottomLeftRadius: _thRadius
 							}
@@ -476,18 +478,19 @@ const useStyles = makeStyles()(theme => {
 					zIndex: 9,
 					left: 0,
 					width: _firstColSize,
-					backgroundColor: theme.decisions.background.contrast.info.default,
+					backgroundColor: fr.colors.decisions.background.contrast.info.default,
 					padding: 0,
 					border: 'none',
-					borderRight: `2px solid ${theme.decisions.background.contrast.info.default}`,
+					borderRight: `2px solid ${fr.colors.decisions.background.contrast.info.default}`,
 					textAlign: 'left',
 					fontWeight: 'normal',
 					['& > div']: {
 						borderTop: '1px solid transparent',
 						borderLeft: '1px solid transparent',
 						borderBottom: '1px solid transparent',
-						borderColor: theme.decisions.background.default.grey.default,
-						backgroundColor: theme.decisions.background.default.grey.default,
+						borderColor: fr.colors.decisions.background.default.grey.default,
+						backgroundColor:
+							fr.colors.decisions.background.default.grey.default,
 						padding: fr.spacing('4v'),
 						borderTopLeftRadius: _thRadius,
 						borderBottomLeftRadius: _thRadius,
@@ -497,7 +500,7 @@ const useStyles = makeStyles()(theme => {
 					}
 				},
 				td: {
-					backgroundColor: theme.decisions.background.default.grey.default,
+					backgroundColor: fr.colors.decisions.background.default.grey.default,
 					border: '1px solid transparent',
 					position: 'relative',
 					textAlign: 'center',
@@ -515,12 +518,14 @@ const useStyles = makeStyles()(theme => {
 						padding: 0,
 						borderWidth: 0,
 						height: '100%',
-						backgroundColor: theme.decisions.background.contrast.info.default,
+						backgroundColor:
+							fr.colors.decisions.background.contrast.info.default,
 						['& > span']: {
 							display: 'block',
 							boxSizing: 'border-box',
 							height: '100%',
-							backgroundColor: theme.decisions.background.default.grey.default,
+							backgroundColor:
+								fr.colors.decisions.background.default.grey.default,
 							borderTopRightRadius: _thRadius,
 							borderBottomRightRadius: _thRadius
 						}
@@ -530,7 +535,8 @@ const useStyles = makeStyles()(theme => {
 		},
 		arrow: {
 			width: _arrowSlideSize,
-			backgroundColor: theme.decisions.background.actionHigh.blueFrance.default,
+			backgroundColor:
+				fr.colors.decisions.background.actionHigh.blueFrance.default,
 			position: 'absolute',
 			right: 0,
 			top: 0,
@@ -540,12 +546,12 @@ const useStyles = makeStyles()(theme => {
 			justifyContent: 'center',
 			borderTopRightRadius: _thRadius,
 			i: {
-				color: theme.decisions.background.default.grey.default,
+				color: fr.colors.decisions.background.default.grey.default,
 				display: 'block !important'
 			}
 		},
 		arrowTh: {
-			backgroundColor: `${theme.decisions.background.contrast.info.default} !important`,
+			backgroundColor: `${fr.colors.decisions.background.contrast.info.default} !important`,
 			width: _arrowSlideSize,
 			position: 'relative'
 		},
@@ -558,7 +564,7 @@ const useStyles = makeStyles()(theme => {
 			i: {
 				display: 'inline-block',
 				animation: 'spin 1s linear infinite;',
-				color: theme.decisions.background.actionHigh.blueFrance.default,
+				color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 				['&::before']: {
 					'--icon-size': '2rem'
 				}

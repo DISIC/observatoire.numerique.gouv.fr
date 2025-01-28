@@ -3,7 +3,6 @@ import { PayloadIndicator } from '@/payload/payload-types';
 import { getDisplayedVolume } from '@/utils/tools';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { Edition, Field, IndicatorColor, IndicatorSlug } from '@prisma/client';
 import { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -12,6 +11,7 @@ import { IndicatorLabel } from './IndicatorLabel';
 import { IndicatorProactive } from './IndicatorProactive';
 import { IndicatorValue } from './IndicatorValue';
 import { IndicatorContent } from './IndicatorContent';
+import { tss } from 'tss-react';
 
 type Props = {
 	procedure: ProcedureWithFields;
@@ -139,10 +139,10 @@ export function ProcedureMobileCard(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(ProcedureMobileCard.name).create(() => ({
 	root: {
-		backgroundColor: theme.decisions.background.default.grey.default,
-		border: `1px solid ${theme.decisions.border.default.blueFrance.default}`,
+		backgroundColor: fr.colors.decisions.background.default.grey.default,
+		border: `1px solid ${fr.colors.decisions.border.default.blueFrance.default}`,
 		borderTopLeftRadius: fr.spacing('2v'),
 		borderTopRightRadius: fr.spacing('2v'),
 		padding: fr.spacing('2v'),
@@ -172,8 +172,9 @@ const useStyles = makeStyles()(theme => ({
 	toogle: {
 		display: 'flex',
 		justifyContent: 'center',
-		backgroundColor: theme.decisions.background.actionHigh.blueFrance.default,
-		color: theme.decisions.background.default.grey.default,
+		backgroundColor:
+			fr.colors.decisions.background.actionHigh.blueFrance.default,
+		color: fr.colors.decisions.background.default.grey.default,
 		position: 'absolute',
 		width: 'calc(100% + 2px)',
 		bottom: 0,

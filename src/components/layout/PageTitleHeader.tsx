@@ -1,6 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { ReactNode } from 'react';
+import { tss } from 'tss-react';
 
 type Props = {
 	title: string | ReactNode;
@@ -18,15 +18,15 @@ export function PageTitleHeader(props: Props) {
 	);
 }
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(PageTitleHeader.name).create(() => ({
 	root: {
-		backgroundColor: theme.decisions.background.alt.blueFrance.default,
+		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
 		padding: `${fr.spacing('18v')} 0`,
 		textAlign: 'center',
 		h1: {
 			...fr.typography[11].style,
 			marginBottom: 0,
-			color: theme.decisions.background.actionHigh.blueFrance.default
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default
 		}
 	}
 }));

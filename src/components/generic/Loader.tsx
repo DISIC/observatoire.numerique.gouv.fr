@@ -1,5 +1,5 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 
 type Props = {
 	loadingMessage?: string;
@@ -19,7 +19,7 @@ export const Loader = (props: Props) => {
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(Loader.name).create(() => ({
 	loader: {
 		padding: fr.spacing('30v'),
 		display: 'flex',
@@ -29,7 +29,7 @@ const useStyles = makeStyles()(theme => ({
 		i: {
 			display: 'inline-block',
 			animation: 'spin 1s linear infinite;',
-			color: theme.decisions.background.actionHigh.blueFrance.default,
+			color: fr.colors.decisions.background.actionHigh.blueFrance.default,
 			['&::before']: {
 				'--icon-size': '2rem'
 			}

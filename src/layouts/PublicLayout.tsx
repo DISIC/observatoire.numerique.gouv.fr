@@ -3,9 +3,8 @@ import { CustomFooter } from '@/components/layout/CustomFooter';
 import { SocialNetworks } from '@/components/layout/SocialNetworks';
 import { useAuth } from '@/providers/Auth';
 import { fr } from '@codegouvfr/react-dsfr';
-import { Display } from '@codegouvfr/react-dsfr/Display';
 import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { tss } from 'tss-react';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -85,12 +84,11 @@ const PublicLayout = (props: Props) => {
 			</main>
 			<SocialNetworks />
 			<CustomFooter />
-			<Display />
 		</>
 	);
 };
 
-const useStyles = makeStyles()(theme => ({
+const useStyles = tss.withName(PublicLayout.name).create(() => ({
 	header: {
 		[fr.breakpoints.up('lg')]: {
 			['.fr-btn::before']: {
