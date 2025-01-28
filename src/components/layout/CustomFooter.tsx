@@ -13,6 +13,7 @@ export function CustomFooter() {
 	return (
 		<>
 			<Footer
+				id="footer"
 				accessibility="partially compliant"
 				accessibilityLinkProps={{
 					href: '/accessibilite'

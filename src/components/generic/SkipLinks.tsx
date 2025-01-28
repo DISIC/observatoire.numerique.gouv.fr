@@ -21,13 +21,15 @@ export function SkipLinks(props: Props) {
 	}
 
 	return (
-		<ul className={classes.skipLinkList}>
-			{links.map((link, index) => (
-				<li key={index}>
-					<a href={link.href}>{link.text}</a>
-				</li>
-			))}
-		</ul>
+		<nav>
+			<ul className={classes.skipLinkList}>
+				{links.map((link, index) => (
+					<li key={index}>
+						<a href={link.href}>{link.text}</a>
+					</li>
+				))}
+			</ul>
+		</nav>
 	);
 }
 
