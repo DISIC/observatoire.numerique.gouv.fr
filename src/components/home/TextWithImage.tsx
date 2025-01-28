@@ -27,6 +27,8 @@ export function TextWithImage(props: Props) {
 	} = props;
 	const { classes, cx } = useStyles();
 
+	const isExternalLink = buttonLink.startsWith('http');
+
 	return (
 		<div className={cx(blueBackground ? classes.blueBackground : {})}>
 			<div
@@ -41,6 +43,10 @@ export function TextWithImage(props: Props) {
 					<p>{description}</p>
 					<Link
 						href={buttonLink}
+						target={isExternalLink ? '_blank' : undefined}
+						title={
+							isExternalLink ? `${buttonText}, nouvelle fenêtre` : undefined
+						}
 						onClick={() => {
 							push(['trackEvent', 'home', 'formDemand']);
 						}}

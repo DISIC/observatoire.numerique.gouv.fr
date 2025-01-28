@@ -18,7 +18,7 @@ export function SocialNetworks(props: Props) {
 							href="https://twitter.com/Numerique_Gouv"
 							target="_blank"
 							rel="noreferrer"
-							title="Compte Twitter"
+							title="Compte Twitter, nouvelle fenêtre"
 							className={fr.cx('ri-twitter-fill')}
 						>
 							Accéder au compte Twitter
@@ -29,7 +29,7 @@ export function SocialNetworks(props: Props) {
 							href="https://www.linkedin.com/company/direction-interministerielle-du-numerique-dinum/"
 							target="_blank"
 							rel="noreferrer"
-							title="Compte LinkedIn"
+							title="Compte LinkedIn, nouvelle fenêtre"
 							className={fr.cx('ri-linkedin-box-fill')}
 						>
 							Accéder au compte LinkedIn
@@ -40,7 +40,7 @@ export function SocialNetworks(props: Props) {
 							href="https://youtube.com"
 							target="_blank"
 							rel="noreferrer"
-							title="Compte Youtube"
+							title="Compte Youtube, nouvelle fenêtre"
 							className={fr.cx('ri-youtube-fill')}
 						>
 							Accéder au compte Youtube

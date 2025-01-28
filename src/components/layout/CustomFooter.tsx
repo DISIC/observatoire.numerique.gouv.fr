@@ -37,7 +37,8 @@ export function CustomFooter() {
 					{
 						text: 'Code source',
 						linkProps: {
-							href: 'https://github.com/DISIC/observatoire.numerique.gouv.fr'
+							href: 'https://github.com/DISIC/observatoire.numerique.gouv.fr',
+							title: 'Code source, nouvelle fenêtre'
 						}
 					}
 				]}

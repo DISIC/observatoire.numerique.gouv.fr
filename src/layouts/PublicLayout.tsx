@@ -42,7 +42,8 @@ const PublicLayout = (props: Props) => {
 			iconId: 'ri-user-star-line',
 			linkProps: {
 				href: 'https://jedonnemonavis.numerique.gouv.fr',
-				target: '_blank'
+				target: '_blank',
+				title: 'Je donne mon avis, nouvelle fenêtre'
 			},
 			text: 'Je donne mon avis'
 		}
