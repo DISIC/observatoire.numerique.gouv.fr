@@ -1,5 +1,4 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
 import { IndicatorColor } from '@prisma/client';
 import { tss } from 'tss-react';
 
