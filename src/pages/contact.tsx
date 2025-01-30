@@ -54,12 +54,13 @@ const Contact = () => {
 						</div>
 					</div>
 					<div className={cx(fr.cx('fr-col-12', 'fr-col-md-6', 'fr-col-lg-5'))}>
+						{/* @ts-ignore -- Intentionally leaving alt undefined (for decorative image) */}
 						<Image
 							className={cx(classes.contactImage)}
 							src={'/assets/mailto.svg'}
-							alt=""
 							width={300}
 							height={300}
+							aria-hidden
 						/>
 					</div>
 				</div>

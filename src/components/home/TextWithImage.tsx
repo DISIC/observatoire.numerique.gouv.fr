@@ -56,7 +56,7 @@ export function TextWithImage(props: Props) {
 					</Link>
 				</div>
 				<div className={classes.secondSection}>
-					<PayloadImage image={image} width={327} height={255} />
+					<PayloadImage image={image} width={327} height={255} isDecorative />
 				</div>
 			</div>
 		</div>

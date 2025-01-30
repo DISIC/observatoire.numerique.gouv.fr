@@ -34,7 +34,7 @@ function IndicatorsInfosCard(props: CardProps) {
 	return (
 		<div className={classes.explanation}>
 			<div className={classes.explanationTitle}>
-				<PayloadImage image={image} />
+				<PayloadImage image={image} isDecorative />
 				<span>{title}</span>
 			</div>
 			<p>{description}</p>
