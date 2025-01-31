@@ -58,11 +58,17 @@ export function Top250Header(props: Props) {
 	);
 
 	const editionOptions =
-		editions?.map((edition, index) => ({
-			label: edition.name,
-			value: index !== 0 ? edition.id : 'current',
-			group: edition.name.split(' ')[1]
-		})) || [];
+		editions?.map((edition, index) => {
+			const editionYearFromName = edition.name.split(' ')[1];
+			const group = editionYearFromName
+				? editionYearFromName
+				: new Date(edition.end_date).getFullYear().toString();
+			return {
+				label: edition.name,
+				value: index !== 0 ? edition.id : 'current',
+				group
+			};
+		}) || [];
 
 	const oldEditionsOptions =
 		oldEditions.map(edition => ({
