@@ -42,6 +42,7 @@ export default function Observatoire() {
 					onSearch={value => setSearch(value)}
 					departments={departments}
 					setSelectedDepartment={setSelectedDepartment}
+					nbResults={procedures ? procedures.length : null}
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">
