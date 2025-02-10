@@ -12,8 +12,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { tss } from 'tss-react';
 
-type TabsType = keyof Pick<Help, 'goals' | 'criterias' | 'indicators'>;
-
 export default function AideObservatoire() {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
@@ -22,36 +20,22 @@ export default function AideObservatoire() {
 
 	const helpTexts = helpCMS?.data;
 
-	const [selectedTabId, setSelectedTabId] = useState<TabsType>('goals');
+	const [selectedTabId, setSelectedTabId] = useState<number | null>(null);
 
-	const tabs: { tabId: TabsType; label: string }[] = [
-		{
-			tabId: 'goals',
-			label: helpTexts?.goals.title || 'Objectifs et méthodologie'
-		},
-		{
-			tabId: 'criterias',
-			label: helpTexts?.criterias.title || "Critères d'entrée des services"
-		},
-		{
-			tabId: 'indicators',
-			label: helpTexts?.indicators.title || 'Indicateurs de qualité'
-		}
-	];
-
-	const handleTabChange = (slug: TabsType) => {
-		setSelectedTabId(slug);
-		router.push(`?tab=${slug}`, undefined, { shallow: true });
+	const handleTabChange = (tabId: number) => {
+		router.push(`?tab=${tabId}`, undefined, { shallow: true });
 	};
 
 	useEffect(() => {
 		const { tab } = router.query;
-		if (tab && tabs.some(tabItem => tabItem.tabId === tab)) {
-			setSelectedTabId(tab as TabsType);
+		if (tab && !isNaN(parseInt(tab as string))) {
+			setSelectedTabId(parseInt(tab as string));
+		} else {
+			setSelectedTabId(0);
 		}
 	}, [router.query]);
 
-	if (isLoadingHelpCms || !helpTexts) {
+	if (isLoadingHelpCms || !helpTexts || selectedTabId === null) {
 		return (
 			<EmptyScreenZone>
 				<Loader loadingMessage="Chargement du contenu en cours..." />
@@ -59,29 +43,32 @@ export default function AideObservatoire() {
 		);
 	}
 
-	const getTabToDisplay = () => {
-		switch (selectedTabId) {
-			case 'goals':
-				return <HelpGoals {...helpTexts.goals} />;
-			case 'criterias':
-				return <HelpCriterias {...helpTexts.criterias} />;
-			case 'indicators':
-			default:
-				return <HelpIndicators {...helpTexts.indicators} />;
+	const tabs = [
+		{
+			tabId: 'goals',
+			label: helpTexts?.goals.title || 'Objectifs et méthodologie',
+			isDefault: selectedTabId === 0,
+			content: <HelpGoals {...helpTexts.goals} />
+		},
+		{
+			tabId: 'criterias',
+			label: helpTexts?.criterias.title || "Critères d'entrée des services",
+			isDefault: selectedTabId === 1,
+			content: <HelpCriterias {...helpTexts.criterias} />
+		},
+		{
+			tabId: 'indicators',
+			label: helpTexts?.indicators.title || 'Indicateurs de qualité',
+			isDefault: selectedTabId === 2,
+			content: <HelpIndicators {...helpTexts.indicators} />
 		}
-	};
+	];
 
 	return (
 		<div className={classes.root}>
 			<PageTitleHeader title={helpTexts.header.title} />
 			<div className={cx(fr.cx('fr-container'), classes.tabsContainer)}>
-				<Tabs
-					selectedTabId={selectedTabId}
-					tabs={tabs}
-					onTabChange={e => handleTabChange(e as TabsType)}
-				>
-					{getTabToDisplay()}
-				</Tabs>
+				<Tabs tabs={tabs} onTabChange={e => handleTabChange(e.tabIndex)} />
 			</div>
 		</div>
 	);
