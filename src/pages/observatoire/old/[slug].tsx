@@ -45,6 +45,7 @@ export default function ObservatoireEdition() {
 					}}
 					departments={departments}
 					setSelectedDepartment={setSelectedDepartment}
+					nbResults={procedures ? procedures.length : null}
 					old
 				/>
 			</div>
