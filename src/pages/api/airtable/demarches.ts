@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { table } from '../../../utils/airtable';
+import { table } from '../../../utils/grist';
 import { ProcedureWithFields } from '../procedures/types';
 import { Field } from '@prisma/client';
 import {

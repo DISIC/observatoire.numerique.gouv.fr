@@ -1,4 +1,4 @@
-import { tableDemande } from '@/utils/airtable';
+import { tableDemande } from '@/utils/grist';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
