@@ -134,7 +134,7 @@ export function LoginForm() {
 				'Content-Type': 'application/json'
 			}
 		});
-		router.push('/administration/bo/airtable');
+		router.push('/administration/bo/grist');
 	};
 
 	const { mutate: verifyCredentials } =
