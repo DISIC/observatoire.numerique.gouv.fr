@@ -371,7 +371,7 @@ export const indicatorLevels: Record<
 			position: 1
 		},
 		{
-			label: 'FranceConnect+',
+			label: 'FranceConnect +',
 			color: 'blue',
 			description: 'Le service est équipé du dispositif FranceConnect+.',
 			position: 2
