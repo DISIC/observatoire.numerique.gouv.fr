@@ -64,9 +64,9 @@ export const getFieldsFromGristProcedure = (
 					id: `preview-${indicator.id}`,
 					slug: indicator.slug,
 					label: indicatorLevel.label.replace(/X{1,5}/g, value),
-					value,
+					value: value !== null ? value.toString() : value,
 					color: indicatorLevel.color,
-					noBackground: indicatorLevel.noBackground || null,
+					noBackground: indicatorLevel.noBackground || false,
 					procedureId: 'preview'
 				}
 			}
@@ -78,9 +78,9 @@ export const getFieldsFromGristProcedure = (
 				id: `preview-${indicator.id}`,
 				slug: indicator.slug,
 				label: value,
-				value: indicator.slug === 'online' ? gristProcedure[grist_field_names.link] : value,
+				value: indicator.slug === 'online' ? gristProcedure[grist_field_names.link] : value ? value.toString() : value,
 				color: indicatorLevel.color,
-				noBackground: indicatorLevel.noBackground || null,
+				noBackground: indicatorLevel.noBackground || false,
 				procedureId: 'preview'
 			}
 		}

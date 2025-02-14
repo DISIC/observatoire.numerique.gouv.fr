@@ -16,8 +16,8 @@ export const grist = router({
 			.map((edition: any) => ({
 				id: edition['id'],
 				name: edition['Nom_Edition'],
-				start_date: edition['Date_Debut'],
-				end_date: edition['Date_Fin']
+				start_date: edition['Date_Debut'] * 1000,
+				end_date: edition['Date_Fin'] * 1000
 			}));
 
 		return { data: editions };
