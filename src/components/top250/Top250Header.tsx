@@ -15,6 +15,7 @@ type Props = {
 	old?: boolean;
 	departments: string[];
 	setSelectedDepartment: Dispatch<SetStateAction<string>>;
+	nbResults: number | null;
 };
 
 const oldEditions = [
@@ -41,7 +42,8 @@ export function Top250Header(props: Props) {
 		onSearch,
 		old,
 		departments,
-		setSelectedDepartment
+		setSelectedDepartment,
+		nbResults
 	} = props;
 	const router = useRouter();
 	const { id: edition_id, slug: old_edition_id } = router.query as {
@@ -225,6 +227,15 @@ export function Top250Header(props: Props) {
 				>
 					Appliquer les filtres
 				</Button>
+				<p role="status" className={fr.cx('fr-sr-only')}>
+					{nbResults !== null && (
+						<>
+							{nbResults
+								? `${nbResults} résultats`
+								: 'Aucune démarche trouvée pour cette recherche...'}
+						</>
+					)}
+				</p>
 			</form>
 		</div>
 	);
