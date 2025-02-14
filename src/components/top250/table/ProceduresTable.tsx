@@ -300,7 +300,7 @@ export function ProceduresTable(props: Props) {
 									return (
 										<td key={`${p.title} ${indicator.label}`}>
 											<IndicatorLabel {...field} />
-											{field.value && !isNotOnline && (
+											{!!field.value && !isNotOnline && (
 												<IndicatorValue
 													slug={field.slug}
 													value={field.value}
