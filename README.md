@@ -37,3 +37,9 @@ Lancer le frontend en local
 ```
 yarn dev
 ```
+
+Utilisateur admin seed
+
+| Email          | Rôle    | Compte activé | Ancien compte observatoire | Mot de passe |
+| -------------- | ------- | ------------- | -------------------------- | ------------ |
+| admin@test.loc | Porteur | Non           | Non                        | admin123     |

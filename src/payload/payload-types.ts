@@ -116,7 +116,19 @@ export interface PayloadMedia {
  */
 export interface PayloadIndicator {
   id: string;
-  slug: string;
+  slug:
+    | 'online'
+    | 'satisfaction'
+    | 'handicap'
+    | 'dlnuf'
+    | 'usage'
+    | 'simplicity'
+    | 'help_reachable'
+    | 'help_efficient'
+    | 'help_used'
+    | 'uptime'
+    | 'performance'
+    | 'auth';
   label: string;
   description?: string | null;
   description_obj?: {
@@ -168,7 +180,8 @@ export interface PayloadIndicatorLevel {
   description: string;
   indicator: string | PayloadIndicator;
   position: number;
-  noBackround?: boolean | null;
+  threshold?: number | null;
+  noBackground?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -299,7 +312,8 @@ export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
   description?: T;
   indicator?: T;
   position?: T;
-  noBackround?: T;
+  threshold?: T;
+  noBackground?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -54,7 +54,7 @@ export const IndicatorContent = (props: Props) => {
 										<IndicatorLabel
 											label={level.label}
 											color={level.color}
-											noBackground={level.noBackround}
+											noBackground={level.noBackground}
 										/>
 									</span>{' '}
 									<span>{level.description}</span>
