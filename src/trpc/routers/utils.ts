@@ -78,7 +78,7 @@ export const getFieldsFromGristProcedure = (
 				id: `preview-${indicator.id}`,
 				slug: indicator.slug,
 				label: value,
-				value,
+				value: indicator.slug === 'online' ? gristProcedure[grist_field_names.link] : value,
 				color: indicatorLevel.color,
 				noBackground: indicatorLevel.noBackground || null,
 				procedureId: 'preview'
