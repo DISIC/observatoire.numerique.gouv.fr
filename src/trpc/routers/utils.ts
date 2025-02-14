@@ -26,7 +26,14 @@ export const grist_field_names = {
 		auth: 'FranceConnect'
 	}
 };
-const grist_field_names_percentages = [grist_field_names.indicators.usage, grist_field_names.indicators.handicap, grist_field_names.indicators.uptime,]
+
+const grist_field_names_percentages = [
+	grist_field_names.indicators.usage,
+	grist_field_names.indicators.handicap,
+	grist_field_names.indicators.uptime,
+	grist_field_names.indicators.help_used,
+	grist_field_names.indicators.help_reachable
+]
 
 export type GristFields = typeof grist_field_names;
 
@@ -46,7 +53,11 @@ export const getFieldsFromGristProcedure = (
 		if (!isNaN(value)) {
 			const indicatorLevel = indicatorLevels.filter(
 				(level) => level.threshold !== undefined && level.threshold !== null
-			).sort((a, b) => (b.threshold ?? 10000) - (a.threshold ?? 10000)).find((level) => (level.threshold ?? 10000) <= value);
+			).sort(
+				(a, b) => (b.threshold ?? 10000) - (a.threshold ?? 10000)
+			).find(
+				(level) => (level.threshold ?? 10000) <= value
+			);
 
 			if (indicatorLevel) {
 				return {

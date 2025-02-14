@@ -18,7 +18,7 @@ export const indicatorLevels: Record<
 			color: 'green',
 			description:
 				'La totalité de la démarche est réalisable en ligne sur l’intégralité du territoire.',
-			position: 1
+			position: 1,
 		},
 
 		{
@@ -50,22 +50,25 @@ export const indicatorLevels: Record<
 	],
 	satisfaction: [
 		{
-			label: '8 / 10',
+			label: 'X / 10',
 			color: 'green',
 			description: 'Moyenne des notes au dessus de 8/10.',
-			position: 1
+			position: 1,
+			threshold: 8
 		},
 		{
-			label: '5 / 10',
+			label: 'X / 10',
 			color: 'yellow',
 			description: 'Moyenne des notes entre 5 et 8/10.',
-			position: 2
+			position: 2,
+			threshold: 5
 		},
 		{
-			label: '1 / 10',
+			label: 'X / 10',
 			color: 'red',
 			description: 'Moyenne inférieure à 5/10.',
-			position: 3
+			position: 3,
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -88,20 +91,23 @@ export const indicatorLevels: Record<
 			label: 'Oui',
 			color: 'green',
 			description: 'Le service est 100% conforme au RGAA.',
-			position: 1
+			position: 1,
+			threshold: 100
 		},
 		{
 			label: 'Partiel',
 			color: 'yellow',
 			description: 'Entre 50% et 99% de conformité au RGAA.',
-			position: 2
+			position: 2,
+			threshold: 50
 		},
 		{
 			label: 'Non',
 			color: 'red',
 			description:
 				'Moins de 50% de conformité au RGAA, ou aucune déclaration d’accessibilité, ou une déclaration ne respectant pas les critères ennoncés ci-dessus.',
-			position: 3
+			position: 3,
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -117,21 +123,24 @@ export const indicatorLevels: Record<
 			color: 'green',
 			description:
 				'Un effort très faible est demandé aux usagers : aucune ou une seule information est requise.',
-			position: 1
+			position: 1,
+			threshold: 0
 		},
 		{
 			label: 'Partiel',
 			color: 'yellow',
 			description:
 				'Un effort modéré est demandé aux usagers : 2 à 4 informations sont requises.',
-			position: 2
+			position: 2,
+			threshold: 2
 		},
 		{
 			label: 'Faible',
 			color: 'red',
 			description:
 				'Un effort important est demandé aux usagers : plus de 4 informations sont requises.',
-			position: 3
+			position: 3,
+			threshold: 5
 		},
 		{
 			label: 'Non applicable',
@@ -149,10 +158,11 @@ export const indicatorLevels: Record<
 	],
 	usage: [
 		{
-			label: '50%',
+			label: 'XX%',
 			color: 'gray',
 			description: "Taux d'utilisation de la version numérique de la démarche.",
-			position: 1
+			position: 1,
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -164,24 +174,26 @@ export const indicatorLevels: Record<
 		}
 	],
 	simplicity: [
-		// 8 / 10
 		{
-			label: '8 / 10',
+			label: 'X / 10',
 			color: 'green',
 			description: 'Moyenne des notes au dessus de 8/10.',
-			position: 1
+			position: 1,
+			threshold: 8
 		},
 		{
-			label: '5 / 10',
+			label: 'X / 10',
 			color: 'yellow',
 			description: 'Moyenne des notes entre 5 et 8/10.',
-			position: 2
+			position: 2,
+			threshold: 5
 		},
 		{
-			label: '1 / 10',
+			label: 'X / 10',
 			color: 'red',
 			description: 'Moyenne inférieure à 5/10.',
-			position: 3
+			position: 3,
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -204,19 +216,22 @@ export const indicatorLevels: Record<
 			label: "XX %",
 			color: "green",
 			description: "85% des usagers ou plus ont réussi à joindre l'administration en la contactant",
-			position: 1
+			position: 1,
+			threshold: 85
 		},
 		{
 			label: "XX %",
 			color: "yellow",
 			description: "Entre 70% (inclus) et 85% (exclu) des usagers ont réussi à joindre l'administration en la contactant",
-			position: 2
+			position: 2,
+			threshold: 70
 		},
 		{
 			label: "XX %",
 			color: "red",
 			description: "Moins de 70% des usagers ont réussi à joindre l'administration en la contactant",
-			position: 3
+			position: 3,
+			threshold: 0
 		},
 		{
 			label: "À venir",
@@ -238,19 +253,22 @@ export const indicatorLevels: Record<
 			label: "X / 10",
 			color: "green",
 			description: "La moyenne des notes est supérieure ou égale à 8/10",
-			position: 1
+			position: 1,
+			threshold: 8
 		},
 		{
 			label: "X / 10",
 			color: "yellow",
 			description: "La moyenne des notes est comprise entre 5/10 (inclus) et 8/10 (exclu)",
-			position: 2
+			position: 2,
+			threshold: 5
 		},
 		{
 			label: "X / 10",
 			color: "red",
 			description: "La moyenne des notes est inférieure à 5/10",
-			position: 3
+			position: 3,
+			threshold: 0
 		},
 		{
 			label: "À venir",
@@ -269,10 +287,11 @@ export const indicatorLevels: Record<
 	],
 	help_used: [
 		{
-			label: '50%',
+			label: 'XX%',
 			color: 'gray',
 			description: "Pourcentage d'usagers ayant eu besoin d'être accompagnés.",
-			position: 1
+			position: 1,
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -287,19 +306,22 @@ export const indicatorLevels: Record<
 			label: 'Optimal',
 			color: 'green',
 			description: 'Taux de disponibilité supérieur à 99.9%.',
-			position: 1
+			position: 1,
+			threshold: 99.9
 		},
 		{
 			label: 'Partiel',
 			color: 'yellow',
 			description: 'Taux de disponibilité compris entre 98.5% et 99.9%.',
-			position: 2
+			position: 2,
+			threshold: 98.5
 		},
 		{
 			label: 'Faible',
 			color: 'red',
 			description: 'Taux de disponibilité inférieur à 98.5%.',
-			position: 3
+			position: 3,
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -315,19 +337,22 @@ export const indicatorLevels: Record<
 			label: 'Optimal',
 			color: 'green',
 			description: 'Temps de chargement des pages inférieur à 0.4s.',
-			position: 1
+			position: 1,
+			threshold: 0
 		},
 		{
 			label: 'Partiel',
 			color: 'yellow',
 			description: 'Temps de chargement des pages compris entre 0.4s et 0.8s.',
-			position: 2
+			position: 2,
+			threshold: 400
 		},
 		{
 			label: 'Faible',
 			color: 'red',
 			description: 'Temps de chargement des pages supérieur à 0.8s.',
-			position: 3
+			position: 3,
+			threshold: 800
 		},
 		{
 			label: 'À venir',
