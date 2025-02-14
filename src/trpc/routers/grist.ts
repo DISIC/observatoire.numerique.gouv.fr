@@ -42,7 +42,7 @@ export const grist = router({
 				administration: gristProcedure[grist_field_names.administration],
 				sousorg: gristProcedure[grist_field_names.sousorg],
 				ministere: gristProcedure[grist_field_names.ministere],
-				airtable_identifier: gristProcedure[grist_field_names.id],
+				grist_identifier: gristProcedure[grist_field_names.id],
 				volume: gristProcedure[grist_field_names.volume],
 				noJdma: gristProcedure[grist_field_names.noJdma],
 				fields: getFieldsFromGristProcedure(gristProcedure, indicators)

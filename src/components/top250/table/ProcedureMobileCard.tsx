@@ -52,7 +52,7 @@ export function ProcedureMobileCard(props: Props) {
 						value={field.value}
 						noJdma={procedure.noJdma}
 						label={field.label}
-						procedureId={procedure.airtable_identifier}
+						procedureId={procedure.grist_identifier}
 						procedureTitle={procedure.title}
 						edition={edition}
 					/>

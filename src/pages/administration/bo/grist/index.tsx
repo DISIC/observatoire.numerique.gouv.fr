@@ -11,21 +11,27 @@ import { Loader } from '@/components/generic/Loader';
 import { Modal } from '@/components/generic/Modal';
 import { ISODateFormatToSimplifiedDate } from '@/utils/tools';
 import { tss } from 'tss-react';
-
-type GristEdition = { name: string; start_date: string; end_date: string };
+import { GristEdition } from '@/trpc/routers/grist';
+import { trpc } from '@/utils/trpc';
 
 export default function Grist() {
 	const { classes, cx } = useStyles();
 
-	const [procedures, setProcdeures] = useState<ProcedureWithFields[]>([]);
-	const [editions, setEditions] = useState<GristEdition[]>([]);
-	const [selectedEdition, setSelectedEdition] = useState<GristEdition | null>(
-		null
-	);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [selectedEdition, setSelectedEdition] =
+		useState<GristEdition | null>(null);
 	const [isPublishing, setIsPublishing] = useState<boolean>(false);
 	const [published, setIsPublished] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+	const { data: editionsQuery, isLoading: isLoadingEditions } =
+		trpc.grist.getEditions.useQuery();
+	const editions = editionsQuery?.data || [];
+
+	const { data: proceduresQuery, isLoading: isLoadingProcedures } =
+		trpc.grist.getProcedures.useQuery({ edition: selectedEdition?.id || 0 }, { enabled: !!selectedEdition });
+	const procedures = proceduresQuery?.data || [];
+
+	const isLoading = isLoadingEditions || isLoadingProcedures;
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const startDateRef = useRef<HTMLInputElement>(null);
@@ -38,34 +44,11 @@ export default function Grist() {
 	const defaultEditionName =
 		yearMonthFr.charAt(0).toUpperCase() + yearMonthFr.slice(1);
 
-	const getEditionsFromGrist = async () => {
-		const res = await fetch('/api/grist/editions');
-		const json = await res.json();
-
-		setEditions(json.data);
-		setSelectedEdition(json.data[0]);
-	};
-
-	const getProceduresFromGrist = async () => {
-		if (selectedEdition) {
-			setIsLoading(true);
-			const res = await fetch(
-				`/api/grist/demarches?edition=${selectedEdition.name}`
-			);
-			const json = await res.json();
-
-			setProcdeures(json.data);
-			setIsLoading(false);
+	useEffect(() => {
+		if (editions.length > 0) {
+			setSelectedEdition(editions[0]);
 		}
-	};
-
-	useEffect(() => {
-		getEditionsFromGrist();
-	}, []);
-
-	useEffect(() => {
-		if (!!editions.length && !!selectedEdition) getProceduresFromGrist();
-	}, [editions, selectedEdition]);
+	}, [editions])
 
 	const publish = async () => {
 		const editionName = !!inputRef.current?.value
@@ -110,9 +93,9 @@ export default function Grist() {
 	return (
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
-				<h2>Prévisualisation à partir du Grist</h2>
+				<h2>Prévisualisation à partir de Grist</h2>
 				<LightSelect
-					label="Édition cible du Grist"
+					label="Édition cible de Grist"
 					id="selecteur-editions"
 					options={editions.map(e => ({
 						label: e.name,
@@ -127,16 +110,16 @@ export default function Grist() {
 				/>
 				<p>
 					Cet espace d&apos;administration vous permet de publier une nouvelle
-					édition du top 250 des démarches en direct depuis les données du
-					Grist. Sélectionnez l&apos;édition cible du Grist, puis prévisualisez
-					les données de celle-ci. Vous pouvez ainsi publier des éditions dans
-					l&apos;Observatoire à la volée en cliquant sur &quot;Publier
-					l&apos;édition&quot;. Les éditions créées sont accessibles depuis
-					l&apos;onglet &quot;Mes éditions&quot;.
+					édition du top 250 des démarches en direct depuis les données de
+					Grist. Sélectionnez l&apos;édition cible de Grist, puis
+					prévisualisez les données de celle-ci. Vous pouvez ainsi publier des
+					éditions dans l&apos;Observatoire à la volée en cliquant sur
+					&quot;Publier l&apos;édition&quot;. Les éditions créées sont
+					accessibles depuis l&apos;onglet &quot;Mes éditions&quot;.
 				</p>
 			</div>
 			{isLoading || !procedures.length ? (
-				<Loader loadingMessage="Chargement des données à partir du Grist..." />
+				<Loader loadingMessage="Chargement des données à partir de Grist..." />
 			) : (
 				<>
 					{published && (

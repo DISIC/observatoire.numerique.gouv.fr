@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
 		!!jwtCookie
 	) {
 		return NextResponse.redirect(
-			new URL('/administration/bo/airtable', request.url)
+			new URL('/administration/bo/grist', request.url)
 		);
 	} else if (
 		request.nextUrl.pathname.startsWith('/administration/bo') &&

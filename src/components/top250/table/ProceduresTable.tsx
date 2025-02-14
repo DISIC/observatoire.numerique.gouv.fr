@@ -306,7 +306,7 @@ export function ProceduresTable(props: Props) {
 													value={field.value}
 													label={field.label}
 													noJdma={p.noJdma}
-													procedureId={p.airtable_identifier}
+													procedureId={p.grist_identifier}
 													procedureTitle={p.title}
 													edition={edition}
 													onLinkFocus={() => {

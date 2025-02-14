@@ -3,7 +3,7 @@ import { PayloadIndicator, PayloadIndicatorLevel } from "@/payload/payload-types
 
 export const grist_field_names = {
 	edition: 'Lien_Vers_Statistiques_Edition_AT_',
-	id: 'id',
+	id: 'Ref_Demarche',
 	link: 'URL_Demarche',
 	title: 'Nom_demarche_AT_',
 	administration: 'Administration_AT_',
