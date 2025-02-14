@@ -70,14 +70,14 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description: 'La démarche ne permet pas encore le recueil des avis.',
 			position: 4
 		},
 		{
 			label: 'Nombre d’avis insuffisants',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description:
 				'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
 			position: 5
@@ -106,7 +106,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description: 'La prise en compte du handicap n’est pas encore évaluée.',
 			position: 4
 		}
@@ -142,7 +142,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description: 'Le système de notation est en cours de réalisation.',
 			position: 5
 		}
@@ -157,7 +157,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description:
 				"Le taux d'utilisation de la version numérique de la démarche est en cours d'analyse.",
 			position: 2
@@ -186,14 +186,14 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description: 'La démarche ne permet pas encore le recueil des avis.',
 			position: 4
 		},
 		{
 			label: 'Nombre d’avis insuffisants',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description:
 				'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
 			position: 5
@@ -223,14 +223,14 @@ export const indicatorLevels: Record<
 			color: "gray",
 			description: "La démarche ne permet pas encore le recueil des avis",
 			position: 4,
-			noBackround: false
+			noBackground: false
 		},
 		{
 			label: "Nombre d'avis insuffisant",
 			color: "gray",
 			description: "Le service n'a pas recueilli le minimum de 100 avis pour que le taux soit représentatif",
 			position: 5,
-			noBackround: false
+			noBackground: false
 		}
 	],
 	help_efficient: [
@@ -257,14 +257,14 @@ export const indicatorLevels: Record<
 			color: "gray",
 			description: "La démarche ne permet pas encore le recueil des avis",
 			position: 4,
-			noBackround: false
+			noBackground: false
 		},
 		{
 			label: "Nombre d'avis insuffisant",
 			color: "gray",
 			description: "Le service n'a pas recueilli le minimum de 100 avis pour que le taux soit représentatif",
 			position: 5,
-			noBackround: false
+			noBackground: false
 		}
 	],
 	help_used: [
@@ -277,7 +277,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description: "Le niveau d'autonomie n'est pas encore évalué.",
 			position: 2
 		}
@@ -304,7 +304,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description:
 				"Le taux de disponibilité de la démarche n'est pas encore évalué.",
 			position: 4
@@ -332,7 +332,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description:
 				"Le temps de chargement des pages de la démarche n'est pas encore évalué.",
 			position: 4
@@ -368,7 +368,7 @@ export const indicatorLevels: Record<
 		{
 			label: 'À venir',
 			color: 'gray',
-			noBackround: true,
+			noBackground: true,
 			description:
 				"L'implémentation de l'authentification FranceConnect n'est pas encore évaluée.",
 			position: 5

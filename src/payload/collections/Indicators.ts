@@ -5,6 +5,21 @@ import {
 } from '@payloadcms/richtext-lexical';
 import type { CollectionConfig } from 'payload';
 
+enum IndicatorSlug {
+	online = 'online',
+	satisfaction = 'satisfaction',
+	handicap = 'handicap',
+	dlnuf = 'dlnuf',
+	usage = 'usage',
+	simplicity = 'simplicity',
+	help_reachable = 'help_reachable',
+	help_efficient = 'help_efficient',
+	help_used = 'help_used',
+	uptime = 'uptime',
+	performance = 'performance',
+	auth = 'auth'
+}
+
 export const Indicators: CollectionConfig = {
 	slug: 'payload-indicators',
 	defaultPopulate: {
@@ -32,9 +47,9 @@ export const Indicators: CollectionConfig = {
 	fields: [
 		{
 			name: 'slug',
-			type: 'text',
+			type: 'select',
 			required: true,
-			unique: true
+			options: Object.values(IndicatorSlug)
 		},
 		{
 			name: 'label',

@@ -11,26 +11,31 @@ import { Loader } from '@/components/generic/Loader';
 import { Modal } from '@/components/generic/Modal';
 import { ISODateFormatToSimplifiedDate } from '@/utils/tools';
 import { tss } from 'tss-react';
-
-type AirtableEdition = { name: string; start_date: string; end_date: string };
+import { GristEdition } from '@/trpc/routers/grist';
+import { trpc } from '@/utils/trpc';
 
 export default function Airtable() {
 	const { classes, cx } = useStyles();
 
-	const [procedures, setProcdeures] = useState<ProcedureWithFields[]>([]);
-	const [editions, setEditions] = useState<AirtableEdition[]>([]);
 	const [selectedEdition, setSelectedEdition] =
-		useState<AirtableEdition | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+		useState<GristEdition | null>(null);
 	const [isPublishing, setIsPublishing] = useState<boolean>(false);
 	const [published, setIsPublished] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+	const { data: editionsQuery, isLoading: isLoadingEditions } =
+		trpc.grist.getEditions.useQuery();
+	const editions = editionsQuery?.data || [];
+
+	const { data: proceduresQuery, isLoading: isLoadingProcedures } =
+		trpc.grist.getProcedures.useQuery({ edition: selectedEdition?.id || 0 }, { enabled: !!selectedEdition });
+	const procedures = proceduresQuery?.data || [];
+
+	const isLoading = isLoadingEditions || isLoadingProcedures;
+
 	const inputRef = useRef<HTMLInputElement>(null);
 	const startDateRef = useRef<HTMLInputElement>(null);
 	const endDateRef = useRef<HTMLInputElement>(null);
-
-	console.log(selectedEdition);
 
 	const yearMonthFr = new Date().toLocaleString('fr-FR', {
 		month: 'long',
@@ -39,34 +44,11 @@ export default function Airtable() {
 	const defaultEditionName =
 		yearMonthFr.charAt(0).toUpperCase() + yearMonthFr.slice(1);
 
-	const getEditionsFromAirtable = async () => {
-		const res = await fetch('/api/airtable/editions');
-		const json = await res.json();
-
-		setEditions(json.data);
-		setSelectedEdition(json.data[0]);
-	};
-
-	const getProceduresFromAirtable = async () => {
-		if (selectedEdition) {
-			setIsLoading(true);
-			const res = await fetch(
-				`/api/airtable/demarches?edition=${selectedEdition.name}`
-			);
-			const json = await res.json();
-
-			setProcdeures(json.data);
-			setIsLoading(false);
+	useEffect(() => {
+		if (editions.length > 0) {
+			setSelectedEdition(editions[0]);
 		}
-	};
-
-	useEffect(() => {
-		getEditionsFromAirtable();
-	}, []);
-
-	useEffect(() => {
-		if (!!editions.length && !!selectedEdition) getProceduresFromAirtable();
-	}, [editions, selectedEdition]);
+	}, [editions])
 
 	const publish = async () => {
 		const editionName = !!inputRef.current?.value

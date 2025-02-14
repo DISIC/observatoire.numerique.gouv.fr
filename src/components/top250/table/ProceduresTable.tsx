@@ -137,13 +137,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				  scrollRef.current.scrollLeft -
-				  _firstColSize -
-				  20
+				scrollRef.current.scrollLeft -
+				_firstColSize -
+				20
 				: _containerWidth -
-				  _firstColSize -
-				  _arrowSlideSize +
-				  scrollRef.current.scrollLeft;
+				_firstColSize -
+				_arrowSlideSize +
+				scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -266,7 +266,7 @@ export function ProceduresTable(props: Props) {
 									);
 									const field = p.fields.find(f => f.slug === indicator.slug);
 
-									if (!field) return <>No</>;
+									if (!field) return <td>-</td>;
 
 									if (isProactive && (index === 1 || index === 5))
 										return (

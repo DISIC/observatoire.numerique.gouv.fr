@@ -7,7 +7,8 @@ export const IndicatorLevels: CollectionConfig = {
 		color: true,
 		description: true,
 		position: true,
-		noBackround: true
+		noBackground: true,
+		threshold: true
 	},
 	labels: {
 		singular: "Niveau d'indicateur",
@@ -64,7 +65,12 @@ export const IndicatorLevels: CollectionConfig = {
 			}
 		},
 		{
-			name: 'noBackround',
+			name: 'threshold',
+			type: 'number',
+			label: 'Seuil (à partirt de)',
+		},
+		{
+			name: 'noBackground',
 			type: 'checkbox',
 			label: "Pas d'arrière-plan"
 		}
