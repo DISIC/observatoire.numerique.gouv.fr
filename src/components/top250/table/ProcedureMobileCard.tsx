@@ -37,7 +37,7 @@ export function ProcedureMobileCard(props: Props) {
 
 	const displayIndicator = (field: Field) => {
 		if (isToCome && field.slug !== 'online')
-			return <IndicatorLabel color="gray" label="À venir" noBackground />;
+			return <IndicatorLabel color="gray" label="À venir" />;
 
 		if (isNotOnline && field.slug !== 'online')
 			return <IndicatorLabel color="gray" label="-" noBackground />;

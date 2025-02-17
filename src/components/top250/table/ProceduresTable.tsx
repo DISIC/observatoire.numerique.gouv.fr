@@ -285,7 +285,6 @@ export function ProceduresTable(props: Props) {
 												<IndicatorLabel
 													color="gray"
 													label="À venir"
-													noBackground
 												/>
 											</td>
 										);
