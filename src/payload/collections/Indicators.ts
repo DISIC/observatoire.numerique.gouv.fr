@@ -112,7 +112,7 @@ export const Indicators: CollectionConfig = {
 		},
 		{
 			name: 'levels',
-			label: "Niveaux d'évaluation",
+			label: "Légende",
 			type: 'join',
 			collection: 'payload-indicator-levels',
 			on: 'indicator',
