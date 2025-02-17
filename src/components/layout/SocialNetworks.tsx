@@ -37,7 +37,7 @@ export function SocialNetworks(props: Props) {
 					</li>
 					<li>
 						<a
-							href="https://youtube.com"
+							href="https://www.youtube.com/c/designgouv"
 							target="_blank"
 							rel="noreferrer"
 							title="Compte Youtube, nouvelle fenêtre"
