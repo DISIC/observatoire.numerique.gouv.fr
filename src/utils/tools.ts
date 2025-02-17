@@ -81,11 +81,11 @@ export const sortProcedures = (
 			bField?.label ??
 			'0';
 
-		if (aField?.slug === 'handicap' && aField.value === null) {
+		if (aField?.slug === 'handicap' && aField.label === 'Non' && aField.value === null) {
 			valueA = '0';
 		}
 
-		if (bField?.slug === 'handicap' && bField.value === null) {
+		if (bField?.slug === 'handicap' && bField.label === 'Non' && bField.value === null) {
 			valueB = '0';
 		}
 
