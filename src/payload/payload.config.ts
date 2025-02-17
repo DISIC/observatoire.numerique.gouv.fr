@@ -13,6 +13,7 @@ import { s3Storage } from '@payloadcms/storage-s3';
 import { Indicators } from './collections/Indicators';
 import { CMSHelp } from './globals/cms/Help';
 import { CMSLegals } from './globals/cms/Legals';
+import { CMSFooter } from './globals/cms/Footer';
 import IndicatorLevels from './collections/IndicatorLevels';
 
 const filename = fileURLToPath(import.meta.url);
@@ -26,7 +27,7 @@ export default buildConfig({
 		}
 	},
 	collections: [Admins, Media, Indicators, IndicatorLevels],
-	globals: [CMSHome, CMSHelp, CMSLegals],
+	globals: [CMSHome, CMSHelp, CMSLegals, CMSFooter],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',
 	typescript: {

@@ -1,7 +1,12 @@
 import Footer from '@codegouvfr/react-dsfr/Footer';
 import { headerFooterDisplayItem } from '@codegouvfr/react-dsfr/Display';
+import { trpc } from '@/utils/trpc';
 
 export function CustomFooter() {
+	const { data: footerCMS, isLoading: isLoadingFooterCMS } =
+		trpc.cms.footer.useQuery();
+	const footerTexts = footerCMS?.data;
+
 	const brandTop = (
 		<>
 			RÉPUBLIQUE
@@ -19,7 +24,7 @@ export function CustomFooter() {
 					href: '/accessibilite'
 				}}
 				brandTop={brandTop}
-				contentDescription="Vos démarches essentielles est un service proposé par l'équipe design des services numériques (DesignGouv) de la direction interministérielle du numérique (DINUM)."
+				contentDescription={footerTexts?.description}
 				homeLinkProps={{
 					href: '/',
 					title: 'Accueil - Vos démarches essentielles'

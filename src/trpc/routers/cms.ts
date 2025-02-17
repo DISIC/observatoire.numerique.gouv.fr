@@ -1,6 +1,4 @@
-import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
-import { Home } from '@/payload/payload-types';
 
 export const cms = router({
 	home: publicProcedure.query(async ({ ctx, input }) => {
@@ -19,6 +17,15 @@ export const cms = router({
 
 		return {
 			data: helpCms
+		};
+	}),
+	footer: publicProcedure.query(async ({ ctx, input }) => {
+		const footerCms = await ctx.payload.findGlobal({
+			slug: 'footer'
+		});
+
+		return {
+			data: footerCms
 		};
 	}),
 	legals: publicProcedure.query(async ({ ctx, input }) => {

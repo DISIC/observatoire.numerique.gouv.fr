@@ -40,11 +40,13 @@ export interface Config {
     home: Home;
     help: Help;
     legals: Legal;
+    footer: Footer;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
     help: HelpSelect<false> | HelpSelect<true>;
     legals: LegalsSelect<false> | LegalsSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
   user: PayloadAdmin & {
@@ -558,6 +560,16 @@ export interface Legal {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  description: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
@@ -709,6 +721,16 @@ export interface LegalsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
