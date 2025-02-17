@@ -29,12 +29,6 @@ export const IndicatorContent = (props: Props) => {
 					dangerouslySetInnerHTML={{ __html: indicator.description_html }}
 				/>
 			)}
-			{isFull && indicator.moreInfos && (
-				<div className={cx(classes.moreInfos)}>
-					{indicator.moreInfosTitle && <b>{indicator.moreInfosTitle}</b>}
-					<p>{indicator.moreInfos}</p>
-				</div>
-			)}
 			<p>
 				<b>Légende</b>
 			</p>
@@ -62,6 +56,12 @@ export const IndicatorContent = (props: Props) => {
 							);
 						})}
 			</ul>
+			{isFull && indicator.moreInfos && (
+				<div className={cx(classes.moreInfos)}>
+					{indicator.moreInfosTitle && <b>{indicator.moreInfosTitle}</b>}
+					<p>{indicator.moreInfos}</p>
+				</div>
+			)}
 		</div>
 	);
 };
