@@ -3,12 +3,56 @@ import AccordionWithIcon from '../generic/AccordionWithIcon';
 import { IndicatorContent } from '../top250/table/IndicatorContent';
 import { Help } from '@/payload/payload-types';
 import { tss } from 'tss-react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useRef } from 'react';
 
 type Props = Help['indicators'];
 
 export function HelpIndicators(props: Props) {
 	const { keyIndicators, additionnalIndicators } = props;
 	const { classes, cx } = useStyles();
+
+	const isFirstLoad = useRef(true);
+
+	const router = useRouter();
+
+	const handleAccordionChange = useCallback((indicatorId: string, isOpen: boolean) => {
+		const currentQuery = { ...router.query };
+
+		if (isOpen) {
+			router.replace(
+				{
+					pathname: router.pathname,
+					query: { ...currentQuery, indicator: indicatorId }
+				},
+				undefined,
+				{ shallow: true }
+			);
+		} else if (currentQuery.indicator === indicatorId) {
+			delete currentQuery.indicator;
+			router.replace(
+				{
+					pathname: router.pathname,
+					query: currentQuery
+				},
+				undefined,
+				{ shallow: true }
+			);
+		}
+	}, [router]);
+
+	useEffect(() => {
+		if (isFirstLoad.current && router.query.indicator) {
+			if (typeof router.query.indicator === 'string') {
+				const element = document.getElementById(`indicator-${router.query.indicator}`);
+				if (element) {
+					element.scrollIntoView({ behavior: 'smooth' });
+				}
+			}
+
+			isFirstLoad.current = false;
+		}
+	}, [router.query]);
 
 	return (
 		<div className={classes.root}>
@@ -24,14 +68,19 @@ export function HelpIndicators(props: Props) {
 						keyIndicators.keyIndicatorsList.map(({ indicator }, id) => {
 							if (typeof indicator === 'string') return;
 							return (
-								<AccordionWithIcon
-									key={indicator.id}
-									className={classes.accordion}
-									icon={indicator.icon as RiIconClassName}
-									label={indicator.label}
-								>
-									<IndicatorContent indicator={indicator} isFull />
-								</AccordionWithIcon>
+								<div id={`indicator-${indicator.id}`} key={indicator.id}>
+									<AccordionWithIcon
+										className={classes.accordion}
+										icon={indicator.icon as RiIconClassName}
+										label={indicator.label}
+										defaultExpanded={router.query.indicator === indicator.id}
+										onExpandedChange={(expanded) => {
+											handleAccordionChange(indicator.id, expanded)
+										}}
+									>
+										<IndicatorContent indicator={indicator} isFull />
+									</AccordionWithIcon>
+								</div>
 							);
 						})}
 				</div>
@@ -49,14 +98,19 @@ export function HelpIndicators(props: Props) {
 							({ indicator }, id) => {
 								if (typeof indicator === 'string') return;
 								return (
-									<AccordionWithIcon
-										key={indicator.id}
-										className={classes.accordion}
-										icon={indicator.icon as RiIconClassName}
-										label={indicator.label}
-									>
-										<IndicatorContent indicator={indicator} isFull />
-									</AccordionWithIcon>
+									<div id={`indicator-${indicator.id}`} key={indicator.id}>
+										<AccordionWithIcon
+											className={classes.accordion}
+											icon={indicator.icon as RiIconClassName}
+											label={indicator.label}
+											defaultExpanded={router.query.indicator === indicator.id}
+											onExpandedChange={(expanded) => {
+												handleAccordionChange(indicator.id, expanded)
+											}}
+										>
+											<IndicatorContent indicator={indicator} isFull />
+										</AccordionWithIcon>
+									</div>
 								);
 							}
 						)}
