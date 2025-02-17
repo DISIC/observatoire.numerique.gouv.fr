@@ -154,7 +154,7 @@ export function ProceduresTable(props: Props) {
 
 		const hasReachedMaxScroll =
 			scrollLeft >=
-			scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+			scrollRef.current.scrollWidth - scrollRef.current.clientWidth - 1;
 
 		setIsRight(hasReachedMaxScroll);
 	};
@@ -344,7 +344,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 	const _userViewportAvailable = window.innerWidth - 40;
 	const _containerWidth =
 		_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
-	const _firstColSize = _containerWidth * 0.28;
+	const _firstColSize = _containerWidth * 0.25;
 	const _arrowSlideSize = 40;
 	const _thRadius = 10;
 
@@ -372,10 +372,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 						backgroundColor:
 							fr.colors.decisions.background.default.grey.default,
 						height: '100%',
-						['&:nth-of-type(-n + 5)']: {
-							width: (_containerWidth - _firstColSize) / 5
-						},
-						['&:nth-of-type(n + 6)']: {
+						['&:nth-of-type(n + 2)']: {
 							width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 						},
 						['& > button']: {
@@ -389,7 +386,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 								fr.colors.decisions.background.contrast.info.default,
 							zIndex: 11
 						},
-						['&:nth-of-type(2), &:nth-of-type(7)']: {
+						['&:nth-of-type(2), &:nth-of-type(8)']: {
 							borderTopLeftRadius: _thRadius
 						},
 						['&:last-child']: {
@@ -423,10 +420,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 						['th:nth-of-type(2)']: {
 							borderTopLeftRadius: 0
 						},
-						['th:nth-of-type(-n + 5):not(:first-of-type)']: {
-							minWidth: (_containerWidth - _firstColSize) / 5
-						},
-						['th:nth-of-type(n + 6)']: {
+						['th:nth-of-type(n + 2)']: {
 							minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 						},
 						['th:last-child']: {
@@ -503,10 +497,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 					border: '1px solid transparent',
 					position: 'relative',
 					textAlign: 'center',
-					['&:nth-of-type(-n + 4)']: {
-						width: (_containerWidth - _firstColSize) / 5
-					},
-					['&:nth-of-type(n + 5)']: {
+					['&:nth-of-type(n + 1)']: {
 						width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 					},
 					['&:last-child']: {
@@ -537,7 +528,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			backgroundColor:
 				fr.colors.decisions.background.actionHigh.blueFrance.default,
 			position: 'absolute',
-			right: 0,
+			right: -1,
 			top: 0,
 			height: '100%',
 			display: 'flex',
