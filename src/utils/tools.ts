@@ -71,20 +71,31 @@ export const sortProcedures = (
 	if (!sortConfig) return procedures;
 
 	return [...procedures].sort((a, b) => {
-		let valueA = a.fields.find((f) => f.slug === sortConfig.slug)?.value ??
-			a.fields.find((f) => f.slug === sortConfig.slug)?.label ??
+		const aField = a.fields.find((f) => f.slug === sortConfig.slug)
+		const bField = b.fields.find((f) => f.slug === sortConfig.slug)
+
+		let valueA = aField?.value ??
+			aField?.label ??
 			'0';
-		let valueB = b.fields.find((f) => f.slug === sortConfig.slug)?.value ??
-			b.fields.find((f) => f.slug === sortConfig.slug)?.label ??
+		let valueB = bField?.value ??
+			bField?.label ??
 			'0';
 
+		if (aField?.slug === 'handicap' && aField.value === null) {
+			valueA = '0';
+		}
+
+		if (bField?.slug === 'handicap' && bField.value === null) {
+			valueB = '0';
+		}
+
 		if (valueA === 'NaN' || valueA.startsWith('http')) {
-			valueA = a.fields.find((f) => f.slug === sortConfig.slug)?.label ??
+			valueA = aField?.label ??
 				'0';
 		}
 
 		if (valueB === 'NaN' || valueB.startsWith('http')) {
-			valueB = b.fields.find((f) => f.slug === sortConfig.slug)?.label ??
+			valueB = bField?.label ??
 				'0';
 		}
 
