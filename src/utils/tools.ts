@@ -1,5 +1,7 @@
-import { ProcedureHeaderSort } from "@/components/top250/table/ProceduresTable";
-import { ProcedureWithFields } from "@/pages/api/procedures/types";
+import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { format, isSameMonth, isSameYear } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -11,8 +13,9 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
-					}`;
+				return `${millions}.${Math.floor(units / 100)} million${
+					millions > 1 ? 's' : ''
+				}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}
@@ -62,8 +65,24 @@ export function ISODateFormatToSimplifiedDate(inputDate: string) {
 	return formattedDate;
 }
 
-const IGNORED_VALUES = ["Non applicable", "Nombre d'avis insuffisant", "En attente", 'À venir', "0", "–"] as string[];
-const SPECIAL_VALUES = ["Faible", "Non", "Partiel", "Déploiement local", "Oui", "Optimal", "FranceConnect", "FranceConnect+"];
+const IGNORED_VALUES = [
+	'Non applicable',
+	"Nombre d'avis insuffisant",
+	'En attente',
+	'À venir',
+	'0',
+	'–'
+] as string[];
+const SPECIAL_VALUES = [
+	'Faible',
+	'Non',
+	'Partiel',
+	'Déploiement local',
+	'Oui',
+	'Optimal',
+	'FranceConnect',
+	'FranceConnect+'
+];
 export const sortProcedures = (
 	procedures: ProcedureWithFields[],
 	sortConfig: ProcedureHeaderSort | null
@@ -71,37 +90,45 @@ export const sortProcedures = (
 	if (!sortConfig) return procedures;
 
 	return [...procedures].sort((a, b) => {
-		const aField = a.fields.find((f) => f.slug === sortConfig.slug)
-		const bField = b.fields.find((f) => f.slug === sortConfig.slug)
+		const aField = a.fields.find(f => f.slug === sortConfig.slug);
+		const bField = b.fields.find(f => f.slug === sortConfig.slug);
 
-		let valueA = aField?.value ??
-			aField?.label ??
-			'0';
-		let valueB = bField?.value ??
-			bField?.label ??
-			'0';
+		let valueA = aField?.value ?? aField?.label ?? '0';
+		let valueB = bField?.value ?? bField?.label ?? '0';
 
-		if (aField?.slug === 'handicap' && aField.label === 'Non' && aField.value === null) {
+		if (
+			aField?.slug === 'handicap' &&
+			aField.label === 'Non' &&
+			aField.value === null
+		) {
 			valueA = '0';
 		}
 
-		if (bField?.slug === 'handicap' && bField.label === 'Non' && bField.value === null) {
+		if (
+			bField?.slug === 'handicap' &&
+			bField.label === 'Non' &&
+			bField.value === null
+		) {
 			valueB = '0';
 		}
 
 		if (valueA === 'NaN' || valueA.startsWith('http')) {
-			valueA = aField?.label ??
-				'0';
+			valueA = aField?.label ?? '0';
 		}
 
 		if (valueB === 'NaN' || valueB.startsWith('http')) {
-			valueB = bField?.label ??
-				'0';
+			valueB = bField?.label ?? '0';
 		}
 
 		// Si les deux valeurs sont ignorées, on les trie selon leur ordre dans IGNORED_VALUES
-		if (IGNORED_VALUES.includes(valueA as string) && IGNORED_VALUES.includes(valueB as string)) {
-			return IGNORED_VALUES.indexOf(valueA as string) - IGNORED_VALUES.indexOf(valueB as string);
+		if (
+			IGNORED_VALUES.includes(valueA as string) &&
+			IGNORED_VALUES.includes(valueB as string)
+		) {
+			return (
+				IGNORED_VALUES.indexOf(valueA as string) -
+				IGNORED_VALUES.indexOf(valueB as string)
+			);
 		}
 
 		// Si une seule valeur est ignorée, elle va toujours à la fin
@@ -109,20 +136,33 @@ export const sortProcedures = (
 		if (IGNORED_VALUES.includes(valueB as string)) return -1;
 
 		// Si les deux valeurs sont spéciales, on les trie selon leur ordre dans SPECIAL_VALUES
-		if (SPECIAL_VALUES.includes(valueA as string) && SPECIAL_VALUES.includes(valueB as string)) {
-			return sortConfig.direction === 'asc' ? SPECIAL_VALUES.indexOf(valueA as string) - SPECIAL_VALUES.indexOf(valueB as string) : SPECIAL_VALUES.indexOf(valueB as string) - SPECIAL_VALUES.indexOf(valueA as string);
+		if (
+			SPECIAL_VALUES.includes(valueA as string) &&
+			SPECIAL_VALUES.includes(valueB as string)
+		) {
+			return sortConfig.direction === 'asc'
+				? SPECIAL_VALUES.indexOf(valueA as string) -
+						SPECIAL_VALUES.indexOf(valueB as string)
+				: SPECIAL_VALUES.indexOf(valueB as string) -
+						SPECIAL_VALUES.indexOf(valueA as string);
 		}
 
 		const valueToCompareA = isNaN(Number(valueA)) ? valueA : Number(valueA);
 		const valueToCompareB = isNaN(Number(valueB)) ? valueB : Number(valueB);
 
-		if (typeof valueToCompareA === 'number' && typeof valueToCompareB === 'number') {
+		if (
+			typeof valueToCompareA === 'number' &&
+			typeof valueToCompareB === 'number'
+		) {
 			return sortConfig.direction === 'asc'
 				? valueToCompareA - valueToCompareB
 				: valueToCompareB - valueToCompareA;
 		}
 
-		if (typeof valueToCompareA === 'string' && typeof valueToCompareB === 'string') {
+		if (
+			typeof valueToCompareA === 'string' &&
+			typeof valueToCompareB === 'string'
+		) {
 			return sortConfig.direction === 'asc'
 				? valueToCompareA.localeCompare(valueToCompareB)
 				: valueToCompareB.localeCompare(valueToCompareA);
@@ -132,4 +172,37 @@ export const sortProcedures = (
 			? String(valueToCompareA).localeCompare(String(valueToCompareB))
 			: String(valueToCompareB).localeCompare(String(valueToCompareA));
 	});
+};
+
+/**
+ * Formats a date range in French showing months and years when necessary
+ * @param {Date} startDate - The start date
+ * @param {Date} endDate - The end date
+ * @returns {string} Formatted date range like "de juillet à septembre 2023" or "de décembre 2022 à février 2023"
+ */
+export const formatDateRangeFR = (startDate: Date, endDate: Date) => {
+	if (!(startDate instanceof Date && endDate instanceof Date)) {
+		throw new Error('Invalid date objects');
+	}
+
+	// Format months in lowercase French
+	const startMonth = format(startDate, 'MMMM', { locale: fr }).toLowerCase();
+	const endMonth = format(endDate, 'MMMM', { locale: fr }).toLowerCase();
+
+	// Get years
+	const startYear = format(startDate, 'yyyy');
+	const endYear = format(endDate, 'yyyy');
+
+	// Same month and year
+	if (isSameMonth(startDate, endDate)) {
+		return `En ${startMonth}`;
+	}
+
+	// Same year but different months
+	if (isSameYear(startDate, endDate)) {
+		return `De ${startMonth} à ${endMonth}`;
+	}
+
+	// Different years
+	return `De ${startMonth} ${startYear} à ${endMonth} ${endYear}`;
 };

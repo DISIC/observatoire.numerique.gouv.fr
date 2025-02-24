@@ -1,6 +1,5 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
-import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { useDepartments, useEditions, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
@@ -32,12 +31,8 @@ export default function Observatoire() {
 		<>
 			<div className={fr.cx('fr-container')}>
 				<Top250Header
-					title={
-						<>
-							Suivi trimestriel de la qualité de
-							<br /> vos démarches essentielles
-						</>
-					}
+					title="Suivi trimestriel de la qualité de vos démarches essentielles"
+					subtitle={`Édition de ${currentEdition?.name.toLowerCase()}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
 					departments={departments}
@@ -46,9 +41,6 @@ export default function Observatoire() {
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">
-				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<PreHeader sort={sort} setSort={setSort} />
-				</div>
 				{isLoading || !procedures ? (
 					<div className={cx(classes.loader)}>
 						<div>

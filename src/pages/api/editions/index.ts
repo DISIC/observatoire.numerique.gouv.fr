@@ -15,9 +15,19 @@ export async function getEditions() {
 }
 
 export async function getEditionById(id: string) {
-	console.log(id);
 	const edition = await prisma.edition.findUnique({
 		where: { id }
+	});
+	return edition;
+}
+
+export async function getCurrentEdition() {
+	const edition = await prisma.edition.findFirst({
+		orderBy: [
+			{
+				created_at: 'desc'
+			}
+		]
 	});
 	return edition;
 }
@@ -62,8 +72,13 @@ export default async function handler(
 	if (req.method === 'GET') {
 		const { id } = req.query;
 		if (id) {
-			const edition = await getEditionById(id.toString());
-			res.status(200).json(edition);
+			if (id === 'current') {
+				const edition = await getCurrentEdition();
+				return res.status(200).json(edition);
+			} else {
+				const edition = await getEditionById(id.toString());
+				res.status(200).json(edition);
+			}
 		} else {
 			const editions = await getEditions();
 			res.status(200).json(editions);
