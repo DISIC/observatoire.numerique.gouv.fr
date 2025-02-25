@@ -1,5 +1,6 @@
 import { ProcedureWithFields } from "@/pages/api/procedures/types";
 import { PayloadIndicator, PayloadIndicatorLevel } from "@/payload/payload-types";
+import { IndicatorColor } from "@prisma/client";
 
 export const grist_field_names = {
 	edition: 'Lien_Vers_Statistiques_Edition_AT_',
@@ -45,6 +46,23 @@ export const getFieldsFromGristProcedure = (
 		const indicatorLevels = ((indicator.levels?.docs || []) as PayloadIndicatorLevel[]);
 		const gristColumnName = grist_field_names.indicators[indicator.slug as keyof GristFields['indicators']]
 		let value = gristProcedure[gristColumnName]
+		if (gristProcedure['Nom_demarche_AT_'] === "Attestation de paiement d'indemnités journalières") {
+			console.log(indicator.slug)
+			console.log(value)
+			console.log('----')
+		}
+
+		if (value === null) {
+			return {
+				id: `preview-${indicator.id}`,
+				slug: indicator.slug,
+				label: '-',
+				value: null,
+				color: 'gray' as IndicatorColor,
+				noBackground: true,
+				procedureId: 'preview'
+			}
+		}
 
 		if (grist_field_names_percentages.includes(gristColumnName)) {
 			value = (value * 100).toFixed(1).replace(/\.0$/, '');
