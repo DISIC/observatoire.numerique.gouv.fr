@@ -7,17 +7,17 @@ export async function getDepartments(kind: 'base' | 'old' = 'base') {
 	const departments =
 		kind === 'old'
 			? await prisma.oldProcedure.groupBy({
-					by: ['ministere'],
-					orderBy: {
-						ministere: 'asc'
-					}
-			  })
+				by: ['ministere'],
+				orderBy: {
+					ministere: 'asc'
+				}
+			})
 			: await prisma.procedure.groupBy({
-					by: ['ministere'],
-					orderBy: {
-						ministere: 'asc'
-					}
-			  });
+				by: ['ministere'],
+				orderBy: {
+					ministere: 'asc'
+				}
+			});
 	return departments.map(department => department.ministere);
 }
 
@@ -25,14 +25,6 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (['POST', 'PUT', 'DELETE'].includes(req.method || '')) {
-		const jwtCookie =
-			req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
-		if (!jwtCookie) {
-			return res.status(401).json({ msg: 'You shall not pass.' });
-		}
-	}
-
 	if (req.method === 'GET') {
 		const { kind } = req.query;
 		const departments = await getDepartments(kind as 'base' | 'old');

@@ -1,5 +1,8 @@
 import { ProcedureHeaderSort } from "@/components/top250/table/ProceduresTable";
 import { ProcedureWithFields } from "@/pages/api/procedures/types";
+import { NextApiRequest } from "next";
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -133,3 +136,43 @@ export const sortProcedures = (
 			: String(valueToCompareB).localeCompare(String(valueToCompareA));
 	});
 };
+
+export function getPayloadJWTSecret(payloadSecret: string): string {
+	return crypto
+		.createHash("sha256")
+		.update(payloadSecret)
+		.digest("hex")
+		.slice(0, 32);
+}
+
+interface AuthOptions {
+	protectedMethods?: string[];
+}
+export async function verifyAuth(req: NextApiRequest, options: AuthOptions = {}): Promise<boolean> {
+	const protectedMethods = options.protectedMethods || ['POST', 'PUT', 'DELETE'];
+
+	if (!protectedMethods.includes(req.method || '')) {
+		return true;
+	}
+
+	const jwtCookie = req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
+
+	if (!jwtCookie) {
+		return false;
+	}
+
+	try {
+		const secret = process.env.PAYLOAD_SECRET;
+		if (!secret) {
+			throw new Error('PAYLOAD_SECRET is not defined');
+		}
+
+		const derivedSecret = getPayloadJWTSecret(secret);
+		const decoded = jwt.verify(jwtCookie, derivedSecret, {
+			algorithms: ["HS256"],
+		});
+		return typeof decoded === 'object' && decoded !== null;
+	} catch (error) {
+		return false;
+	}
+}

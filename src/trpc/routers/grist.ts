@@ -1,14 +1,13 @@
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { api } from '@/utils/grist';
 import { z } from 'zod';
-import { publicProcedure, router } from '../trpc';
+import { protectedProcedure, router } from '../trpc';
 import { getFieldsFromGristProcedure, grist_field_names } from './utils';
 
 export type GristEdition = { id: number; name: string; start_date: string; end_date: string }
 
 export const grist = router({
-	// TODO: MAKE PROTECTED PROCEDURE
-	getEditions: publicProcedure.query(async ({ ctx, input }) => {
+	getEditions: protectedProcedure.query(async ({ ctx, input }) => {
 		const gristEditions = await api.fetchTable(process.env.GRIST_TABLE_EDITION);
 
 		const editions: GristEdition[] = gristEditions
@@ -22,7 +21,7 @@ export const grist = router({
 
 		return { data: editions };
 	}),
-	getProcedures: publicProcedure.input(z.object({ edition: z.number() })).query(async ({ ctx, input }) => {
+	getProcedures: protectedProcedure.input(z.object({ edition: z.number() })).query(async ({ ctx, input }) => {
 		const { docs: indicators } = await ctx.payload.find({
 			collection: 'payload-indicators',
 			limit: 1000

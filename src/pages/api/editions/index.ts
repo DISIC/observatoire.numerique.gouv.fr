@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, Edition } from '@prisma/client';
+import { verifyAuth } from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -51,12 +52,10 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (['POST', 'PUT', 'DELETE'].includes(req.method || '')) {
-		const jwtCookie =
-			req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
-		if (!jwtCookie) {
-			return res.status(401).json({ msg: 'You shall not pass.' });
-		}
+	const protectedMethods = ['POST', 'PUT', 'DELETE'];
+	const isAuthorized = await verifyAuth(req, { protectedMethods });
+	if (!isAuthorized && protectedMethods.includes(req.method || '')) {
+		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
 	if (req.method === 'GET') {
