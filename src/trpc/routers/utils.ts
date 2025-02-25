@@ -46,11 +46,6 @@ export const getFieldsFromGristProcedure = (
 		const indicatorLevels = ((indicator.levels?.docs || []) as PayloadIndicatorLevel[]);
 		const gristColumnName = grist_field_names.indicators[indicator.slug as keyof GristFields['indicators']]
 		let value = gristProcedure[gristColumnName]
-		if (gristProcedure['Nom_demarche_AT_'] === "Attestation de paiement d'indemnités journalières") {
-			console.log(indicator.slug)
-			console.log(value)
-			console.log('----')
-		}
 
 		if (value === null) {
 			return {
