@@ -12,7 +12,6 @@ type Props = {
 	subtitle: string;
 	searchLabel: string;
 	onSearch: (value: string) => void;
-	old?: boolean;
 	departments: string[];
 	setSelectedDepartment: Dispatch<SetStateAction<string>>;
 	nbResults: number | null;
@@ -24,7 +23,6 @@ export function Top250Header(props: Props) {
 		subtitle,
 		searchLabel,
 		onSearch,
-		old,
 		departments,
 		setSelectedDepartment,
 		nbResults

@@ -32,7 +32,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				'Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option de réponses proposée dans le questionnaire.',
-			icon: 'ri-emotion-happy-line',
+			icon: 'ri-emoji-sticker-line',
 			position: 2
 		},
 		{
@@ -41,16 +41,16 @@ const indicatorsTask = async (payload: BasePayload) => {
 			description:
 				'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
 			description_obj: onlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
-			icon: 'ri-computer-line',
+			icon: 'ri-mac-line',
 			position: 1
 		},
 		{
 			slug: 'usage',
-			label: 'Utilisation de la version en ligne',
+			label: 'Utilisation de la version numérique',
 			description:
 				'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
 			description_obj: usageOnlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
-			icon: 'ri-direction-line',
+			icon: 'ri-device-line',
 			position: 5
 		},
 		{
@@ -61,7 +61,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				"On obtient ce taux de disponibilité en divisant la durée durant laquelle ledit service est opérationnel par la durée totale durant laquelle on aurait souhaité qu'il le soit. Cet indicateur est calculé sur une durée de 3 mois précédant la publication de l’Observatoire.",
-			icon: 'ri-rest-time-line',
+			icon: 'ri-signal-tower-line',
 			position: 10
 		},
 		{
@@ -72,7 +72,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				"Il s’agit du ratio entre le nombre d’usagers ayant réussi à joindre le contact d’aide et le nombre de répondants à la question « Quand vous avez cherché de l'aide, avez-vous réussi à joindre l'administration ? ». La note publiée s’établit sur 12 mois glissants. Elle s'affiche si au moins 100 avis ont été déposés sur cette période.",
-			icon: 'ri-customer-service-2-line',
+			icon: 'ri-customer-service-line',
 			position: 7
 		},
 		{
@@ -81,8 +81,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			description: null,
 			description_obj: helpEfficientWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
-			moreInfos:
-				`
+			moreInfos: `
 				Une échelle à 5 valeurs est proposée en réponse à la question « Comment évaluez-vous la qualité de l'aide que vous avez obtenue de la part de l'administration ? ». Le résultat est ramené à une note moyenne sur 10. 
 				Les valeurs sont pondérées de la façon suivante :
 				-	Très mauvaise = 0/10 ; 
@@ -92,7 +91,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 				-	Excellente = 10/10. 
 				La note publiée s’établit sur 12 mois glissants. Elle s'affiche si au moins 100 avis ont été déposés sur cette période
 				`,
-			icon: 'ri-customer-service-2-line',
+			icon: 'ri-customer-service-line',
 			position: 8
 		},
 		{
@@ -100,7 +99,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			label: 'Authentification',
 			description: null,
 			description_obj: authIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
-			icon: 'ri-shield-user-line',
+			icon: 'ri-lock-unlock-line',
 			position: 12
 		},
 		{
@@ -111,19 +110,19 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				'Afin de calculer cette vitesse d’affichage d’une page (ou “temps de réponse d’une page”), des tests sont réalisés par un outil automatique qui interroge 24 heures sur 24 les adresses URL des sites afin de calculer ce temps de réponse.',
-			icon: 'ri-timer-flash-line',
+			icon: 'ri-timer-line',
 			position: 11
 		},
 		{
 			slug: 'dlnuf',
-			label: 'Dites-le nous une fois',
+			label: 'Dites-le-nous une fois',
 			description:
 				"Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l'Administration détient déjà.",
 			description_obj: dlnufWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				"Afin d’évaluer l’efficacité de ce pré-remplissage, nous comptons le nombre d’informations au sein de la démarche demandées par l'administration à l'usager qui pourraient être pré-remplies.",
-			icon: 'ri-spam-line',
+			icon: 'ri-pass-valid-line',
 			position: 4
 		},
 		{
@@ -146,7 +145,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				'Pour calculer la note de simplicité du langage, nous réalisons une moyenne des réponses données à la question « Que pensez-vous du langage utilisé ? » en attribuant une note /10 aux trois réponses proposées dans le questionnaire.',
-			icon: 'ri-sun-line',
+			icon: 'ri-speak-line',
 			position: 6
 		},
 		{
@@ -157,7 +156,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
 				'Comme la note de satisfaction usager, cette note est calculée sur la base des retours usagers récoltés via le questionnaire de satisfaction (bouton «je donne mon avis», qui se trouve à la fin de la démarche).',
-			icon: 'ri-chat-smile-line',
+			icon: 'ri-user-line',
 			position: 9
 		}
 	];
