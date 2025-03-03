@@ -37,7 +37,7 @@ export default function ObservatoireEditions() {
 
 	const router = useRouter();
 
-	const [selectedTabId, setSelectedTabId] = useState<string>('tab1');
+	const [selectedTabId, setSelectedTabId] = useState<string>('tab0');
 
 	let { data: editions } = useEditions();
 
@@ -179,13 +179,18 @@ const useStyles = tss.withName(ObservatoireEditions.name).create(() => ({
 	},
 	table: {
 		margin: 0,
-		marginTop: fr.spacing('2v'),
+		marginTop: fr.spacing('3v'),
 		['table']: {
-			display: 'inline-table'
+			display: 'inline-table',
+			overflow: 'hidden',
+			borderRadius: '8px'
 		},
 		['table thead']: {
 			backgroundColor: 'white',
 			backgroundImage: `linear-gradient(0deg, ${fr.colors.decisions.artwork.major.blueFrance.default}, ${fr.colors.decisions.artwork.major.blueFrance.default})`
+		},
+		['table > ::after']: {
+			display: 'none!important'
 		}
 	},
 	tabs: {
