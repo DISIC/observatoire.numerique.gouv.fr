@@ -114,7 +114,9 @@ const PublicLayout = (props: Props) => {
 							href: '/observatoire/editions',
 							target: '_self'
 						},
-						isActive: router.pathname.startsWith('/observatoire/editions'),
+						isActive:
+							router.pathname.startsWith('/observatoire/editions') ||
+							router.pathname.startsWith('/observatoire/old'),
 						text: 'Éditions précédentes'
 					}
 				]}
