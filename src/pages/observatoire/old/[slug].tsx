@@ -1,7 +1,7 @@
 import { Top250Header } from '@/components/top250/Top250Header';
 import { OldProceduresTable } from '@/components/top250/table/OldProceduresTable';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useDepartments, useOldProcedures } from '@/utils/api';
+import { useOldProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -29,8 +29,6 @@ export default function ObservatoireEdition() {
 		department: selectedDepartment
 	});
 
-	const { data: departments } = useDepartments('old');
-
 	if (isError) return <div>Une erreur est survenue.</div>;
 
 	return (
@@ -40,12 +38,11 @@ export default function ObservatoireEdition() {
 					title="Anciennes éditions de l'observatoire 1.0"
 					subtitle={`Édition de ${slug}`}
 					searchLabel="Rechercher par mots clés..."
-					onSearch={value => {
-						setSearch(value);
-					}}
-					departments={departments}
+					onSearch={value => setSearch(value)}
 					setSelectedDepartment={setSelectedDepartment}
+					setSelectedAdministration={() => {}}
 					nbResults={procedures ? procedures.length : null}
+					old
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">

@@ -1,20 +1,22 @@
 import { fr } from '@codegouvfr/react-dsfr';
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { SearchBar } from '@codegouvfr/react-dsfr/SearchBar';
 import { useRouter } from 'next/router';
 import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
 import assert from 'assert';
 import { tss } from 'tss-react';
+import { useAdministrations, useDepartments } from '@/utils/api';
 
 type Props = {
 	title: string;
 	subtitle: string;
 	searchLabel: string;
 	onSearch: (value: string) => void;
-	departments: string[];
 	setSelectedDepartment: Dispatch<SetStateAction<string>>;
+	setSelectedAdministration: Dispatch<SetStateAction<string>>;
 	nbResults: number | null;
+	old?: boolean;
 };
 
 export function Top250Header(props: Props) {
@@ -23,15 +25,19 @@ export function Top250Header(props: Props) {
 		subtitle,
 		searchLabel,
 		onSearch,
-		departments,
 		setSelectedDepartment,
-		nbResults
+		setSelectedAdministration,
+		nbResults,
+		old
 	} = props;
 	const router = useRouter();
 	const { id: edition_id } = router.query as {
 		id: string | undefined;
 		slug: string;
 	};
+
+	const { data: departments } = useDepartments(old ? 'old' : 'base');
+	const { data: administrations } = useAdministrations();
 
 	const { classes, cx } = useStyles({
 		isMainEdition: !edition_id
@@ -48,7 +54,17 @@ export function Top250Header(props: Props) {
 			value: department
 		}))
 	];
+
+	const administrationOptions = [
+		{ label: 'Toutes les administrations', value: 'all' },
+		...administrations?.map(administration => ({
+			label: administration,
+			value: administration
+		}))
+	];
+
 	const [department, setDepartment] = useState<string>('');
+	const [administration, setAdministration] = useState<string>('');
 	const [search, setSearch] = useState<string>('');
 
 	return (
@@ -61,6 +77,7 @@ export function Top250Header(props: Props) {
 					e.preventDefault();
 					onSearch(search);
 					setSelectedDepartment(department);
+					setSelectedAdministration(administration);
 				}}
 			>
 				<LightSelect
@@ -71,19 +88,29 @@ export function Top250Header(props: Props) {
 					onChange={value => setDepartment(value as string)}
 					className={cx(classes.filterItem, classes.filterSelect)}
 				/>
+				{!old && (
+					<LightSelect
+						label="Administration"
+						id="select-administration"
+						options={administrationOptions}
+						size="small"
+						onChange={value => setAdministration(value as string)}
+						className={cx(classes.filterItem, classes.filterSelect)}
+					/>
+				)}
 				<div className={cx(classes.filterItem, classes.search)}>
-					<label className={cx('fr-label', fr.cx('fr-mb-2v'))} htmlFor="search">
+					{/* <label className={cx('fr-label', fr.cx('fr-mb-2v'))} htmlFor="search">
 						Mots clés
-					</label>
+					</label> */}
 					<SearchBar
 						className={cx(classes.filterItem)}
 						label={searchLabel}
-						renderInput={({ className, id, placeholder, type }) => (
+						renderInput={({ className, id, type }) => (
 							<input
 								ref={setInputElement}
 								className={className}
 								id={id}
-								placeholder={placeholder}
+								placeholder="Rechercher"
 								type={type}
 								value={search}
 								onChange={event => setSearch(event.currentTarget.value)}

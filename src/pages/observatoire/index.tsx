@@ -1,7 +1,7 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useDepartments, useEditions, useProcedures } from '@/utils/api';
+import { useEditions, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { useState } from 'react';
 import { tss } from 'tss-react';
@@ -10,16 +10,19 @@ export default function Observatoire() {
 	const { classes, cx } = useStyles();
 
 	const [search, setSearch] = useState<string>();
-	const [sort, setSort] = useState<string>('volume:desc');
 	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
+	const [selectedAdministration, setSelectedAdministration] =
+		useState<string>('all');
 
 	const {
 		data: procedures,
 		isError,
 		isLoading
-	} = useProcedures({ search, sort, department: selectedDepartment });
-
-	const { data: departments } = useDepartments();
+	} = useProcedures({
+		search,
+		department: selectedDepartment,
+		administration: selectedAdministration
+	});
 
 	const { data: editions } = useEditions();
 	if (!editions) return;
@@ -35,8 +38,8 @@ export default function Observatoire() {
 					subtitle={`Édition de ${currentEdition?.name.toLowerCase()}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
-					departments={departments}
 					setSelectedDepartment={setSelectedDepartment}
+					setSelectedAdministration={setSelectedAdministration}
 					nbResults={procedures ? procedures.length : null}
 				/>
 			</div>
