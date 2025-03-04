@@ -31,7 +31,7 @@ export function Top250Header(props: Props) {
 		old
 	} = props;
 	const router = useRouter();
-	const { id: edition_id } = router.query as {
+	const { id: edition_id, slug } = router.query as {
 		id: string | undefined;
 		slug: string;
 	};
@@ -40,7 +40,7 @@ export function Top250Header(props: Props) {
 	const { data: administrations } = useAdministrations();
 
 	const { classes, cx } = useStyles({
-		isMainEdition: !edition_id
+		isMainEdition: !edition_id && !slug
 	});
 
 	const [inputElement, setInputElement] = useState<HTMLInputElement | null>(

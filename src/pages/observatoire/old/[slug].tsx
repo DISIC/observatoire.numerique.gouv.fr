@@ -3,6 +3,7 @@ import { OldProceduresTable } from '@/components/top250/table/OldProceduresTable
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
 import { useOldProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { tss } from 'tss-react';
@@ -34,6 +35,16 @@ export default function ObservatoireEdition() {
 	return (
 		<>
 			<div className={fr.cx('fr-container')}>
+				<Breadcrumb
+					currentPageLabel={slug}
+					segments={[
+						{
+							label: 'Éditions précédentes',
+							linkProps: { href: '/observatoire/editions' }
+						}
+					]}
+					className={fr.cx('fr-mb-0', 'fr-mt-4w')}
+				/>
 				<Top250Header
 					title="Anciennes éditions de l'observatoire 1.0"
 					subtitle={`Édition de ${slug}`}
