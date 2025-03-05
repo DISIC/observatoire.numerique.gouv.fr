@@ -27,11 +27,11 @@ export default function AideObservatoire() {
 	};
 
 	useEffect(() => {
-		const { tab } = router.query;
+		const { tab, indicator } = router.query;
 		if (tab && !isNaN(parseInt(tab as string))) {
 			setSelectedTabId(parseInt(tab as string));
 		} else {
-			setSelectedTabId(0);
+			setSelectedTabId(indicator ? 2 : 0);
 		}
 	}, [router.query]);
 
