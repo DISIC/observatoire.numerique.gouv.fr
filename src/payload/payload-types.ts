@@ -150,17 +150,21 @@ export interface PayloadIndicator {
   } | null;
   description_html?: string | null;
   icon:
-    | 'ri-emotion-happy-line'
-    | 'ri-computer-line'
-    | 'ri-direction-line'
+    | 'ri-emoji-sticker-line'
+    | 'ri-mac-line'
+    | 'ri-device-line'
     | 'ri-rest-time-line'
-    | 'ri-customer-service-2-line'
+    | 'ri-customer-service-line'
     | 'ri-shield-user-line'
     | 'ri-timer-flash-line'
-    | 'ri-spam-line'
+    | 'ri-timer-line'
+    | 'ri-pass-valid-line'
     | 'ri-open-arm-line'
-    | 'ri-sun-line'
-    | 'ri-chat-smile-line';
+    | 'ri-speak-line'
+    | 'ri-chat-smile-line'
+    | 'ri-user-line'
+    | 'ri-signal-tower-line'
+    | 'ri-lock-unlock-line';
   position: number;
   moreInfosTitle?: string | null;
   moreInfos?: string | null;

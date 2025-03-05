@@ -1,12 +1,12 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
-import { PreHeader } from '@/components/top250/table/PreHeader';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useDepartments, useEditions, useProcedures } from '@/utils/api';
+import { useEditions, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { tss } from 'tss-react';
+import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb';
 
 export default function ObservatoireEdition() {
 	const { classes, cx } = useStyles();
@@ -14,8 +14,9 @@ export default function ObservatoireEdition() {
 	const { id } = router.query;
 
 	const [search, setSearch] = useState<string>();
-	const [sort, setSort] = useState<string>('volume:desc');
 	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
+	const [selectedAdministration, setSelectedAdministration] =
+		useState<string>('all');
 
 	const {
 		data: procedures,
@@ -23,12 +24,10 @@ export default function ObservatoireEdition() {
 		isLoading
 	} = useProcedures({
 		search,
-		sort,
 		editionId: id as string,
-		department: selectedDepartment
+		department: selectedDepartment,
+		administration: selectedAdministration
 	});
-
-	const { data: departments } = useDepartments();
 
 	const { data: editions } = useEditions();
 	if (!editions) return;
@@ -41,24 +40,27 @@ export default function ObservatoireEdition() {
 	return (
 		<>
 			<div className={fr.cx('fr-container')}>
+				<Breadcrumb
+					currentPageLabel={currentEdition?.name}
+					segments={[
+						{
+							label: 'Éditions précédentes',
+							linkProps: { href: '/observatoire/editions' }
+						}
+					]}
+					className={fr.cx('fr-mb-0', 'fr-mt-4w')}
+				/>
 				<Top250Header
-					title={
-						<>
-							Suivi trimestriel de la qualité de
-							<br /> vos démarches essentielles
-						</>
-					}
+					title="Suivi trimestriel de la qualité de vos démarches essentielles"
+					subtitle={`Édition de ${currentEdition?.name.toLowerCase()}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
-					departments={departments}
 					setSelectedDepartment={setSelectedDepartment}
+					setSelectedAdministration={setSelectedAdministration}
 					nbResults={procedures ? procedures.length : null}
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">
-				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<PreHeader sort={sort} setSort={setSort} />
-				</div>
 				{isLoading || !procedures ? (
 					<div className={cx(classes.loader)}>
 						<div>

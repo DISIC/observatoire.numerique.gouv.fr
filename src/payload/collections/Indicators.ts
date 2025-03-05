@@ -79,17 +79,21 @@ export const Indicators: CollectionConfig = {
 			type: 'select',
 			required: true,
 			options: [
-				{ label: 'Emotion Happy', value: 'ri-emotion-happy-line' },
-				{ label: 'Computer', value: 'ri-computer-line' },
-				{ label: 'Direction', value: 'ri-direction-line' },
+				{ label: 'Emotion Happy', value: 'ri-emoji-sticker-line' },
+				{ label: 'Computer', value: 'ri-mac-line' },
+				{ label: 'Device', value: 'ri-device-line' },
 				{ label: 'Rest Time', value: 'ri-rest-time-line' },
-				{ label: 'Customer Service', value: 'ri-customer-service-2-line' },
+				{ label: 'Customer Service', value: 'ri-customer-service-line' },
 				{ label: 'Shield User', value: 'ri-shield-user-line' },
 				{ label: 'Timer Flash', value: 'ri-timer-flash-line' },
-				{ label: 'Spam', value: 'ri-spam-line' },
+				{ label: 'Timer', value: 'ri-timer-line' },
+				{ label: 'Pass Valid', value: 'ri-pass-valid-line' },
 				{ label: 'Open Arm', value: 'ri-open-arm-line' },
-				{ label: 'Sun', value: 'ri-sun-line' },
-				{ label: 'Chat Smile', value: 'ri-chat-smile-line' }
+				{ label: 'Speak', value: 'ri-speak-line' },
+				{ label: 'Chat Smile', value: 'ri-chat-smile-line' },
+				{ label: 'User', value: 'ri-user-line' },
+				{ label: 'Signal Tower', value: 'ri-signal-tower-line' },
+				{ label: 'Lock Unlock', value: 'ri-lock-unlock-line' }
 			]
 		},
 		{
@@ -112,7 +116,7 @@ export const Indicators: CollectionConfig = {
 		},
 		{
 			name: 'levels',
-			label: "Légende",
+			label: 'Légende',
 			type: 'join',
 			collection: 'payload-indicator-levels',
 			on: 'indicator',

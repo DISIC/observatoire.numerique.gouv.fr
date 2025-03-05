@@ -8,7 +8,8 @@ export async function getProcedures(
 	editionId?: string,
 	search?: string,
 	sort?: string,
-	department?: string
+	department?: string,
+	administration?: string
 ) {
 	let tmpEditionId = editionId;
 
@@ -25,7 +26,9 @@ export async function getProcedures(
 
 	let whereRequest: Prisma.ProcedureWhereInput = {
 		editionId: tmpEditionId || null,
-		ministere: department && department !== 'all' ? department : undefined
+		ministere: department && department !== 'all' ? department : undefined,
+		administration:
+			administration && administration !== 'all' ? administration : undefined
 	};
 
 	if (search)
@@ -103,7 +106,8 @@ export default async function handler(
 	}
 
 	if (req.method === 'GET') {
-		const { id, editionId, search, sort, department } = req.query;
+		const { id, editionId, search, sort, department, administration } =
+			req.query;
 		if (id) {
 			const procedure = await getProcedureById(id.toString());
 			res.status(200).json(procedure);
@@ -112,7 +116,8 @@ export default async function handler(
 				editionId as string,
 				search as string,
 				sort as string,
-				department as string
+				department as string,
+				administration as string
 			);
 			res.status(200).json(procedures);
 		}

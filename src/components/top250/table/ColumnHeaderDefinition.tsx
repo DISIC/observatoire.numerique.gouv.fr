@@ -94,13 +94,13 @@ export function ColumnHeaderDefinition(props: Props) {
 						}}
 					>
 						<i
-							className={cx(fr.cx('ri-arrow-drop-down-line'))}
+							className={cx(fr.cx('ri-arrow-down-line'), classes.sortIcon)}
 							style={{
 								color:
 									currentSort?.slug === slug &&
 									currentSort?.direction === 'desc'
 										? 'inherit'
-										: 'gray'
+										: fr.colors.decisions.background.actionLow.blueFrance.hover
 							}}
 						/>
 					</Button>
@@ -118,12 +118,12 @@ export function ColumnHeaderDefinition(props: Props) {
 						}}
 					>
 						<i
-							className={cx(fr.cx('ri-arrow-drop-up-line'))}
+							className={cx(fr.cx('ri-arrow-up-line'), classes.sortIcon)}
 							style={{
 								color:
 									currentSort?.slug === slug && currentSort?.direction === 'asc'
 										? 'inherit'
-										: 'gray'
+										: fr.colors.decisions.background.actionLow.blueFrance.hover
 							}}
 						/>
 					</Button>
@@ -186,6 +186,8 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 	},
 	text: {
 		marginTop: fr.spacing('3v'),
+		fontWeight: 500,
+		fontSize: fr.typography[18].style.fontSize,
 		[fr.breakpoints.down('lg')]: {
 			marginTop: 0,
 			fontSize: fr.typography[17].style.fontSize
@@ -207,5 +209,10 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 	sortContainer: {
 		display: 'flex',
 		justifyContent: 'center'
+	},
+	sortIcon: {
+		':before': {
+			'--icon-size': fr.typography[21].style.fontSize
+		}
 	}
 }));
