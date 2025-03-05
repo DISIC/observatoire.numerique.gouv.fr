@@ -226,7 +226,7 @@ const useStyles = tss.withName(OldProceduresTable.name).create(() => ({
 			textAlign: 'center'
 		},
 		['tbody th']: {
-			...fr.typography[20].style,
+			...fr.typography[19].style,
 			small: {
 				...fr.typography[18].style,
 				fontWeight: 'normal',
