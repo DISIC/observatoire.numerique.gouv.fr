@@ -46,7 +46,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		},
 		{
 			slug: 'usage',
-			label: 'Utilisation de la version numérique',
+			label: "Taux d'utilisation de la version numérique",
 			description:
 				'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
 			description_obj: usageOnlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
@@ -139,12 +139,12 @@ const indicatorsTask = async (payload: BasePayload) => {
 		},
 		{
 			slug: 'simplicity',
-			label: 'Simplicité du langage',
+			label: 'Clarté du langage',
 			description: null,
 			description_obj: simplicityLanguageWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
 			moreInfos:
-				'Pour calculer la note de simplicité du langage, nous réalisons une moyenne des réponses données à la question « Que pensez-vous du langage utilisé ? » en attribuant une note /10 aux trois réponses proposées dans le questionnaire.',
+				'Pour calculer la note de clarté du langage, nous réalisons une moyenne des réponses données à la question « Que pensez-vous du langage utilisé ? » en attribuant une note /10 aux trois réponses proposées dans le questionnaire.',
 			icon: 'ri-speak-line',
 			position: 6
 		},
