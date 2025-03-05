@@ -92,121 +92,123 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 	];
 
 	return (
-		<table className={cx(fr.cx('fr-table'), classes.table)}>
-			<thead>
-				<tr>
-					{headerTexts.map((header, i) => (
-						<th
-							key={i}
-							onClick={handleSort(headerKeys[i])}
-							className={cx(
-								sort.includes(headerKeys[i]) ? classes.sortedHeader : ''
-							)}
-						>
-							{header}{' '}
-							{sort.includes(headerKeys[i]) && (
-								<span
-									className={cx(
-										classes.sortIcon,
-										sort.includes('asc')
-											? 'fr-icon-arrow-down-s-fill'
-											: 'fr-icon-arrow-up-s-fill'
-									)}
-								></span>
-							)}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{procedures.map(procedure => (
-					<tr key={procedure.id}>
-						<th className={fr.cx('fr-text--bold', 'fr-text--md')} scope="row">
-							{procedure.title}
-							<br />
-							<small>{procedure.ministere}</small>
-							<br />
-							<span>
-								Volumétrie totale : {procedure.volumetrie_display} (
-								{procedure.pourcentageRecoursVoieDematerialisee_display} en
-								ligne)
-							</span>
-						</th>
-						{cellsKeys.map((attr, i) => {
-							let fieldAttrType: 'number' | 'dlnuf' | 'text' | undefined =
-								'text';
-							if (
-								attr.includes('satisfactionIndex_display') ||
-								attr.includes('urlScore_display')
-							)
-								fieldAttrType = 'number';
-							else if (attr.includes('UneFois')) fieldAttrType = 'dlnuf';
-
-							const procedureJdmaLink = `https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
-								.split('.')
-								.join('/')}?view-mode=statistics&date-debut=${
-								procedure.jdma_start_date
-							}&date-fin=${procedure.jdma_end_date}`;
-							const hasLink =
-								attr === 'satisfactionIndex_display' &&
-								(procedure.satisfactionIndex_value || -1) >= 0;
-
-							const displayAccessibilityScore =
-								attr === 'accessibilityScore_display' &&
-								!!procedure.rgaaCompliancyLevel_value;
-
-							return (
-								<td key={i} style={{ position: 'relative' }}>
-									<IndicatorLabel
-										label={
-											(procedure[attr as keyof OldProcedure] as string) || '-'
-										}
-										noBackground={['-', 'n/a'].includes(
-											(procedure[attr as keyof OldProcedure] as string) || '-'
+		<div className={fr.cx('fr-table')}>
+			<table className={cx(classes.table)}>
+				<thead>
+					<tr>
+						{headerTexts.map((header, i) => (
+							<th
+								key={i}
+								onClick={handleSort(headerKeys[i])}
+								className={cx(
+									sort.includes(headerKeys[i]) ? classes.sortedHeader : ''
+								)}
+							>
+								{header}{' '}
+								{sort.includes(headerKeys[i]) && (
+									<span
+										className={cx(
+											classes.sortIcon,
+											sort.includes('asc')
+												? 'fr-icon-arrow-down-s-fill'
+												: 'fr-icon-arrow-up-s-fill'
 										)}
-										color={getColor(
-											(procedure[attr as keyof OldProcedure] as string) || '',
-											fieldAttrType
-										)}
-										old
-									/>
-									{hasLink && procedure.jdma_start_date && (
-										<Link
-											href={procedureJdmaLink}
-											className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
-											target="_blank"
-										>
-											Graphes
-										</Link>
-									)}
-									{attr === 'statutDemat' && procedure.urlDemarche && (
-										<Link
-											href={procedure.urlDemarche}
-											className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
-											target="_blank"
-										>
-											Voir
-										</Link>
-									)}
-									{displayAccessibilityScore && (
-										<span
-											className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
-										>
-											{procedure.rgaaCompliancyLevel_display}
-										</span>
-									)}
-								</td>
-							);
-						})}
+									></span>
+								)}
+							</th>
+						))}
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{procedures.map(procedure => (
+						<tr key={procedure.id}>
+							<th className={fr.cx('fr-text--bold', 'fr-text--md')} scope="row">
+								{procedure.title}
+								<br />
+								<small>{procedure.ministere}</small>
+								<br />
+								<span>
+									Volumétrie totale : {procedure.volumetrie_display} (
+									{procedure.pourcentageRecoursVoieDematerialisee_display} en
+									ligne)
+								</span>
+							</th>
+							{cellsKeys.map((attr, i) => {
+								let fieldAttrType: 'number' | 'dlnuf' | 'text' | undefined =
+									'text';
+								if (
+									attr.includes('satisfactionIndex_display') ||
+									attr.includes('urlScore_display')
+								)
+									fieldAttrType = 'number';
+								else if (attr.includes('UneFois')) fieldAttrType = 'dlnuf';
+
+								const procedureJdmaLink = `https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
+									.split('.')
+									.join('/')}?view-mode=statistics&date-debut=${procedure.jdma_start_date
+									}&date-fin=${procedure.jdma_end_date}`;
+								const hasLink =
+									attr === 'satisfactionIndex_display' &&
+									(procedure.satisfactionIndex_value || -1) >= 0;
+
+								const displayAccessibilityScore =
+									attr === 'accessibilityScore_display' &&
+									!!procedure.rgaaCompliancyLevel_value;
+
+								return (
+									<td key={i} style={{ position: 'relative' }}>
+										<IndicatorLabel
+											label={
+												(procedure[attr as keyof OldProcedure] as string) || '-'
+											}
+											noBackground={['-', 'n/a'].includes(
+												(procedure[attr as keyof OldProcedure] as string) || '-'
+											)}
+											color={getColor(
+												(procedure[attr as keyof OldProcedure] as string) || '',
+												fieldAttrType
+											)}
+											old
+										/>
+										{hasLink && procedure.jdma_start_date && (
+											<Link
+												href={procedureJdmaLink}
+												className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
+												target="_blank"
+											>
+												Graphes
+											</Link>
+										)}
+										{attr === 'statutDemat' && procedure.urlDemarche && (
+											<Link
+												href={procedure.urlDemarche}
+												className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
+												target="_blank"
+											>
+												Voir
+											</Link>
+										)}
+										{displayAccessibilityScore && (
+											<span
+												className={cx(fr.cx('fr-text--xs'), classes.smallLinks)}
+											>
+												{procedure.rgaaCompliancyLevel_display}
+											</span>
+										)}
+									</td>
+								);
+							})}
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };
 
 const useStyles = tss.withName(OldProceduresTable.name).create(() => ({
 	table: {
+		paddingTop: fr.spacing('10v'),
 		['thead th']: {
 			cursor: 'pointer',
 			position: 'relative',
