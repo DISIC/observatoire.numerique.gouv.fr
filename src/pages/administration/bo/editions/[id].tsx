@@ -19,7 +19,7 @@ export default function Editions(props: Props) {
 		data: edition,
 		isError: isErrorEdition,
 		isLoading: isLoadingEdition
-	} = useEdition(id as string);
+	} = useEdition({ id: id as string | undefined, kind: 'id' });
 	const {
 		data: procedures,
 		isError: isErrorProcedures,

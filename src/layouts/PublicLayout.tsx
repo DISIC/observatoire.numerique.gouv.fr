@@ -22,7 +22,10 @@ const PublicLayout = (props: Props) => {
 	const { user } = useAuth();
 	const isLogged = !!user;
 
-	const { data: currentEdition } = useEdition('current');
+	const { data: currentEdition } = useEdition({
+		id: 'current',
+		kind: 'id'
+	});
 
 	const brandTop = (
 		<>

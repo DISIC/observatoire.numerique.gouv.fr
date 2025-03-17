@@ -4,7 +4,7 @@ import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import { Edition } from '@prisma/client';
 import { useEffect, useMemo, useState } from 'react';
 import { tss } from 'tss-react';
-import { formatDateRangeFR } from '@/utils/tools';
+import { formatDateRangeFR, slugifyText } from '@/utils/tools';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useRouter } from 'next/router';
 
@@ -60,7 +60,7 @@ export default function ObservatoireEditions() {
 
 			groupedByYear[year].push({
 				kind: 'base',
-				id: edition.id,
+				id: slugifyText(edition.name),
 				name: edition.name,
 				period: formatDateRangeFR(
 					new Date(edition.start_date),

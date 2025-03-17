@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-import { NextApiRequest } from "next";
+import { NextApiRequest } from 'next';
 import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { format, isSameMonth, isSameYear } from 'date-fns';
@@ -212,23 +212,31 @@ export const formatDateRangeFR = (startDate: Date, endDate: Date) => {
 
 export function getPayloadJWTSecret(payloadSecret: string): string {
 	return crypto
-		.createHash("sha256")
+		.createHash('sha256')
 		.update(payloadSecret)
-		.digest("hex")
+		.digest('hex')
 		.slice(0, 32);
 }
 
 interface AuthOptions {
 	protectedMethods?: string[];
 }
-export async function verifyAuth(req: NextApiRequest, options: AuthOptions = {}): Promise<boolean> {
-	const protectedMethods = options.protectedMethods || ['POST', 'PUT', 'DELETE'];
+export async function verifyAuth(
+	req: NextApiRequest,
+	options: AuthOptions = {}
+): Promise<boolean> {
+	const protectedMethods = options.protectedMethods || [
+		'POST',
+		'PUT',
+		'DELETE'
+	];
 
 	if (!protectedMethods.includes(req.method || '')) {
 		return true;
 	}
 
-	const jwtCookie = req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
+	const jwtCookie =
+		req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
 
 	if (!jwtCookie) {
 		return false;
@@ -242,10 +250,21 @@ export async function verifyAuth(req: NextApiRequest, options: AuthOptions = {})
 
 		const derivedSecret = getPayloadJWTSecret(secret);
 		const decoded = jwt.verify(jwtCookie, derivedSecret, {
-			algorithms: ["HS256"],
+			algorithms: ['HS256']
 		});
 		return typeof decoded === 'object' && decoded !== null;
 	} catch (error) {
 		return false;
 	}
 }
+
+export const slugifyText = (text: string): string => {
+	return text
+		.toLowerCase()
+		.replace(/ /g, '-')
+		.replace(/[^a-z0-9-]/g, '');
+};
+
+export const desufligyText = (text: string): string => {
+	return text.replace(/-/g, ' ');
+};

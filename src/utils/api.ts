@@ -80,9 +80,15 @@ export function useEditions() {
 	};
 }
 
-export function useEdition(id: String) {
+type EditionProps = {
+	id?: string;
+	kind: 'id' | 'slug';
+};
+
+export function useEdition(props: EditionProps) {
+	const { id, kind } = props;
 	const { data, error } = useSWR(
-		`/api/editions?id=${id}`,
+		id ? `/api/editions?id=${id}&kind=${kind}` : null,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<Edition>(stringify(await res.json()));

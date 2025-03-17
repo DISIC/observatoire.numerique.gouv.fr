@@ -1,7 +1,7 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useEditions, useProcedures } from '@/utils/api';
+import { useEdition, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -11,12 +11,17 @@ import { Breadcrumb } from '@codegouvfr/react-dsfr/Breadcrumb';
 export default function ObservatoireEdition() {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
-	const { id } = router.query;
+	const { slug: edition_slug } = router.query;
 
 	const [search, setSearch] = useState<string>();
 	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
 	const [selectedAdministration, setSelectedAdministration] =
 		useState<string>('all');
+
+	const { data: edition } = useEdition({
+		id: edition_slug as string | undefined,
+		kind: 'slug'
+	});
 
 	const {
 		data: procedures,
@@ -24,16 +29,12 @@ export default function ObservatoireEdition() {
 		isLoading
 	} = useProcedures({
 		search,
-		editionId: id as string,
+		editionId: edition?.id as string,
 		department: selectedDepartment,
 		administration: selectedAdministration
 	});
 
-	const { data: editions } = useEditions();
-	if (!editions) return;
-	const currentEdition = id
-		? editions.find(edition => edition.id === (id as string))
-		: editions[0];
+	if (!edition) return;
 
 	if (isError) return <div>Une erreur est survenue.</div>;
 
@@ -41,7 +42,7 @@ export default function ObservatoireEdition() {
 		<>
 			<div className={fr.cx('fr-container')}>
 				<Breadcrumb
-					currentPageLabel={currentEdition?.name}
+					currentPageLabel={edition?.name}
 					segments={[
 						{
 							label: 'Éditions précédentes',
@@ -52,7 +53,7 @@ export default function ObservatoireEdition() {
 				/>
 				<Top250Header
 					title="Suivi trimestriel de la qualité de vos démarches essentielles"
-					subtitle={`Édition de ${currentEdition?.name.toLowerCase()}`}
+					subtitle={`Édition de ${edition?.name.toLowerCase()}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
 					setSelectedDepartment={setSelectedDepartment}
@@ -73,7 +74,7 @@ export default function ObservatoireEdition() {
 					<>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
 							<Top250TableSection
-								edition={currentEdition}
+								edition={edition}
 								procedures={procedures}
 								search={search}
 							/>

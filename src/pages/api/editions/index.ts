@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, Edition } from '@prisma/client';
-import { verifyAuth } from '@/utils/tools';
+import { desufligyText, verifyAuth } from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -18,6 +18,18 @@ export async function getEditions() {
 export async function getEditionById(id: string) {
 	const edition = await prisma.edition.findUnique({
 		where: { id }
+	});
+	return edition;
+}
+
+export async function getEditionBySlug(slug: string) {
+	const edition = await prisma.edition.findFirst({
+		where: {
+			name: {
+				contains: desufligyText(slug),
+				mode: 'insensitive'
+			}
+		}
 	});
 	return edition;
 }
@@ -69,13 +81,16 @@ export default async function handler(
 	}
 
 	if (req.method === 'GET') {
-		const { id } = req.query;
+		const { id, kind } = req.query;
 		if (id) {
 			if (id === 'current') {
 				const edition = await getCurrentEdition();
 				return res.status(200).json(edition);
-			} else {
+			} else if (kind === 'id') {
 				const edition = await getEditionById(id.toString());
+				res.status(200).json(edition);
+			} else {
+				const edition = await getEditionBySlug(id.toString());
 				res.status(200).json(edition);
 			}
 		} else {
