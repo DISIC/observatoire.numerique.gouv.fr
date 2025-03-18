@@ -183,170 +183,181 @@ export function ProceduresTable(props: Props) {
 	};
 
 	return (
-		<div className={cx(classes.root)} ref={scrollRef} onScroll={onScrollTable}>
-			<table className={cx(classes.table)} ref={tableRef} id="procedure-table">
-				<caption className={fr.cx('fr-sr-only')}>
-					Toutes les démarches de l&apos;observatoire
-				</caption>
-				<thead>
-					<div className={cx(classes.tabsWrapper)}>
-						<Button
-							className="fr-tabs__tab"
-							aria-selected={!isRight}
-							onClick={() => handleScrollX(false)}
+		<>
+			<div className={cx(classes.tabsWrapper)}>
+				<Button
+					className="fr-tabs__tab"
+					aria-selected={!isRight}
+					onClick={() => handleScrollX(false)}
+				>
+					Indicateurs principaux
+				</Button>
+				<Button
+					className="fr-tabs__tab"
+					aria-selected={isRight}
+					onClick={() => handleScrollX(true)}
+				>
+					Autres indicateurs
+				</Button>
+			</div>
+			<div
+				className={cx(classes.root)}
+				ref={scrollRef}
+				onScroll={onScrollTable}
+			>
+				<table
+					className={cx(classes.table)}
+					ref={tableRef}
+					id="procedure-table"
+				>
+					<caption className={fr.cx('fr-sr-only')}>
+						Toutes les démarches de l&apos;observatoire
+					</caption>
+					<thead>
+						<tr
+							ref={stickyHeaderRef}
+							style={{
+								width: scrollRef?.current?.clientWidth || 1400
+							}}
 						>
-							Indicateurs principaux
-						</Button>
-						<Button
-							className="fr-tabs__tab"
-							aria-selected={isRight}
-							onClick={() => handleScrollX(true)}
-						>
-							Autres indicateurs
-						</Button>
-					</div>
-					<tr
-						ref={stickyHeaderRef}
-						style={{
-							width: scrollRef?.current?.clientWidth || 1400
-						}}
-					>
-						<th ref={firstColRef} scope="col">
-							<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
-						</th>
-						{indicators.map((indicator, index) => {
-							return (
-								<th key={indicator.label} scope="col">
-									<ColumnHeaderDefinition
-										slug={indicator.slug as IndicatorSlug}
-										icon={indicator.icon as FrIconClassName | RiIconClassName}
-										text={indicator.label}
-										infos={{
-											content: (
-												<>
-													<IndicatorContent indicator={indicator} />
-												</>
-											),
-											title: indicator.label
-										}}
-										onFocus={() => {
-											if (index >= 5) handleScrollX(true, true);
-											else handleScrollX(false, true);
-										}}
-										onSort={onSort}
-										currentSort={currentSort}
-									/>
-								</th>
-							);
-						})}
-					</tr>
-				</thead>
-				<tbody>
-					{procedures.map((p, index) => (
-						<>
-							<tr key={p.id} id={`procedure-table-row-${index}`}>
-								<th scope="row">
-									<div>
-										<span>{p.title}</span>
-										<br />
-										<div
-											className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}
-										>
-											{p.ministere}
-										</div>
-										<span className={fr.cx('fr-text--sm')}>
-											{p.administration}
-										</span>
-										<div
-											className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}
-										>
-											Volumétrie en ligne :{' '}
-											{p.volume
-												? getDisplayedVolume(p.volume)
-												: 'non communiquée'}
-										</div>
-									</div>
-								</th>
-								{indicators.map((indicator, index) => {
-									const isProactive = p.fields.some(
-										f => f.slug === 'online' && f.label === 'Démarche proactive'
-									);
-									const isToCome = p.fields.some(
-										f => f.slug === 'online' && f.label === 'À venir'
-									);
-									const isNotOnline = p.fields.some(
-										f => f.slug === 'online' && f.label === 'Non'
-									);
-									const field = p.fields.find(f => f.slug === indicator.slug);
-
-									if (!field) return <td>-</td>;
-
-									if (isProactive && (index === 1 || index === 5))
-										return (
-											<td
-												colSpan={index === 1 ? 4 : 6}
-												key={`${p.title} ${indicator.label}`}
+							<th ref={firstColRef} scope="col">
+								<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
+							</th>
+							{indicators.map((indicator, index) => {
+								return (
+									<th key={indicator.label} scope="col">
+										<ColumnHeaderDefinition
+											slug={indicator.slug as IndicatorSlug}
+											icon={indicator.icon as FrIconClassName | RiIconClassName}
+											text={indicator.label}
+											infos={{
+												content: (
+													<>
+														<IndicatorContent indicator={indicator} />
+													</>
+												),
+												title: indicator.label
+											}}
+											onFocus={() => {
+												if (index >= 5) handleScrollX(true, true);
+												else handleScrollX(false, true);
+											}}
+											onSort={onSort}
+											currentSort={currentSort}
+										/>
+									</th>
+								);
+							})}
+						</tr>
+					</thead>
+					<tbody>
+						{procedures.map((p, index) => (
+							<>
+								<tr key={p.id} id={`procedure-table-row-${index}`}>
+									<th scope="row">
+										<div>
+											<span>{p.title}</span>
+											<br />
+											<div
+												className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}
 											>
-												<IndicatorProactive />
-											</td>
+												{p.ministere}
+											</div>
+											<span className={fr.cx('fr-text--sm')}>
+												{p.administration}
+											</span>
+											<div
+												className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}
+											>
+												Volumétrie en ligne :{' '}
+												{p.volume
+													? getDisplayedVolume(p.volume)
+													: 'non communiquée'}
+											</div>
+										</div>
+									</th>
+									{indicators.map((indicator, index) => {
+										const isProactive = p.fields.some(
+											f =>
+												f.slug === 'online' && f.label === 'Démarche proactive'
 										);
-									else if (isProactive && field.slug !== 'online') return;
+										const isToCome = p.fields.some(
+											f => f.slug === 'online' && f.label === 'À venir'
+										);
+										const isNotOnline = p.fields.some(
+											f => f.slug === 'online' && f.label === 'Non'
+										);
+										const field = p.fields.find(f => f.slug === indicator.slug);
 
-									if (isToCome && field.slug !== 'online')
+										if (!field) return <td>-</td>;
+
+										if (isProactive && (index === 1 || index === 5))
+											return (
+												<td
+													colSpan={index === 1 ? 4 : 6}
+													key={`${p.title} ${indicator.label}`}
+												>
+													<IndicatorProactive />
+												</td>
+											);
+										else if (isProactive && field.slug !== 'online') return;
+
+										if (isToCome && field.slug !== 'online')
+											return (
+												<td key={`${p.title} ${indicator.label}`}>
+													<IndicatorLabel color="gray" label="À venir" />
+												</td>
+											);
+
+										if (isNotOnline && field.slug !== 'online')
+											return (
+												<td key={`${p.title} ${indicator.label}`}>
+													<IndicatorLabel color="gray" label="-" noBackground />
+												</td>
+											);
+
 										return (
 											<td key={`${p.title} ${indicator.label}`}>
-												<IndicatorLabel color="gray" label="À venir" />
+												<IndicatorLabel {...field} />
+												{!!field.value && !isNotOnline && (
+													<IndicatorValue
+														slug={field.slug}
+														value={field.value}
+														label={field.label}
+														noJdma={p.noJdma}
+														procedureId={p.grist_identifier}
+														procedureTitle={p.title}
+														edition={edition}
+														onLinkFocus={() => {
+															scrollRef.current?.scrollTo({ left: 0 });
+														}}
+													/>
+												)}
 											</td>
 										);
-
-									if (isNotOnline && field.slug !== 'online')
-										return (
-											<td key={`${p.title} ${indicator.label}`}>
-												<IndicatorLabel color="gray" label="-" noBackground />
-											</td>
-										);
-
-									return (
-										<td key={`${p.title} ${indicator.label}`}>
-											<IndicatorLabel {...field} />
-											{!!field.value && !isNotOnline && (
-												<IndicatorValue
-													slug={field.slug}
-													value={field.value}
-													label={field.label}
-													noJdma={p.noJdma}
-													procedureId={p.grist_identifier}
-													procedureTitle={p.title}
-													edition={edition}
-													onLinkFocus={() => {
-														scrollRef.current?.scrollTo({ left: 0 });
-													}}
-												/>
-											)}
-										</td>
-									);
-								})}
-								<td>
-									<span></span>
-								</td>
-							</tr>
-							<tr key={`${p.id}-skiplinks`}>
-								<td className={cx(classes.skipLinksTd, fr.cx('fr-pl-1-5v'))}>
-									<SkipLinks
-										links={[
-											{
-												text: 'Revenir au dessus du tableau',
-												href: '#procedures-section'
-											}
-										]}
-									/>
-								</td>
-							</tr>
-						</>
-					))}
-				</tbody>
-			</table>
-		</div>
+									})}
+									<td>
+										<span></span>
+									</td>
+								</tr>
+								<tr key={`${p.id}-skiplinks`}>
+									<td className={cx(classes.skipLinksTd, fr.cx('fr-pl-1-5v'))}>
+										<SkipLinks
+											links={[
+												{
+													text: 'Revenir au dessus du tableau',
+													href: '#procedures-section'
+												}
+											]}
+										/>
+									</td>
+								</tr>
+							</>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</>
 	);
 }
 
@@ -370,7 +381,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 		},
 		table: {
 			width: 'max-content',
-			marginTop: fr.spacing('2v'),
+			marginTop: fr.spacing('1v'),
 			height: '100%',
 			borderSpacing: `0 ${fr.spacing('2v')}`,
 			['&.table-has-sticked-row']: {
@@ -569,9 +580,9 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			left: 0
 		},
 		tabsWrapper: {
-			position: 'sticky',
-			left: _firstColSize,
-			marginBottom: '0.5rem',
+			position: 'block',
+			marginLeft: _firstColSize,
+			paddingTop: fr.spacing('4v'),
 			display: 'flex'
 		}
 	};
