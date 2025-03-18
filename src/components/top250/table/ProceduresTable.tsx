@@ -580,7 +580,6 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			left: 0
 		},
 		tabsWrapper: {
-			position: 'block',
 			marginLeft: _firstColSize,
 			paddingTop: fr.spacing('4v'),
 			display: 'flex'
