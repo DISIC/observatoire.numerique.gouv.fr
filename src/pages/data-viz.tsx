@@ -84,13 +84,15 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 		},
 		['& > .fr-tabs__panel']: {
 			backgroundColor: 'white',
-			border: 'none'
+			border: 'none',
+			padding: fr.spacing('6v'),
+			borderRadius: fr.spacing('2v')
 		}
 	},
 	grid: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(3, 1fr)',
-		gap: fr.spacing('4v')
+		gap: fr.spacing('6v')
 	},
 	gridItem: {
 		display: 'flex',
@@ -98,8 +100,9 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 		alignItems: 'center',
 		justifyContent: 'center',
 		textAlign: 'center',
+		borderRadius: fr.spacing('2v'),
 		padding: `${fr.spacing('3w')} ${fr.spacing('4v')}`,
-		border: `1px solid ${fr.colors.decisions.artwork.background.grey.default}`
+		border: `1px solid ${fr.colors.decisions.background.contrast.blueFrance.default}`
 	},
 	gridTitle: {
 		fontWeight: 500,
