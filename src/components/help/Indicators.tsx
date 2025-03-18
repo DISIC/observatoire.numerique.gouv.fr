@@ -16,35 +16,40 @@ export function HelpIndicators(props: Props) {
 
 	const router = useRouter();
 
-	const handleAccordionChange = useCallback((indicatorId: string, isOpen: boolean) => {
-		const currentQuery = { ...router.query };
+	const handleAccordionChange = useCallback(
+		(indicatorSlug: string, isOpen: boolean) => {
+			const currentQuery = { ...router.query };
 
-		if (isOpen) {
-			router.replace(
-				{
-					pathname: router.pathname,
-					query: { ...currentQuery, indicator: indicatorId }
-				},
-				undefined,
-				{ shallow: true }
-			);
-		} else if (currentQuery.indicator === indicatorId) {
-			delete currentQuery.indicator;
-			router.replace(
-				{
-					pathname: router.pathname,
-					query: currentQuery
-				},
-				undefined,
-				{ shallow: true }
-			);
-		}
-	}, [router]);
+			if (isOpen) {
+				router.replace(
+					{
+						pathname: router.pathname,
+						query: { ...currentQuery, indicator: indicatorSlug }
+					},
+					undefined,
+					{ shallow: true }
+				);
+			} else if (currentQuery.indicator === indicatorSlug) {
+				delete currentQuery.indicator;
+				router.replace(
+					{
+						pathname: router.pathname,
+						query: currentQuery
+					},
+					undefined,
+					{ shallow: true }
+				);
+			}
+		},
+		[router]
+	);
 
 	useEffect(() => {
 		if (isFirstLoad.current && router.query.indicator) {
 			if (typeof router.query.indicator === 'string') {
-				const element = document.getElementById(`indicator-${router.query.indicator}`);
+				const element = document.getElementById(
+					`indicator-${router.query.indicator}`
+				);
 				if (element) {
 					element.scrollIntoView({ behavior: 'smooth' });
 				}
@@ -73,9 +78,9 @@ export function HelpIndicators(props: Props) {
 										className={classes.accordion}
 										icon={indicator.icon as RiIconClassName}
 										label={indicator.label}
-										defaultExpanded={router.query.indicator === indicator.id}
-										onExpandedChange={(expanded) => {
-											handleAccordionChange(indicator.id, expanded)
+										defaultExpanded={router.query.indicator === indicator.slug}
+										onExpandedChange={expanded => {
+											handleAccordionChange(indicator.slug, expanded);
 										}}
 									>
 										<IndicatorContent indicator={indicator} isFull />
@@ -103,9 +108,11 @@ export function HelpIndicators(props: Props) {
 											className={classes.accordion}
 											icon={indicator.icon as RiIconClassName}
 											label={indicator.label}
-											defaultExpanded={router.query.indicator === indicator.id}
-											onExpandedChange={(expanded) => {
-												handleAccordionChange(indicator.id, expanded)
+											defaultExpanded={
+												router.query.indicator === indicator.slug
+											}
+											onExpandedChange={expanded => {
+												handleAccordionChange(indicator.slug, expanded);
 											}}
 										>
 											<IndicatorContent indicator={indicator} isFull />
