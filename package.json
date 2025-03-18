@@ -20,11 +20,6 @@
 		"lhci:wizard": "lhci wizard",
 		"lhci:server": "lhci server --storage.storageMethod=sql --storage.sqlDialect=sqlite --storage.sqlDatabasePath=./db.sql"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
 	"lint-staged": {
 		"*": "prettier --write"
 	},
