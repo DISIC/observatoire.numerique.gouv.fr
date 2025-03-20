@@ -244,6 +244,7 @@ export interface PayloadIndicatorLevel {
   position: number;
   threshold?: number | null;
   noBackground?: boolean | null;
+  goal_reached?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -376,6 +377,7 @@ export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
   position?: T;
   threshold?: T;
   noBackground?: T;
+  goal_reached?: T;
   updatedAt?: T;
   createdAt?: T;
 }

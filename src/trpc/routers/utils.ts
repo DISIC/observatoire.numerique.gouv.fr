@@ -56,7 +56,8 @@ export const getFieldsFromGristProcedure = (
 				value: null,
 				color: 'gray' as IndicatorColor,
 				noBackground: true,
-				procedureId: 'preview'
+				procedureId: 'preview',
+				goalReached: false
 			}
 		}
 
@@ -81,7 +82,8 @@ export const getFieldsFromGristProcedure = (
 					value: value !== null ? value.toString() : value,
 					color: indicatorLevel.color,
 					noBackground: indicatorLevel.noBackground || false,
-					procedureId: 'preview'
+					procedureId: 'preview',
+					goalReached: indicatorLevel.goal_reached || false
 				}
 			}
 		}
@@ -95,7 +97,8 @@ export const getFieldsFromGristProcedure = (
 				value: indicator.slug === 'online' ? gristProcedure[grist_field_names.link] : value ? value.toString() : value,
 				color: indicatorLevel.color,
 				noBackground: indicatorLevel.noBackground || false,
-				procedureId: 'preview'
+				procedureId: 'preview',
+				goalReached: indicatorLevel.goal_reached || false
 			}
 		}
 
