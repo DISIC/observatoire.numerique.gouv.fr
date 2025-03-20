@@ -4,19 +4,30 @@ import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import { useAdministrations, useDepartments } from '@/utils/api';
 import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
+import DataVizTabHeader from '@/components/data-viz/Header';
+import { useState } from 'react';
 
 const RadarChartCustom = dynamic(
 	() => import('../components/charts/RadarChart')
 );
+
+export type DataVizKind = 'radar' | 'table';
 
 const TabContent = ({ kind }: { kind: 'department' | 'administration' }) => {
 	const { classes, cx } = useStyles();
 	const { data } =
 		kind === 'department' ? useDepartments('base') : useAdministrations();
 
+	const [dataVisualitionKind, setDataVisualitionKind] = useState<
+		'radar' | 'table'
+	>('radar');
+
 	return (
 		<div>
-			{/* <TabHeader /> */}
+			<DataVizTabHeader
+				dataVisualitionKind={dataVisualitionKind}
+				setDataVisualitionKind={setDataVisualitionKind}
+			/>
 			<div className={cx(classes.grid)}>
 				{data.map(item => (
 					<div key={item} className={cx(classes.gridItem)}>
