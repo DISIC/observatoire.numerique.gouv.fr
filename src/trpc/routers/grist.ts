@@ -31,14 +31,25 @@ export const grist = router({
 
 		const gristProcedures = await api.fetchTable(process.env.GRIST_TABLE_PROCEDURES, { Ref_Edition: [edition] });
 
+		const gristAdministrationCentral = await api.fetchTable(process.env.GRIST_TABLE_ADMINISTRATIONS_CENTRAL);
+
+		const gristAdministrationCentralMap = gristAdministrationCentral.reduce((acc: Record<number, string>, administrationCentral: any) => {
+			acc[administrationCentral['id']] = administrationCentral['Nom_Administration_Centrale'];
+			return acc;
+		}, {});
+
 		const procedures: ProcedureWithFields[] = gristProcedures.map((gristProcedure: any) => {
 			const title = gristProcedure[grist_field_names.title].replace(/(?:\uD83D\uDCC4|#)/g, '').trim();
+			const administrationCentralId = gristProcedure[grist_field_names.administration_central];
+			const administrationCentralName = gristAdministrationCentralMap[administrationCentralId] || '';
+
 			return {
 				id: `preview-${gristProcedure[grist_field_names.id]}`,
 				editionId: null,
 				title,
 				title_normalized: title.normalize('NFD').replace(/[\u0300-\u036f]/g, ''),
 				administration: gristProcedure[grist_field_names.administration],
+				administration_central: administrationCentralName,
 				sousorg: gristProcedure[grist_field_names.sousorg],
 				ministere: gristProcedure[grist_field_names.ministere],
 				grist_identifier: gristProcedure[grist_field_names.id],

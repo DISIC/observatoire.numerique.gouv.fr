@@ -1,5 +1,4 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import Alert from '@codegouvfr/react-dsfr/Alert';

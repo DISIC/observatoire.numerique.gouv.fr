@@ -8,6 +8,7 @@ export const grist_field_names = {
 	link: 'URL_Demarche',
 	title: 'Nom_demarche_AT_',
 	administration: 'Administration_AT_',
+	administration_central: 'Ref_AC_SG',
 	sousorg: 'Min_politique_AT_',
 	ministere: 'Min_politique_AT_',
 	volume: 'Volumetrie_Totale',

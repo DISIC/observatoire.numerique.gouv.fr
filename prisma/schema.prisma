@@ -80,18 +80,19 @@ model Edition {
 }
 
 model Procedure {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  grist_identifier Int?
-  title            String
-  title_normalized String
-  ministere        String
-  administration   String
-  sousorg          String
-  volume           Int?
-  fields           Field[]
-  noJdma           Boolean
-  edition          Edition? @relation(fields: [editionId], references: [id])
-  editionId        String?  @db.ObjectId
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  grist_identifier       Int?
+  title                  String
+  title_normalized       String
+  ministere              String
+  administration         String
+  administration_central String?
+  sousorg                String
+  volume                 Int?
+  fields                 Field[]
+  noJdma                 Boolean
+  edition                Edition? @relation(fields: [editionId], references: [id])
+  editionId              String?  @db.ObjectId
 
   @@index([editionId])
 }
