@@ -133,3 +133,19 @@ export function useAdministrations() {
 		isLoading: (!error && !data) || isLoading
 	};
 }
+
+export function useAdministrationsCentral() {
+	const { data, error, isLoading } = useSWR(
+		`/api/administrations-central`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}

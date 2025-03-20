@@ -1,7 +1,11 @@
 import { tss } from 'tss-react';
 import { fr } from '@codegouvfr/react-dsfr';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
-import { useAdministrations, useDepartments } from '@/utils/api';
+import {
+	useAdministrations,
+	useAdministrationsCentral,
+	useDepartments
+} from '@/utils/api';
 import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
@@ -13,10 +17,18 @@ const RadarChartCustom = dynamic(
 
 export type DataVizKind = 'radar' | 'table';
 
-const TabContent = ({ kind }: { kind: 'department' | 'administration' }) => {
+const TabContent = ({
+	kind
+}: {
+	kind: 'department' | 'administration' | 'administration_central';
+}) => {
 	const { classes, cx } = useStyles();
 	const { data } =
-		kind === 'department' ? useDepartments('base') : useAdministrations();
+		kind === 'department'
+			? useDepartments('base')
+			: kind === 'administration'
+			? useAdministrations()
+			: useAdministrationsCentral();
 
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'radar' | 'table'
@@ -67,6 +79,10 @@ const DataViz = () => {
 						{
 							label: 'Administrations',
 							content: <TabContent kind="administration" />
+						},
+						{
+							label: 'Administrations centrales',
+							content: <TabContent kind="administration_central" />
 						}
 					]}
 				/>
