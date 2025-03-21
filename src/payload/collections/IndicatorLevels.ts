@@ -8,7 +8,8 @@ export const IndicatorLevels: CollectionConfig = {
 		description: true,
 		position: true,
 		noBackground: true,
-		threshold: true
+		threshold: true,
+		goal_reached: true
 	},
 	labels: {
 		singular: "Niveau d'indicateur",

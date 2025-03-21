@@ -18,38 +18,33 @@ export const indicatorLevels: Record<
 			color: 'green',
 			description:
 				'La totalité de la démarche est réalisable en ligne sur l’intégralité du territoire.',
-			position: 1,
-			goal_reached: true
+			position: 1
 		},
 		{
 			label: 'En cours de déploiement local',
 			color: 'green',
 			description: 'La démarche est en cours de déploiement sur le territoire.',
-			position: 2,
-			goal_reached: true
+			position: 2
 		},
 		{
 			label: 'Partiel',
 			color: 'yellow',
 			description:
 				'Une partie de la démarche n’est pas réalisable en ligne, n’est pas disponible sur l’intégralité du territoire français, ou n’est ouverte qu’à une partie de la population.',
-			position: 3,
-			goal_reached: false
+			position: 3
 		},
 		{
 			label: 'Non',
 			color: 'red',
 			description: 'La démarche n’est pas encore réalisable en ligne.',
-			position: 4,
-			goal_reached: false
+			position: 4
 		},
 		{
 			label: 'Démarche proactive',
 			color: 'blue',
 			description:
 				'Grâce au partage d’informations entre administrations, ce service attribue automatiquement les droits aux personnes concernées.',
-			position: 5,
-			goal_reached: false
+			position: 5
 		}
 	],
 	satisfaction: [
@@ -180,8 +175,7 @@ export const indicatorLevels: Record<
 			color: 'gray',
 			description: "Taux d'utilisation de la version numérique de la démarche.",
 			position: 1,
-			threshold: 0,
-			goal_reached: true
+			threshold: 0
 		},
 		{
 			label: 'À venir',
@@ -189,8 +183,7 @@ export const indicatorLevels: Record<
 			noBackground: true,
 			description:
 				"Le taux d'utilisation de la version numérique de la démarche est en cours d'analyse.",
-			position: 2,
-			goal_reached: false
+			position: 2
 		}
 	],
 	simplicity: [
@@ -332,16 +325,14 @@ export const indicatorLevels: Record<
 			color: 'gray',
 			description: "Pourcentage d'usagers ayant eu besoin d'être accompagnés.",
 			position: 1,
-			threshold: 0,
-			goal_reached: true
+			threshold: 0
 		},
 		{
 			label: 'À venir',
 			color: 'gray',
 			noBackground: true,
 			description: "Le niveau d'autonomie n'est pas encore évalué.",
-			position: 2,
-			goal_reached: false
+			position: 2
 		}
 	],
 	uptime: [

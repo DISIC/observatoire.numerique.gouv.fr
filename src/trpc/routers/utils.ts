@@ -106,3 +106,83 @@ export const getFieldsFromGristProcedure = (
 
 	}).filter((field) => field !== null);
 }
+
+export const getFieldsFromProcedure = (
+	procedure: ProcedureWithFields,
+	indicators: PayloadIndicator[]
+): ProcedureWithFields['fields'] => {
+	return indicators
+		.map(indicator => {
+			const indicatorLevels = (indicator.levels?.docs ||
+				[]) as PayloadIndicatorLevel[];
+			const currentField = procedure.fields.find(
+				field => field.slug === indicator.slug
+			);
+
+			if (!currentField) {
+				return null;
+			}
+
+			let value = currentField.value;
+
+			if (value === null) {
+				return {
+					id: `preview-${indicator.id}`,
+					slug: indicator.slug,
+					label: '-',
+					value: null,
+					color: 'gray' as IndicatorColor,
+					noBackground: true,
+					procedureId: 'preview',
+					goalReached: false
+				};
+			}
+
+			let numberValue = parseFloat(value);
+
+			if (Object.keys(grist_field_names_percentages).includes(indicator.slug) ) {
+				value = (numberValue * 100).toFixed(1).replace(/\.0$/, '');
+			}
+
+			if (!isNaN(numberValue)) {
+				const indicatorLevel = indicatorLevels
+					.filter(
+						level => level.threshold !== undefined && level.threshold !== null
+					)
+					.sort((a, b) => (b.threshold ?? 10000) - (a.threshold ?? 10000))
+					.find(level => (level.threshold ?? 10000) <= numberValue);
+
+				if (indicatorLevel) {
+					return {
+						id: `preview-${indicator.id}`,
+						slug: indicator.slug,
+						label: indicatorLevel.label.replace(/X{1,5}/g, value),
+						value: value !== null ? value.toString() : value,
+						color: indicatorLevel.color,
+						noBackground: indicatorLevel.noBackground || false,
+						procedureId: 'preview',
+						goalReached: indicatorLevel.goal_reached || false
+					};
+				}
+			}
+
+			const indicatorLevel = indicatorLevels.find(
+				(level: PayloadIndicatorLevel) => level.label === value
+			);
+			if (indicatorLevel && typeof indicatorLevel !== 'string') {
+				return {
+					id: `preview-${indicator.id}`,
+					slug: indicator.slug,
+					label: value,
+					value: value ? value.toString() : value,
+					color: indicatorLevel.color,
+					noBackground: indicatorLevel.noBackground || false,
+					procedureId: 'preview',
+					goalReached: indicatorLevel.goal_reached || false
+				};
+			}
+
+			return null;
+		})
+		.filter(field => field !== null);
+};
