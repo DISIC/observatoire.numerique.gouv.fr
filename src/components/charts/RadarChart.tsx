@@ -1,4 +1,4 @@
-import { RecordData } from '@/pages/api/administrations-central';
+import { RecordData } from '@/utils/data-viz';
 import { fr } from '@codegouvfr/react-dsfr';
 import React, { useState } from 'react';
 import {
