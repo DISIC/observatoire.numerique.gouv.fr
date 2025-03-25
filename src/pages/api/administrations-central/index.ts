@@ -100,19 +100,21 @@ export async function getAdministrationsCentral() {
 
 			for (const field of validSlugs) {
 				const fieldData = fields.filter(fieldData => fieldData.slug === field);
-				if (fieldData.length !== 2) {
-					console.error(
-						`Field ${field} has not 2 records, but ${fieldData.length}`
-					);
-					continue;
-				}
-				const [countReached, countNotReached] = fieldData
-					.sort((a, b) => (a.goalReached ? 1 : 0) - (b.goalReached ? 1 : 0))
-					.map(fieldData => fieldData._count);
 
-				const score = Math.round(
-					(countReached / (countReached + countNotReached)) * 100
-				);
+				let countReached = 0;
+				let countNotReached = 0;
+
+				if (fieldData.length > 0) {
+					const reachedData = fieldData.find(f => f.goalReached === true);
+					const notReachedData = fieldData.find(f => f.goalReached === false);
+
+					countReached = reachedData ? reachedData._count : 0;
+					countNotReached = notReachedData ? notReachedData._count : 0;
+				}
+
+				const totalCount = countReached + countNotReached;
+				const score =
+					totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
 
 				indicators[
 					indicators.findIndex(indicator => indicator.slug === field)
