@@ -11,33 +11,7 @@ import {
 } from 'recharts';
 import { tss } from 'tss-react';
 
-const data = [
-	{
-		icon: 'ri-emoji-sticker-line',
-		name: 'Satisfaction usager',
-		value: 8
-	},
-	{
-		icon: 'ri-open-arm-line',
-		name: 'Prise en compte du handicap',
-		value: 8
-	},
-	{
-		icon: 'ri-pass-valid-line',
-		name: 'Dites-le-nous une fois',
-		value: 5
-	},
-	{
-		icon: 'ri-lock-unlock-line',
-		name: 'Authentification',
-		value: 9
-	},
-	{
-		icon: 'ri-speak-line',
-		name: 'Simplicité du langage',
-		value: 6
-	}
-];
+type RadarChartData = { score: number; name: string; icon: string };
 
 const CustomAxisTick = (props: any) => {
 	if (props.payload.value === 0) return <></>;
@@ -78,7 +52,8 @@ const CustomAxisTickLabel = (props: any) => {
 	const newY = y + Math.sin(angle) * spacing;
 
 	const isActive = activeIcon === payload.value;
-	const displayName = data.find((d: any) => d.icon === activeIcon)?.name || '';
+	// const displayName = data.find((d: any) => d.icon === activeIcon)?.name || '';
+	const displayName = 'test';
 
 	const handleMouseEnter = () => {
 		if (onMouseEnter && payload) {
@@ -141,7 +116,7 @@ const CustomAxisTickLabel = (props: any) => {
 	);
 };
 
-const RadarChartCustom = () => {
+const RadarChartCustom = ({ data }: { data: RadarChartData[] }) => {
 	const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
 	const handleIconMouseEnter = (dataItem: any) => {
@@ -172,7 +147,7 @@ const RadarChartCustom = () => {
 				/>
 				<PolarRadiusAxis
 					angle={90}
-					domain={[0, 10]}
+					domain={[0, 100]}
 					orientation="middle"
 					stroke="transparent"
 					tick={<CustomAxisTick />}
@@ -180,7 +155,7 @@ const RadarChartCustom = () => {
 				/>
 				<Radar
 					name="Valeur"
-					dataKey="value"
+					dataKey="score"
 					strokeWidth={2}
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fill={fr.colors.decisions.artwork.minor.blueFrance.default}

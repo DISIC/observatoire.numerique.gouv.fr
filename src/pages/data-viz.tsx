@@ -23,12 +23,7 @@ const TabContent = ({
 	kind: 'department' | 'administration' | 'administration_central';
 }) => {
 	const { classes, cx } = useStyles();
-	const { data } =
-		kind === 'department'
-			? useDepartments('base')
-			: kind === 'administration'
-			? useAdministrations()
-			: useAdministrationsCentral();
+	const { data } = useAdministrationsCentral();
 
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'radar' | 'table'
@@ -42,10 +37,10 @@ const TabContent = ({
 			/>
 			<div className={cx(classes.grid)}>
 				{data.map(item => (
-					<div key={item} className={cx(classes.gridItem)}>
-						<h2 className={cx(classes.gridTitle)}>{item}</h2>
+					<div key={item.text} className={cx(classes.gridItem)}>
+						<h2 className={cx(classes.gridTitle)}>{item.text}</h2>
 						<div className={cx(classes.chart)}>
-							<RadarChartCustom />
+							<RadarChartCustom data={item.data} />
 						</div>
 						<div className={cx(classes.buttonsGroup)}>
 							<Button priority="secondary" size="small">
@@ -72,14 +67,14 @@ const DataViz = () => {
 				<Tabs
 					className={classes.tabsWrapper}
 					tabs={[
-						{
-							label: 'Périmètres ministériels',
-							content: <TabContent kind="department" />
-						},
-						{
-							label: 'Administrations',
-							content: <TabContent kind="administration" />
-						},
+						// {
+						// 	label: 'Périmètres ministériels',
+						// 	content: <TabContent kind="department" />
+						// },
+						// {
+						// 	label: 'Administrations',
+						// 	content: <TabContent kind="administration" />
+						// },
 						{
 							label: 'Administrations centrales',
 							content: <TabContent kind="administration_central" />

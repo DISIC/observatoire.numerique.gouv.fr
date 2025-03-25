@@ -37,6 +37,14 @@ const grist_field_names_percentages = [
 	grist_field_names.indicators.help_reachable
 ]
 
+const grist_field_names_strings = [
+	'usage',
+	'handicap',
+	'uptime',
+	'help_used',
+	'help_reachable'
+]
+
 export type GristFields = typeof grist_field_names;
 
 export const getFieldsFromGristProcedure = (
@@ -108,7 +116,7 @@ export const getFieldsFromGristProcedure = (
 }
 
 export const getFieldsFromProcedure = (
-	procedure: ProcedureWithFields,
+	procedure: Pick<ProcedureWithFields, 'id' | 'fields'>,
 	indicators: PayloadIndicator[]
 ): ProcedureWithFields['fields'] => {
 	return indicators
@@ -119,28 +127,30 @@ export const getFieldsFromProcedure = (
 				field => field.slug === indicator.slug
 			);
 
-			if (!currentField) {
-				return null;
-			}
+			if (!currentField) return null;
 
-			let value = currentField.value;
+			const indicatorLevel = indicatorLevels.find(
+				(level: PayloadIndicatorLevel) => level.label === currentField.label
+			);
+
+			let value = currentField.value ? currentField.value : indicatorLevel ? currentField.label : null;
 
 			if (value === null) {
 				return {
-					id: `preview-${indicator.id}`,
+					id: currentField.id,
 					slug: indicator.slug,
 					label: '-',
 					value: null,
 					color: 'gray' as IndicatorColor,
 					noBackground: true,
-					procedureId: 'preview',
+					procedureId: procedure.id,
 					goalReached: false
 				};
 			}
 
 			let numberValue = parseFloat(value);
 
-			if (Object.keys(grist_field_names_percentages).includes(indicator.slug) ) {
+			if (grist_field_names_strings.includes(indicator.slug)) {
 				value = (numberValue * 100).toFixed(1).replace(/\.0$/, '');
 			}
 
@@ -154,30 +164,27 @@ export const getFieldsFromProcedure = (
 
 				if (indicatorLevel) {
 					return {
-						id: `preview-${indicator.id}`,
+						id: currentField.id,
 						slug: indicator.slug,
 						label: indicatorLevel.label.replace(/X{1,5}/g, value),
 						value: value !== null ? value.toString() : value,
 						color: indicatorLevel.color,
 						noBackground: indicatorLevel.noBackground || false,
-						procedureId: 'preview',
+						procedureId: procedure.id,
 						goalReached: indicatorLevel.goal_reached || false
 					};
 				}
 			}
 
-			const indicatorLevel = indicatorLevels.find(
-				(level: PayloadIndicatorLevel) => level.label === value
-			);
 			if (indicatorLevel && typeof indicatorLevel !== 'string') {
 				return {
-					id: `preview-${indicator.id}`,
+					id: currentField.id,
 					slug: indicator.slug,
 					label: value,
 					value: value ? value.toString() : value,
 					color: indicatorLevel.color,
 					noBackground: indicatorLevel.noBackground || false,
-					procedureId: 'preview',
+					procedureId: procedure.id,
 					goalReached: indicatorLevel.goal_reached || false
 				};
 			}

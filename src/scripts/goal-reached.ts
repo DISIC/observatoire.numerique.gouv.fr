@@ -27,7 +27,7 @@ async function updateGoalReachedProperty() {
 				indicator.levels?.docs?.some(
 					level =>
 						typeof level != 'string' &&
-						(level.goal_reached !== undefined || level.goal_reached !== null)
+						(level.goal_reached !== undefined && level.goal_reached !== null)
 				) || false
 			);
 		});
@@ -37,18 +37,22 @@ async function updateGoalReachedProperty() {
 		);
 
 		const procedures = await prisma.procedure.findMany({
-			include: {
-				fields: true
+			select: {
+				id: true,
+				fields: {
+					where: {
+						slug: {
+							in: indicators.docs.map(indicator => indicator.slug)
+						}
+					}
+				}
 			},
 			where: {
 				fields: {
 					some: {
-						slug: {
-							in: indicators.docs.map(indicator => indicator.slug)
-						},
-						goalReached: {
-							isSet: false
-						}
+						// goalReached: {
+						// 	isSet: false
+						// }
 					}
 				}
 			}

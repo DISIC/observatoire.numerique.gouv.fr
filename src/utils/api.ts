@@ -2,6 +2,7 @@ import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { Edition, OldProcedure } from '@prisma/client';
+import { RecordData } from '@/pages/api/administrations-central';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -139,7 +140,7 @@ export function useAdministrationsCentral() {
 		`/api/administrations-central`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<string[]>(stringify(await res.json()));
+			return superJSONParse<RecordData[]>(stringify(await res.json()));
 		}
 	);
 
