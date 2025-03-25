@@ -1,12 +1,13 @@
 import { tss } from 'tss-react';
 import { fr } from '@codegouvfr/react-dsfr';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
-import { useAdministrationsCentral } from '@/utils/api';
+import { useIndicatorScoreByProcedureKind } from '@/utils/api';
 import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
-import { RecordData } from './api/administrations-central';
+import { ProcedureKind } from './api/indicator-scores';
+import { RecordData } from '@/utils/data-viz';
 
 const RadarChartCustom = dynamic(
 	() => import('../components/charts/RadarChart')
@@ -14,13 +15,9 @@ const RadarChartCustom = dynamic(
 
 export type DataVizKind = 'radar' | 'table';
 
-const TabContent = ({
-	kind
-}: {
-	kind: 'department' | 'administration' | 'administration_central';
-}) => {
+const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 	const { classes, cx } = useStyles();
-	const { data } = useAdministrationsCentral();
+	const { data } = useIndicatorScoreByProcedureKind({ kind });
 
 	const dataCrossKind = data
 		.reduce((acc, current) => {
@@ -94,17 +91,17 @@ const DataViz = () => {
 				<Tabs
 					className={classes.tabsWrapper}
 					tabs={[
-						// {
-						// 	label: 'Périmètres ministériels',
-						// 	content: <TabContent kind="department" />
-						// },
-						// {
-						// 	label: 'Administrations',
-						// 	content: <TabContent kind="administration" />
-						// },
 						{
 							label: 'Administrations centrales',
 							content: <TabContent kind="administration_central" />
+						},
+						{
+							label: 'Administrations',
+							content: <TabContent kind="administration" />
+						},
+						{
+							label: 'Périmètres ministériels',
+							content: <TabContent kind="ministere" />
 						}
 					]}
 				/>

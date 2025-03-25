@@ -10,6 +10,7 @@ export async function getAdministrations() {
 			administration: 'asc'
 		}
 	});
+
 	return administrations.map(administration => administration.administration);
 }
 

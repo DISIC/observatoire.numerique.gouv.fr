@@ -2,7 +2,8 @@ import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { Edition, OldProcedure } from '@prisma/client';
-import { RecordData } from '@/pages/api/administrations-central';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { RecordData } from './data-viz';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -135,12 +136,34 @@ export function useAdministrations() {
 	};
 }
 
+type IndicatorScoreByProcedureKindProps = {
+	kind: ProcedureKind;
+};
+
+export function useIndicatorScoreByProcedureKind({
+	kind
+}: IndicatorScoreByProcedureKindProps) {
+	const { data, error, isLoading } = useSWR(
+		`/api/indicator-scores?kind=${kind}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<RecordData[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
 export function useAdministrationsCentral() {
 	const { data, error, isLoading } = useSWR(
 		`/api/administrations-central`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<RecordData[]>(stringify(await res.json()));
+			return superJSONParse<string[]>(stringify(await res.json()));
 		}
 	);
 
