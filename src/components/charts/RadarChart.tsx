@@ -1,3 +1,4 @@
+import { RecordData } from '@/pages/api/administrations-central';
 import { fr } from '@codegouvfr/react-dsfr';
 import React, { useState } from 'react';
 import {
@@ -10,8 +11,6 @@ import {
 	Tooltip
 } from 'recharts';
 import { tss } from 'tss-react';
-
-type RadarChartData = { score: number; name: string; icon: string };
 
 const CustomAxisTick = (props: any) => {
 	if (props.payload.value === 0) return <></>;
@@ -116,7 +115,17 @@ const CustomAxisTickLabel = (props: any) => {
 	);
 };
 
-const RadarChartCustom = ({ data }: { data: RadarChartData[] }) => {
+type RadarChartCustomProps = {
+	data: RecordData['data'];
+	showGoalRadar: boolean;
+	showCrossScorePerimeter: boolean;
+};
+
+const RadarChartCustom = ({
+	data,
+	showGoalRadar,
+	showCrossScorePerimeter
+}: RadarChartCustomProps) => {
 	const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
 	const handleIconMouseEnter = (dataItem: any) => {
@@ -131,7 +140,6 @@ const RadarChartCustom = ({ data }: { data: RadarChartData[] }) => {
 		<ResponsiveContainer width="100%" height="100%">
 			<RadarChart data={data} accessibilityLayer>
 				<PolarGrid
-					strokeWidth={2}
 					stroke={fr.colors.decisions.artwork.decorative.blueFrance.default}
 				/>
 				<PolarAngleAxis
@@ -154,9 +162,38 @@ const RadarChartCustom = ({ data }: { data: RadarChartData[] }) => {
 					tickCount={6}
 				/>
 				<Radar
+					name="Objectif"
+					dataKey="goal"
+					stroke={
+						showGoalRadar
+							? fr.colors.decisions.background.flat.success.default
+							: 'transparent'
+					}
+					fill={
+						showGoalRadar
+							? fr.colors.decisions.background.flat.success.default
+							: 'transparent'
+					}
+					fillOpacity={0.2}
+				/>
+				<Radar
+					name="Moyenne cross-perimètre"
+					dataKey="cross"
+					stroke={
+						showCrossScorePerimeter
+							? fr.colors.options.orangeTerreBattue.main645.default
+							: 'transparent'
+					}
+					fill={
+						showCrossScorePerimeter
+							? fr.colors.options.orangeTerreBattue.main645.default
+							: 'transparent'
+					}
+					fillOpacity={0.2}
+				/>
+				<Radar
 					name="Valeur"
 					dataKey="score"
-					strokeWidth={2}
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fill={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fillOpacity={0.2}

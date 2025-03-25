@@ -15,11 +15,24 @@ const validSlugs = [
 export type RecordData = {
 	text: string;
 	count: number;
-	data: { score: number; name: string; icon: string }[];
+	data: {
+		score: number;
+		goal: number;
+		cross: number;
+		slug: string;
+		name: string;
+		icon: string;
+	}[];
 };
 
 export async function getAdministrationsCentral() {
 	const payload = await getPayloadClient({ seed: false });
+
+	const currentEdition = await prisma.edition.findFirstOrThrow({
+		orderBy: {
+			created_at: 'desc'
+		}
+	});
 
 	const administrationsCentral = await prisma.procedure.groupBy({
 		by: ['administration_central'],
@@ -52,7 +65,8 @@ export async function getAdministrationsCentral() {
 
 			const procedures = await prisma.procedure.findMany({
 				where: {
-					administration_central: current_administration_central
+					administration_central: current_administration_central,
+					editionId: currentEdition.id
 				},
 				select: {
 					id: true
@@ -75,14 +89,14 @@ export async function getAdministrationsCentral() {
 				_count: true
 			});
 
-			const indicators = validIndicators.map(indicator => {
-				return {
-					score: 0,
-					slug: indicator.slug,
-					name: indicator.label,
-					icon: indicator.icon
-				};
-			});
+			const indicators = validIndicators.map(indicator => ({
+				score: 0,
+				goal: 80,
+				cross: 0,
+				slug: indicator.slug,
+				name: indicator.label,
+				icon: indicator.icon
+			})) as RecordData['data'];
 
 			for (const field of validSlugs) {
 				const fieldData = fields.filter(fieldData => fieldData.slug === field);

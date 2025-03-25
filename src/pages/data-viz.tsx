@@ -1,15 +1,12 @@
 import { tss } from 'tss-react';
 import { fr } from '@codegouvfr/react-dsfr';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
-import {
-	useAdministrations,
-	useAdministrationsCentral,
-	useDepartments
-} from '@/utils/api';
+import { useAdministrationsCentral } from '@/utils/api';
 import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
+import { RecordData } from './api/administrations-central';
 
 const RadarChartCustom = dynamic(
 	() => import('../components/charts/RadarChart')
@@ -25,6 +22,30 @@ const TabContent = ({
 	const { classes, cx } = useStyles();
 	const { data } = useAdministrationsCentral();
 
+	const dataCrossKind = data
+		.reduce((acc, current) => {
+			current.data.forEach((item, i) => {
+				if (!acc[i]) acc[i] = { ...item, score: 0 };
+				acc[i].score += item.score;
+			});
+			return acc;
+		}, [] as RecordData['data'])
+		.map(item => ({
+			...item,
+			score: Math.round(item.score / data.length)
+		}));
+
+	const dataWithCrossKind = data.map(item => ({
+		...item,
+		data: item.data.map((subItem, i) => ({
+			...subItem,
+			cross: dataCrossKind[i].score
+		}))
+	}));
+
+	const [showGoalRadar, setShowGoalRadar] = useState(false);
+	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
+
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'radar' | 'table'
 	>('radar');
@@ -34,13 +55,19 @@ const TabContent = ({
 			<DataVizTabHeader
 				dataVisualitionKind={dataVisualitionKind}
 				setDataVisualitionKind={setDataVisualitionKind}
+				setShowGoalRadar={setShowGoalRadar}
+				setShowCrossScorePerimeter={setShowCrossScorePerimeter}
 			/>
 			<div className={cx(classes.grid)}>
-				{data.map(item => (
+				{dataWithCrossKind.map(item => (
 					<div key={item.text} className={cx(classes.gridItem)}>
 						<h2 className={cx(classes.gridTitle)}>{item.text}</h2>
 						<div className={cx(classes.chart)}>
-							<RadarChartCustom data={item.data} />
+							<RadarChartCustom
+								data={item.data}
+								showGoalRadar={showGoalRadar}
+								showCrossScorePerimeter={showCrossScorePerimeter}
+							/>
 						</div>
 						<div className={cx(classes.buttonsGroup)}>
 							<Button priority="secondary" size="small">

@@ -4,46 +4,62 @@ import { tss } from 'tss-react';
 import { Checkbox } from '@codegouvfr/react-dsfr/Checkbox';
 import { fr } from '@codegouvfr/react-dsfr';
 import { DataVizKind } from '@/pages/data-viz';
+import { Dispatch, SetStateAction } from 'react';
 
 type DataVizTabHeaderProps = {
 	dataVisualitionKind: DataVizKind;
-	// give me the set type for useState
-	setDataVisualitionKind: any;
+	setDataVisualitionKind: Dispatch<SetStateAction<DataVizKind>>;
+	setShowGoalRadar: Dispatch<SetStateAction<boolean>>;
+	setShowCrossScorePerimeter: Dispatch<SetStateAction<boolean>>;
 };
 
 const DataVizTabHeader = ({
 	dataVisualitionKind,
-	setDataVisualitionKind
+	setDataVisualitionKind,
+	setShowGoalRadar,
+	setShowCrossScorePerimeter
 }: DataVizTabHeaderProps) => {
 	const { classes, cx } = useStyles();
 	return (
 		<div className={cx(classes.root)}>
 			<SearchBar onButtonClick={function noRefCheck() {}} />
-			<Checkbox
-				options={[
-					{
-						label: 'Objectif',
-						nativeInputProps: {
-							name: 'checkboxes-1',
-							value: 'value1'
+			<div style={{ display: 'flex', alignItems: 'center' }}>
+				<Checkbox
+					options={[
+						{
+							label: 'Objectif',
+							nativeInputProps: {
+								name: 'checkboxes-1',
+								value: 'value1',
+								onChange: e => setShowGoalRadar(e.target.checked)
+							}
 						}
-					},
-					{
-						label: 'Moyenne interministérielle',
-						nativeInputProps: {
-							name: 'checkboxes-1',
-							value: 'value2'
+					]}
+					orientation="horizontal"
+					state="default"
+					className={cx(classes.checkboxWrapper, 'checkbox-green')}
+					small
+				/>
+				<Checkbox
+					options={[
+						{
+							label: 'Moyenne inter-périmètre',
+							nativeInputProps: {
+								name: 'checkboxes-1',
+								value: 'value2',
+								onChange: e => setShowCrossScorePerimeter(e.target.checked)
+							}
 						}
-					}
-				]}
-				orientation="horizontal"
-				state="default"
-				className={cx(classes.checkboxWrapper)}
-				small
-			/>
+					]}
+					orientation="horizontal"
+					state="default"
+					className={cx(classes.checkboxWrapper, 'checkbox-yellow')}
+					small
+				/>
+			</div>
 			<div className={cx(classes.buttonsGroup)}>
 				<Button
-					iconId="fr-icon-checkbox-circle-line"
+					iconId="ri-pentagon-line"
 					onClick={() => setDataVisualitionKind('radar')}
 					priority={dataVisualitionKind === 'radar' ? 'primary' : 'secondary'}
 					title="Radar"
