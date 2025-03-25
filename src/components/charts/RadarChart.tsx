@@ -162,42 +162,30 @@ const RadarChartCustom = ({
 					tickCount={6}
 				/>
 				<Radar
-					name="Objectif"
-					dataKey="goal"
-					stroke={
-						showGoalRadar
-							? fr.colors.decisions.background.flat.success.default
-							: 'transparent'
-					}
-					fill={
-						showGoalRadar
-							? fr.colors.decisions.background.flat.success.default
-							: 'transparent'
-					}
-					fillOpacity={0.2}
-				/>
-				<Radar
-					name="Moyenne cross-perimètre"
-					dataKey="cross"
-					stroke={
-						showCrossScorePerimeter
-							? fr.colors.options.orangeTerreBattue.main645.default
-							: 'transparent'
-					}
-					fill={
-						showCrossScorePerimeter
-							? fr.colors.options.orangeTerreBattue.main645.default
-							: 'transparent'
-					}
-					fillOpacity={0.2}
-				/>
-				<Radar
 					name="Valeur"
 					dataKey="score"
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fill={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fillOpacity={0.2}
 				/>
+				{showGoalRadar && (
+					<Radar
+						name="Objectif"
+						dataKey="goal"
+						stroke={fr.colors.decisions.background.flat.success.default}
+						fill={fr.colors.decisions.background.flat.success.default}
+						fillOpacity={0.2}
+					/>
+				)}
+				{showCrossScorePerimeter && (
+					<Radar
+						name="Moyenne cross-perimètre"
+						dataKey="cross"
+						stroke={fr.colors.options.orangeTerreBattue.main645.default}
+						fill={fr.colors.options.orangeTerreBattue.main645.default}
+						fillOpacity={0.2}
+					/>
+				)}
 				<Tooltip
 					labelFormatter={(_, payload) => payload[0]?.payload.name || ''}
 				/>
