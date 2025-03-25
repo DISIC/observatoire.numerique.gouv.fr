@@ -19,27 +19,6 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 	const { classes, cx } = useStyles();
 	const { data } = useIndicatorScoreByProcedureKind({ kind });
 
-	const dataCrossKind = data
-		.reduce((acc, current) => {
-			current.data.forEach((item, i) => {
-				if (!acc[i]) acc[i] = { ...item, score: 0 };
-				acc[i].score += item.score;
-			});
-			return acc;
-		}, [] as RecordData['data'])
-		.map(item => ({
-			...item,
-			score: Math.round(item.score / data.length)
-		}));
-
-	const dataWithCrossKind = data.map(item => ({
-		...item,
-		data: item.data.map((subItem, i) => ({
-			...subItem,
-			cross: dataCrossKind[i].score
-		}))
-	}));
-
 	const [showGoalRadar, setShowGoalRadar] = useState(false);
 	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
 
@@ -56,7 +35,7 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 				setShowCrossScorePerimeter={setShowCrossScorePerimeter}
 			/>
 			<div className={cx(classes.grid)}>
-				{dataWithCrossKind.map(item => (
+				{data.map(item => (
 					<div key={item.text} className={cx(classes.gridItem)}>
 						<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
 							{item.text}

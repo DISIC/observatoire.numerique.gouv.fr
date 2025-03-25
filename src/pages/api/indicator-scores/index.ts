@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { getIndicatorScoresByProcedureKind } from '@/utils/data-viz';
+import {
+	getIndicatorScoresByProcedureKind,
+	RecordData
+} from '@/utils/data-viz';
 
 export type ProcedureKind =
 	| 'administration'
@@ -35,6 +38,24 @@ export async function getIndicatorScores(kind: ProcedureKind) {
 		kind,
 		groupByKind
 	});
+
+	const dataCrossKind = records
+		.reduce((acc, current) => {
+			current.data.forEach((item, i) => {
+				if (!acc[i]) acc[i] = { ...item, score: 0 };
+				acc[i].score += item.score;
+			});
+			return acc;
+		}, [] as RecordData['data'])
+		.map(item => Math.round(item.score / records.length));
+
+	records = records.map(item => ({
+		...item,
+		data: item.data.map((data, subIndex) => ({
+			...data,
+			cross: dataCrossKind[subIndex]
+		}))
+	}));
 
 	records = records.sort((a, b) => a.text.localeCompare(b.text));
 
