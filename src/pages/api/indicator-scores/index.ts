@@ -10,8 +10,17 @@ export type ProcedureKind =
 const prisma = new PrismaClient();
 
 export async function getIndicatorScores(kind: ProcedureKind) {
+	const currentEdition = await prisma.edition.findFirstOrThrow({
+		orderBy: {
+			created_at: 'desc'
+		}
+	});
+
 	const elementGroupedByProcedureKind = await prisma.procedure.groupBy({
 		by: [kind],
+		where: {
+			editionId: currentEdition.id
+		},
 		_count: true
 	});
 
@@ -22,10 +31,12 @@ export async function getIndicatorScores(kind: ProcedureKind) {
 			_count: element._count
 		}));
 
-	const records = await getIndicatorScoresByProcedureKind({
+	let records = await getIndicatorScoresByProcedureKind({
 		kind,
 		groupByKind
 	});
+
+	records = records.sort((a, b) => a.text.localeCompare(b.text));
 
 	return records;
 }

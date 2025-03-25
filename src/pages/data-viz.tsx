@@ -58,7 +58,12 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 			<div className={cx(classes.grid)}>
 				{dataWithCrossKind.map(item => (
 					<div key={item.text} className={cx(classes.gridItem)}>
-						<h2 className={cx(classes.gridTitle)}>{item.text}</h2>
+						<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+							{item.text}
+						</h2>
+						<p className={cx('fr-text--xs')}>
+							(Nb de démarches : {item.count})
+						</p>
 						<div className={cx(classes.chart)}>
 							<RadarChartCustom
 								data={item.data}
@@ -152,9 +157,8 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 	},
 	gridTitle: {
 		fontWeight: 500,
-		fontSize: '18px',
-		lineHeight: '28px',
-		color: fr.colors.decisions.text.title.grey.default
+		color: fr.colors.decisions.text.title.grey.default,
+		marginBottom: fr.spacing('1v')
 	},
 	chart: {
 		width: '100%',

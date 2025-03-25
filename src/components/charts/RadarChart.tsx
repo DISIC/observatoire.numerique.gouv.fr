@@ -19,10 +19,10 @@ const CustomAxisTick = (props: any) => {
 			x={props.x}
 			y={props.y + 14}
 			fill="#666"
-			fontSize={12}
+			fontSize={10}
 			textAnchor={props.textAnchor}
 		>
-			{props.payload.value}
+			{props.payload.value}%
 		</text>
 	);
 };
@@ -188,6 +188,7 @@ const RadarChartCustom = ({
 				)}
 				<Tooltip
 					labelFormatter={(_, payload) => payload[0]?.payload.name || ''}
+					formatter={(value, _, { name }) => [`${value}%`, name]}
 				/>
 			</RadarChart>
 		</ResponsiveContainer>

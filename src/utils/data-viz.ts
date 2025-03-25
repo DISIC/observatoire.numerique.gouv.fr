@@ -36,12 +36,6 @@ export async function getIndicatorScoresByProcedureKind({
 }: GetIndicatorScoresByProcedureKindProps) {
 	const payload = await getPayloadClient({ seed: false });
 
-	const currentEdition = await prisma.edition.findFirstOrThrow({
-		orderBy: {
-			created_at: 'desc'
-		}
-	});
-
 	const validIndicators = (
 		await payload.find({
 			collection: 'payload-indicators',
@@ -57,8 +51,7 @@ export async function getIndicatorScoresByProcedureKind({
 		groupByKind.map(async group => {
 			const procedures = await prisma.procedure.findMany({
 				where: {
-					[kind]: group.text,
-					editionId: currentEdition.id
+					[kind]: group.text
 				},
 				select: {
 					id: true
