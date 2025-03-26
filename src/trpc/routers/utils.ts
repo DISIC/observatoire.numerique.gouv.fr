@@ -8,6 +8,7 @@ export const grist_field_names = {
 	link: 'URL_Demarche',
 	title: 'Nom_demarche_AT_',
 	administration: 'Administration_AT_',
+	administration_central: 'Ref_AC_SG',
 	sousorg: 'Min_politique_AT_',
 	ministere: 'Min_politique_AT_',
 	volume: 'Volumetrie_Totale',
@@ -36,6 +37,14 @@ const grist_field_names_percentages = [
 	grist_field_names.indicators.help_reachable
 ]
 
+const grist_field_names_strings = [
+	'usage',
+	'handicap',
+	'uptime',
+	'help_used',
+	'help_reachable'
+]
+
 export type GristFields = typeof grist_field_names;
 
 export const getFieldsFromGristProcedure = (
@@ -55,7 +64,8 @@ export const getFieldsFromGristProcedure = (
 				value: null,
 				color: 'gray' as IndicatorColor,
 				noBackground: true,
-				procedureId: 'preview'
+				procedureId: 'preview',
+				goalReached: false
 			}
 		}
 
@@ -80,7 +90,8 @@ export const getFieldsFromGristProcedure = (
 					value: value !== null ? value.toString() : value,
 					color: indicatorLevel.color,
 					noBackground: indicatorLevel.noBackground || false,
-					procedureId: 'preview'
+					procedureId: 'preview',
+					goalReached: indicatorLevel.goal_reached || false
 				}
 			}
 		}
@@ -94,7 +105,8 @@ export const getFieldsFromGristProcedure = (
 				value: indicator.slug === 'online' ? gristProcedure[grist_field_names.link] : value ? value.toString() : value,
 				color: indicatorLevel.color,
 				noBackground: indicatorLevel.noBackground || false,
-				procedureId: 'preview'
+				procedureId: 'preview',
+				goalReached: indicatorLevel.goal_reached || false
 			}
 		}
 
@@ -102,3 +114,82 @@ export const getFieldsFromGristProcedure = (
 
 	}).filter((field) => field !== null);
 }
+
+export const getFieldsFromProcedure = (
+	procedure: Pick<ProcedureWithFields, 'id' | 'fields'>,
+	indicators: PayloadIndicator[]
+): ProcedureWithFields['fields'] => {
+	return indicators
+		.map(indicator => {
+			const indicatorLevels = (indicator.levels?.docs ||
+				[]) as PayloadIndicatorLevel[];
+			const currentField = procedure.fields.find(
+				field => field.slug === indicator.slug
+			);
+
+			if (!currentField) return null;
+
+			const indicatorLevel = indicatorLevels.find(
+				(level: PayloadIndicatorLevel) => level.label === currentField.label
+			);
+
+			let value = currentField.value ? currentField.value : indicatorLevel ? currentField.label : null;
+
+			if (value === null) {
+				return {
+					id: currentField.id,
+					slug: indicator.slug,
+					label: '-',
+					value: null,
+					color: 'gray' as IndicatorColor,
+					noBackground: true,
+					procedureId: procedure.id,
+					goalReached: false
+				};
+			}
+
+			let numberValue = parseFloat(value);
+
+			if (grist_field_names_strings.includes(indicator.slug)) {
+				value = (numberValue * 100).toFixed(1).replace(/\.0$/, '');
+			}
+
+			if (!isNaN(numberValue)) {
+				const indicatorLevel = indicatorLevels
+					.filter(
+						level => level.threshold !== undefined && level.threshold !== null
+					)
+					.sort((a, b) => (b.threshold ?? 10000) - (a.threshold ?? 10000))
+					.find(level => (level.threshold ?? 10000) <= numberValue);
+
+				if (indicatorLevel) {
+					return {
+						id: currentField.id,
+						slug: indicator.slug,
+						label: indicatorLevel.label.replace(/X{1,5}/g, value),
+						value: value !== null ? value.toString() : value,
+						color: indicatorLevel.color,
+						noBackground: indicatorLevel.noBackground || false,
+						procedureId: procedure.id,
+						goalReached: indicatorLevel.goal_reached || false
+					};
+				}
+			}
+
+			if (indicatorLevel && typeof indicatorLevel !== 'string') {
+				return {
+					id: currentField.id,
+					slug: indicator.slug,
+					label: value,
+					value: value ? value.toString() : value,
+					color: indicatorLevel.color,
+					noBackground: indicatorLevel.noBackground || false,
+					procedureId: procedure.id,
+					goalReached: indicatorLevel.goal_reached || false
+				};
+			}
+
+			return null;
+		})
+		.filter(field => field !== null);
+};

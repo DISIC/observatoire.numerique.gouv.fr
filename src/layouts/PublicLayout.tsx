@@ -114,6 +114,14 @@ const PublicLayout = (props: Props) => {
 					},
 					{
 						linkProps: {
+							href: '/data-viz',
+							target: '_self'
+						},
+						isActive: router.pathname === '/data-viz',
+						text: 'DataViz'
+					},
+					{
+						linkProps: {
 							href: '/observatoire/editions',
 							target: '_self'
 						},
