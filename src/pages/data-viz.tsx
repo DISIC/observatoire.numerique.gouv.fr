@@ -7,10 +7,13 @@ import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
 import { ProcedureKind } from './api/indicator-scores';
-import { RecordData } from '@/utils/data-viz';
+import {
+	ModalEvolutionParams,
+	ModalEvolution
+} from '@/components/data-viz/ModalEvolution';
 
 const RadarChartCustom = dynamic(
-	() => import('../components/charts/RadarChart')
+	() => import('@/components/charts/RadarChart')
 );
 
 export type DataVizKind = 'radar' | 'table';
@@ -26,8 +29,13 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 		'radar' | 'table'
 	>('radar');
 
+	const [myDialogActions] = useState<{
+		open?: (params: ModalEvolutionParams) => void;
+	}>({});
+
 	return (
 		<div>
+			<ModalEvolution actions={myDialogActions} />
 			<DataVizTabHeader
 				dataVisualitionKind={dataVisualitionKind}
 				setDataVisualitionKind={setDataVisualitionKind}
@@ -54,7 +62,17 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 							<Button priority="secondary" size="small">
 								Comparer
 							</Button>
-							<Button priority="secondary" size="small">
+							<Button
+								priority="secondary"
+								size="small"
+								onClick={async () => {
+									const response = await myDialogActions.open!({
+										title: `Voir l'évolution ${item.text}`,
+										procedureKind: kind,
+										kindSlug: item.text
+									});
+								}}
+							>
 								Voir l'évolution
 							</Button>
 							<Button size="small">Voir les démarches</Button>
@@ -150,6 +168,9 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 		alignItems: 'center',
 		flexWrap: 'wrap',
 		marginTop: fr.spacing('2v')
+	},
+	modal: {
+		textAlign: 'start'
 	}
 }));
 
