@@ -90,19 +90,16 @@ export function ColumnHeaderDefinition(props: Props) {
 							);
 						}}
 						nativeButtonProps={{
-							title: `Trier les démarches par rapport à la valeur de "${text}" de manière descendante`
+							title: `Trier les démarches par rapport à la valeur de "${text}" de manière descendante`,
+							className: cx(
+								classes.sortButton,
+								currentSort?.slug === slug &&
+									currentSort?.direction === 'desc' &&
+									classes.sortButtonActive
+							)
 						}}
 					>
-						<i
-							className={cx(fr.cx('ri-arrow-down-line'), classes.sortIcon)}
-							style={{
-								color:
-									currentSort?.slug === slug &&
-									currentSort?.direction === 'desc'
-										? 'inherit'
-										: fr.colors.decisions.background.actionLow.blueFrance.hover
-							}}
-						/>
+						<i className={cx(fr.cx('ri-arrow-down-line'), classes.sortIcon)} />
 					</Button>
 					<Button
 						priority="tertiary no outline"
@@ -114,18 +111,16 @@ export function ColumnHeaderDefinition(props: Props) {
 							);
 						}}
 						nativeButtonProps={{
-							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`
+							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`,
+							className: cx(
+								classes.sortButton,
+								currentSort?.slug === slug &&
+									currentSort?.direction === 'asc' &&
+									classes.sortButtonActive
+							)
 						}}
 					>
-						<i
-							className={cx(fr.cx('ri-arrow-up-line'), classes.sortIcon)}
-							style={{
-								color:
-									currentSort?.slug === slug && currentSort?.direction === 'asc'
-										? 'inherit'
-										: fr.colors.decisions.background.actionLow.blueFrance.hover
-							}}
-						/>
+						<i className={cx(fr.cx('ri-arrow-up-line'), classes.sortIcon)} />
 					</Button>
 				</div>
 			)}
@@ -208,7 +203,14 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 	},
 	sortContainer: {
 		display: 'flex',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		gap: fr.spacing('1v')
+	},
+	sortButton: {
+		borderRadius: fr.spacing('2v')
+	},
+	sortButtonActive: {
+		backgroundColor: `${fr.colors.decisions.background.alt.blueFrance.default}!important`
 	},
 	sortIcon: {
 		':before': {
