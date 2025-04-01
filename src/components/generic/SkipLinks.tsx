@@ -21,7 +21,7 @@ export function SkipLinks(props: Props) {
 	}
 
 	return (
-		<nav>
+		<nav role="navigation" aria-label="Accès rapide">
 			<ul className={classes.skipLinkList}>
 				{links.map((link, index) => (
 					<li key={index}>
