@@ -26,10 +26,10 @@ Installer les dépendances (npm version >= 18)
 yarn
 ```
 
-Insérer les seed
+Insérer les seed (payloadcms)
 
 ```
-npx prisma db seed
+yarn seed:dev
 ```
 
 Lancer le frontend en local
@@ -37,3 +37,9 @@ Lancer le frontend en local
 ```
 yarn dev
 ```
+
+Utilisateur admin seed
+
+| Email          | Rôle    | Compte activé | Ancien compte observatoire | Mot de passe |
+| -------------- | ------- | ------------- | -------------------------- | ------------ |
+| admin@test.loc | Porteur | Non           | Non                        | admin123     |
