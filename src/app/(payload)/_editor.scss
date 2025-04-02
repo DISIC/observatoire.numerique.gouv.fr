@@ -1,0 +1,41 @@
+.editor {
+	&-container {
+		* {
+			font-family: 'Marianne', sans-serif;
+		}
+		background-color: white;
+		color: #3a3a3a;
+
+		h1,
+		h2,
+		h3 {
+			color: #000091;
+			font-weight: 700;
+			margin: 1.5rem 0;
+		}
+
+		h2 {
+			font-size: 2rem !important;
+			line-height: 2.5rem !important;
+		}
+
+		p {
+			margin: 0 0 1.5rem;
+		}
+
+		a {
+			text-decoration: underline;
+			color: #3a3a3a;
+		}
+	}
+
+	.add-block-menu .icon {
+		background-color: #000091;
+		color: #fff;
+		border-radius: 0.2em;
+		&:hover {
+			color: #000091;
+			background-color: #000091;
+		}
+	}
+}
