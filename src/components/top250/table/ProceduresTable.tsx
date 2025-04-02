@@ -239,7 +239,7 @@ export function ProceduresTable(props: Props) {
 												title: indicator.label
 											}}
 											onFocus={() => {
-												if (index >= 5) handleScrollX(true, true);
+												if (index >= 6) handleScrollX(true, true);
 												else handleScrollX(false, true);
 											}}
 											onSort={onSort}
