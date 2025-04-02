@@ -30,7 +30,7 @@
 		"@codegouvfr/react-dsfr": "^1.17.0",
 		"@emotion/react": "^11.10.6",
 		"@emotion/server": "^11.10.0",
-		"@next/font": "13.1.6",
+		"@next/font": "^15.0.3",
 		"@paulmillr/qr": "^0.3.0",
 		"@payloadcms/db-mongodb": "^3.5.0",
 		"@payloadcms/next": "^3.5.0",
