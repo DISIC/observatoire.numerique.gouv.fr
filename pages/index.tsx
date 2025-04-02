@@ -116,7 +116,7 @@ export default function Home() {
 				}
 				button={{
 					text: 'Ajouter le bouton “je donne mon avis”',
-					link: '/je-donne-mon-avis/'
+					link: 'https://jedonnemonavis.numerique.gouv.fr'
 				}}
 				image={{
 					alt: '',

@@ -17,7 +17,7 @@ RUN if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
 
 #### BUILDER ####
 FROM node:alpine AS builder
-ARG DATABASE_URL
+ARG MONGODB_ADDON_URI
 
 WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
@@ -35,7 +35,7 @@ RUN if [ -f yarn.lock ]; then yarn build; \
 
 #### RUNNER ####
 FROM node:alpine AS runner
-ARG DATABASE_URL
+ARG MONGODB_ADDON_URI
 WORKDIR /app
 
 

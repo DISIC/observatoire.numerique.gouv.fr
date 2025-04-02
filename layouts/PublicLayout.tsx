@@ -1,14 +1,12 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { fr } from '@codegouvfr/react-dsfr';
-import { makeStyles } from '@codegouvfr/react-dsfr/tss';
-import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
-import { Display } from '@codegouvfr/react-dsfr/Display';
-import Head from 'next/head';
-import { doesHttpOnlyCookieExist } from '@/utils/cookies';
-import { SocialNetworks } from '@/components/layout/SocialNetworks';
-import { CustomFooter } from '@/components/layout/CustomFooter';
-import { useSession } from 'next-auth/react';
 import { SkipLinks } from '@/components/generic/SkipLinks';
+import { CustomFooter } from '@/components/layout/CustomFooter';
+import { SocialNetworks } from '@/components/layout/SocialNetworks';
+import { fr } from '@codegouvfr/react-dsfr';
+import { Display } from '@codegouvfr/react-dsfr/Display';
+import { Header, HeaderProps } from '@codegouvfr/react-dsfr/Header';
+import { makeStyles } from '@codegouvfr/react-dsfr/tss';
+import { useSession } from 'next-auth/react';
+import { ReactNode } from 'react';
 
 type Props = {
 	children: ReactNode;
@@ -19,8 +17,6 @@ const PublicLayout = (props: Props) => {
 	const { classes, cx } = useStyles();
 	const session = useSession();
 	const isLogged = !!session.data;
-
-	const [isXWikiUserLogged, setIsXWikiUserLogged] = useState<boolean>();
 
 	const brandTop = (
 		<>
@@ -33,15 +29,6 @@ const PublicLayout = (props: Props) => {
 	const serviceTitle = 'Vos démarches essentielles';
 	const serviceTagLine = '';
 
-	useEffect(() => {
-		setIsXWikiUserLogged(
-			doesHttpOnlyCookieExist('JSESSIONID') &&
-				doesHttpOnlyCookieExist('username')
-		);
-	}, []);
-
-	if (isXWikiUserLogged === undefined) return <></>;
-
 	let accessItems: HeaderProps.QuickAccessItem[] = [
 		{
 			iconId: 'ri-service-fill',
@@ -53,22 +40,18 @@ const PublicLayout = (props: Props) => {
 		{
 			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: '/je-donne-mon-avis/',
+				href: 'https://jedonnemonavis.numerique.gouv.fr',
 				target: '_self'
 			},
-			text: "L'outil Je donne mon avis"
+			text: 'Je donne mon avis'
 		},
 		{
-			iconId: isXWikiUserLogged
-				? 'ri-logout-circle-line'
-				: 'ri-login-circle-line',
+			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: isXWikiUserLogged
-					? '/logout/Main/WebHome'
-					: '/login/XWiki/XWikiLogin',
+				href: 'https://jedonnemonavis.numerique.gouv.fr/login',
 				target: '_self'
 			},
-			text: isXWikiUserLogged ? 'Déconnexion' : 'Connexion'
+			text: 'Connexion'
 		}
 	];
 
@@ -95,7 +78,7 @@ const PublicLayout = (props: Props) => {
 				className={cx(classes.header)}
 				brandTop={brandTop}
 				homeLinkProps={{
-					href: isXWikiUserLogged ? '/Main' : '/',
+					href: '/',
 					target: '_self',
 					title: 'Accueil - Vos démarches essentielles'
 				}}

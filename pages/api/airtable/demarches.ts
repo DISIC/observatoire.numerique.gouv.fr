@@ -204,50 +204,20 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 		{
 			id: 'preview',
 			slug: 'help_reachable',
-			label: getLabelFromValue(
-				'help_reachable',
-				record.get(field_names.indicators.help_reachable)
-			),
-			color: getColorFromLabel(
-				'help_reachable',
-				getLabelFromValue(
-					'help_reachable',
-					record.get(field_names.indicators.help_reachable)
-				)
-			),
-			value: getRoundedDecimalString(
-				(record.get(field_names.indicators.help_reachable) * 100).toString()
-			),
+			label: 'À venir',
+			color: 'gray',
+			value: null,
 			procedureId: 'preview',
-			noBackground:
-				getLabelFromValue(
-					'help_reachable',
-					record.get(field_names.indicators.help_reachable)
-				) === 'À venir'
+			noBackground: true
 		},
 		{
 			id: 'preview',
 			slug: 'help_used',
-			label: getLabelFromValue(
-				'help_used',
-				record.get(field_names.indicators.help_used)
-			),
-			color: getColorFromLabel(
-				'help_used',
-				getLabelFromValue(
-					'help_used',
-					record.get(field_names.indicators.help_used)
-				)
-			),
-			value: getRoundedDecimalString(
-				(record.get(field_names.indicators.help_used) * 100).toString()
-			),
+			label: 'À venir',
+			color: 'gray',
+			value: null,
 			procedureId: 'preview',
-			noBackground:
-				getLabelFromValue(
-					'help_used',
-					record.get(field_names.indicators.help_used)
-				) === 'À venir'
+			noBackground: true
 		},
 		{
 			id: 'preview',
@@ -312,6 +282,7 @@ const recordToProcedure = (record: any): ProcedureWithFields => {
 
 const getDemarches = async (_req: NextApiRequest, res: NextApiResponse) => {
 	const token = await getToken({
+		cookieName: process.env.NEXTAUTH_COOKIENAME,
 		req: _req,
 		secret: process.env.JWT_SECRET
 	});

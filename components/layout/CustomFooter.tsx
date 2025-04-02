@@ -14,7 +14,7 @@ export function CustomFooter() {
 			<Footer
 				accessibility="partially compliant"
 				accessibilityLinkProps={{
-					href: '/Main/Accessibilite'
+					href: '/accessibilite'
 				}}
 				brandTop={brandTop}
 				contentDescription="Vos démarches essentielles est un service proposé par l'équipe design des services numériques (DesignGouv) de la direction interministérielle du numérique (DINUM)."
@@ -23,15 +23,24 @@ export function CustomFooter() {
 					title: 'Accueil - Vos démarches essentielles'
 				}}
 				personalDataLinkProps={{
-					href: '/Main/CGU'
+					href: '/cgu'
 				}}
 				termsLinkProps={{
-					href: '/Main/CGU#HMentionslE9gales'
+					href: '/legalNotice'
 				}}
-				websiteMapLinkProps={{
-					href: '/Main/plan-site'
-				}}
-				bottomItems={[{ text: 'Contact', linkProps: { href: '/contact' } }]}
+				bottomItems={[
+					{
+						text: 'Modalités d’utilisation',
+						linkProps: { href: '/termsOfUse' }
+					},
+					{ text: 'Contact', linkProps: { href: '/contact' } },
+					{
+						text: 'Code source',
+						linkProps: {
+							href: 'https://github.com/DISIC/observatoire.numerique.gouv.fr'
+						}
+					}
+				]}
 			/>
 		</>
 	);

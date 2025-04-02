@@ -76,6 +76,7 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	const token = await getToken({
+		cookieName: process.env.NEXTAUTH_COOKIENAME,
 		req,
 		secret: process.env.JWT_SECRET
 	});

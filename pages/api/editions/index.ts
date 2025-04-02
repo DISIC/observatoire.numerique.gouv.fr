@@ -54,6 +54,7 @@ export default async function handler(
 ) {
 	if (['POST', 'PUT', 'DELETE'].includes(req.method || '')) {
 		const token = await getToken({
+			cookieName: process.env.NEXTAUTH_COOKIENAME,
 			req,
 			secret: process.env.JWT_SECRET
 		});
