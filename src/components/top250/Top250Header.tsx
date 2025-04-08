@@ -70,7 +70,7 @@ export function Top250Header(props: Props) {
 	return (
 		<div className={cx(classes.root)}>
 			<h1 className={cx(classes.title)}>{title}</h1>
-			<h4 className={cx(classes.subtitle)}>{subtitle}</h4>
+			<h2 className={cx(classes.subtitle)}>{subtitle}</h2>
 			<form
 				className={cx(classes.filterWrapper)}
 				onSubmit={e => {
