@@ -187,6 +187,9 @@ export function ProceduresTable(props: Props) {
 			<div className={cx(classes.tabsWrapper)}>
 				<Button
 					className="fr-tabs__tab"
+					nativeButtonProps={{
+						tabIndex: -1
+					}}
 					aria-selected={!isRight}
 					onClick={() => handleScrollX(false)}
 				>
@@ -194,6 +197,9 @@ export function ProceduresTable(props: Props) {
 				</Button>
 				<Button
 					className="fr-tabs__tab"
+					nativeButtonProps={{
+						tabIndex: -1
+					}}
 					aria-selected={isRight}
 					onClick={() => handleScrollX(true)}
 				>
