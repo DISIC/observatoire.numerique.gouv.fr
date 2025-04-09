@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { IndicatorSlug } from '@prisma/client';
 import { ProcedureHeaderSort } from './ProceduresTable';
 import { tss } from 'tss-react';
+import { createModal } from '@codegouvfr/react-dsfr/Modal';
 
 type Props = {
 	slug: IndicatorSlug;
@@ -32,7 +33,10 @@ export function ColumnHeaderDefinition(props: Props) {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
-	const [openModal, setOpenModal] = useState<boolean>(false);
+	const modal = createModal({
+		id: `modal-indicator-${isMobile ? 'mobile' : 'desktop'}-${slug}`,
+		isOpenedByDefault: false
+	});
 
 	const getDisplayedText = (children: ReactNode): ReactNode => {
 		if (isMobile) return children;
@@ -61,11 +65,13 @@ export function ColumnHeaderDefinition(props: Props) {
 				className={cx(classes.root)}
 				onClick={() => {
 					push(['trackEvent', 'top250', 'openModalIndicator', infos.title]);
-					setOpenModal(true);
+					modal.open();
 				}}
-				nativeButtonProps={{
-					onFocus
-				}}
+				nativeButtonProps={
+					{
+						// onFocus
+					}
+				}
 			>
 				<i className={cx(fr.cx(icon), classes.mainIcon)} />
 				<span className={cx(classes.text)}>
@@ -124,24 +130,18 @@ export function ColumnHeaderDefinition(props: Props) {
 					</Button>
 				</div>
 			)}
-			{openModal && (
-				<Modal
-					title={infos.title}
-					buttons={[
-						{
-							onClick: () => {
-								router.push('/Aide/Observatoire?tab=indicators');
-							},
-							children: 'Consulter toute la documentation'
-						}
-					]}
-					onClose={() => {
-						setOpenModal(false);
-					}}
-				>
-					{infos.content}
-				</Modal>
-			)}
+			<modal.Component
+				title={infos.title}
+				className={cx(classes.modalContainer)}
+				buttons={[
+					{
+						onClick: () => router.push('/Aide/Observatoire?tab=indicators'),
+						children: 'Consulter toute la documentation'
+					}
+				]}
+			>
+				{infos.content}
+			</modal.Component>
 		</>
 	);
 }
@@ -215,6 +215,16 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 	sortIcon: {
 		':before': {
 			'--icon-size': fr.typography[21].style.fontSize
+		}
+	},
+	modalContainer: {
+		textAlign: 'left',
+		fontWeight: 'normal',
+		'& .fr-modal__footer': {
+			backgroundImage: 'none !important'
+		},
+		[fr.breakpoints.down('md')]: {
+			padding: fr.spacing('3v')
 		}
 	}
 }));
