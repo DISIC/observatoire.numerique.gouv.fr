@@ -35,6 +35,8 @@ export function ProceduresTable(props: Props) {
 	const [isRight, setIsRight] = useState<boolean>(false);
 	const [isScrollingManually, setIsScrollingManually] =
 		useState<boolean>(false);
+	const [scrollingManuallyTimeout, setScrollingManuallyTimeout] =
+		useState<NodeJS.Timeout>();
 	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort | null>(
 		null
 	);
@@ -130,6 +132,7 @@ export function ProceduresTable(props: Props) {
 	};
 
 	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
+		if (scrollingManuallyTimeout) clearTimeout(scrollingManuallyTimeout);
 		if (
 			!scrollRef.current ||
 			!firstColRef.current ||
@@ -175,7 +178,8 @@ export function ProceduresTable(props: Props) {
 		});
 
 		setIsRight(tmpIsRight);
-		setTimeout(() => setIsScrollingManually(false), 600);
+		let timeoutId = setTimeout(() => setIsScrollingManually(false), 800);
+		setScrollingManuallyTimeout(timeoutId);
 	};
 
 	const onScrollTable = () => {
