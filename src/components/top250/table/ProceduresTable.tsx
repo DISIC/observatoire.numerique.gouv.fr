@@ -14,6 +14,8 @@ import { Edition, IndicatorSlug } from '@prisma/client';
 import { trpc } from '@/utils/trpc';
 import { tss } from 'tss-react';
 
+const MIDDLE_ELEMENT_INDEX = 7;
+
 type Props = {
 	procedures: ProcedureWithFields[];
 	edition?: Edition;
@@ -128,7 +130,12 @@ export function ProceduresTable(props: Props) {
 	};
 
 	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
-		if (!scrollRef.current || !firstColRef.current || !stickyHeaderRef.current)
+		if (
+			!scrollRef.current ||
+			!firstColRef.current ||
+			!stickyHeaderRef.current ||
+			!tableRef.current
+		)
 			return;
 
 		setIsScrollingManually(true);
@@ -136,18 +143,29 @@ export function ProceduresTable(props: Props) {
 		const _arrowSlideSize = 0;
 		const _containerWidth = scrollRef.current.clientWidth;
 		const _firstColSize = firstColRef.current.clientWidth;
-		const _userViewportAvailable = window.innerWidth - _arrowSlideSize;
+		// const _userViewportAvailable = window.innerWidth - _arrowSlideSize;
 		const isSticky = stickyHeaderRef.current.classList.contains('sticked-row');
-		const scrollLeftPosition =
-			_userViewportAvailable < 1400
-				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				  scrollRef.current.scrollLeft -
-				  _firstColSize -
-				  20
-				: _containerWidth -
-				  _firstColSize -
-				  _arrowSlideSize +
-				  scrollRef.current.scrollLeft;
+		const thElements = tableRef.current.querySelectorAll('thead th');
+		const seventhColElement = thElements[MIDDLE_ELEMENT_INDEX];
+
+		let scrollLeftPosition = 0;
+
+		if (seventhColElement) {
+			const seventhColRect = seventhColElement.getBoundingClientRect();
+			const tableRect = tableRef.current.getBoundingClientRect();
+			scrollLeftPosition =
+				scrollRef.current.scrollLeft +
+				(seventhColRect.left - tableRect.left) -
+				_firstColSize +
+				5;
+		} else {
+			// Fallback to original calculation if element not found
+			scrollLeftPosition =
+				_containerWidth -
+				_firstColSize -
+				_arrowSlideSize +
+				scrollRef.current.scrollLeft;
+		}
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -156,26 +174,39 @@ export function ProceduresTable(props: Props) {
 			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
 
-		const hasReachedMaxScroll =
-			scrollLeft >=
-			scrollRef.current.scrollWidth - scrollRef.current.clientWidth - 1;
-
-		setIsRight(hasReachedMaxScroll);
-		setTimeout(() => setIsScrollingManually(false), 200);
+		setIsRight(tmpIsRight);
+		setTimeout(() => setIsScrollingManually(false), 600);
 	};
 
 	const onScrollTable = () => {
-		if (!scrollRef.current || isScrollingManually) return;
+		if (!scrollRef.current || isScrollingManually || !tableRef.current) return;
 
 		const scrollPosition = scrollRef.current.scrollLeft;
-		const maxScroll =
-			scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+		const thElements = tableRef.current.querySelectorAll('thead th');
+		const seventhColElement = thElements[MIDDLE_ELEMENT_INDEX];
 
-		setIsRight(
-			!isRight
-				? scrollPosition > maxScroll * 0.9
-				: scrollPosition > maxScroll * 0.1
-		);
+		if (seventhColElement) {
+			// Get the position of the seventh column relative to the table
+			const tableRect = tableRef.current.getBoundingClientRect();
+			const seventhColRect = seventhColElement.getBoundingClientRect();
+			const seventhColPosition = seventhColRect.left - tableRect.left;
+
+			// Check if we've scrolled past the seventh column
+			const firstColWidth = firstColRef.current?.clientWidth || 0;
+			const isPastSeventhCol =
+				scrollPosition + firstColWidth >= seventhColPosition;
+
+			setIsRight(isPastSeventhCol);
+		} else {
+			// Fallback to the previous logic if seventh column not found
+			const maxScroll =
+				scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
+			setIsRight(
+				!isRight
+					? scrollPosition > maxScroll * 0.9
+					: scrollPosition > maxScroll * 0.1
+			);
+		}
 	};
 
 	const onSort = (sortObject: ProcedureHeaderSort | null) => {
