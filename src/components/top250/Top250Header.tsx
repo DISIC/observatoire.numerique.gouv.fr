@@ -16,6 +16,7 @@ type Props = {
 	setSelectedDepartment: Dispatch<SetStateAction<string>>;
 	setSelectedAdministration: Dispatch<SetStateAction<string>>;
 	nbResults: number | null;
+	editionId?: string;
 	old?: boolean;
 };
 
@@ -28,6 +29,7 @@ export function Top250Header(props: Props) {
 		setSelectedDepartment,
 		setSelectedAdministration,
 		nbResults,
+		editionId,
 		old
 	} = props;
 	const router = useRouter();
@@ -36,7 +38,7 @@ export function Top250Header(props: Props) {
 		slug: string;
 	};
 
-	const { data: departments } = useDepartments(old ? 'old' : 'base');
+	const { data: departments } = useDepartments(old ? 'old' : 'base', editionId);
 	const { data: administrations } = useAdministrations();
 
 	const { classes, cx } = useStyles({
