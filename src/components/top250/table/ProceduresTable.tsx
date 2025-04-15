@@ -267,7 +267,7 @@ export function ProceduresTable(props: Props) {
 							{indicators.map((indicator, index) => {
 								return (
 									<th key={indicator.label} scope="col">
-										<div className={cx(classes.indicatorWrapper)}>
+										<div className={classes.indicatorWrapper}>
 											<ColumnHeaderDefinition
 												slug={indicator.slug as IndicatorSlug}
 												icon={
@@ -493,7 +493,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 								fr.colors.decisions.background.default.grey.default,
 							color: fr.colors.decisions.background.default.grey.default
 						},
-						['th > button:first-of-type']: {
+						['th > div > button:first-of-type']: {
 							fontWeight: 500,
 							fontSize: fr.typography[18].style.fontSize,
 							['&:first-of-type > i']: { display: 'none' },
