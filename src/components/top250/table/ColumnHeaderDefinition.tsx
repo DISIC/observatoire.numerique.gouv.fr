@@ -156,8 +156,6 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 		justifyContent: 'start',
 		alignItems: 'center',
 		padding: fr.spacing('2v'),
-		marginTop: fr.spacing('2v'),
-		marginBottom: fr.spacing('2v'),
 		color: fr.colors.decisions.text.actionHigh.blueFrance.default,
 		fontWeight: 'bold',
 		textAlign: 'center',

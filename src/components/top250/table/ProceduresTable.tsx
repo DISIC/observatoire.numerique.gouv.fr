@@ -267,25 +267,29 @@ export function ProceduresTable(props: Props) {
 							{indicators.map((indicator, index) => {
 								return (
 									<th key={indicator.label} scope="col">
-										<ColumnHeaderDefinition
-											slug={indicator.slug as IndicatorSlug}
-											icon={indicator.icon as FrIconClassName | RiIconClassName}
-											text={indicator.label}
-											infos={{
-												content: (
-													<>
-														<IndicatorContent indicator={indicator} />
-													</>
-												),
-												title: indicator.label
-											}}
-											onFocus={() => {
-												if (index >= 6) handleScrollX(true, true);
-												else handleScrollX(false, true);
-											}}
-											onSort={onSort}
-											currentSort={currentSort}
-										/>
+										<div className={cx(classes.indicatorWrapper)}>
+											<ColumnHeaderDefinition
+												slug={indicator.slug as IndicatorSlug}
+												icon={
+													indicator.icon as FrIconClassName | RiIconClassName
+												}
+												text={indicator.label}
+												infos={{
+													content: (
+														<>
+															<IndicatorContent indicator={indicator} />
+														</>
+													),
+													title: indicator.label
+												}}
+												onFocus={() => {
+													if (index >= 6) handleScrollX(true, true);
+													else handleScrollX(false, true);
+												}}
+												onSort={onSort}
+												currentSort={currentSort}
+											/>
+										</div>
 									</th>
 								);
 							})}
@@ -455,7 +459,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 							borderTopRightRadius: _thRadius
 						},
 						['&:not(:first-of-type):not(:last-child)']: {
-							verticalAlign: 'top'
+							// verticalAlign: 'top'
 						}
 					},
 					['&.sticked-row']: {
@@ -624,6 +628,15 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			marginLeft: _firstColSize,
 			paddingTop: fr.spacing('4v'),
 			display: 'flex'
+		},
+		indicatorWrapper: {
+			height: '100%',
+			display: 'flex',
+			flexDirection: 'column',
+			alignItems: 'center',
+			justifyContent: 'space-between',
+			paddingTop: fr.spacing('2v'),
+			paddingBottom: fr.spacing('2v')
 		}
 	};
 });
