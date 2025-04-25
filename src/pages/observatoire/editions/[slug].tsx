@@ -59,6 +59,7 @@ export default function ObservatoireEdition() {
 					setSelectedDepartment={setSelectedDepartment}
 					setSelectedAdministration={setSelectedAdministration}
 					nbResults={procedures ? procedures.length : null}
+					editionId={edition?.id}
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">

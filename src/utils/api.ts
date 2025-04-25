@@ -102,9 +102,14 @@ export function useEdition(props: EditionProps) {
 	};
 }
 
-export function useDepartments(kind: 'base' | 'old' = 'base') {
+export function useDepartments(
+	kind: 'base' | 'old' = 'base',
+	editionId: string | undefined
+) {
 	const { data, error, isLoading } = useSWR(
-		`/api/departments?kind=${kind}`,
+		`/api/departments?kind=${kind}${
+			editionId ? `&editionId=${editionId}` : ''
+		}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<string[]>(stringify(await res.json()));

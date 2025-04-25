@@ -104,7 +104,7 @@ export const sortProcedures = (
 			aField.label === 'Non' &&
 			aField.value === null
 		) {
-			valueA = '0';
+			valueA = '1';
 		}
 
 		if (
@@ -112,7 +112,7 @@ export const sortProcedures = (
 			bField.label === 'Non' &&
 			bField.value === null
 		) {
-			valueB = '0';
+			valueB = '1';
 		}
 
 		if (valueA === 'NaN' || valueA.startsWith('http')) {
