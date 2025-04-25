@@ -13,9 +13,6 @@ export function HelpCriterias(props: Props) {
 	return (
 		<div className={classes.root}>
 			{wysiwyg_html && <WysiwygInterpretor wysiwyg_html={wysiwyg_html} />}
-			<Link className={fr.cx('fr-btn', 'fr-mt-4v')} href={buttonLink}>
-				{buttonText}
-			</Link>
 		</div>
 	);
 }
