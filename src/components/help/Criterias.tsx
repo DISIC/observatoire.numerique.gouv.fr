@@ -7,15 +7,12 @@ import { tss } from 'tss-react';
 type Props = Help['criterias'];
 
 export function HelpCriterias(props: Props) {
-	const { wysiwyg_html, buttonLink, buttonText } = props;
+	const { wysiwyg_html } = props;
 	const { classes } = useStyles();
 
 	return (
 		<div className={classes.root}>
 			{wysiwyg_html && <WysiwygInterpretor wysiwyg_html={wysiwyg_html} />}
-			<Link className={fr.cx('fr-btn', 'fr-mt-4v')} href={buttonLink}>
-				{buttonText}
-			</Link>
 		</div>
 	);
 }

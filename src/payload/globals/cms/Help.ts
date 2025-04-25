@@ -29,8 +29,7 @@ export const CMSHelp: GlobalConfig = {
 					fields: [
 						standardFields.title,
 						standardFields.wysiwyg,
-						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' }),
-						standardFields.button
+						lexicalHTML('wysiwyg', { name: 'wysiwyg_html' })
 					]
 				},
 				{

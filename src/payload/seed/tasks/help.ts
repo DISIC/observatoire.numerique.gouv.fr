@@ -23,8 +23,6 @@ const helpTask = async (payload: BasePayload) => {
 			criterias: {
 				title: "Critères d'entrée des services",
 				wysiwyg: criteriasWysiwygContent as any, // TODO: Fix this type when payload update
-				buttonText: "Je propose l'ajout d'un service",
-				buttonLink: '/demande'
 			},
 			indicators: {
 				title: 'Indicateurs de qualité',
