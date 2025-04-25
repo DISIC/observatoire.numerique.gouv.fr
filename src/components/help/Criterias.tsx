@@ -7,7 +7,7 @@ import { tss } from 'tss-react';
 type Props = Help['criterias'];
 
 export function HelpCriterias(props: Props) {
-	const { wysiwyg_html, buttonLink, buttonText } = props;
+	const { wysiwyg_html } = props;
 	const { classes } = useStyles();
 
 	return (
