@@ -3,27 +3,27 @@ import { PayloadIndicator, PayloadIndicatorLevel } from "@/payload/payload-types
 import { IndicatorColor } from "@prisma/client";
 
 export const grist_field_names = {
-	edition: 'Lien_Vers_Statistiques_Edition_AT_',
+	edition: 'Ref_Edition',
 	id: 'Ref_Demarche',
 	link: 'URL_Demarche',
-	title: 'Nom_demarche_AT_',
-	administration: 'Administration_AT_',
-	sousorg: 'Min_politique_AT_',
-	ministere: 'Min_politique_AT_',
+	title: 'Nom_Demarche',
+	administration: 'Ref_Administration',
+	sousorg: 'Ref_Admin_Centrale_SG_',
+	ministere: 'Ref_Ministere',
 	volume: 'Volumetrie_Totale',
-	noJdma: 'MaJ_Manuelle_Satisfaction',
+	noJdma: 'Ajout_Bouton_JDMA',
 	indicators: {
 		online: 'Statut_En_ligne',
 		satisfaction: 'Note_Satisfaction',
 		simplicity: 'Note_Clarte_Langage',
 		help_reachable: 'Aide_Joignable',
 		help_efficient: 'Aide_Efficace',
-		help_used: 'Niveau_d_Autonomie',
-		uptime: 'Dashlord_UpDown_disponibilite',
-		performance: 'Dashlord_UpDown_temps_de_reponse',
-		handicap: 'Prise_En_Compte_Handicap',
+		help_used: 'Niveau_Autonomie',
+		uptime: 'Dashlord_UpDown_Dispo',
+		performance: 'Dashlord_UpDown_Tps_Moy_Chargement',
+		handicap: 'Taux_Audit_RGAA',
 		dlnuf: 'DLNUF_pour_publication_',
-		usage: 'Tx_Recours_Demat',
+		usage: 'Recours_au_Numerique',
 		auth: 'FranceConnect'
 	}
 };
