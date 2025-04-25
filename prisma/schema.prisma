@@ -15,6 +15,7 @@ enum IndicatorSlug {
   usage
   simplicity
   help_reachable
+  help_efficient
   help_used
   uptime
   performance
@@ -79,18 +80,20 @@ model Edition {
 }
 
 model Procedure {
-  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
-  airtable_identifier Int?
-  title               String
-  title_normalized    String
-  ministere           String
-  administration      String
-  sousorg             String
-  volume              Int?
-  fields              Field[]
-  noJdma              Boolean
-  edition             Edition? @relation(fields: [editionId], references: [id])
-  editionId           String?  @db.ObjectId
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  grist_identifier Int?
+  title            String
+  title_normalized String
+  ministere        String
+  administration   String
+  sousorg          String
+  volume           Int?
+  fields           Field[]
+  noJdma           Boolean
+  edition          Edition? @relation(fields: [editionId], references: [id])
+  editionId        String?  @db.ObjectId
+
+  @@index([editionId])
 }
 
 model Field {
@@ -102,22 +105,6 @@ model Field {
   noBackground Boolean?
   procedure    Procedure      @relation(fields: [procedureId], references: [id])
   procedureId  String         @db.ObjectId
-}
 
-model ProcedureHeader {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  slug        IndicatorSlug @unique
-  label       String
-  description String?
-  icon        String
-  position    Int           @unique
-}
-
-// Next auth
-model User {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  username   String
-  email      String    @unique
-  password   String
-  created_at DateTime? @default(now())
+  @@index([procedureId, slug])
 }
