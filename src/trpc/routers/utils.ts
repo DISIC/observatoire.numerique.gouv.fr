@@ -7,9 +7,9 @@ export const grist_field_names = {
 	id: 'Ref_Demarche',
 	link: 'URL_Demarche',
 	title: 'Nom_Demarche',
-	administration: 'Ref_Administration',
-	sousorg: 'Ref_Admin_Centrale_SG_',
-	ministere: 'Ref_Ministere',
+	administration: 'Nom_Administration',
+	sousorg: 'Nom_Administration_Centrale',
+	ministere: 'Nom_Ministere',
 	volume: 'Volumetrie_Totale',
 	noJdma: 'Ajout_Bouton_JDMA',
 	indicators: {
