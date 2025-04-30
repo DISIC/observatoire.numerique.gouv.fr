@@ -161,7 +161,7 @@ export default function Grist() {
 					</div>
 					<div className={cx(classes.tableContainer)}>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
-							<Top250TableSection procedures={procedures} isAdmin />
+							<Top250TableSection procedures={procedures} />
 						</div>
 						<StickyFooter proceduresCount={procedures.length} isAdmin />
 					</div>
