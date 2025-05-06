@@ -10,7 +10,7 @@ export const grist_field_names = {
 	administration: 'Nom_Administration',
 	sousorg: 'Nom_Administration_Centrale',
 	ministere: 'Nom_Ministere',
-	volume: 'Volumetrie_Totale',
+	volume: 'Volumetrie_En_Ligne',
 	noJdma: 'Ajout_Bouton_JDMA',
 	indicators: {
 		online: 'Statut_En_ligne',
