@@ -21,7 +21,7 @@ export const grist_field_names = {
 		help_used: 'Niveau_Autonomie',
 		uptime: 'Dashlord_UpDown_Dispo',
 		performance: 'Dashlord_UpDown_Tps_Moy_Chargement',
-		handicap: 'Taux_Audit_RGAA',
+		handicap: 'Libelle_RGAA',
 		dlnuf: 'DLNUF_pour_publication_',
 		usage: 'Recours_au_Numerique',
 		auth: 'FranceConnect'
@@ -59,7 +59,7 @@ export const getFieldsFromGristProcedure = (
 			}
 		}
 
-		if (grist_field_names_percentages.includes(gristColumnName)) {
+		if (grist_field_names_percentages.includes(gristColumnName) && !isNaN(value)) {
 			value = (value * 100).toFixed(1).replace(/\.0$/, '');
 		}
 
