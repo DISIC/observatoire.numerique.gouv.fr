@@ -59,7 +59,8 @@ export const getFieldsFromGristProcedure = (
 			}
 		}
 
-		if (grist_field_names_percentages.includes(gristColumnName) && !isNaN(value)) {
+		const isPercentageCol = grist_field_names_percentages.includes(gristColumnName)
+		if (isPercentageCol && !isNaN(value)) {
 			value = (value * 100).toFixed(1).replace(/\.0$/, '');
 		}
 
@@ -76,7 +77,7 @@ export const getFieldsFromGristProcedure = (
 				return {
 					id: `preview-${indicator.id}`,
 					slug: indicator.slug,
-					label: indicatorLevel.label.replace(/X{1,5}/g, value),
+					label: indicatorLevel.label.replace(/X{1,5}/g, isPercentageCol ? value.toString() : (Math.round(value * 10) / 10).toFixed(1)),
 					value: value !== null ? value.toString() : value,
 					color: indicatorLevel.color,
 					noBackground: indicatorLevel.noBackground || false,
