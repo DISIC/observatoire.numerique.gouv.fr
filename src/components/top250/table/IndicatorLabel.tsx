@@ -79,7 +79,6 @@ const useStyles = tss.withName(IndicatorLabel.name).create(() => ({
 		backgroundColor: fr.colors.decisions.background.default.grey.hover
 	},
 	noBackground: {
-		textAlign: 'left',
 		backgroundColor: 'transparent',
 		fontWeight: 'normal'
 	},
