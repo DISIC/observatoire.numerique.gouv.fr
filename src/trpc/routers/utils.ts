@@ -86,8 +86,6 @@ export const getFieldsFromGristProcedure = (
 			}
 		}
 
-		console.log(value)
-
 		const indicatorLevel = indicatorLevels.find((level: PayloadIndicatorLevel) => level.label === value);
 		if (indicatorLevel && typeof indicatorLevel !== 'string') {
 			return {

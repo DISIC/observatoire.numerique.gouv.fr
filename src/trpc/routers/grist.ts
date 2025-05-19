@@ -31,7 +31,6 @@ export const grist = router({
 
 		const gristProcedures = await api.fetchTable(process.env.GRIST_TABLE_PROCEDURES, { Ref_Edition: [edition] });
 
-		console.log('gristProcedures', gristProcedures[0]);
 		const procedures: ProcedureWithFields[] = gristProcedures.map((gristProcedure: any) => {
 			const title = gristProcedure[grist_field_names.title].replace(/(?:\uD83D\uDCC4|#)/g, '').trim();
 			return {
