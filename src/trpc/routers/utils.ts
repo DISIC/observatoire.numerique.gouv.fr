@@ -22,7 +22,7 @@ export const grist_field_names = {
 		uptime: 'Dashlord_UpDown_Dispo',
 		performance: 'Dashlord_UpDown_Tps_Moy_Chargement',
 		handicap: 'Libelle_RGAA',
-		dlnuf: 'DLNUF_pour_publication_',
+		dlnuf: 'Score_DLNUF',
 		usage: 'Recours_au_Numerique',
 		auth: 'FranceConnect'
 	}
@@ -85,6 +85,8 @@ export const getFieldsFromGristProcedure = (
 				}
 			}
 		}
+
+		console.log(value)
 
 		const indicatorLevel = indicatorLevels.find((level: PayloadIndicatorLevel) => level.label === value);
 		if (indicatorLevel && typeof indicatorLevel !== 'string') {
