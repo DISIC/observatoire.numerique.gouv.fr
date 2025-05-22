@@ -8,7 +8,8 @@ export const IndicatorLevels: CollectionConfig = {
 		description: true,
 		position: true,
 		noBackground: true,
-		threshold: true
+		threshold: true,
+		goal_reached: true
 	},
 	labels: {
 		singular: "Niveau d'indicateur",
@@ -67,12 +68,17 @@ export const IndicatorLevels: CollectionConfig = {
 		{
 			name: 'threshold',
 			type: 'number',
-			label: 'Seuil (à partirt de)',
+			label: 'Seuil (à partir de)'
 		},
 		{
 			name: 'noBackground',
 			type: 'checkbox',
 			label: "Pas d'arrière-plan"
+		},
+		{
+			name: 'goal_reached',
+			type: 'checkbox',
+			label: 'Objectif atteint'
 		}
 	],
 	timestamps: true
