@@ -10,9 +10,20 @@ const WysiwygInterpretor = (props: WysiwygInterpretorProps) => {
 
 	const { classes, cx } = useStyles();
 
+	const regexForExternalLink =
+		/<a href="([^"]+)" target="_blank" rel="noopener noreferrer">([^<]*)/g;
+	const newHtml = wysiwyg_html.replace(regexForExternalLink, (_, url, text) => {
+		const isSameAsUrl = text === url;
+		if (isSameAsUrl) {
+			return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}<span class="fr-sr-only">nouvelle fenêtre</span>`;
+		} else {
+			return `<a href="${url}" target="_blank" rel="noopener noreferrer" title="${text}, nouvelle fenêtre">${text}`;
+		}
+	});
+
 	return (
 		<div
-			dangerouslySetInnerHTML={{ __html: wysiwyg_html }}
+			dangerouslySetInnerHTML={{ __html: newHtml }}
 			className={cx(classes.wysiwyg)}
 		/>
 	);

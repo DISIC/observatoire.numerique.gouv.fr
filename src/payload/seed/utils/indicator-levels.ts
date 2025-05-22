@@ -81,7 +81,7 @@ export const indicatorLevels: Record<
 			goal_reached: false
 		},
 		{
-			label: 'Nombre d’avis insuffisants',
+			label: 'Nombre d\'avis insuffisant',
 			color: 'gray',
 			noBackground: true,
 			description:

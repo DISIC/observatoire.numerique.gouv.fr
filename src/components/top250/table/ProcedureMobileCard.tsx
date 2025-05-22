@@ -70,7 +70,7 @@ export function ProcedureMobileCard(props: Props) {
 			}}
 		>
 			<div className={cx(classes.mainInfos)}>
-				<h2 className={fr.cx('fr-text--sm', 'fr-mb-0')}>{procedure.title}</h2>
+				<h3 className={fr.cx('fr-text--sm', 'fr-mb-0')}>{procedure.title}</h3>
 				<div className={fr.cx('fr-text--xs', 'fr-mb-0')}>
 					<div>{procedure.ministere}</div>
 					<div className={fr.cx('fr-mt-3v')}>

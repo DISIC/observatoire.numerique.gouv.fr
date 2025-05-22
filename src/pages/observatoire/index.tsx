@@ -1,7 +1,7 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
-import { useEditions, useProcedures } from '@/utils/api';
+import { useEdition, useProcedures } from '@/utils/api';
 import { fr } from '@codegouvfr/react-dsfr';
 import { useState } from 'react';
 import { tss } from 'tss-react';
@@ -24,9 +24,10 @@ export default function Observatoire() {
 		administration: selectedAdministration
 	});
 
-	const { data: editions } = useEditions();
-	if (!editions) return;
-	const currentEdition = editions[0];
+	const { data: currentEdition } = useEdition({
+		id: 'current',
+		kind: 'id'
+	});
 
 	if (isError) return <div>Une erreur est survenue.</div>;
 
@@ -41,6 +42,7 @@ export default function Observatoire() {
 					setSelectedDepartment={setSelectedDepartment}
 					setSelectedAdministration={setSelectedAdministration}
 					nbResults={procedures ? procedures.length : null}
+					editionId={currentEdition?.id}
 				/>
 			</div>
 			<div className={cx(classes.tableContainer)} id="procedures-section">

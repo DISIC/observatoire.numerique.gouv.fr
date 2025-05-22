@@ -3852,7 +3852,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:15.2.3, @next/env@npm:^15.1.5":
+"@next/env@npm:15.2.3":
   version: 15.2.3
   resolution: "@next/env@npm:15.2.3"
   checksum: 10c0/52e60419f71b991bdab23fc23f05d221dfe07b725140a110eedc158b2612cebcaa71a74726e2f78b1d53ae162ae0a745fdc3263a2bc76eda013cac057a30f05e
@@ -13688,7 +13688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^15.0.3":
+"next@npm:15.2.3":
   version: 15.2.3
   resolution: "next@npm:15.2.3"
   dependencies:
@@ -14099,7 +14099,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.5.0"
     jsonwebtoken: "npm:^9.0.2"
     jwt-decode: "npm:^4.0.0"
-    next: "npm:^15.0.3"
+    next: "npm:15.2.3"
     otpauth: "npm:^9.3.6"
     payload: "npm:^3.3.0"
     powerhooks: "npm:^1.0.20"

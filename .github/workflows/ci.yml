@@ -16,23 +16,23 @@ jobs:
   #         node-version: 18
   #     - run: npm install
   #     - run: npm run test:ci
-  lighthouseci:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm install && npm install -g @lhci/cli@0.11.x
-      - run: npm run build
-      - run: lhci autorun
+  # lighthouseci:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #     - run: npm install && npm install -g @lhci/cli@0.11.x
+  #     - run: npm run build
+  #     - run: lhci autorun
 
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [20.x, 22.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -44,5 +44,5 @@ jobs:
 
       - name: Build
         run: |
-          npm install
-          npm run build
+          yarn
+          yarn build

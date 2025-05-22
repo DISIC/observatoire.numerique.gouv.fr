@@ -11,12 +11,12 @@ export const grist = router({
 		const gristEditions = await api.fetchTable(process.env.GRIST_TABLE_EDITION);
 
 		const editions: GristEdition[] = gristEditions
-			.sort((a: any, b: any) => new Date(b['Date_Fin']).getTime() - new Date(a['Date_Fin']).getTime())
+			.sort((a: any, b: any) => new Date(b['Date_Fin_Edition']).getTime() - new Date(a['Date_Fin_Edition']).getTime())
 			.map((edition: any) => ({
 				id: edition['id'],
 				name: edition['Nom_Edition'],
-				start_date: edition['Date_Debut'] * 1000,
-				end_date: edition['Date_Fin'] * 1000
+				start_date: edition['Date_Debut_Edition'] * 1000,
+				end_date: edition['Date_Fin_Edition'] * 1000
 			}));
 
 		return { data: editions };
@@ -54,7 +54,7 @@ export const grist = router({
 				ministere: gristProcedure[grist_field_names.ministere],
 				grist_identifier: gristProcedure[grist_field_names.id],
 				volume: gristProcedure[grist_field_names.volume],
-				noJdma: gristProcedure[grist_field_names.noJdma],
+				noJdma: gristProcedure[grist_field_names.noJdma] === 'Oui',
 				fields: getFieldsFromGristProcedure(gristProcedure, indicators)
 			};
 		});

@@ -3,28 +3,27 @@ import { PayloadIndicator, PayloadIndicatorLevel } from "@/payload/payload-types
 import { IndicatorColor } from "@prisma/client";
 
 export const grist_field_names = {
-	edition: 'Lien_Vers_Statistiques_Edition_AT_',
+	edition: 'Ref_Edition',
 	id: 'Ref_Demarche',
 	link: 'URL_Demarche',
-	title: 'Nom_demarche_AT_',
-	administration: 'Administration_AT_',
-	administration_central: 'Ref_AC_SG',
-	sousorg: 'Min_politique_AT_',
-	ministere: 'Min_politique_AT_',
-	volume: 'Volumetrie_Totale',
-	noJdma: 'MaJ_Manuelle_Satisfaction',
+	title: 'Nom_Demarche',
+	administration: 'Nom_Administration',
+	sousorg: 'Nom_Administration_Centrale',
+	ministere: 'Nom_Ministere',
+	volume: 'Volumetrie_En_Ligne',
+	noJdma: 'Ajout_Bouton_JDMA',
 	indicators: {
 		online: 'Statut_En_ligne',
 		satisfaction: 'Note_Satisfaction',
 		simplicity: 'Note_Clarte_Langage',
 		help_reachable: 'Aide_Joignable',
 		help_efficient: 'Aide_Efficace',
-		help_used: 'Niveau_d_Autonomie',
-		uptime: 'Dashlord_UpDown_disponibilite',
-		performance: 'Dashlord_UpDown_temps_de_reponse',
-		handicap: 'Prise_En_Compte_Handicap',
-		dlnuf: 'DLNUF_pour_publication_',
-		usage: 'Tx_Recours_Demat',
+		help_used: 'Niveau_Autonomie',
+		uptime: 'Dashlord_UpDown_Dispo',
+		performance: 'Dashlord_UpDown_Tps_Moy_Chargement',
+		handicap: 'Libelle_RGAA',
+		dlnuf: 'Score_DLNUF',
+		usage: 'Recours_au_Numerique',
 		auth: 'FranceConnect'
 	}
 };
@@ -69,7 +68,8 @@ export const getFieldsFromGristProcedure = (
 			}
 		}
 
-		if (grist_field_names_percentages.includes(gristColumnName)) {
+		const isPercentageCol = grist_field_names_percentages.includes(gristColumnName)
+		if (isPercentageCol && !isNaN(value)) {
 			value = (value * 100).toFixed(1).replace(/\.0$/, '');
 		}
 
@@ -86,7 +86,7 @@ export const getFieldsFromGristProcedure = (
 				return {
 					id: `preview-${indicator.id}`,
 					slug: indicator.slug,
-					label: indicatorLevel.label.replace(/X{1,5}/g, value),
+					label: indicatorLevel.label.replace(/X{1,5}/g, isPercentageCol ? value.toString() : (Math.round(value * 10) / 10).toFixed(1)),
 					value: value !== null ? value.toString() : value,
 					color: indicatorLevel.color,
 					noBackground: indicatorLevel.noBackground || false,

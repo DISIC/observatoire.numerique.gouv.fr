@@ -14,13 +14,9 @@ export function IndicatorLabel(props: Props) {
 	const { classes, cx } = useStyles();
 
 	return (
-		<span
+		<p
 			className={cx(
-				fr.cx(
-					noBackground ? 'fr-px-0' : 'fr-px-1w',
-					'fr-py-0-5v',
-					'fr-text--sm'
-				),
+				fr.cx(noBackground ? 'fr-px-0' : 'fr-px-1w', 'fr-text--sm'),
 				classes.root,
 				classes[color],
 				old ? classes.old : '',
@@ -38,7 +34,7 @@ export function IndicatorLabel(props: Props) {
 			)}
 		>
 			{label}
-		</span>
+		</p>
 	);
 }
 
@@ -47,6 +43,8 @@ const useStyles = tss.withName(IndicatorLabel.name).create(() => ({
 		textAlign: 'center',
 		fontWeight: 'bold',
 		borderRadius: fr.spacing('1v'),
+		marginBottom: 0,
+		display: 'inline-block',
 		[fr.breakpoints.down('lg')]: {
 			fontSize: fr.typography[17].style.fontSize,
 			position: 'relative',
@@ -81,7 +79,6 @@ const useStyles = tss.withName(IndicatorLabel.name).create(() => ({
 		backgroundColor: fr.colors.decisions.background.default.grey.hover
 	},
 	noBackground: {
-		textAlign: 'left',
 		backgroundColor: 'transparent',
 		fontWeight: 'normal'
 	},
