@@ -61,20 +61,12 @@ if __name__ == "__main__":
         for procedure in procedures_chunk:
             # Get procedure from Grist based on the id
             procedure_grist_id = procedure['grist_identifier']
-            procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Ancien_ID_Demarche': procedure_grist_id})
-                
+            procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Dashlord_ID_XWIKI': procedure_grist_id})
             procedure_grist = procedure_grist[0]._asdict()
-            
-            if 'Ref_AC_SG' not in procedure_grist or procedure_grist['Ref_AC_SG'] not in administration_central_dict:
-                print(f"Warning: Missing or invalid Ref_AC_SG for procedure {procedure_grist_id}")
-                continue
-                
-            current_administration_central = administration_central_dict[procedure_grist['Ref_AC_SG']]
-            
             updates.append(UpdateOne(
                 {"_id": procedure['_id']},
                 {"$set": {
-                    "administration_central": current_administration_central,
+                    "administration_central": procedure_grist['Nom_Administration_Centrale'],
                 }}
             ))
         
