@@ -7,6 +7,7 @@ import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useId } from 'react';
 import { tss } from 'tss-react';
+import CustomBarChart from '../charts/BarChart';
 
 const LineChartCustom = dynamic(() => import('@/components/charts/LineChart'));
 
@@ -19,9 +20,16 @@ type Props = {
 type TabContentProps = {
 	procedureKind: ProcedureKind;
 	indicatorSlug: string;
+	shouldShowGoalLine?: boolean;
+	shouldShowCrossScorePerimeter?: boolean;
 };
 
-const TabContent = ({ procedureKind, indicatorSlug }: TabContentProps) => {
+const TabContent = ({
+	procedureKind,
+	indicatorSlug,
+	shouldShowGoalLine,
+	shouldShowCrossScorePerimeter
+}: TabContentProps) => {
 	const { classes, cx } = useStyles();
 
 	const [showGoalLine, setShowGoalLine] = useState(false);
@@ -29,43 +37,47 @@ const TabContent = ({ procedureKind, indicatorSlug }: TabContentProps) => {
 
 	return (
 		<div className={classes.tabContent}>
-			<div style={{ display: 'flex', alignItems: 'center' }}>
-				<Checkbox
-					options={[
-						{
-							label: 'Objectif',
-							nativeInputProps: {
-								name: 'checkboxes-1',
-								value: 'value1',
-								onChange: e => setShowGoalLine(e.target.checked)
-							}
-						}
-					]}
-					orientation="horizontal"
-					state="default"
-					small
-				/>
-				<Checkbox
-					options={[
-						{
-							label: 'Moyenne inter-périmètre',
-							nativeInputProps: {
-								name: 'checkboxes-1',
-								value: 'value2',
-								onChange: e => setShowCrossScorePerimeter(e.target.checked)
-							}
-						}
-					]}
-					orientation="horizontal"
-					state="default"
-					small
-				/>
-			</div>
+			{(shouldShowGoalLine || shouldShowCrossScorePerimeter) && (
+				<div style={{ display: 'flex', alignItems: 'center' }}>
+					{shouldShowGoalLine && (
+						<Checkbox
+							options={[
+								{
+									label: 'Objectif',
+									nativeInputProps: {
+										name: 'checkboxes-1',
+										value: 'value1',
+										onChange: e => setShowGoalLine(e.target.checked)
+									}
+								}
+							]}
+							orientation="horizontal"
+							state="default"
+							small
+						/>
+					)}
+					{shouldShowCrossScorePerimeter && (
+						<Checkbox
+							options={[
+								{
+									label: 'Moyenne inter-périmètre',
+									nativeInputProps: {
+										name: 'checkboxes-1',
+										value: 'value2',
+										onChange: e => setShowCrossScorePerimeter(e.target.checked)
+									}
+								}
+							]}
+							orientation="horizontal"
+							state="default"
+							small
+						/>
+					)}
+				</div>
+			)}
+
 			<div className={cx(classes.chart)}>
-				<LineChartCustom
-					showGoalLine={showGoalLine}
-					showCrossScorePerimeter={showCrossScorePerimeter}
-				/>
+				<CustomBarChart />
 			</div>
 		</div>
 	);
@@ -75,6 +87,8 @@ export type ModalEvolutionParams = {
 	title: string;
 	procedureKind: ProcedureKind;
 	kindSlug: string;
+	shouldShowGoalLine?: boolean;
+	shouldShowCrossScorePerimeter?: boolean;
 };
 
 export function ModalEvolution(props: Props) {
@@ -115,6 +129,64 @@ export function ModalEvolution(props: Props) {
 
 	useIsModalOpen(modal);
 
+	const tabs = [
+		{
+			tabId: 'satisfaction',
+			label: (
+				<>
+					<i className="ri-emoji-sticker-line" />
+					{selectedTabId === 'satisfaction' && <p>Satisfaction usager</p>}
+				</>
+			),
+			legend:
+				'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du périmètre ministériel.'
+		},
+		{
+			tabId: 'handicap',
+			label: (
+				<>
+					<i className="ri-open-arm-line" />
+					{selectedTabId === 'handicap' && <p>Prise en compte du handicap</p>}
+				</>
+			),
+			legend:
+				'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches du périmètre ministériel.'
+		},
+		{
+			tabId: 'dlnuf',
+			label: (
+				<>
+					<i className="ri-pass-valid-line" />
+					{selectedTabId === 'dlnuf' && <p>Dites-le-nous une fois</p>}
+				</>
+			),
+			legend:
+				'Cet histogramme représente la répartition en pourcentage du niveau de simplification des démarches du périmètre ministériel.'
+		},
+		{
+			tabId: 'auth',
+			label: (
+				<>
+					<i className="ri-lock-unlock-line" />
+					{selectedTabId === 'auth' && <p>Authentification</p>}
+				</>
+			),
+			legend:
+				'Cet histogramme représente la répartition en pourcentage des démarches de l’indicateur “Authentification”'
+		},
+		{
+			tabId: 'simplicity',
+			label: (
+				<>
+					<i className="ri-speak-line" />
+					{selectedTabId === 'simplicity' && <p>Clarté du langage</p>}
+				</>
+			),
+			legend:
+				'Cet histogramme représente la répartition en pourcentage des niveaux de clarté des démarches du périmètre ministériel.'
+		}
+	];
+
 	return (
 		<modal.Component
 			title={openState?.dialogParams.title}
@@ -128,59 +200,20 @@ export function ModalEvolution(props: Props) {
 				className={classes.tabsWrapper}
 				selectedTabId={selectedTabId}
 				onTabChange={tabId => setSelectedTabId(tabId)}
-				tabs={[
-					{
-						tabId: 'satisfaction',
-						label: (
-							<>
-								<i className="ri-emoji-sticker-line" />
-								{selectedTabId === 'satisfaction' && <p>Satisfaction usager</p>}
-							</>
-						)
-					},
-					{
-						tabId: 'handicap',
-						label: (
-							<>
-								<i className="ri-open-arm-line" />
-								{selectedTabId === 'handicap' && (
-									<p>Prise en compte du handicap</p>
-								)}
-							</>
-						)
-					},
-					{
-						tabId: 'dlnuf',
-						label: (
-							<>
-								<i className="ri-pass-valid-line" />
-								{selectedTabId === 'dlnuf' && <p>Dites-le-nous une fois</p>}
-							</>
-						)
-					},
-					{
-						tabId: 'auth',
-						label: (
-							<>
-								<i className="ri-lock-unlock-line" />
-								{selectedTabId === 'auth' && <p>Authentification</p>}
-							</>
-						)
-					},
-					{
-						tabId: 'simplicity',
-						label: (
-							<>
-								<i className="ri-speak-line" />
-								{selectedTabId === 'simplicity' && <p>Clarté du langage</p>}
-							</>
-						)
-					}
-				]}
+				tabs={tabs.map(tab => ({
+					...tab
+				}))}
 			>
+				<p className={classes.chartLegend}>
+					{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+				</p>
 				<TabContent
 					procedureKind={openState?.dialogParams.procedureKind as ProcedureKind}
 					indicatorSlug={selectedTabId}
+					shouldShowGoalLine={openState?.dialogParams.shouldShowGoalLine}
+					shouldShowCrossScorePerimeter={
+						openState?.dialogParams.shouldShowCrossScorePerimeter
+					}
 				/>
 			</Tabs>
 		</modal.Component>
@@ -224,5 +257,9 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 	chart: {
 		width: '100%',
 		height: '400px'
+	},
+	chartLegend: {
+		color: fr.colors.decisions.text.mention.grey.default,
+		fontSize: '14px'
 	}
 }));
