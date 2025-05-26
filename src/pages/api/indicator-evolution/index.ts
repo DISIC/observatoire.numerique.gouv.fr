@@ -80,16 +80,15 @@ export async function getIndicatorEvolution({
 				}
 			});
 
-			// TODO: set custom labels based on levels??
 			const levelCounts = indicatorLevels
 				.map(level => {
-					if (typeof level === 'string') return null;
+					if (typeof level === 'string' || !level.label_stats) return null;
 
 					const count = fields.filter(
-						field => field.label === level.label
+						field => field.color === level.color
 					).length;
 					return {
-						level: level.label,
+						level: level.label_stats,
 						count: count
 					};
 				})
