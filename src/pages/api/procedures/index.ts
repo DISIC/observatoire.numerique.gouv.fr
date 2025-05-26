@@ -24,19 +24,15 @@ export async function getProcedures(
 		tmpEditionId = editions[0]?.id;
 	}
 
-	// Requête de base avec les filtres essentiels
-	let whereRequest: Prisma.ProcedureWhereInput = {
-		editionId: tmpEditionId || null
-	};
-
-	// Récupération des données avec le minimum de filtrage côté base de données
+	// Récupération de toutes les procédures de l'édition sans filtres complexes
 	const procedures = await prisma.procedure.findMany({
-		where: whereRequest,
 		include: { fields: true, edition: true }
 	});
 
-	// Filtrage post-requête
-	let filteredProcedures = procedures;
+	// Filtrage post-requête - Edition
+	let filteredProcedures = procedures.filter((proc: Procedure) => 
+		proc.editionId === tmpEditionId || proc.editionId === null
+	);
 
 	// Filtrage par ministère (department)
 	if (department && department !== 'all') {
