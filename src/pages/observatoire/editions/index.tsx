@@ -101,9 +101,8 @@ export default function ObservatoireEditions() {
 		return currentEdition.editions.map(edition => ({
 			name: edition.name,
 			period: edition.period,
-			link: `/observatoire/${edition.kind === 'base' ? 'editions' : 'old'}/${
-				edition.id
-			}`
+			link: `/observatoire/${edition.kind === 'base' ? 'editions' : 'old'}/${edition.id
+				}`
 		})) as { name: string; period: string; link: string }[];
 	}, [selectedTabId, editionTabs]);
 
@@ -141,7 +140,7 @@ export default function ObservatoireEditions() {
 								<tbody>
 									{currentTableData.map((row, i) => (
 										<tr key={i} data-fr-js-table-row="true">
-											<td>{row.name}</td>
+											<td className={classes.editionName}>{row.name}</td>
 											<td>{row.period}</td>
 											<td>
 												<Button
@@ -173,6 +172,9 @@ const useStyles = tss.withName(ObservatoireEditions.name).create(() => ({
 			fontSize: `${fr.typography[4].style.fontSize} !important`,
 			lineHeight: `${fr.typography[4].style.lineHeight} !important`
 		}
+	},
+	editionName: {
+		textTransform: 'capitalize',
 	},
 	tableContainer: {
 		backgroundColor: fr.colors.decisions.background.contrast.info.default

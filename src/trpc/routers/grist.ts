@@ -43,7 +43,7 @@ export const grist = router({
 				ministere: gristProcedure[grist_field_names.ministere],
 				grist_identifier: gristProcedure[grist_field_names.id],
 				volume: gristProcedure[grist_field_names.volume],
-				noJdma: gristProcedure[grist_field_names.noJdma] === 'Oui',
+				noJdma: gristProcedure[grist_field_names.noJdma] !== 'Oui',
 				fields: getFieldsFromGristProcedure(gristProcedure, indicators)
 			};
 		});
