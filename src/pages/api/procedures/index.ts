@@ -24,42 +24,80 @@ export async function getProcedures(
 		tmpEditionId = editions[0]?.id;
 	}
 
+	// Requête de base avec les filtres essentiels
 	let whereRequest: Prisma.ProcedureWhereInput = {
-		editionId: tmpEditionId || null,
-		ministere: department && department !== 'all' ? department : undefined,
-		administration:
-			administration && administration !== 'all' ? administration : undefined
+		editionId: tmpEditionId || null
 	};
 
-	if (search)
-		whereRequest.OR = [
-			{ title: { contains: search, mode: 'insensitive' } },
-			{ title_normalized: { contains: search, mode: 'insensitive' } },
-			{ ministere: { contains: search, mode: 'insensitive' } },
-			{ sousorg: { contains: search, mode: 'insensitive' } },
-			{ administration: { contains: search, mode: 'insensitive' } }
-		];
-
-	let orderBy: any = [{ volume: 'desc' }];
-
-	if (sort) {
-		const values = sort.split(':');
-		if (values.length === 2) {
-			orderBy = [
-				{
-					[values[0]]: values[1]
-				}
-			];
-		}
-	}
-
+	// Récupération des données avec le minimum de filtrage côté base de données
 	const procedures = await prisma.procedure.findMany({
-		orderBy,
 		where: whereRequest,
 		include: { fields: true, edition: true }
 	});
 
-	return procedures;
+	// Filtrage post-requête
+	let filteredProcedures = procedures;
+
+	// Filtrage par ministère (department)
+	if (department && department !== 'all') {
+		filteredProcedures = filteredProcedures.filter(
+			(procedure: Procedure) => procedure.ministere === department
+		);
+	}
+
+	// Filtrage par administration
+	if (administration && administration !== 'all') {
+		filteredProcedures = filteredProcedures.filter(
+			(procedure: Procedure) => procedure.administration === administration
+		);
+	}
+
+	// Filtrage par recherche textuelle
+	if (search && search.trim() !== '') {
+		const searchLower = search.toLowerCase();
+		filteredProcedures = filteredProcedures.filter(
+			(procedure: Procedure) =>
+				procedure.title.toLowerCase().includes(searchLower) ||
+				procedure.title_normalized.toLowerCase().includes(searchLower) ||
+				procedure.ministere.toLowerCase().includes(searchLower) ||
+				procedure.sousorg.toLowerCase().includes(searchLower) ||
+				procedure.administration.toLowerCase().includes(searchLower)
+		);
+	}
+
+	// Tri des résultats
+	if (sort) {
+		const values = sort.split(':');
+		if (values.length === 2) {
+			const [field, direction] = values;
+			filteredProcedures.sort((a: Procedure, b: Procedure) => {
+				// Gestion des valeurs nulles ou undefined
+				if (a[field as keyof Procedure] === null || a[field as keyof Procedure] === undefined) return direction === 'asc' ? -1 : 1;
+				if (b[field as keyof Procedure] === null || b[field as keyof Procedure] === undefined) return direction === 'asc' ? 1 : -1;
+
+				// Tri selon le type de données
+				if (typeof a[field as keyof Procedure] === 'string') {
+					return direction === 'asc'
+						? (a[field as keyof Procedure] as string).localeCompare(b[field as keyof Procedure] as string)
+						: (b[field as keyof Procedure] as string).localeCompare(a[field as keyof Procedure] as string);
+				} else {
+					return direction === 'asc'
+						? (a[field as keyof Procedure] as number) - (b[field as keyof Procedure] as number)
+						: (b[field as keyof Procedure] as number) - (a[field as keyof Procedure] as number);
+				}
+			});
+		}
+	} else {
+		// Tri par défaut par volume décroissant
+		filteredProcedures.sort((a: Procedure, b: Procedure) => {
+			// Gestion des valeurs nulles ou undefined
+			if (a.volume === null || a.volume === undefined) return 1;
+			if (b.volume === null || b.volume === undefined) return -1;
+			return (b.volume as number) - (a.volume as number);
+		});
+	}
+
+	return filteredProcedures;
 }
 
 export async function getProcedureById(id: string) {
