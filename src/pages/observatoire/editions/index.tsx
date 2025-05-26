@@ -140,7 +140,7 @@ export default function ObservatoireEditions() {
 								<tbody>
 									{currentTableData.map((row, i) => (
 										<tr key={i} data-fr-js-table-row="true">
-											<td className={classes.editionName}>{row.name}</td>
+											<td className={classes.editionName}>{row.name.toLowerCase()}</td>
 											<td>{row.period}</td>
 											<td>
 												<Button
