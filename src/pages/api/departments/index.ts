@@ -3,6 +3,12 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+// Définition des types pour éviter les erreurs TypeScript
+interface MinistereRecord {
+  ministere: string | null;
+  editionId?: string | null;
+}
+
 export async function getDepartments(
 	kind: 'base' | 'old' = 'base',
 	editionId?: string
@@ -13,26 +19,37 @@ export async function getDepartments(
 			// Pour les anciennes procédures
 			const oldProcedures = await prisma.oldProcedure.findMany({
 				select: { ministere: true }
-			});
+			}) as MinistereRecord[];
 			
 			// Traitement manuel des données pour remplacer groupBy
-			const uniqueMinisteres = [...new Set(oldProcedures.map(p => p.ministere))].filter(Boolean);
-			return uniqueMinisteres.sort();
+			// Utilisation de Array.from() au lieu de la syntaxe d'étalement (...)
+			const ministereSet = new Set<string>();
+			oldProcedures.forEach((p: MinistereRecord) => {
+				if (p.ministere) ministereSet.add(p.ministere);
+			});
+			
+			const uniqueMinisteres = Array.from(ministereSet).sort();
+			return uniqueMinisteres;
 		} else {
 			// Pour les procédures actuelles
 			// 1. Récupérer toutes les procédures sans filtrage
 			const procedures = await prisma.procedure.findMany({
 				select: { ministere: true, editionId: true }
-			});
+			}) as MinistereRecord[];
 			
 			// 2. Filtrer par editionId en mémoire si nécessaire
 			const filteredProcedures = editionId 
-				? procedures.filter(p => p.editionId === editionId)
+				? procedures.filter((p: MinistereRecord) => p.editionId === editionId)
 				: procedures;
 			
 			// 3. Extraire les ministères uniques et les trier
-			const uniqueMinisteres = [...new Set(filteredProcedures.map(p => p.ministere))].filter(Boolean);
-			return uniqueMinisteres.sort();
+			const ministereSet = new Set<string>();
+			filteredProcedures.forEach((p: MinistereRecord) => {
+				if (p.ministere) ministereSet.add(p.ministere);
+			});
+			
+			const uniqueMinisteres = Array.from(ministereSet).sort();
+			return uniqueMinisteres;
 		}
 	} catch (error) {
 		console.error("Erreur lors de la récupération des départements:", error);

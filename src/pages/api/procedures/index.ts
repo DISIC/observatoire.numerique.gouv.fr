@@ -4,6 +4,23 @@ import { verifyAuth } from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
+// Interface simplifiée pour éviter les erreurs TypeScript
+interface ProcedureRecord {
+  id: string;
+  grist_identifier?: number | null;
+  title: string;
+  title_normalized: string;
+  ministere: string;
+  administration: string;
+  sousorg: string;
+  volume?: number | null;
+  noJdma: boolean;
+  editionId?: string | null;
+  fields?: any[];
+  edition?: any | null;
+  [key: string]: any; // Pour permettre l'accès aux propriétés dynamiques
+}
+
 export async function getProcedures(
 	editionId?: string,
 	search?: string,
@@ -34,7 +51,6 @@ export async function getProcedures(
 		const procedures = await prisma.procedure.findMany();
 		
 		// Récupération des champs associés (fields) séparément
-		const procedureIds = procedures.map(p => p.id);
 		let fields: any[] = [];
 		
 		try {
@@ -54,15 +70,15 @@ export async function getProcedures(
 		}
 		
 		// Association manuelle des champs et éditions aux procédures
-		const enrichedProcedures = procedures.map(procedure => {
-			const procedureFields = fields.filter(f => f.procedureId === procedure.id);
-			const edition = editions.find(e => e.id === procedure.editionId);
+		const enrichedProcedures = procedures.map((procedure: any) => {
+			const procedureFields = fields.filter((f: any) => f.procedureId === procedure.id);
+			const edition = editions.find((e: any) => e.id === procedure.editionId);
 			
 			return {
 				...procedure,
 				fields: procedureFields || [],
 				edition: edition || null
-			};
+			} as ProcedureRecord;
 		});
 		
 		// Filtrage post-requête
@@ -71,21 +87,21 @@ export async function getProcedures(
 		// Filtrage par édition
 		if (tmpEditionId) {
 			filteredProcedures = filteredProcedures.filter(
-				proc => proc.editionId === tmpEditionId
+				(proc: ProcedureRecord) => proc.editionId === tmpEditionId
 			);
 		}
 
 		// Filtrage par ministère (department)
 		if (department && department !== 'all') {
 			filteredProcedures = filteredProcedures.filter(
-				procedure => procedure.ministere === department
+				(procedure: ProcedureRecord) => procedure.ministere === department
 			);
 		}
 
 		// Filtrage par administration
 		if (administration && administration !== 'all') {
 			filteredProcedures = filteredProcedures.filter(
-				procedure => procedure.administration === administration
+				(procedure: ProcedureRecord) => procedure.administration === administration
 			);
 		}
 
@@ -93,7 +109,7 @@ export async function getProcedures(
 		if (search && search.trim() !== '') {
 			const searchLower = search.toLowerCase();
 			filteredProcedures = filteredProcedures.filter(
-				procedure =>
+				(procedure: ProcedureRecord) =>
 					(procedure.title && procedure.title.toLowerCase().includes(searchLower)) ||
 					(procedure.title_normalized && procedure.title_normalized.toLowerCase().includes(searchLower)) ||
 					(procedure.ministere && procedure.ministere.toLowerCase().includes(searchLower)) ||
@@ -107,29 +123,32 @@ export async function getProcedures(
 			const values = sort.split(':');
 			if (values.length === 2) {
 				const [field, direction] = values;
-				filteredProcedures.sort((a, b) => {
+				filteredProcedures.sort((a: ProcedureRecord, b: ProcedureRecord) => {
 					// Gestion des valeurs nulles ou undefined
-					if (a[field] === null || a[field] === undefined) return direction === 'asc' ? -1 : 1;
-					if (b[field] === null || b[field] === undefined) return direction === 'asc' ? 1 : -1;
+					const aValue = a[field];
+					const bValue = b[field];
+					
+					if (aValue === null || aValue === undefined) return direction === 'asc' ? -1 : 1;
+					if (bValue === null || bValue === undefined) return direction === 'asc' ? 1 : -1;
 					
 					// Tri selon le type de données
-					if (typeof a[field] === 'string') {
+					if (typeof aValue === 'string') {
 						return direction === 'asc' 
-							? a[field].localeCompare(b[field]) 
-							: b[field].localeCompare(a[field]);
+							? aValue.localeCompare(bValue) 
+							: bValue.localeCompare(aValue);
 					} else {
 						return direction === 'asc' 
-							? a[field] - b[field] 
-							: b[field] - a[field];
+							? aValue - bValue 
+							: bValue - aValue;
 					}
 				});
 			}
 		} else {
 			// Tri par défaut par volume décroissant
-			filteredProcedures.sort((a, b) => {
+			filteredProcedures.sort((a: ProcedureRecord, b: ProcedureRecord) => {
 				if (a.volume === null || a.volume === undefined) return 1;
 				if (b.volume === null || b.volume === undefined) return -1;
-				return b.volume - a.volume;
+				return (b.volume as number) - (a.volume as number);
 			});
 		}
 
