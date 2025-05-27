@@ -29,6 +29,8 @@ export async function getIndicatorEvolution({
 	kind,
 	value
 }: GetIndicatorEvolutionProps) {
+	if (view !== 'year' && view !== 'edition') return null;
+
 	const prisma = new PrismaClient();
 	const payload = await getPayloadClient({ seed: false });
 
@@ -53,10 +55,13 @@ export async function getIndicatorEvolution({
 		orderBy: {
 			created_at: 'desc'
 		},
-		take: 5
+		take: view === 'edition' ? 5 : undefined
 	});
 
-	// example: { "April 2023": [ { level: "good", count: 3 }, { level: "bad", count: 1 }... ], ...  }
+	editions.sort((a, b) => {
+		return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
+	});
+
 	const data = await Promise.all(
 		editions.map(async edition => {
 			const procedures = await prisma.procedure.findMany({
@@ -84,9 +89,12 @@ export async function getIndicatorEvolution({
 				.map(level => {
 					if (typeof level === 'string' || !level.label_stats) return null;
 
-					const count = fields.filter(
-						field => field.color === level.color
+					const count = fields.filter(field =>
+						field.color === 'gray'
+							? field.label === level.label_stats
+							: field.color === level.color
 					).length;
+
 					return {
 						level: level.label_stats,
 						count: count
