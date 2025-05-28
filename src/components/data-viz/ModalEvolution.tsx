@@ -8,6 +8,8 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect, useId } from 'react';
 import { tss } from 'tss-react';
 import CustomBarChart from '../charts/BarChart';
+import { useIndicatorEvolution } from '@/utils/api';
+import { validIndicatorSlugs } from '@/utils/data-viz';
 
 const LineChartCustom = dynamic(() => import('@/components/charts/LineChart'));
 
@@ -98,7 +100,8 @@ export function ModalEvolution(props: Props) {
 		'line' | 'table'
 	>('line');
 
-	const [selectedTabId, setSelectedTabId] = useState('satisfaction');
+	const [selectedTabId, setSelectedTabId] =
+		useState<(typeof validIndicatorSlugs)[number]>('satisfaction');
 
 	const { classes } = useStyles();
 
@@ -117,6 +120,13 @@ export function ModalEvolution(props: Props) {
 		  }
 		| undefined
 	>(undefined);
+
+	const { data } = useIndicatorEvolution({
+		view: 'edition',
+		slug: selectedTabId,
+		kind: openState?.dialogParams.procedureKind as ProcedureKind,
+		value: openState?.dialogParams.kindSlug || ''
+	});
 
 	useEffect(() => {
 		actions.open = dialogParams => {
@@ -199,7 +209,9 @@ export function ModalEvolution(props: Props) {
 			<Tabs
 				className={classes.tabsWrapper}
 				selectedTabId={selectedTabId}
-				onTabChange={tabId => setSelectedTabId(tabId)}
+				onTabChange={tabId =>
+					setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number])
+				}
 				tabs={tabs.map(tab => ({
 					...tab
 				}))}

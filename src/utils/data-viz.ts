@@ -13,6 +13,14 @@ export const validIndicatorSlugs = [
 	'simplicity'
 ] as const;
 
+export function isValidIndicatorSlug(
+	slug: string
+): slug is (typeof validIndicatorSlugs)[number] {
+	return validIndicatorSlugs.includes(
+		slug as (typeof validIndicatorSlugs)[number]
+	);
+}
+
 export type RecordData = {
 	text: string;
 	count: number;

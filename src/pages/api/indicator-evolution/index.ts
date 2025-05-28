@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { validIndicatorSlugs } from '@/utils/data-viz';
+import { isValidIndicatorSlug, validIndicatorSlugs } from '@/utils/data-viz';
 import { ProcedureKind } from '../indicator-scores';
 import getPayloadClient from '@/payload/payload-client';
 
@@ -10,7 +10,7 @@ const validProcedureKinds: ProcedureKind[] = [
 	'ministere'
 ];
 
-function isValidProcedureKind(kind: string): kind is ProcedureKind {
+export function isValidProcedureKind(kind: string): kind is ProcedureKind {
 	return validProcedureKinds.includes(kind as ProcedureKind);
 }
 
@@ -139,6 +139,14 @@ export default async function handler(
 		if (!isValidProcedureKind(kind as string)) {
 			return res.status(400).json({
 				message: `Invalid kind parameter. Must be one of: ${validProcedureKinds.join(
+					', '
+				)}`
+			});
+		}
+		// Validate slug parameter
+		if (!isValidIndicatorSlug(slug as string)) {
+			return res.status(400).json({
+				message: `Invalid slug parameter. Must be one of: ${validIndicatorSlugs.join(
 					', '
 				)}`
 			});

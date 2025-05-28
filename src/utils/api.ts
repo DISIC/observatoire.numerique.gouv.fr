@@ -4,6 +4,7 @@ import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { Edition, OldProcedure } from '@prisma/client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { RecordData } from './data-viz';
+import { GetIndicatorEvolutionProps } from '@/pages/api/indicator-evolution';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -169,6 +170,29 @@ export function useAdministrationsCentral() {
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+export function useIndicatorEvolution({
+	view,
+	slug,
+	kind,
+	value
+}: GetIndicatorEvolutionProps) {
+	const { data, error, isLoading } = useSWR(
+		kind && value
+			? `/api/indicator-evolution?view=${view}&slug=${slug}&kind=${kind}&value=${value}`
+			: null,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<any[]>(stringify(await res.json()));
 		}
 	);
 
