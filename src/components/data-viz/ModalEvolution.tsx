@@ -7,14 +7,13 @@ import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useId } from 'react';
 import { tss } from 'tss-react';
-import CustomBarChart from '../charts/BarChart';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { LightSelect } from '../generic/LightSelect';
 import { EvolutionViewType } from '@/pages/api/indicator-evolution';
 
-const LineChartCustom = dynamic(() => import('@/components/charts/LineChart'));
+const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
 type Props = {
 	actions: {
@@ -84,7 +83,7 @@ const TabContent = ({
 			)}
 
 			<div className={cx(classes.chart)}>
-				<CustomBarChart />
+				<BarChartCustom dataKeys={[]} data={[]} />
 			</div>
 			<div className={classes.viewTypeContainer}>
 				<LightSelect

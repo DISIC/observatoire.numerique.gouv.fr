@@ -23,6 +23,16 @@ export type GetIndicatorEvolutionProps = {
 	value: string;
 };
 
+export type DataIndicatorEvolution = {
+	name: string;
+	values: {
+		label: string;
+		color: string;
+		position: number;
+		count: number;
+	}[];
+};
+
 export async function getIndicatorEvolution({
 	view,
 	slug,
