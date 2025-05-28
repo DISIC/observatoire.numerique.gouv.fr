@@ -62,6 +62,75 @@ export async function getIndicatorEvolution({
 		return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
 	});
 
+	if (view === 'year') {
+		const yearEditionIds: Record<string, string[]> = {};
+		editions.forEach(edition => {
+			const year = edition.name.match(/\d{4}/)?.[0];
+			if (year) {
+				if (!yearEditionIds[year]) {
+					yearEditionIds[year] = [];
+				}
+				yearEditionIds[year].push(edition.id);
+			}
+		});
+
+		const data = await Promise.all(
+			Object.entries(yearEditionIds).map(async ([year, editionIds]) => {
+				const procedures = await prisma.procedure.findMany({
+					where: {
+						editionId: {
+							in: editionIds
+						},
+						[kind]: value
+					},
+					select: {
+						id: true
+					}
+				});
+
+				const fields = await prisma.field.findMany({
+					where: {
+						slug: {
+							equals: slug
+						},
+						procedureId: {
+							in: procedures.map(procedure => procedure.id)
+						}
+					}
+				});
+
+				const levelCounts = indicatorLevels
+					.map(level => {
+						if (typeof level === 'string' || !level.label_stats) return null;
+
+						const count = fields.filter(field =>
+							field.color === 'gray'
+								? field.label === level.label_stats
+								: field.color === level.color
+						).length;
+
+						return {
+							level: level.label_stats,
+							count: count
+						};
+					})
+					.filter(item => item !== null);
+
+				return {
+					year: year,
+					levels: levelCounts
+				};
+			})
+		);
+
+		const result = data.reduce((acc, editionData) => {
+			acc[editionData.year] = editionData.levels;
+			return acc;
+		}, {} as Record<string, Array<{ level: string; count: number }>>);
+
+		return result;
+	}
+
 	const data = await Promise.all(
 		editions.map(async edition => {
 			const procedures = await prisma.procedure.findMany({
