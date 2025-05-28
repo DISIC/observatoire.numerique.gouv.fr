@@ -110,7 +110,9 @@ export async function getIndicatorEvolution({
 						).length;
 
 						return {
-							level: level.label_stats,
+							label: level.label_stats,
+							color: level.color,
+							position: level.position,
 							count: count
 						};
 					})
@@ -126,7 +128,7 @@ export async function getIndicatorEvolution({
 		const result = data.reduce((acc, editionData) => {
 			acc[editionData.year] = editionData.levels;
 			return acc;
-		}, {} as Record<string, Array<{ level: string; count: number }>>);
+		}, {} as Record<string, Array<{ label: string; color: string; position: number; count: number }>>);
 
 		return result;
 	}
@@ -165,7 +167,9 @@ export async function getIndicatorEvolution({
 					).length;
 
 					return {
-						level: level.label_stats,
+						label: level.label_stats,
+						color: level.color,
+						position: level.position,
 						count: count
 					};
 				})
@@ -181,7 +185,7 @@ export async function getIndicatorEvolution({
 	const result = data.reduce((acc, editionData) => {
 		acc[editionData.edition] = editionData.levels;
 		return acc;
-	}, {} as Record<string, Array<{ level: string; count: number }>>);
+	}, {} as Record<string, Array<{ label: string; color: string; position: number; count: number }>>);
 
 	return result;
 }
