@@ -54,7 +54,8 @@ export const indicatorLevels: Record<
 			description: 'Moyenne des notes au dessus de 8/10.',
 			position: 1,
 			threshold: 8,
-			goal_reached: true
+			goal_reached: true,
+			label_stats: 'Très bien'
 		},
 		{
 			label: 'X / 10',
@@ -62,7 +63,8 @@ export const indicatorLevels: Record<
 			description: 'Moyenne des notes entre 5 et 8/10.',
 			position: 2,
 			threshold: 5,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Insuffisant'
 		},
 		{
 			label: 'X / 10',
@@ -70,7 +72,8 @@ export const indicatorLevels: Record<
 			description: 'Moyenne inférieure à 5/10.',
 			position: 3,
 			threshold: 0,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Critique'
 		},
 		{
 			label: 'À venir',
@@ -81,13 +84,14 @@ export const indicatorLevels: Record<
 			goal_reached: false
 		},
 		{
-			label: 'Nombre d\'avis insuffisant',
+			label: "Nombre d'avis insuffisant",
 			color: 'gray',
 			noBackground: true,
 			description:
 				'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
 			position: 5,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: "Nombre d'avis insuffisant"
 		}
 	],
 	handicap: [
