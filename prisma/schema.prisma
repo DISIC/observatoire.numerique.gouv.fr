@@ -82,6 +82,7 @@ model Edition {
 model Procedure {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
   grist_identifier Int?
+  jdma_identifier  Int?
   title            String
   title_normalized String
   ministere        String

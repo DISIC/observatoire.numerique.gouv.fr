@@ -42,6 +42,7 @@ export const grist = router({
 				sousorg: gristProcedure[grist_field_names.sousorg],
 				ministere: gristProcedure[grist_field_names.ministere],
 				grist_identifier: gristProcedure[grist_field_names.id],
+				jdma_identifier: gristProcedure[grist_field_names.jdma_id],
 				volume: gristProcedure[grist_field_names.volume],
 				noJdma: gristProcedure[grist_field_names.noJdma] !== 'Oui',
 				fields: getFieldsFromGristProcedure(gristProcedure, indicators)
