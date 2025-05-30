@@ -63,6 +63,7 @@
 		"powerhooks": "^1.0.20",
 		"react": "19.0.0-rc-65a56d0e-20241020",
 		"react-dom": "19.0.0-rc-65a56d0e-20241020",
+		"react-markdown": "^10.1.0",
 		"react-transition-group": "^4.4.5",
 		"remark": "^14.0.3",
 		"remark-html": "^15.0.2",
