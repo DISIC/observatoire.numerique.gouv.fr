@@ -99,6 +99,13 @@ export const sortProcedures = (
 		let valueA = aField?.value ?? aField?.label ?? '0';
 		let valueB = bField?.value ?? bField?.label ?? '0';
 
+		if (aField?.slug === 'dlnuf') {
+			valueA = aField?.label ?? '0';
+		}
+		if (bField?.slug === 'dlnuf') {
+			valueB = bField?.label ?? '0';
+		}
+
 		if (
 			aField?.slug === 'handicap' &&
 			aField.label === 'Non' &&
