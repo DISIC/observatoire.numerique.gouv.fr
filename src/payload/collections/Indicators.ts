@@ -111,8 +111,14 @@ export const Indicators: CollectionConfig = {
 		},
 		{
 			name: 'moreInfos',
-			type: 'textarea',
-			label: 'Informations supplémentaires'
+			type: 'richText',
+			label: 'Informations supplémentaires',
+			editor: lexicalEditor({
+				features: ({ defaultFeatures }) => [
+					...defaultFeatures,
+					HTMLConverterFeature({})
+				]
+			})
 		},
 		{
 			name: 'levels',
