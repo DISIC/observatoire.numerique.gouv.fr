@@ -7,11 +7,13 @@ import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useId } from 'react';
 import { tss } from 'tss-react';
-import CustomBarChart from '../charts/BarChart';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz';
+import Button from '@codegouvfr/react-dsfr/Button';
+import { LightSelect } from '../generic/LightSelect';
+import { EvolutionViewType } from '@/pages/api/indicator-evolution';
 
-const LineChartCustom = dynamic(() => import('@/components/charts/LineChart'));
+const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
 type Props = {
 	actions: {
@@ -24,13 +26,15 @@ type TabContentProps = {
 	indicatorSlug: string;
 	shouldShowGoalLine?: boolean;
 	shouldShowCrossScorePerimeter?: boolean;
+	setViewType: (viewType: EvolutionViewType) => void;
 };
 
 const TabContent = ({
 	procedureKind,
 	indicatorSlug,
 	shouldShowGoalLine,
-	shouldShowCrossScorePerimeter
+	shouldShowCrossScorePerimeter,
+	setViewType
 }: TabContentProps) => {
 	const { classes, cx } = useStyles();
 
@@ -79,7 +83,26 @@ const TabContent = ({
 			)}
 
 			<div className={cx(classes.chart)}>
-				<CustomBarChart />
+				<BarChartCustom dataKeys={[]} data={[]} />
+			</div>
+			<div className={classes.viewTypeContainer}>
+				<LightSelect
+					label=""
+					id="select-view"
+					options={[
+						{
+							label: 'Années',
+							value: 'year'
+						},
+						{
+							label: 'Éditions',
+							value: 'edition'
+						}
+					]}
+					size="small"
+					onChange={value => setViewType(value as EvolutionViewType)}
+					className={classes.selectViewType}
+				/>
 			</div>
 		</div>
 	);
@@ -103,6 +126,8 @@ export function ModalEvolution(props: Props) {
 	const [selectedTabId, setSelectedTabId] =
 		useState<(typeof validIndicatorSlugs)[number]>('satisfaction');
 
+	const [viewType, setViewType] = useState<EvolutionViewType>('edition');
+
 	const { classes } = useStyles();
 
 	const id = useId();
@@ -122,7 +147,7 @@ export function ModalEvolution(props: Props) {
 	>(undefined);
 
 	const { data } = useIndicatorEvolution({
-		view: 'edition',
+		view: viewType,
 		slug: selectedTabId,
 		kind: openState?.dialogParams.procedureKind as ProcedureKind,
 		value: openState?.dialogParams.kindSlug || ''
@@ -206,28 +231,60 @@ export function ModalEvolution(props: Props) {
 			className={classes.modal}
 		>
 			<hr />
-			<Tabs
-				className={classes.tabsWrapper}
-				selectedTabId={selectedTabId}
-				onTabChange={tabId =>
-					setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number])
-				}
-				tabs={tabs.map(tab => ({
-					...tab
-				}))}
-			>
-				<p className={classes.chartLegend}>
-					{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-				</p>
-				<TabContent
-					procedureKind={openState?.dialogParams.procedureKind as ProcedureKind}
-					indicatorSlug={selectedTabId}
-					shouldShowGoalLine={openState?.dialogParams.shouldShowGoalLine}
-					shouldShowCrossScorePerimeter={
-						openState?.dialogParams.shouldShowCrossScorePerimeter
+			<div style={{ position: 'relative' }}>
+				<Tabs
+					className={classes.tabsWrapper}
+					selectedTabId={selectedTabId}
+					onTabChange={tabId =>
+						setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number])
 					}
-				/>
-			</Tabs>
+					tabs={tabs.map(tab => ({
+						...tab
+					}))}
+				>
+					<p className={classes.chartLegend}>
+						{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+					</p>
+					<TabContent
+						procedureKind={
+							openState?.dialogParams.procedureKind as ProcedureKind
+						}
+						indicatorSlug={selectedTabId}
+						shouldShowGoalLine={openState?.dialogParams.shouldShowGoalLine}
+						shouldShowCrossScorePerimeter={
+							openState?.dialogParams.shouldShowCrossScorePerimeter
+						}
+						setViewType={setViewType}
+					/>
+				</Tabs>
+				<div className={classes.tabsActions}>
+					<div className={classes.buttonsGroup}>
+						<Button
+							iconId="ri-bar-chart-line"
+							onClick={() => setDataVisualitionKind('line')}
+							priority={
+								dataVisualitionKind === 'line' ? 'primary' : 'secondary'
+							}
+							title="Chart"
+						/>
+						<Button
+							iconId="ri-table-line"
+							onClick={() => setDataVisualitionKind('table')}
+							priority={
+								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
+							}
+							title="Table"
+						/>
+					</div>
+					<Button
+						iconId="ri-download-line"
+						priority={'secondary'}
+						title="Exporter"
+					>
+						Exporter
+					</Button>
+				</div>
+			</div>
 		</modal.Component>
 	);
 }
@@ -256,6 +313,19 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 			borderRadius: fr.spacing('2v')
 		}
 	},
+	tabsActions: {
+		position: 'absolute',
+		top: 0,
+		right: 0,
+		zIndex: 1,
+		display: 'flex',
+		gap: fr.spacing('10v'),
+		paddingTop: fr.spacing('1v')
+	},
+	buttonsGroup: {
+		display: 'flex',
+		gap: fr.spacing('2v')
+	},
 	tabContent: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -273,5 +343,16 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 	chartLegend: {
 		color: fr.colors.decisions.text.mention.grey.default,
 		fontSize: '14px'
+	},
+	viewTypeContainer: {
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'flex-end'
+	},
+	selectViewType: {
+		['select.fr-select']: {
+			width: '100%'
+		},
+		width: '7rem'
 	}
 }));
