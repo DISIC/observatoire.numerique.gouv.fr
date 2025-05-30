@@ -75,6 +75,9 @@ export async function getIndicatorScoresByProcedureKind({
 					},
 					procedureId: {
 						in: procedures.map(procedure => procedure.id)
+					},
+					goalReached: {
+						not: null
 					}
 				},
 				orderBy: {
