@@ -5,6 +5,7 @@ import { IndicatorColor } from "@prisma/client";
 export const grist_field_names = {
 	edition: 'Ref_Edition',
 	id: 'Ref_Demarche',
+	jdma_id: 'Dashlord_ID_JDMA',
 	link: 'URL_Demarche',
 	title: 'Nom_Demarche',
 	administration: 'Nom_Administration',

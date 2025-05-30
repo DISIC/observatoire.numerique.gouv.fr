@@ -16,9 +16,8 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${
-					millions > 1 ? 's' : ''
-				}`;
+				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
+					}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}
@@ -74,7 +73,8 @@ const IGNORED_VALUES = [
 	'En attente',
 	'À venir',
 	'0',
-	'–'
+	'–',
+	'-'
 ] as string[];
 const SPECIAL_VALUES = [
 	'Faible',
@@ -99,10 +99,17 @@ export const sortProcedures = (
 		let valueA = aField?.value ?? aField?.label ?? '0';
 		let valueB = bField?.value ?? bField?.label ?? '0';
 
+		if (aField?.slug === 'dlnuf') {
+			valueA = aField?.label ?? '0';
+		}
+		if (bField?.slug === 'dlnuf') {
+			valueB = bField?.label ?? '0';
+		}
+
 		if (
 			aField?.slug === 'handicap' &&
 			aField.label === 'Non' &&
-			aField.value === null
+			(aField.value === null || aField.value === 'Non')
 		) {
 			valueA = '1';
 		}
@@ -145,9 +152,9 @@ export const sortProcedures = (
 		) {
 			return sortConfig.direction === 'asc'
 				? SPECIAL_VALUES.indexOf(valueA as string) -
-						SPECIAL_VALUES.indexOf(valueB as string)
+				SPECIAL_VALUES.indexOf(valueB as string)
 				: SPECIAL_VALUES.indexOf(valueB as string) -
-						SPECIAL_VALUES.indexOf(valueA as string);
+				SPECIAL_VALUES.indexOf(valueA as string);
 		}
 
 		const valueToCompareA = isNaN(Number(valueA)) ? valueA : Number(valueA);
