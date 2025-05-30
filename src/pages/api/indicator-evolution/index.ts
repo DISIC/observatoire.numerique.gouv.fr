@@ -23,14 +23,15 @@ export type GetIndicatorEvolutionProps = {
 	value: string;
 };
 
-export type DataIndicatorEvolution = {
+export type DataLevel = {
+	label: string;
+	color?: string;
+	position?: number;
+};
+
+export type RecordDataGrouped = {
 	name: string;
-	values: {
-		label: string;
-		color: string;
-		position: number;
-		count: number;
-	}[];
+	values: (DataLevel & { value: number })[];
 };
 
 export async function getIndicatorEvolution({
@@ -38,7 +39,7 @@ export async function getIndicatorEvolution({
 	slug,
 	kind,
 	value
-}: GetIndicatorEvolutionProps) {
+}: GetIndicatorEvolutionProps): Promise<RecordDataGrouped[] | null> {
 	if (view !== 'year' && view !== 'edition') return null;
 
 	const prisma = new PrismaClient();
@@ -123,7 +124,7 @@ export async function getIndicatorEvolution({
 							label: level.label_stats,
 							color: level.color,
 							position: level.position,
-							count: count
+							value: count
 						};
 					})
 					.filter(item => item !== null);
@@ -135,10 +136,10 @@ export async function getIndicatorEvolution({
 			})
 		);
 
-		const result = data.reduce((acc, editionData) => {
-			acc[editionData.year] = editionData.levels;
-			return acc;
-		}, {} as Record<string, Array<{ label: string; color: string; position: number; count: number }>>);
+		const result: RecordDataGrouped[] = data.map(editionData => ({
+			name: editionData.year,
+			values: editionData.levels
+		}));
 
 		return result;
 	}
@@ -180,7 +181,7 @@ export async function getIndicatorEvolution({
 						label: level.label_stats,
 						color: level.color,
 						position: level.position,
-						count: count
+						value: count
 					};
 				})
 				.filter(item => item !== null);
@@ -192,10 +193,10 @@ export async function getIndicatorEvolution({
 		})
 	);
 
-	const result = data.reduce((acc, editionData) => {
-		acc[editionData.edition] = editionData.levels;
-		return acc;
-	}, {} as Record<string, Array<{ label: string; color: string; position: number; count: number }>>);
+	const result: RecordDataGrouped[] = data.map(editionData => ({
+		name: editionData.edition,
+		values: editionData.levels
+	}));
 
 	return result;
 }

@@ -4,7 +4,10 @@ import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { Edition, OldProcedure } from '@prisma/client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { RecordData } from './data-viz';
-import { GetIndicatorEvolutionProps } from '@/pages/api/indicator-evolution';
+import {
+	GetIndicatorEvolutionProps,
+	RecordDataGrouped
+} from '@/pages/api/indicator-evolution';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -192,7 +195,7 @@ export function useIndicatorEvolution({
 			: null,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<any[]>(stringify(await res.json()));
+			return superJSONParse<RecordDataGrouped[]>(stringify(await res.json()));
 		}
 	);
 

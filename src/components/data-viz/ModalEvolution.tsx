@@ -11,7 +11,10 @@ import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { LightSelect } from '../generic/LightSelect';
-import { EvolutionViewType } from '@/pages/api/indicator-evolution';
+import {
+	EvolutionViewType,
+	RecordDataGrouped
+} from '@/pages/api/indicator-evolution';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
@@ -27,6 +30,7 @@ type TabContentProps = {
 	shouldShowGoalLine?: boolean;
 	shouldShowCrossScorePerimeter?: boolean;
 	setViewType: (viewType: EvolutionViewType) => void;
+	data: RecordDataGrouped[];
 };
 
 const TabContent = ({
@@ -34,6 +38,7 @@ const TabContent = ({
 	indicatorSlug,
 	shouldShowGoalLine,
 	shouldShowCrossScorePerimeter,
+	data,
 	setViewType
 }: TabContentProps) => {
 	const { classes, cx } = useStyles();
@@ -83,7 +88,16 @@ const TabContent = ({
 			)}
 
 			<div className={cx(classes.chart)}>
-				<BarChartCustom dataKeys={[]} data={[]} />
+				<BarChartCustom
+					dataKeys={
+						data[0]?.values.map(value => ({
+							label: value.label,
+							color: value.color,
+							position: value.position
+						})) || []
+					}
+					data={data}
+				/>
 			</div>
 			<div className={classes.viewTypeContainer}>
 				<LightSelect
@@ -91,14 +105,15 @@ const TabContent = ({
 					id="select-view"
 					options={[
 						{
-							label: 'Années',
-							value: 'year'
-						},
-						{
 							label: 'Éditions',
 							value: 'edition'
+						},
+						{
+							label: 'Années',
+							value: 'year'
 						}
 					]}
+					defaultValue={'edition'}
 					size="small"
 					onChange={value => setViewType(value as EvolutionViewType)}
 					className={classes.selectViewType}
@@ -146,8 +161,8 @@ export function ModalEvolution(props: Props) {
 		| undefined
 	>(undefined);
 
-	const { data } = useIndicatorEvolution({
-		view: viewType,
+	const { data: apiData } = useIndicatorEvolution({
+		view: viewType || 'edition',
 		slug: selectedTabId,
 		kind: openState?.dialogParams.procedureKind as ProcedureKind,
 		value: openState?.dialogParams.kindSlug || ''
@@ -255,6 +270,7 @@ export function ModalEvolution(props: Props) {
 							openState?.dialogParams.shouldShowCrossScorePerimeter
 						}
 						setViewType={setViewType}
+						data={apiData}
 					/>
 				</Tabs>
 				<div className={classes.tabsActions}>
@@ -338,7 +354,7 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 	},
 	chart: {
 		width: '100%',
-		height: '400px'
+		height: '500px'
 	},
 	chartLegend: {
 		color: fr.colors.decisions.text.mention.grey.default,
