@@ -11,6 +11,10 @@ import {
 	ModalEvolutionParams,
 	ModalEvolution
 } from '@/components/data-viz/ModalEvolution';
+import {
+	ModalComparison,
+	ModalComparisonParams
+} from '@/components/data-viz/ModalComparison';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -29,13 +33,18 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 		'radar' | 'table'
 	>('radar');
 
-	const [myDialogActions] = useState<{
+	const [modalEvolutionActions] = useState<{
 		open?: (params: ModalEvolutionParams) => void;
+	}>({});
+
+	const [modalComparisonActions] = useState<{
+		open?: (params: ModalComparisonParams) => void;
 	}>({});
 
 	return (
 		<div>
-			<ModalEvolution actions={myDialogActions} />
+			<ModalEvolution actions={modalEvolutionActions} />
+			<ModalComparison actions={modalComparisonActions} />
 			<DataVizTabHeader
 				dataVisualitionKind={dataVisualitionKind}
 				setDataVisualitionKind={setDataVisualitionKind}
@@ -59,14 +68,24 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 							/>
 						</div>
 						<div className={cx(classes.buttonsGroup)}>
-							<Button priority="secondary" size="small">
+							<Button
+								priority="secondary"
+								size="small"
+								onClick={async () => {
+									const response = await modalComparisonActions.open!({
+										title: `Comparer ${item.text}`,
+										procedureKind: kind,
+										kindSlug: item.text
+									});
+								}}
+							>
 								Comparer
 							</Button>
 							<Button
 								priority="secondary"
 								size="small"
 								onClick={async () => {
-									const response = await myDialogActions.open!({
+									const response = await modalEvolutionActions.open!({
 										title: `Voir l'évolution ${item.text}`,
 										procedureKind: kind,
 										kindSlug: item.text
