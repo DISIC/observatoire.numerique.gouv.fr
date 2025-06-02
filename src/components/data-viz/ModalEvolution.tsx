@@ -16,6 +16,7 @@ import {
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
 import { exportChartAsImage } from '@/utils/tools';
+import Link from 'next/link';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
@@ -278,6 +279,16 @@ export function ModalEvolution(props: Props) {
 						chartRef={chartRef}
 					/>
 				</Tabs>
+				<div className={classes.linkContainer}>
+					<Link
+						href="/Aide/Observatoire?tab=indicators"
+						className={fr.cx('fr-link')}
+					>
+						Tout comprendre sur les indicateurs{' '}
+						<i className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')} />
+					</Link>
+				</div>
+
 				<div className={classes.tabsActions}>
 					<div className={classes.buttonsGroup}>
 						<Button
@@ -303,7 +314,10 @@ export function ModalEvolution(props: Props) {
 						title="Exporter"
 						onClick={() => {
 							if (chartRef.current && openState?.dialogParams.title) {
-								exportChartAsImage(chartRef.current, openState.dialogParams.title);
+								exportChartAsImage(
+									chartRef.current,
+									openState.dialogParams.title
+								);
 							}
 						}}
 					>
@@ -374,6 +388,17 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 		width: '100%',
 		display: 'flex',
 		justifyContent: 'flex-end'
+	},
+	linkContainer: {
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'flex-end',
+		a: {
+			fontSize: '14px',
+			'i::after, i::before': {
+				'--icon-size': '14px'
+			}
+		}
 	},
 	selectViewType: {
 		['select.fr-select']: {
