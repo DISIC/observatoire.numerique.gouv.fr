@@ -136,10 +136,12 @@ export async function getIndicatorEvolution({
 			})
 		);
 
-		const result: RecordDataGrouped[] = data.map(editionData => ({
-			name: editionData.year,
-			values: editionData.levels
-		}));
+		const result: RecordDataGrouped[] = data
+			.filter(editionData => editionData.levels.some(level => level.value > 0))
+			.map(editionData => ({
+				name: editionData.year,
+				values: editionData.levels
+			}));
 
 		return result;
 	}
@@ -193,10 +195,12 @@ export async function getIndicatorEvolution({
 		})
 	);
 
-	const result: RecordDataGrouped[] = data.map(editionData => ({
-		name: editionData.edition,
-		values: editionData.levels
-	}));
+	const result: RecordDataGrouped[] = data
+		.filter(editionData => editionData.levels.some(level => level.value > 0))
+		.map(editionData => ({
+			name: editionData.edition,
+			values: editionData.levels
+		}));
 
 	return result;
 }

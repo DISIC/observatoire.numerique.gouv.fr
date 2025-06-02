@@ -5,7 +5,7 @@ import { createModal } from '@codegouvfr/react-dsfr/Modal';
 import { useIsModalOpen } from '@codegouvfr/react-dsfr/Modal/useIsModalOpen';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect, useId, useRef } from 'react';
 import { tss } from 'tss-react';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz';
@@ -15,6 +15,7 @@ import {
 	EvolutionViewType,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
+import { exportChartAsImage } from '@/utils/tools';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
@@ -31,6 +32,7 @@ type TabContentProps = {
 	shouldShowCrossScorePerimeter?: boolean;
 	setViewType: (viewType: EvolutionViewType) => void;
 	data: RecordDataGrouped[];
+	chartRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const TabContent = ({
@@ -39,7 +41,8 @@ const TabContent = ({
 	shouldShowGoalLine,
 	shouldShowCrossScorePerimeter,
 	data,
-	setViewType
+	setViewType,
+	chartRef
 }: TabContentProps) => {
 	const { classes, cx } = useStyles();
 
@@ -87,7 +90,7 @@ const TabContent = ({
 				</div>
 			)}
 
-			<div className={cx(classes.chart)}>
+			<div className={cx(classes.chart)} ref={chartRef}>
 				<BarChartCustom
 					dataKeys={
 						data[0]?.values.map(value => ({
@@ -146,6 +149,7 @@ export function ModalEvolution(props: Props) {
 	const { classes } = useStyles();
 
 	const id = useId();
+	const chartRef = useRef<HTMLDivElement>(null);
 
 	const [modal] = useState(() =>
 		createModal({
@@ -271,6 +275,7 @@ export function ModalEvolution(props: Props) {
 						}
 						setViewType={setViewType}
 						data={apiData}
+						chartRef={chartRef}
 					/>
 				</Tabs>
 				<div className={classes.tabsActions}>
@@ -296,6 +301,11 @@ export function ModalEvolution(props: Props) {
 						iconId="ri-download-line"
 						priority={'secondary'}
 						title="Exporter"
+						onClick={() => {
+							if (chartRef.current && openState?.dialogParams.title) {
+								exportChartAsImage(chartRef.current, openState.dialogParams.title);
+							}
+						}}
 					>
 						Exporter
 					</Button>

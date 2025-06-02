@@ -20,8 +20,8 @@ const getColorValue = (value?: string) => {
 			return fr.colors.getHex({ isDark: false }).decisions.text.default.info
 				.default;
 		case 'yellow':
-			return fr.colors.getHex({ isDark: false }).decisions.text.default.warning
-				.default;
+			return fr.colors.getHex({ isDark: false }).options.orangeTerreBattue
+				.main645.default;
 		case 'red':
 			return fr.colors.getHex({ isDark: false }).decisions.text.default.error
 				.default;
@@ -76,8 +76,6 @@ const renderLegend = (props: any) => {
 const CustomYAxisTick = (props: any) => {
 	const { x, y, payload } = props;
 
-	if (payload.value === 0) return null;
-
 	return (
 		<g transform={`translate(${x},${y})`}>
 			<text x={0} y={0} dy={4} textAnchor="end" fill="#666" fontSize="0.75rem">
@@ -110,9 +108,10 @@ const CustomBar = (props: any) => {
 type BarChartProps = {
 	data: RecordDataGrouped[];
 	dataKeys: DataLevel[];
+	chartRef?: React.RefObject<any>;
 };
 
-const CustomBarChart = ({ data, dataKeys }: BarChartProps) => {
+const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 	const transformedData = data.map(item => {
 		const result: any = { name: item.name };
 		const total = item.values.reduce((sum, value) => sum + value.value, 0);
@@ -167,13 +166,18 @@ const CustomBarChart = ({ data, dataKeys }: BarChartProps) => {
 
 	return (
 		<ResponsiveContainer width="100%" height="100%">
-			<BarChart role="img" data={transformedData} margin={{ bottom: 20 }}>
+			<BarChart
+				role="img"
+				data={transformedData}
+				margin={{ bottom: 20 }}
+				ref={chartRef}
+			>
 				<XAxis
 					axisLine={false}
 					dataKey="name"
 					fontSize="0.75rem"
 					tickLine={false}
-					padding={{ left: 20 }}
+					padding={{ left: 10 }}
 				/>
 				<YAxis
 					axisLine={false}
@@ -194,7 +198,6 @@ const CustomBarChart = ({ data, dataKeys }: BarChartProps) => {
 				{dataKeys
 					.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
 					.map((key, index) => {
-						console.log('key', key.color);
 						return (
 							<Bar
 								key={index}
