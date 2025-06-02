@@ -173,14 +173,18 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 				ref={chartRef}
 			>
 				<XAxis
-					axisLine={false}
+					axisLine={{
+						stroke: fr.colors.decisions.background.contrast.blueFrance.default
+					}}
 					dataKey="name"
 					fontSize="0.75rem"
 					tickLine={false}
 					padding={{ left: 10 }}
 				/>
 				<YAxis
-					axisLine={false}
+					axisLine={{
+						stroke: fr.colors.decisions.background.contrast.blueFrance.default
+					}}
 					domain={[0, 100]}
 					ticks={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
 					tick={<CustomYAxisTick />}
