@@ -22,7 +22,13 @@ const RadarChartCustom = dynamic(
 
 export type DataVizKind = 'radar' | 'table';
 
-const TabContent = ({ kind }: { kind: ProcedureKind }) => {
+const TabContent = ({
+	kind,
+	kindLabel
+}: {
+	kind: ProcedureKind;
+	kindLabel: string;
+}) => {
 	const { classes, cx } = useStyles();
 	const { data } = useIndicatorScoreByProcedureKind({ kind });
 
@@ -73,9 +79,14 @@ const TabContent = ({ kind }: { kind: ProcedureKind }) => {
 								size="small"
 								onClick={async () => {
 									const response = await modalComparisonActions.open!({
-										title: `Comparer ${item.text}`,
+										title: `Comparer les ${kindLabel.toLowerCase()} avec ${
+											item.text
+										}`,
+										baseTitle: item.text,
+										baseData: item.data,
 										procedureKind: kind,
-										kindSlug: item.text
+										kindSlug: item.text,
+										kindLabel: kindLabel
 									});
 								}}
 							>
@@ -114,15 +125,27 @@ const DataViz = () => {
 					tabs={[
 						{
 							label: 'Administrations centrales',
-							content: <TabContent kind="administration_central" />
+							content: (
+								<TabContent
+									kind="administration_central"
+									kindLabel="Administrations centrales"
+								/>
+							)
 						},
 						{
 							label: 'Administrations',
-							content: <TabContent kind="administration" />
+							content: (
+								<TabContent kind="administration" kindLabel="Administrations" />
+							)
 						},
 						{
 							label: 'Périmètres ministériels',
-							content: <TabContent kind="ministere" />
+							content: (
+								<TabContent
+									kind="ministere"
+									kindLabel="Périmètres ministériels"
+								/>
+							)
 						}
 					]}
 				/>
