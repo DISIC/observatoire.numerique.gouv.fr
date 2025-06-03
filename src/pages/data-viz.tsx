@@ -82,11 +82,15 @@ const TabContent = ({
 										title: `Comparer les ${kindLabel.toLowerCase()} avec ${
 											item.text
 										}`,
-										baseTitle: item.text,
 										baseData: item.data,
 										procedureKind: kind,
 										kindSlug: item.text,
-										kindLabel: kindLabel
+										kindLabel: kindLabel,
+										kindDataOptions: data.map(_ => ({
+											label: _.text,
+											value: _.text,
+											data: _.data
+										}))
 									});
 								}}
 							>
