@@ -3860,9 +3860,9 @@ __metadata:
   linkType: hard
 
 "@next/env@npm:^15.1.5":
-  version: 15.3.2
-  resolution: "@next/env@npm:15.3.2"
-  checksum: 10c0/bebc8acbe2fdaadc8cc9ae6dbf4fe1a2e183e1bc417742213ae6d246f8be9416b2af8e703e2faa1792c167245ea1918547c62cf7be88c35429f3494e71e4b429
+  version: 15.3.3
+  resolution: "@next/env@npm:15.3.3"
+  checksum: 10c0/b47ef78c4194900f52a274270932a633ba21f39377fc6ad478839c3c1e3fffccb8ad25b286a1beb11f91fe9d09a299087ccb9c205a4e610ad95af65f24e49e5a
   languageName: node
   linkType: hard
 

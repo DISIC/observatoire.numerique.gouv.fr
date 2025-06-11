@@ -119,12 +119,14 @@ type RadarChartCustomProps = {
 	data: RecordData['data'];
 	showGoalRadar: boolean;
 	showCrossScorePerimeter: boolean;
+	enableAnimation?: boolean;
 };
 
 const RadarChartCustom = ({
 	data,
 	showGoalRadar,
-	showCrossScorePerimeter
+	showCrossScorePerimeter,
+	enableAnimation = true
 }: RadarChartCustomProps) => {
 	const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
@@ -167,6 +169,7 @@ const RadarChartCustom = ({
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fill={fr.colors.decisions.artwork.minor.blueFrance.default}
 					fillOpacity={0.2}
+					isAnimationActive={enableAnimation}
 				/>
 				{showGoalRadar && (
 					<Radar
