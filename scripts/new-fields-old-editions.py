@@ -62,13 +62,14 @@ if __name__ == "__main__":
             # Get procedure from Grist based on the id
             procedure_grist_id = procedure['grist_identifier']
             procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Dashlord_ID_XWIKI': procedure_grist_id})
-            procedure_grist = procedure_grist[0]._asdict()
-            updates.append(UpdateOne(
-                {"_id": procedure['_id']},
-                {"$set": {
-                    "administration_central": procedure_grist['Nom_Administration_Centrale'],
-                }}
-            ))
+            if (len(procedure_grist) > 0):
+                procedure_grist = procedure_grist[0]._asdict()
+                updates.append(UpdateOne(
+                    {"_id": procedure['_id']},
+                    {"$set": {
+                        "administration_central": procedure_grist['Nom_Administration_Centrale'],
+                    }}
+                ))
         
         # Execute bulk update if there are any updates
         if updates:

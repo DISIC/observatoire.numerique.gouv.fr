@@ -4,6 +4,7 @@ export const IndicatorLevels: CollectionConfig = {
 	slug: 'payload-indicator-levels',
 	defaultPopulate: {
 		label: true,
+		label_stats: true,
 		color: true,
 		description: true,
 		position: true,
@@ -29,6 +30,11 @@ export const IndicatorLevels: CollectionConfig = {
 			type: 'text',
 			required: true,
 			label: 'Libellé'
+		},
+		{
+			name: 'label_stats',
+			type: 'text',
+			label: 'Libellé statistique'
 		},
 		{
 			name: 'color',
