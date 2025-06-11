@@ -79,9 +79,8 @@ const TabContent = ({
 								size="small"
 								onClick={async () => {
 									const response = await modalComparisonActions.open!({
-										title: `Comparer les ${kindLabel.toLowerCase()} avec ${
-											item.text
-										}`,
+										title: `Comparer les ${kindLabel.toLowerCase()} avec ${item.text
+											}`,
 										baseData: item.data,
 										procedureKind: kind,
 										kindSlug: item.text,
@@ -137,12 +136,6 @@ const DataViz = () => {
 							)
 						},
 						{
-							label: 'Administrations',
-							content: (
-								<TabContent kind="administration" kindLabel="Administrations" />
-							)
-						},
-						{
 							label: 'Périmètres ministériels',
 							content: (
 								<TabContent
@@ -150,7 +143,13 @@ const DataViz = () => {
 									kindLabel="Périmètres ministériels"
 								/>
 							)
-						}
+						},
+						{
+							label: 'Administrations',
+							content: (
+								<TabContent kind="administration" kindLabel="Administrations" />
+							)
+						},
 					]}
 				/>
 			</div>
