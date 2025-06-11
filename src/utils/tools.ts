@@ -5,6 +5,7 @@ import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { saveAs } from 'file-saver';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -267,4 +268,19 @@ export const slugifyText = (text: string): string => {
 
 export const desufligyText = (text: string): string => {
 	return text.replace(/-/g, ' ');
+};
+export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
+	const chartSVG = chartParent.children[0] as SVGElement;
+
+	if (!chartSVG) {
+		console.error('Chart SVG element not found');
+		return;
+	}
+
+	const filename = `export-${slugifyText(title)}-${new Date()
+		.toISOString()
+		.slice(0, 10)}`;
+	const svgURL = new XMLSerializer().serializeToString(chartSVG);
+	const svgBlob = new Blob([svgURL], { type: 'image/svg+xml;charset=utf-8' });
+	saveAs(svgBlob, `${filename}.svg`);
 };

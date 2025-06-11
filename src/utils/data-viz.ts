@@ -1,16 +1,25 @@
 import { PrismaClient } from '@prisma/client';
 import getPayloadClient from '@/payload/payload-client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { EvolutionViewType } from '@/pages/api/indicator-evolution';
 
 const prisma = new PrismaClient();
 
-const validSlugs = [
+export const validIndicatorSlugs = [
 	'satisfaction',
 	'handicap',
 	'dlnuf',
 	'auth',
 	'simplicity'
 ] as const;
+
+export function isValidIndicatorSlug(
+	slug: string
+): slug is (typeof validIndicatorSlugs)[number] {
+	return validIndicatorSlugs.includes(
+		slug as (typeof validIndicatorSlugs)[number]
+	);
+}
 
 export type RecordData = {
 	text: string;
@@ -41,7 +50,7 @@ export async function getIndicatorScoresByProcedureKind({
 			collection: 'payload-indicators',
 			where: {
 				slug: {
-					in: validSlugs
+					in: validIndicatorSlugs
 				}
 			}
 		})
@@ -62,10 +71,13 @@ export async function getIndicatorScoresByProcedureKind({
 				by: ['slug', 'goalReached'],
 				where: {
 					slug: {
-						in: [...validSlugs]
+						in: [...validIndicatorSlugs]
 					},
 					procedureId: {
 						in: procedures.map(procedure => procedure.id)
+					},
+					goalReached: {
+						not: null
 					}
 				},
 				orderBy: {
@@ -83,7 +95,7 @@ export async function getIndicatorScoresByProcedureKind({
 				icon: indicator.icon
 			})) as RecordData['data'];
 
-			for (const field of validSlugs) {
+			for (const field of validIndicatorSlugs) {
 				const fieldData = fields.filter(fieldData => fieldData.slug === field);
 
 				let countReached = 0;

@@ -238,6 +238,7 @@ export interface PayloadIndicator {
 export interface PayloadIndicatorLevel {
   id: string;
   label: string;
+  label_stats?: string | null;
   color: 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'orange';
   description: string;
   indicator: string | PayloadIndicator;
@@ -371,6 +372,7 @@ export interface PayloadIndicatorsSelect<T extends boolean = true> {
  */
 export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
   label?: T;
+  label_stats?: T;
   color?: T;
   description?: T;
   indicator?: T;

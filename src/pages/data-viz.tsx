@@ -64,7 +64,7 @@ const TabContent = ({
 							{item.text}
 						</h2>
 						<p className={cx('fr-text--xs')}>
-							(Nb de démarches : {item.count})
+							(Nombre de démarches : {item.count})
 						</p>
 						<div className={cx(classes.chart)}>
 							<RadarChartCustom
