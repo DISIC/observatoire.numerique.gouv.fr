@@ -39,7 +39,7 @@ export function Top250Header(props: Props) {
 	};
 
 	const { data: departments } = useDepartments(old ? 'old' : 'base', editionId);
-	const { data: administrations } = useAdministrations();
+	const { data: administrations } = useAdministrations(editionId);
 
 	const { classes, cx } = useStyles({
 		isMainEdition: !edition_id && !slug
