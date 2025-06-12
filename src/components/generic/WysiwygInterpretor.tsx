@@ -11,7 +11,7 @@ const WysiwygInterpretor = (props: WysiwygInterpretorProps) => {
 	const { classes, cx } = useStyles();
 
 	const regexForExternalLink =
-		/<a href="([^"]+)" target="_blank" rel="noopener noreferrer">([^<]*)/g;
+		/<a href="([^"]+)"(?=[^>]*\btarget="_blank")(?=[^>]*\brel="noopener noreferrer")[^>]*>([^<]*)/g;
 	const newHtml = wysiwyg_html.replace(regexForExternalLink, (_, url, text) => {
 		const isSameAsUrl = text === url;
 		if (isSameAsUrl) {

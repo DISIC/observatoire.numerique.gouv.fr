@@ -4,6 +4,7 @@ import React from 'react';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { tss } from 'tss-react';
 import ReactMarkdown from 'react-markdown';
+import WysiwygInterpretor from '@/components/generic/WysiwygInterpretor';
 
 
 type Props = {
@@ -26,10 +27,9 @@ export const IndicatorContent = (props: Props) => {
 				</>
 			)}
 			{isFull && indicator.description_html && (
-				<div
-					className={cx(classes.description)}
-					dangerouslySetInnerHTML={{ __html: indicator.description_html }}
-				/>
+				<div className={cx(classes.description)}>
+					<WysiwygInterpretor wysiwyg_html={indicator.description_html} />
+				</div>
 			)}
 			<p>
 				<b>Légende</b>
@@ -79,7 +79,10 @@ const useStyles = tss.withName(IndicatorContent.name).create(() => ({
 	},
 	description: {
 		fontSize: '14px',
-		marginBottom: fr.spacing('4v')
+		marginBottom: fr.spacing('4v'),
+		ul: {
+			paddingLeft: fr.spacing('5v'),
+		}
 	},
 	label: {
 		marginRight: fr.spacing('2v')
