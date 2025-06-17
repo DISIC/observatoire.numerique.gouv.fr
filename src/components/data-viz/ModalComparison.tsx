@@ -166,8 +166,15 @@ export function ModalComparison({ actions }: Props) {
 			</div>
 			<div className={classes.mainContainer} ref={mainContainerRef}>
 				<div
-					className={cx(classes.container, classes.radarCard)}
-					style={{ height: maxReachedHeight }}
+					className={cx(
+						classes.container,
+						classes.radarCard,
+						shouldRadarOverlay && fr.cx('fr-py-0')
+					)}
+					style={{
+						minHeight: maxReachedHeight,
+						height: shouldRadarOverlay ? maxReachedHeight : undefined
+					}}
 				>
 					{!shouldRadarOverlay && (
 						<h2 className={cx(classes.title, 'fr-text--lg')}>
@@ -188,8 +195,23 @@ export function ModalComparison({ actions }: Props) {
 							<RadarChartCustom
 								data={
 									shouldRadarOverlay
-										? [] // TODO: merge both radars data
+										? (openState?.dialogParams.baseData || []).map(item => ({
+												...item,
+												compareScore: openState?.dialogParams.kindDataOptions
+													.find(option => option.value === selectedKindValue)
+													?.data.find(
+														compareItem => compareItem.slug === item.slug
+													)?.score
+										  }))
 										: openState?.dialogParams.baseData || []
+								}
+								compareData={
+									shouldRadarOverlay
+										? {
+												initialTitle: openState?.dialogParams.kindSlug || '',
+												compareTitle: selectedKindValue
+										  }
+										: undefined
 								}
 								showGoalRadar={false}
 								showCrossScorePerimeter={showCrossScorePerimeter}
@@ -236,6 +258,8 @@ export function ModalComparison({ actions }: Props) {
 											}
 											showGoalRadar={false}
 											showCrossScorePerimeter={showCrossScorePerimeter}
+											color={fr.colors.options.purpleGlycine._925_125.active}
+											enableAnimation={false}
 										/>
 									</div>
 
