@@ -8,7 +8,8 @@ import {
 	PolarAngleAxis,
 	PolarRadiusAxis,
 	ResponsiveContainer,
-	Tooltip
+	Tooltip,
+	Legend
 } from 'recharts';
 import { tss } from 'tss-react';
 
@@ -116,17 +117,26 @@ const CustomAxisTickLabel = (props: any) => {
 };
 
 type RadarChartCustomProps = {
-	data: RecordData['data'];
+	data: RecordData['data'] & {
+		compareScore?: number;
+	};
 	showGoalRadar: boolean;
 	showCrossScorePerimeter: boolean;
 	enableAnimation?: boolean;
+	compareData?: {
+		initialTitle: string;
+		compareTitle: string;
+	};
+	color?: string;
 };
 
 const RadarChartCustom = ({
 	data,
 	showGoalRadar,
 	showCrossScorePerimeter,
-	enableAnimation = true
+	enableAnimation = true,
+	compareData,
+	color
 }: RadarChartCustomProps) => {
 	const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
@@ -139,8 +149,16 @@ const RadarChartCustom = ({
 	};
 
 	return (
-		<ResponsiveContainer width="100%" height="100%">
-			<RadarChart data={data} accessibilityLayer>
+		<ResponsiveContainer width="100%" height={compareData ? '110%' : '100%'}>
+			<RadarChart
+				data={data}
+				accessibilityLayer
+				margin={{ top: 16 }}
+				style={{
+					display: 'flex',
+					flexDirection: 'column-reverse'
+				}}
+			>
 				<PolarGrid
 					stroke={fr.colors.decisions.artwork.decorative.blueFrance.default}
 				/>
@@ -164,10 +182,10 @@ const RadarChartCustom = ({
 					tickCount={6}
 				/>
 				<Radar
-					name="Valeur"
+					name={compareData?.initialTitle || 'Valeur'}
 					dataKey="score"
-					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
-					fill={fr.colors.decisions.artwork.minor.blueFrance.default}
+					stroke={color || fr.colors.decisions.artwork.minor.blueFrance.default}
+					fill={color || fr.colors.decisions.artwork.minor.blueFrance.default}
 					fillOpacity={0.2}
 					isAnimationActive={enableAnimation}
 				/>
@@ -189,9 +207,33 @@ const RadarChartCustom = ({
 						fillOpacity={0.2}
 					/>
 				)}
+				{compareData && (
+					<>
+						<Radar
+							name={compareData.compareTitle || 'Comparaison'}
+							dataKey="compareScore"
+							stroke={fr.colors.options.purpleGlycine._925_125.active}
+							fill={fr.colors.options.purpleGlycine._925_125.active}
+							fillOpacity={0.2}
+							isAnimationActive={enableAnimation}
+						/>
+						<Legend
+							verticalAlign="top"
+							iconType="circle"
+							wrapperStyle={{ position: 'relative' }}
+						/>
+					</>
+				)}
+
 				<Tooltip
 					labelFormatter={(_, payload) => payload[0]?.payload.name || ''}
 					formatter={(value, _, { name }) => [`${value}%`, name]}
+					contentStyle={{
+						textAlign: 'left'
+					}}
+					labelStyle={{
+						textAlign: 'center'
+					}}
 				/>
 			</RadarChart>
 		</ResponsiveContainer>
