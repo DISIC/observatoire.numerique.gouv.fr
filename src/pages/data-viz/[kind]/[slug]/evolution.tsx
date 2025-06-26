@@ -1,30 +1,28 @@
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { fr } from '@codegouvfr/react-dsfr';
 import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
-import { createModal } from '@codegouvfr/react-dsfr/Modal';
-import { useIsModalOpen } from '@codegouvfr/react-dsfr/Modal/useIsModalOpen';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useId, useRef } from 'react';
+import { useState, useId, useRef } from 'react';
 import { tss } from 'tss-react';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { LightSelect } from '../generic/LightSelect';
+import { LightSelect } from '@/components/generic/LightSelect';
 import {
 	EvolutionViewType,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
-import { exportChartAsImage } from '@/utils/tools';
+import {
+	base64UrlToString,
+	exportChartAsImage,
+	stringToBase64Url
+} from '@/utils/tools';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
-
-type Props = {
-	actions: {
-		open?: (params: ModalEvolutionParams) => void;
-	};
-};
 
 type TabContentProps = {
 	procedureKind: ProcedureKind;
@@ -127,16 +125,13 @@ const TabContent = ({
 	);
 };
 
-export type ModalEvolutionParams = {
-	title: string;
-	procedureKind: ProcedureKind;
-	kindSlug: string;
-	shouldShowGoalLine?: boolean;
-	shouldShowCrossScorePerimeter?: boolean;
-};
-
-export function ModalEvolution(props: Props) {
-	const { actions } = props;
+function DataVizEvolution() {
+	const router = useRouter();
+	const { kind, slug: tmpSlug } = router.query as {
+		kind: ProcedureKind;
+		slug: string;
+	};
+	const slug = tmpSlug ? base64UrlToString(tmpSlug) : '';
 
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'line' | 'table'
@@ -147,51 +142,26 @@ export function ModalEvolution(props: Props) {
 
 	const [viewType, setViewType] = useState<EvolutionViewType>('edition');
 
-	const { classes } = useStyles();
+	const { classes, cx } = useStyles();
 
 	const id = useId();
 	const chartRef = useRef<HTMLDivElement>(null);
 
-	const [modal] = useState(() =>
-		createModal({
-			id: `modal-indicator-evolution-${id}`,
-			isOpenedByDefault: false
-		})
-	);
-
-	const [openState, setOpenState] = useState<
-		| {
-				dialogParams: ModalEvolutionParams;
-		  }
-		| undefined
-	>(undefined);
-
 	const { data: apiData } = useIndicatorEvolution({
 		view: viewType || 'edition',
 		slug: selectedTabId,
-		kind: openState?.dialogParams.procedureKind as ProcedureKind,
-		value: openState?.dialogParams.kindSlug || ''
+		kind,
+		value: slug
 	});
-
-	useEffect(() => {
-		actions.open = dialogParams => {
-			setOpenState({
-				dialogParams
-			});
-			modal.open();
-		};
-	}, []);
-
-	useIsModalOpen(modal);
 
 	const tabs = [
 		{
 			tabId: 'satisfaction',
 			label: (
-				<>
-					<i className="ri-emoji-sticker-line" />
-					{selectedTabId === 'satisfaction' && <p>Satisfaction usager</p>}
-				</>
+				<span>
+					<i className="ri-emoji-sticker-line" />{' '}
+					{selectedTabId === 'satisfaction' && <span>Satisfaction usager</span>}
+				</span>
 			),
 			legend:
 				'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du périmètre ministériel.'
@@ -199,10 +169,12 @@ export function ModalEvolution(props: Props) {
 		{
 			tabId: 'handicap',
 			label: (
-				<>
-					<i className="ri-open-arm-line" />
-					{selectedTabId === 'handicap' && <p>Prise en compte du handicap</p>}
-				</>
+				<span>
+					<i className="ri-open-arm-line" />{' '}
+					{selectedTabId === 'handicap' && (
+						<span>Prise en compte du handicap</span>
+					)}
+				</span>
 			),
 			legend:
 				'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches du périmètre ministériel.'
@@ -210,10 +182,10 @@ export function ModalEvolution(props: Props) {
 		{
 			tabId: 'dlnuf',
 			label: (
-				<>
-					<i className="ri-pass-valid-line" />
-					{selectedTabId === 'dlnuf' && <p>Dites-le-nous une fois</p>}
-				</>
+				<span>
+					<i className="ri-pass-valid-line" />{' '}
+					{selectedTabId === 'dlnuf' && <span>Dites-le-nous une fois</span>}
+				</span>
 			),
 			legend:
 				'Cet histogramme représente la répartition en pourcentage du niveau de simplification des démarches du périmètre ministériel.'
@@ -221,10 +193,10 @@ export function ModalEvolution(props: Props) {
 		{
 			tabId: 'auth',
 			label: (
-				<>
-					<i className="ri-lock-unlock-line" />
-					{selectedTabId === 'auth' && <p>Authentification</p>}
-				</>
+				<span>
+					<i className="ri-lock-unlock-line" />{' '}
+					{selectedTabId === 'auth' && <span>Authentification</span>}
+				</span>
 			),
 			legend:
 				'Cet histogramme représente la répartition en pourcentage des démarches de l’indicateur “Authentification”'
@@ -232,10 +204,10 @@ export function ModalEvolution(props: Props) {
 		{
 			tabId: 'simplicity',
 			label: (
-				<>
-					<i className="ri-speak-line" />
-					{selectedTabId === 'simplicity' && <p>Clarté du langage</p>}
-				</>
+				<span>
+					<i className="ri-speak-line" />{' '}
+					{selectedTabId === 'simplicity' && <span>Clarté du langage</span>}
+				</span>
 			),
 			legend:
 				'Cet histogramme représente la répartition en pourcentage des niveaux de clarté des démarches du périmètre ministériel.'
@@ -243,98 +215,110 @@ export function ModalEvolution(props: Props) {
 	];
 
 	return (
-		<modal.Component
-			title={openState?.dialogParams.title}
-			iconId="ri-arrow-right-line"
-			concealingBackdrop={false}
-			size="large"
-			className={classes.modal}
-		>
-			<hr />
-			<div style={{ position: 'relative' }}>
-				<Tabs
-					className={classes.tabsWrapper}
-					selectedTabId={selectedTabId}
-					onTabChange={tabId =>
-						setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number])
-					}
-					tabs={tabs.map(tab => ({
-						...tab
-					}))}
-				>
-					<p className={classes.chartLegend}>
-						{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-					</p>
-					<TabContent
-						procedureKind={
-							openState?.dialogParams.procedureKind as ProcedureKind
+		<div className={cx(classes.root)}>
+			<div className="fr-container">
+				<Breadcrumb
+					segments={[
+						{
+							label: 'Accueil',
+							linkProps: { href: '/' }
+						},
+						{
+							label: 'Dataviz',
+							linkProps: { href: '/data-viz' }
 						}
-						indicatorSlug={selectedTabId}
-						shouldShowGoalLine={openState?.dialogParams.shouldShowGoalLine}
-						shouldShowCrossScorePerimeter={
-							openState?.dialogParams.shouldShowCrossScorePerimeter
+					]}
+					currentPageLabel={`Détail des indicateurs du périmètre ${slug}`}
+					className={cx('fr-mb-1v')}
+				/>
+				<h1>Détail des indicateurs du périmètre {slug}</h1>
+				<div>
+					<Tabs
+						className={classes.tabsWrapper}
+						selectedTabId={selectedTabId}
+						onTabChange={tabId =>
+							setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number])
 						}
-						setViewType={setViewType}
-						data={apiData}
-						chartRef={chartRef}
-					/>
-				</Tabs>
-				<div className={classes.linkContainer}>
-					<Link
-						href="/Aide/Observatoire?tab=indicators"
-						className={fr.cx('fr-link')}
+						tabs={tabs.map(tab => ({
+							...tab
+						}))}
 					>
-						Tout comprendre sur les indicateurs{' '}
-						<i className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')} />
-					</Link>
-				</div>
+						<p className={classes.chartLegend}>
+							{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+						</p>
+						<TabContent
+							procedureKind={kind}
+							indicatorSlug={selectedTabId}
+							shouldShowGoalLine={
+								false
+								// openState?.dialogParams.shouldShowGoalLine
+							}
+							shouldShowCrossScorePerimeter={
+								false
+								// openState?.dialogParams.shouldShowCrossScorePerimeter
+							}
+							setViewType={setViewType}
+							data={apiData}
+							chartRef={chartRef}
+						/>
+						<div className={classes.linkContainer}>
+							<Link
+								href="/Aide/Observatoire?tab=indicators"
+								className={fr.cx('fr-link')}
+							>
+								Tout comprendre sur les indicateurs{' '}
+								<i
+									className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')}
+								/>
+							</Link>
+						</div>
+					</Tabs>
 
-				<div className={classes.tabsActions}>
-					<div className={classes.buttonsGroup}>
+					<div className={classes.tabsActions}>
+						<div className={classes.buttonsGroup}>
+							<Button
+								iconId="ri-bar-chart-line"
+								onClick={() => setDataVisualitionKind('line')}
+								priority={
+									dataVisualitionKind === 'line' ? 'primary' : 'secondary'
+								}
+								title="Chart"
+							/>
+							<Button
+								iconId="ri-table-line"
+								onClick={() => setDataVisualitionKind('table')}
+								priority={
+									dataVisualitionKind === 'table' ? 'primary' : 'secondary'
+								}
+								title="Table"
+							/>
+						</div>
 						<Button
-							iconId="ri-bar-chart-line"
-							onClick={() => setDataVisualitionKind('line')}
-							priority={
-								dataVisualitionKind === 'line' ? 'primary' : 'secondary'
-							}
-							title="Chart"
-						/>
-						<Button
-							iconId="ri-table-line"
-							onClick={() => setDataVisualitionKind('table')}
-							priority={
-								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-							}
-							title="Table"
-						/>
+							iconId="ri-download-line"
+							priority={'secondary'}
+							title="Exporter"
+							onClick={() => {
+								if (chartRef.current && slug) {
+									exportChartAsImage(chartRef.current, slug);
+								}
+							}}
+						>
+							Exporter
+						</Button>
 					</div>
-					<Button
-						iconId="ri-download-line"
-						priority={'secondary'}
-						title="Exporter"
-						onClick={() => {
-							if (chartRef.current && openState?.dialogParams.title) {
-								exportChartAsImage(
-									chartRef.current,
-									openState.dialogParams.title
-								);
-							}
-						}}
-					>
-						Exporter
-					</Button>
 				</div>
 			</div>
-		</modal.Component>
+		</div>
 	);
 }
 
-const useStyles = tss.withName(ModalEvolution.name).create(() => ({
-	modal: {
-		'& > div > div > div': {
-			width: 'calc(1100% / 12)',
-			maxWidth: 'calc(1100% / 12)',
-			flexBasis: 'calc(1100% / 12)'
+const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
+	root: {
+		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
+		padding: `${fr.spacing('12v')} 0`,
+		['& > div  > h1']: {
+			lineHeight: '2.25rem',
+			fontSize: '1.75rem'
 		}
 	},
 	tabsWrapper: {
@@ -349,7 +333,7 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 		['& > .fr-tabs__panel']: {
 			backgroundColor: 'white',
 			border: 'none',
-			padding: `${fr.spacing('5v')} 0`,
+			padding: fr.spacing('6v'),
 			borderRadius: fr.spacing('2v')
 		}
 	},
@@ -393,6 +377,7 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 		width: '100%',
 		display: 'flex',
 		justifyContent: 'flex-end',
+		marginTop: fr.spacing('6v'),
 		a: {
 			fontSize: '14px',
 			'i::after, i::before': {
@@ -407,3 +392,5 @@ const useStyles = tss.withName(ModalEvolution.name).create(() => ({
 		width: '7rem'
 	}
 }));
+
+export default DataVizEvolution;

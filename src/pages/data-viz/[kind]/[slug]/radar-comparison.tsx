@@ -103,10 +103,10 @@ const RadarComparison = () => {
 							linkProps: { href: '/data-viz' }
 						}
 					]}
-					currentPageLabel="Radar de comparaison"
+					currentPageLabel={`Comparer le périmètre ${slug}`}
 					className={cx('fr-mb-1v')}
 				/>
-				<h1>Comparer le {baseIndicatorScores?.text}</h1>
+				<h1>Comparer le périmètre {baseIndicatorScores?.text}</h1>
 				<div className={classes.pageContent}>
 					<div className={classes.actions}>
 						<Checkbox

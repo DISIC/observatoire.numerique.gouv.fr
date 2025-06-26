@@ -7,10 +7,6 @@ import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
 import { ProcedureKind } from '../api/indicator-scores';
-import {
-	ModalEvolutionParams,
-	ModalEvolution
-} from '@/components/data-viz/ModalEvolution';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { stringToBase64Url } from '@/utils/tools';
 
@@ -37,13 +33,8 @@ const TabContent = ({
 		'radar' | 'table'
 	>('radar');
 
-	const [modalEvolutionActions] = useState<{
-		open?: (params: ModalEvolutionParams) => void;
-	}>({});
-
 	return (
 		<div>
-			<ModalEvolution actions={modalEvolutionActions} />
 			<DataVizTabHeader
 				dataVisualitionKind={dataVisualitionKind}
 				setDataVisualitionKind={setDataVisualitionKind}
@@ -81,15 +72,13 @@ const TabContent = ({
 							<Button
 								priority="secondary"
 								size="small"
-								onClick={async () => {
-									await modalEvolutionActions.open!({
-										title: `Voir l'évolution ${item.text}`,
-										procedureKind: kind,
-										kindSlug: item.text
-									});
+								linkProps={{
+									href: `/data-viz/${kind}/${stringToBase64Url(
+										item.text
+									)}/evolution`
 								}}
 							>
-								Voir l'évolution
+								Voir le détail
 							</Button>
 							<Button size="small">Voir les démarches</Button>
 						</div>
