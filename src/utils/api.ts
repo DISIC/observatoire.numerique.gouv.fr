@@ -145,6 +145,22 @@ export function useAdministrations() {
 	};
 }
 
+export function useProcedureGroupByKind({ kind }: { kind: ProcedureKind }) {
+	const { data, error, isLoading } = useSWR(
+		`/api/procedure-group?kind=${kind}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
 type IndicatorScoreByProcedureKindProps = {
 	kind: ProcedureKind;
 };
@@ -162,6 +178,30 @@ export function useIndicatorScoreByProcedureKind({
 
 	return {
 		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+type IndicatorScoreByProcedureKindSlugProps = {
+	kind: ProcedureKind;
+	slug: string;
+};
+
+export function useIndicatorScoreByProcedureKindSlug({
+	kind,
+	slug
+}: IndicatorScoreByProcedureKindSlugProps) {
+	const { data, error, isLoading } = useSWR(
+		`/api/indicator-scores?kind=${kind}&slug=${slug}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<RecordData>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data,
 		isError: error,
 		isLoading: (!error && !data) || isLoading
 	};

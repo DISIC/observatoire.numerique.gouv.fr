@@ -6,6 +6,7 @@ import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { saveAs } from 'file-saver';
+import pako from 'pako';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -260,15 +261,14 @@ export async function verifyAuth(
 }
 
 export const slugifyText = (text: string): string => {
-	return text
-		.toLowerCase()
-		.replace(/ /g, '-')
-		.replace(/[^a-z0-9-]/g, '');
+	return text.toLowerCase().replace(/\s+/g, '-');
 };
 
 export const desufligyText = (text: string): string => {
-	return text.replace(/-/g, ' ');
+	const result = text.replace(/-/g, ' ');
+	return result.charAt(0).toUpperCase() + result.slice(1);
 };
+
 export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
 	const chartSVG = chartParent.children[0] as SVGElement;
 
@@ -284,3 +284,13 @@ export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
 	const svgBlob = new Blob([svgURL], { type: 'image/svg+xml;charset=utf-8' });
 	saveAs(svgBlob, `${filename}.svg`);
 };
+
+export function stringToBase64Url(str: string): string {
+	const base64 = btoa(unescape(encodeURIComponent(str)));
+	return encodeURIComponent(base64);
+}
+
+export function base64UrlToString(base64Url: string): string {
+	const decoded = decodeURIComponent(base64Url);
+	return decodeURIComponent(escape(atob(decoded)));
+}

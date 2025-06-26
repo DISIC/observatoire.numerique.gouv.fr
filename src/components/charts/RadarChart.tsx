@@ -124,7 +124,7 @@ type RadarChartCustomProps = {
 	showCrossScorePerimeter: boolean;
 	enableAnimation?: boolean;
 	compareData?: {
-		initialTitle: string;
+		mainTitle: string;
 		compareTitle: string;
 	};
 	color?: string;
@@ -182,7 +182,7 @@ const RadarChartCustom = ({
 					tickCount={6}
 				/>
 				<Radar
-					name={compareData?.initialTitle || 'Valeur'}
+					name={compareData?.mainTitle || 'Valeur'}
 					dataKey="score"
 					stroke={color || fr.colors.decisions.artwork.minor.blueFrance.default}
 					fill={color || fr.colors.decisions.artwork.minor.blueFrance.default}
@@ -220,11 +220,22 @@ const RadarChartCustom = ({
 						<Legend
 							verticalAlign="top"
 							iconType="circle"
+							iconSize={12}
+							formatter={value => (
+								<span
+									style={{
+										color: 'black',
+										fontSize: 14,
+										fontWeight: 500
+									}}
+								>
+									{value}
+								</span>
+							)}
 							wrapperStyle={{ position: 'relative' }}
 						/>
 					</>
 				)}
-
 				<Tooltip
 					labelFormatter={(_, payload) => payload[0]?.payload.name || ''}
 					formatter={(value, _, { name }) => [`${value}%`, name]}

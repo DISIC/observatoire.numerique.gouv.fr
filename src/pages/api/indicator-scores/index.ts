@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import {
 	getIndicatorScoresByProcedureKind,
+	getIndicatorScoresByProcedureKindSlug,
 	RecordData
 } from '@/utils/data-viz';
 
@@ -68,11 +69,18 @@ export default async function handler(
 ) {
 	if (req.method === 'GET') {
 		if (req.query.kind) {
-			const { kind } = req.query;
-			const administrationsCentral = await getIndicatorScores(
-				kind as ProcedureKind
-			);
-			res.status(200).json(administrationsCentral);
+			const { kind, slug } = req.query;
+			if (!slug || typeof slug !== 'string') {
+				const indicatorScores = await getIndicatorScores(kind as ProcedureKind);
+				res.status(200).json(indicatorScores);
+			} else {
+				let indicatorScore = await getIndicatorScoresByProcedureKindSlug({
+					kind: kind as ProcedureKind,
+					slug: slug as string
+				});
+
+				res.status(200).json(indicatorScore);
+			}
 		}
 	} else {
 		res.status(400).json({ message: 'Unsupported method' });

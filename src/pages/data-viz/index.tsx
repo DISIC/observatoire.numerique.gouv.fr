@@ -6,15 +6,13 @@ import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
-import { ProcedureKind } from './api/indicator-scores';
+import { ProcedureKind } from '../api/indicator-scores';
 import {
 	ModalEvolutionParams,
 	ModalEvolution
 } from '@/components/data-viz/ModalEvolution';
-import {
-	ModalComparison,
-	ModalComparisonParams
-} from '@/components/data-viz/ModalComparison';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import { stringToBase64Url } from '@/utils/tools';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -43,14 +41,9 @@ const TabContent = ({
 		open?: (params: ModalEvolutionParams) => void;
 	}>({});
 
-	const [modalComparisonActions] = useState<{
-		open?: (params: ModalComparisonParams) => void;
-	}>({});
-
 	return (
 		<div>
 			<ModalEvolution actions={modalEvolutionActions} />
-			<ModalComparison actions={modalComparisonActions} />
 			<DataVizTabHeader
 				dataVisualitionKind={dataVisualitionKind}
 				setDataVisualitionKind={setDataVisualitionKind}
@@ -77,20 +70,10 @@ const TabContent = ({
 							<Button
 								priority="secondary"
 								size="small"
-								onClick={async () => {
-									const response = await modalComparisonActions.open!({
-										title: `Comparer les ${kindLabel.toLowerCase()} avec ${item.text
-											}`,
-										baseData: item.data,
-										procedureKind: kind,
-										kindSlug: item.text,
-										kindLabel: kindLabel,
-										kindDataOptions: data.map(_ => ({
-											label: _.text,
-											value: _.text,
-											data: _.data
-										}))
-									});
+								linkProps={{
+									href: `/data-viz/${kind}/${stringToBase64Url(
+										item.text
+									)}/radar-comparison`
 								}}
 							>
 								Comparer
@@ -99,7 +82,7 @@ const TabContent = ({
 								priority="secondary"
 								size="small"
 								onClick={async () => {
-									const response = await modalEvolutionActions.open!({
+									await modalEvolutionActions.open!({
 										title: `Voir l'évolution ${item.text}`,
 										procedureKind: kind,
 										kindSlug: item.text
@@ -122,6 +105,16 @@ const DataViz = () => {
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
+				<Breadcrumb
+					segments={[
+						{
+							label: 'Accueil',
+							linkProps: { href: '/' }
+						}
+					]}
+					currentPageLabel="Dataviz"
+					className={cx('fr-mb-1v')}
+				/>
 				<h1>DataViz</h1>
 				<Tabs
 					className={classes.tabsWrapper}
@@ -149,7 +142,7 @@ const DataViz = () => {
 							content: (
 								<TabContent kind="administration" kindLabel="Administrations" />
 							)
-						},
+						}
 					]}
 				/>
 			</div>
