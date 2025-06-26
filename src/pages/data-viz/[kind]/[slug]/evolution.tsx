@@ -243,9 +243,43 @@ function DataVizEvolution() {
 							...tab
 						}))}
 					>
-						<p className={classes.chartLegend}>
-							{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-						</p>
+						<div className={classes.tabsHeaderWrapper}>
+							<p className={classes.chartLegend}>
+								{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+							</p>
+							<div className={classes.tabsActions}>
+								<div className={classes.buttonsGroup}>
+									<Button
+										iconId="ri-bar-chart-line"
+										onClick={() => setDataVisualitionKind('line')}
+										priority={
+											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
+										}
+										title="Chart"
+									/>
+									<Button
+										iconId="ri-table-line"
+										onClick={() => setDataVisualitionKind('table')}
+										priority={
+											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
+										}
+										title="Table"
+									/>
+								</div>
+								<Button
+									iconId="ri-download-line"
+									priority={'secondary'}
+									title="Exporter"
+									onClick={() => {
+										if (chartRef.current && slug) {
+											exportChartAsImage(chartRef.current, slug);
+										}
+									}}
+								>
+									Exporter
+								</Button>
+							</div>
+						</div>
 						<TabContent
 							procedureKind={kind}
 							indicatorSlug={selectedTabId}
@@ -273,39 +307,6 @@ function DataVizEvolution() {
 							</Link>
 						</div>
 					</Tabs>
-
-					<div className={classes.tabsActions}>
-						<div className={classes.buttonsGroup}>
-							<Button
-								iconId="ri-bar-chart-line"
-								onClick={() => setDataVisualitionKind('line')}
-								priority={
-									dataVisualitionKind === 'line' ? 'primary' : 'secondary'
-								}
-								title="Chart"
-							/>
-							<Button
-								iconId="ri-table-line"
-								onClick={() => setDataVisualitionKind('table')}
-								priority={
-									dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-								}
-								title="Table"
-							/>
-						</div>
-						<Button
-							iconId="ri-download-line"
-							priority={'secondary'}
-							title="Exporter"
-							onClick={() => {
-								if (chartRef.current && slug) {
-									exportChartAsImage(chartRef.current, slug);
-								}
-							}}
-						>
-							Exporter
-						</Button>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -337,18 +338,24 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 			borderRadius: fr.spacing('2v')
 		}
 	},
-	tabsActions: {
-		position: 'absolute',
-		top: 0,
-		right: 0,
-		zIndex: 1,
+	tabsHeaderWrapper: {
 		display: 'flex',
-		gap: fr.spacing('10v'),
-		paddingTop: fr.spacing('1v')
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		marginBottom: fr.spacing('6v'),
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column-reverse',
+			gap: fr.spacing('4v')
+		}
+	},
+	tabsActions: {
+		display: 'flex',
+		alignItems: 'center'
 	},
 	buttonsGroup: {
 		display: 'flex',
-		gap: fr.spacing('2v')
+		gap: fr.spacing('2v'),
+		marginRight: fr.spacing('8v')
 	},
 	tabContent: {
 		display: 'flex',
@@ -366,7 +373,8 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 	},
 	chartLegend: {
 		color: fr.colors.decisions.text.mention.grey.default,
-		fontSize: '14px'
+		fontSize: '14px',
+		marginBottom: 0
 	},
 	viewTypeContainer: {
 		width: '100%',
