@@ -6,9 +6,10 @@ import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
-import { ProcedureKind } from '../api/indicator-scores';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { stringToBase64Url } from '@/utils/tools';
+import { ProcedureKind } from '../api/indicator-scores';
+import TableView from '@/components/data-viz/TableView';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -41,50 +42,58 @@ const TabContent = ({
 				setShowGoalRadar={setShowGoalRadar}
 				setShowCrossScorePerimeter={setShowCrossScorePerimeter}
 			/>
-			<div className={cx(classes.grid)}>
-				{data.map(item => (
-					<div key={item.text} className={cx(classes.gridItem)}>
-						<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-							{item.text}
-						</h2>
-						<p className={cx('fr-text--xs')}>
-							(Nombre de démarches : {item.count})
-						</p>
-						<div className={cx(classes.chart)}>
-							<RadarChartCustom
-								data={item.data}
-								showGoalRadar={showGoalRadar}
-								showCrossScorePerimeter={showCrossScorePerimeter}
-							/>
+
+			{dataVisualitionKind === 'table' ? (
+				<TableView
+					headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
+					data={data}
+				/>
+			) : (
+				<div className={cx(classes.grid)}>
+					{data.map(item => (
+						<div key={item.text} className={cx(classes.gridItem)}>
+							<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+								{item.text}
+							</h2>
+							<p className={cx('fr-text--xs')}>
+								(Nombre de démarches : {item.count})
+							</p>
+							<div className={cx(classes.chart)}>
+								<RadarChartCustom
+									data={item.data}
+									showGoalRadar={showGoalRadar}
+									showCrossScorePerimeter={showCrossScorePerimeter}
+								/>
+							</div>
+							<div className={cx(classes.buttonsGroup)}>
+								<Button
+									priority="secondary"
+									size="small"
+									linkProps={{
+										href: `/data-viz/${kind}/${stringToBase64Url(
+											item.text
+										)}/radar-comparison`
+									}}
+								>
+									Comparer
+								</Button>
+								<Button
+									priority="secondary"
+									size="small"
+									linkProps={{
+										href: `/data-viz/${kind}/${stringToBase64Url(
+											item.text
+										)}/evolution`
+									}}
+								>
+									Voir le détail
+								</Button>
+								<Button size="small">Voir les démarches</Button>
+							</div>
 						</div>
-						<div className={cx(classes.buttonsGroup)}>
-							<Button
-								priority="secondary"
-								size="small"
-								linkProps={{
-									href: `/data-viz/${kind}/${stringToBase64Url(
-										item.text
-									)}/radar-comparison`
-								}}
-							>
-								Comparer
-							</Button>
-							<Button
-								priority="secondary"
-								size="small"
-								linkProps={{
-									href: `/data-viz/${kind}/${stringToBase64Url(
-										item.text
-									)}/evolution`
-								}}
-							>
-								Voir le détail
-							</Button>
-							<Button size="small">Voir les démarches</Button>
-						</div>
-					</div>
-				))}
-			</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };
