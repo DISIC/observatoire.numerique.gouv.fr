@@ -1,26 +1,23 @@
-import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { fr } from '@codegouvfr/react-dsfr';
-import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
-import Tabs from '@codegouvfr/react-dsfr/Tabs';
-import dynamic from 'next/dynamic';
-import { useState, useId, useRef } from 'react';
-import { tss } from 'tss-react';
-import { useIndicatorEvolution } from '@/utils/api';
-import { validIndicatorSlugs } from '@/utils/data-viz';
-import Button from '@codegouvfr/react-dsfr/Button';
+import TableView from '@/components/data-viz/TableView';
 import { LightSelect } from '@/components/generic/LightSelect';
 import {
 	EvolutionViewType,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
-import {
-	base64UrlToString,
-	exportChartAsImage,
-	stringToBase64Url
-} from '@/utils/tools';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { useIndicatorEvolution } from '@/utils/api';
+import { validIndicatorSlugs } from '@/utils/data-viz';
+import { base64UrlToString, exportChartAsImage } from '@/utils/tools';
+import { fr } from '@codegouvfr/react-dsfr';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import Button from '@codegouvfr/react-dsfr/Button';
+import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
+import Tabs from '@codegouvfr/react-dsfr/Tabs';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import { useId, useRef, useState } from 'react';
+import { tss } from 'tss-react';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
@@ -280,21 +277,43 @@ function DataVizEvolution() {
 								</Button>
 							</div>
 						</div>
-						<TabContent
-							procedureKind={kind}
-							indicatorSlug={selectedTabId}
-							shouldShowGoalLine={
-								false
-								// openState?.dialogParams.shouldShowGoalLine
-							}
-							shouldShowCrossScorePerimeter={
-								false
-								// openState?.dialogParams.shouldShowCrossScorePerimeter
-							}
-							setViewType={setViewType}
-							data={apiData}
-							chartRef={chartRef}
-						/>
+						{dataVisualitionKind === 'table' ? (
+							<TableView
+								headers={['', ...(apiData.map(d => d.name) || [])]}
+								rows={apiData[0]?.values.map(value => ({
+									title: value.label,
+									cells: apiData.reduce((acc, current) => {
+										return {
+											...acc,
+											[current.name]:
+												Math.round(
+													(current.values.find(
+														v => v.position === value.position
+													)?.value ?? 0) * 100
+												) /
+													100 +
+												`%`
+										};
+									}, {})
+								}))}
+							/>
+						) : (
+							<TabContent
+								procedureKind={kind}
+								indicatorSlug={selectedTabId}
+								shouldShowGoalLine={
+									false
+									// openState?.dialogParams.shouldShowGoalLine
+								}
+								shouldShowCrossScorePerimeter={
+									false
+									// openState?.dialogParams.shouldShowCrossScorePerimeter
+								}
+								setViewType={setViewType}
+								data={apiData}
+								chartRef={chartRef}
+							/>
+						)}
 						<div className={classes.linkContainer}>
 							<Link
 								href="/Aide/Observatoire?tab=indicators"

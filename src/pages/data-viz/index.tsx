@@ -46,7 +46,16 @@ const TabContent = ({
 			{dataVisualitionKind === 'table' ? (
 				<TableView
 					headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
-					data={data}
+					rows={data.map(item => ({
+						title: item.text,
+						cells: item.data.reduce(
+							(acc, current) => ({
+								...acc,
+								[current.slug]: Math.round(current.score * 100) / 100 + `%`
+							}),
+							{}
+						)
+					}))}
 				/>
 			) : (
 				<div className={cx(classes.grid)}>

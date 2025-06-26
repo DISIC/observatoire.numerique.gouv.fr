@@ -1,52 +1,24 @@
-import React from 'react';
 import { fr } from '@codegouvfr/react-dsfr';
 import { tss } from 'tss-react';
-import { RecordData } from '@/utils/data-viz';
 
 type TableViewProps = {
 	headers: string[];
-	data: RecordData[];
+	rows: { title?: string; cells: Record<string, string> }[];
 };
 
-const TableView = ({ headers, data }: TableViewProps) => {
+const TableView = ({ headers, rows }: TableViewProps) => {
 	const { classes, cx } = useStyles();
 
-	const cells = data.map(item => {
-		return item.data.reduce((acc, current) => {
-			acc[current.slug] = current.score;
-			return acc;
-		}, {} as Record<string, string | number>);
-	});
-
-	let rows = data.map(item => item.text);
-
-	const displayCellValue = (
-		cell: Record<string, string | number>,
-		key: string,
-		dataIndex: number
-	) => {
-		const value = parseInt((((cell[key] as number) || 0) * 10).toString()) / 10;
-		const attachedValue = data[dataIndex]?.data.find(
-			d => d.slug === key
-		)?.score;
-
-		if (attachedValue) {
-			return Math.round(value) + `%`;
-		}
-
-		return Math.round(value * 100) / 100;
-	};
-
 	const displayRows = () => {
-		return rows.map((r, index) => (
-			<tr key={`${r}_${index}`}>
-				<td>{r}</td>
-				{Object.keys(cells[index]).map((key, indexC) => (
+		return rows.map((row, index) => (
+			<tr key={`${row.title}_${index}`}>
+				{row.title && <td style={{ textAlign: 'left' }}>{row.title}</td>}
+				{Object.keys(row.cells).map((key, indexC) => (
 					<td
-						key={`${r}_${index}_${key}_${indexC}`}
-						title={cells[index][key]?.toString()}
+						key={`${row.title}_${index}_${key}_${indexC}`}
+						title={row.cells[key]?.toString()}
 					>
-						{displayCellValue(cells[index], key, index)}
+						{row.cells[key]}
 					</td>
 				))}
 			</tr>
@@ -111,7 +83,8 @@ const useStyles = tss.create({
 				},
 				td: {
 					'&:first-of-type': {
-						fontWeight: 'bold'
+						fontWeight: 'bold',
+						paddingLeft: '1rem'
 					}
 				}
 			}
