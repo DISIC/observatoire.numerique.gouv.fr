@@ -6,7 +6,7 @@ import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { saveAs } from 'file-saver';
-import pako from 'pako';
+import html2canvas from 'html2canvas';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -283,6 +283,38 @@ export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
 	const svgURL = new XMLSerializer().serializeToString(chartSVG);
 	const svgBlob = new Blob([svgURL], { type: 'image/svg+xml;charset=utf-8' });
 	saveAs(svgBlob, `${filename}.svg`);
+};
+
+export const exportChartAsPng = async (chartParent: HTMLElement) => {
+	const chartSVG = chartParent.children[0] as HTMLElement;
+
+	console.log('Exporting chart as PNG', chartSVG);
+
+	if (!chartSVG) {
+		console.error('Chart SVG element not found');
+		return;
+	}
+
+	const canvas = await html2canvas(chartSVG, {
+		// foreignObjectRendering: true
+	});
+
+	const pngBlob = await new Promise<Blob>((resolve, reject) => {
+		canvas.toBlob(blob => {
+			if (blob) {
+				resolve(blob);
+			} else {
+				reject(new Error('Failed to create PNG blob'));
+			}
+		}, 'image/png');
+	});
+
+	if (pngBlob) {
+		const filename = `export-${slugifyText(
+			chartSVG.getAttribute('title') || 'chart'
+		)}-${new Date().toISOString().slice(0, 10)}.png`;
+		saveAs(pngBlob, filename);
+	}
 };
 
 export function stringToBase64Url(str: string): string {

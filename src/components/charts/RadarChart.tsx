@@ -128,6 +128,7 @@ type RadarChartCustomProps = {
 		compareTitle: string;
 	};
 	color?: string;
+	customRef?: React.RefObject<HTMLDivElement | null>;
 };
 
 const RadarChartCustom = ({
@@ -136,7 +137,8 @@ const RadarChartCustom = ({
 	showCrossScorePerimeter,
 	enableAnimation = true,
 	compareData,
-	color
+	color,
+	customRef
 }: RadarChartCustomProps) => {
 	const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
@@ -149,7 +151,11 @@ const RadarChartCustom = ({
 	};
 
 	return (
-		<ResponsiveContainer width="100%" height={compareData ? '110%' : '100%'}>
+		<ResponsiveContainer
+			width="100%"
+			height={compareData ? '110%' : '100%'}
+			ref={customRef}
+		>
 			<RadarChart
 				data={data}
 				accessibilityLayer

@@ -3,7 +3,7 @@ import {
 	useIndicatorScoreByProcedureKindSlug,
 	useProcedureGroupByKind
 } from '@/utils/api';
-import { base64UrlToString } from '@/utils/tools';
+import { base64UrlToString, exportChartAsPng } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
@@ -12,8 +12,9 @@ import Select from '@codegouvfr/react-dsfr/Select';
 import ToggleSwitch from '@codegouvfr/react-dsfr/ToggleSwitch';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { tss } from 'tss-react';
+import FileSaver from 'file-saver';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -29,6 +30,7 @@ const RadarComparison = () => {
 	const slug = tmpSlug ? base64UrlToString(tmpSlug) : '';
 
 	const id = useId();
+	const chartRef = useRef<HTMLDivElement | null>(null);
 
 	const [selectedKindValue, setSelectedKindValue] = useState<string>('');
 
@@ -149,13 +151,9 @@ const RadarComparison = () => {
 								priority={'secondary'}
 								title="Exporter"
 								onClick={() => {
-									// TODO: export either both charts or merged single chart
-									// if (chartRef.current && openState?.dialogParams.title) {
-									// 	exportChartAsImage(
-									// 		chartRef.current,
-									// 		openState.dialogParams.title
-									// 	);
-									// }
+									if (chartRef.current) {
+										exportChartAsPng(chartRef.current);
+									}
 								}}
 							>
 								Exporter
@@ -190,6 +188,7 @@ const RadarComparison = () => {
 									}}
 								>
 									<RadarChartCustom
+										customRef={chartRef}
 										data={radarData}
 										compareData={radarCompareData}
 										showGoalRadar={false}
