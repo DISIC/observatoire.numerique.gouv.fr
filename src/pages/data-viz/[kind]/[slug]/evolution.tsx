@@ -1,4 +1,4 @@
-import TableView from '@/components/data-viz/TableView';
+import TableView, { TableViewProps } from '@/components/data-viz/TableView';
 import { LightSelect } from '@/components/generic/LightSelect';
 import {
 	EvolutionViewType,
@@ -211,6 +211,34 @@ function DataVizEvolution() {
 		}
 	];
 
+	const getPercentage = (value: number, total: number) => {
+		if (total === 0) return 0;
+		return Math.round(Math.round((value / total) * 10000) / 100);
+	};
+
+	const getRows = (): TableViewProps['rows'] => {
+		if (!apiData || apiData.length === 0) return [];
+
+		return apiData[0]?.values
+			.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+			.map(value => ({
+				title: value.label,
+				description: value.description,
+				cells: apiData.reduce((acc, current) => {
+					const total = current.values.reduce((sum, v) => sum + v.value, 0);
+					return {
+						...acc,
+						[current.name]:
+							getPercentage(
+								current.values.find(v => v.position === value.position)
+									?.value ?? 0,
+								total
+							) + `%`
+					};
+				}, {} as Record<string, string>)
+			}));
+	};
+
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
@@ -280,35 +308,14 @@ function DataVizEvolution() {
 						{dataVisualitionKind === 'table' ? (
 							<TableView
 								headers={['', ...(apiData.map(d => d.name) || [])]}
-								rows={apiData[0]?.values.map(value => ({
-									title: value.label,
-									cells: apiData.reduce((acc, current) => {
-										return {
-											...acc,
-											[current.name]:
-												Math.round(
-													(current.values.find(
-														v => v.position === value.position
-													)?.value ?? 0) * 100
-												) /
-													100 +
-												`%`
-										};
-									}, {})
-								}))}
+								rows={getRows()}
 							/>
 						) : (
 							<TabContent
 								procedureKind={kind}
 								indicatorSlug={selectedTabId}
-								shouldShowGoalLine={
-									false
-									// openState?.dialogParams.shouldShowGoalLine
-								}
-								shouldShowCrossScorePerimeter={
-									false
-									// openState?.dialogParams.shouldShowCrossScorePerimeter
-								}
+								shouldShowGoalLine={false}
+								shouldShowCrossScorePerimeter={false}
 								setViewType={setViewType}
 								data={apiData}
 								chartRef={chartRef}

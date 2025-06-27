@@ -1,18 +1,27 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { tss } from 'tss-react';
 
-type TableViewProps = {
+export type TableViewProps = {
 	headers: string[];
-	rows: { title?: string; cells: Record<string, string> }[];
+	rows: {
+		title?: string;
+		description?: string;
+		cells: Record<string, string>;
+	}[];
 };
 
-const TableView = ({ headers, rows }: TableViewProps) => {
+const TableView = ({ headers, rows = [] }: TableViewProps) => {
 	const { classes, cx } = useStyles();
 
 	const displayRows = () => {
 		return rows.map((row, index) => (
 			<tr key={`${row.title}_${index}`}>
-				{row.title && <td style={{ textAlign: 'left' }}>{row.title}</td>}
+				{row.title && (
+					<td style={{ textAlign: 'left' }}>
+						{row.title}
+						{row.description && <p>{row.description}</p>}
+					</td>
+				)}
 				{Object.keys(row.cells).map((key, indexC) => (
 					<td
 						key={`${row.title}_${index}_${key}_${indexC}`}
@@ -56,7 +65,7 @@ const useStyles = tss.create({
 	},
 	table: {
 		textAlign: 'center',
-		...fr.typography[17].style,
+		...fr.typography[18].style,
 		width: '100%',
 		borderCollapse: 'collapse',
 		margin: 0,
@@ -85,6 +94,10 @@ const useStyles = tss.create({
 					'&:first-of-type': {
 						fontWeight: 'bold',
 						paddingLeft: '1rem'
+					},
+					p: {
+						...fr.typography[17].style,
+						fontWeight: 'normal'
 					}
 				}
 			}

@@ -51,7 +51,7 @@ const TabContent = ({
 						cells: item.data.reduce(
 							(acc, current) => ({
 								...acc,
-								[current.slug]: Math.round(current.score * 100) / 100 + `%`
+								[current.slug]: current.score + `%`
 							}),
 							{}
 						)

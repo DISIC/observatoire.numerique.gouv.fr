@@ -27,6 +27,7 @@ export type DataLevel = {
 	label: string;
 	color?: string;
 	position?: number;
+	description?: string;
 };
 
 export type RecordDataGrouped = {
@@ -124,6 +125,7 @@ export async function getIndicatorEvolution({
 							label: level.label_stats,
 							color: level.color,
 							position: level.position,
+							description: level.description,
 							value: count
 						};
 					})
@@ -183,6 +185,7 @@ export async function getIndicatorEvolution({
 						label: level.label_stats,
 						color: level.color,
 						position: level.position,
+						description: level.description,
 						value: count
 					};
 				})
