@@ -1,26 +1,27 @@
-import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { fr } from '@codegouvfr/react-dsfr';
-import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
-import Tabs from '@codegouvfr/react-dsfr/Tabs';
-import dynamic from 'next/dynamic';
-import { useState, useId, useRef } from 'react';
-import { tss } from 'tss-react';
-import { useIndicatorEvolution } from '@/utils/api';
-import { validIndicatorSlugs } from '@/utils/data-viz';
-import Button from '@codegouvfr/react-dsfr/Button';
+import TableView, { TableViewProps } from '@/components/data-viz/TableView';
 import { LightSelect } from '@/components/generic/LightSelect';
 import {
 	EvolutionViewType,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { useIndicatorEvolution } from '@/utils/api';
+import { validIndicatorSlugs } from '@/utils/data-viz';
 import {
 	base64UrlToString,
 	exportChartAsImage,
-	stringToBase64Url
+	exportTableAsCSV
 } from '@/utils/tools';
+import { fr } from '@codegouvfr/react-dsfr';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import Button from '@codegouvfr/react-dsfr/Button';
+import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
+import Tabs from '@codegouvfr/react-dsfr/Tabs';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import { useId, useRef, useState } from 'react';
+import { tss } from 'tss-react';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 
@@ -214,6 +215,34 @@ function DataVizEvolution() {
 		}
 	];
 
+	const getPercentage = (value: number, total: number) => {
+		if (total === 0) return 0;
+		return Math.round(Math.round((value / total) * 10000) / 100);
+	};
+
+	const getRows = (): TableViewProps['rows'] => {
+		if (!apiData || apiData.length === 0) return [];
+
+		return apiData[0]?.values
+			.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+			.map(value => ({
+				title: value.label,
+				description: value.description,
+				cells: apiData.reduce((acc, current) => {
+					const total = current.values.reduce((sum, v) => sum + v.value, 0);
+					return {
+						...acc,
+						[current.name]:
+							getPercentage(
+								current.values.find(v => v.position === value.position)
+									?.value ?? 0,
+								total
+							) + `%`
+					};
+				}, {} as Record<string, string>)
+			}));
+	};
+
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
@@ -271,6 +300,10 @@ function DataVizEvolution() {
 									priority={'secondary'}
 									title="Exporter"
 									onClick={() => {
+										if (dataVisualitionKind === 'table') {
+											exportTableAsCSV('table', slug);
+										}
+
 										if (chartRef.current && slug) {
 											exportChartAsImage(chartRef.current, slug);
 										}
@@ -280,21 +313,22 @@ function DataVizEvolution() {
 								</Button>
 							</div>
 						</div>
-						<TabContent
-							procedureKind={kind}
-							indicatorSlug={selectedTabId}
-							shouldShowGoalLine={
-								false
-								// openState?.dialogParams.shouldShowGoalLine
-							}
-							shouldShowCrossScorePerimeter={
-								false
-								// openState?.dialogParams.shouldShowCrossScorePerimeter
-							}
-							setViewType={setViewType}
-							data={apiData}
-							chartRef={chartRef}
-						/>
+						{dataVisualitionKind === 'table' ? (
+							<TableView
+								headers={['', ...(apiData.map(d => d.name) || [])]}
+								rows={getRows()}
+							/>
+						) : (
+							<TabContent
+								procedureKind={kind}
+								indicatorSlug={selectedTabId}
+								shouldShowGoalLine={false}
+								shouldShowCrossScorePerimeter={false}
+								setViewType={setViewType}
+								data={apiData}
+								chartRef={chartRef}
+							/>
+						)}
 						<div className={classes.linkContainer}>
 							<Link
 								href="/Aide/Observatoire?tab=indicators"

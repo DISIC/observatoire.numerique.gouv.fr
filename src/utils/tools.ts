@@ -326,3 +326,34 @@ export function base64UrlToString(base64Url: string): string {
 	const decoded = decodeURIComponent(base64Url);
 	return decodeURIComponent(escape(atob(decoded)));
 }
+
+export function exportTableAsCSV(tableSelector: string, title: string) {
+	const rows = document.querySelectorAll<HTMLTableRowElement>(
+		`${tableSelector} tr`
+	);
+	const csv: string[] = [];
+
+	rows.forEach(row => {
+		const cells = Array.from(row.querySelectorAll('th, td'));
+		const rowData = cells.map(cell => {
+			const cellClone = cell.cloneNode(true) as HTMLElement;
+
+			cellClone.querySelectorAll('p').forEach(p => p.remove());
+
+			const text = cellClone.textContent?.trim().replace(/"/g, '""') ?? '';
+
+			return `"${text}"`;
+		});
+
+		csv.push(rowData.join(','));
+	});
+
+	const csvBlob = new Blob([csv.join('\n')], {
+		type: 'text/csv;charset=utf-8'
+	});
+	const filename = `export-${slugifyText(title)}-${new Date()
+		.toISOString()
+		.slice(0, 10)}.csv`;
+
+	saveAs(csvBlob, filename);
+}

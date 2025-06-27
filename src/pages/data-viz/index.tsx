@@ -46,18 +46,29 @@ const TabContent = ({
 			{dataVisualitionKind === 'table' ? (
 				<TableView
 					headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
-					data={data}
+					rows={data.map(item => ({
+						title: item.text,
+						cells: item.data.reduce(
+							(acc, current) => ({
+								...acc,
+								[current.slug]: `${current.score}%`
+							}),
+							{}
+						)
+					}))}
 				/>
 			) : (
 				<div className={cx(classes.grid)}>
 					{data.map(item => (
 						<div key={item.text} className={cx(classes.gridItem)}>
-							<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-								{item.text}
-							</h2>
-							<p className={cx('fr-text--xs')}>
-								(Nombre de démarches : {item.count})
-							</p>
+							<div>
+								<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+									{item.text}
+								</h2>
+								<p className={cx('fr-text--xs')}>
+									(Nombre de démarches : {item.count})
+								</p>
+							</div>
 							<div className={cx(classes.chart)}>
 								<RadarChartCustom
 									data={item.data}
@@ -182,7 +193,7 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'space-between',
 		textAlign: 'center',
 		borderRadius: fr.spacing('2v'),
 		padding: `${fr.spacing('3w')} ${fr.spacing('4v')}`,
@@ -195,7 +206,8 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 	},
 	chart: {
 		width: '100%',
-		height: '325px'
+		height: '325px',
+		marginTop: 'auto'
 	},
 	buttonsGroup: {
 		display: 'flex',
