@@ -51,7 +51,7 @@ const TabContent = ({
 						cells: item.data.reduce(
 							(acc, current) => ({
 								...acc,
-								[current.slug]: current.score + `%`
+								[current.slug]: `${current.score}%`
 							}),
 							{}
 						)

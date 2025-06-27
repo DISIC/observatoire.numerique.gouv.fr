@@ -1,3 +1,4 @@
+import TableView, { TableViewProps } from '@/components/data-viz/TableView';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import {
 	useIndicatorScoreByProcedureKindSlug,
@@ -82,11 +83,46 @@ const RadarComparison = () => {
 		}
 	}, [selectedKindValue]);
 
-	const getSingularKindLabel = (label: string) => {
-		return label
-			.split(' ')
-			.map(word => (word.endsWith('s') ? word.slice(0, -1) : word))
-			.join(' ');
+	const getKindLabel = () => {
+		switch (kind) {
+			case 'ministere':
+				return 'ministère';
+			case 'administration':
+				return 'administration';
+			case 'administration_central':
+				return 'administration centrale';
+			default:
+				return '';
+		}
+	};
+
+	const getRows = (): TableViewProps['rows'] => {
+		if (!radarData || radarData.length === 0 || !comparedIndicatorScores) {
+			return [];
+		}
+
+		return [
+			{
+				title: baseIndicatorScores?.text || 'Périmètre de base',
+				cells: radarData.reduce(
+					(acc, current) => ({
+						...acc,
+						[current.slug]: `${current.score}%`
+					}),
+					{}
+				)
+			},
+			{
+				title: selectedKindValue || 'Périmètre comparé',
+				cells: comparedIndicatorScores.data.reduce(
+					(acc, current) => ({
+						...acc,
+						[current.slug]: `${current.score}%`
+					}),
+					{}
+				)
+			}
+		];
 	};
 
 	return (
@@ -142,6 +178,7 @@ const RadarComparison = () => {
 										dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 									}
 									title="Table"
+									disabled={selectedKindValue === ''}
 								/>
 							</div>
 							<Button
@@ -162,126 +199,136 @@ const RadarComparison = () => {
 							</Button>
 						</div>
 					</div>
-					<div className={classes.mainContainer} ref={mainContainerRef}>
-						<div
-							className={cx(
-								classes.container,
-								classes.radarCard,
-								shouldRadarOverlay && fr.cx('fr-py-0')
-							)}
-							style={{
-								minHeight: maxReachedHeight,
-								height: shouldRadarOverlay ? maxReachedHeight : undefined
-							}}
-						>
-							{!shouldRadarOverlay && (
-								<h2 className={cx(classes.title, 'fr-text--lg')}>
-									{baseIndicatorScores?.text || 'Radar de comparaison'}
-								</h2>
-							)}
-							<div style={{ width: '100%' }}>
+					{dataVisualitionKind === 'table' ? (
+						<TableView
+							headers={['', ...(radarData.map(d => d.name) || [])]}
+							rows={getRows()}
+						/>
+					) : (
+						<>
+							<div className={classes.mainContainer} ref={mainContainerRef}>
 								<div
-									className={cx(classes.chart)}
+									className={cx(
+										classes.container,
+										classes.radarCard,
+										shouldRadarOverlay && fr.cx('fr-py-0')
+									)}
 									style={{
-										height:
-											shouldRadarOverlay && maxReachedHeight
-												? maxReachedHeight
-												: '325px'
+										minHeight: maxReachedHeight,
+										height: shouldRadarOverlay ? maxReachedHeight : undefined
 									}}
 								>
-									<RadarChartCustom
-										data={radarData}
-										compareData={radarCompareData}
-										showGoalRadar={false}
-										showCrossScorePerimeter={showCrossScorePerimeter}
-										enableAnimation={false}
-									/>
-								</div>
-								{!shouldRadarOverlay && (
-									<Button priority="secondary">Voir le détail</Button>
-								)}
-							</div>
-						</div>
-						{!shouldRadarOverlay && (
-							<div
-								className={cx(
-									classes.container,
-									selectedKindValue && classes.radarCard
-								)}
-							>
-								{selectedKindValue ? (
-									<>
-										<div className={classes.removableTitleContainer}>
-											<h2 className={cx(classes.title, 'fr-text--lg')}>
-												{selectedKindValue}
-											</h2>
-											<Button
-												priority="tertiary no outline"
-												iconId="ri-close-circle-fill"
-												onClick={() => setSelectedKindValue('')}
-												children={''}
-												size="large"
-												className={classes.clearButton}
-												title="Supprimer la sélection"
-												aria-label="Supprimer la sélection"
-											/>
-										</div>
-										<div style={{ width: '100%' }}>
-											<div className={cx(classes.chart)}>
-												<RadarChartCustom
-													data={comparedIndicatorScores?.data || []}
-													showGoalRadar={false}
-													showCrossScorePerimeter={showCrossScorePerimeter}
-													color={
-														fr.colors.options.purpleGlycine._925_125.active
-													}
-													enableAnimation={false}
-												/>
-											</div>
-
-											<Button priority="secondary">Voir le détail</Button>
-										</div>
-									</>
-								) : (
-									<>
-										<Select
-											label="Choisir un périmètre"
-											nativeSelectProps={{
-												id: `select-kind-${id}`,
-												onChange: event =>
-													setSelectedKindValue(event.target.value),
-												value: selectedKindValue
+									{!shouldRadarOverlay && (
+										<h2 className={cx(classes.title, 'fr-text--lg')}>
+											{baseIndicatorScores?.text || 'Radar de comparaison'}
+										</h2>
+									)}
+									<div style={{ width: '100%' }}>
+										<div
+											className={cx(classes.chart)}
+											style={{
+												height:
+													shouldRadarOverlay && maxReachedHeight
+														? maxReachedHeight
+														: '325px'
 											}}
 										>
-											<option value="" disabled>
-												Sélectionner une option
-											</option>
-											{groupByProcedureKind
-												.filter(option => option !== slug)
-												.map(option => (
-													<option key={option} value={option}>
-														{option}
-													</option>
-												))}
-										</Select>
-										<div className={classes.emptyStateContainer}>
-											<p>
-												Ajouter un
-												{kind !== 'ministere' ? 'e' : ''}{' '}
-												{getSingularKindLabel(slug.toLowerCase())} à comparer
-											</p>
+											<RadarChartCustom
+												data={radarData}
+												compareData={radarCompareData}
+												showGoalRadar={false}
+												showCrossScorePerimeter={showCrossScorePerimeter}
+												enableAnimation={false}
+											/>
 										</div>
-									</>
+										{!shouldRadarOverlay && (
+											<Button priority="secondary">Voir le détail</Button>
+										)}
+									</div>
+								</div>
+								{!shouldRadarOverlay && (
+									<div
+										className={cx(
+											classes.container,
+											selectedKindValue && classes.radarCard
+										)}
+									>
+										{selectedKindValue ? (
+											<>
+												<div className={classes.removableTitleContainer}>
+													<h2 className={cx(classes.title, 'fr-text--lg')}>
+														{selectedKindValue}
+													</h2>
+													<Button
+														priority="tertiary no outline"
+														iconId="ri-close-circle-fill"
+														onClick={() => setSelectedKindValue('')}
+														children={''}
+														size="large"
+														className={classes.clearButton}
+														title="Supprimer la sélection"
+														aria-label="Supprimer la sélection"
+													/>
+												</div>
+												<div style={{ width: '100%' }}>
+													<div className={cx(classes.chart)}>
+														<RadarChartCustom
+															data={comparedIndicatorScores?.data || []}
+															showGoalRadar={false}
+															showCrossScorePerimeter={showCrossScorePerimeter}
+															color={
+																fr.colors.options.purpleGlycine._925_125.active
+															}
+															enableAnimation={false}
+														/>
+													</div>
+
+													<Button priority="secondary">Voir le détail</Button>
+												</div>
+											</>
+										) : (
+											<>
+												<Select
+													label="Choisir un périmètre"
+													nativeSelectProps={{
+														id: `select-kind-${id}`,
+														onChange: event =>
+															setSelectedKindValue(event.target.value),
+														value: selectedKindValue
+													}}
+												>
+													<option value="" disabled>
+														Sélectionner une option
+													</option>
+													{groupByProcedureKind
+														.filter(option => option !== slug)
+														.map(option => (
+															<option key={option} value={option}>
+																{option}
+															</option>
+														))}
+												</Select>
+												<div className={classes.emptyStateContainer}>
+													<p>
+														Ajouter un
+														{kind !== 'ministere'
+															? 'e'
+															: ''} {getKindLabel()} à comparer
+													</p>
+												</div>
+											</>
+										)}
+									</div>
 								)}
 							</div>
-						)}
-					</div>
-					{selectedKindValue && (
-						<ToggleSwitch
-							label="Superposer les deux radars"
-							checked={shouldRadarOverlay}
-							onChange={checked => setShouldRadarOverlay(checked)}
-						/>
+							{selectedKindValue && (
+								<ToggleSwitch
+									label="Superposer les deux radars"
+									checked={shouldRadarOverlay}
+									onChange={checked => setShouldRadarOverlay(checked)}
+								/>
+							)}
+						</>
 					)}
 				</div>
 			</div>
