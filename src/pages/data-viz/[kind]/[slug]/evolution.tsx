@@ -7,7 +7,11 @@ import {
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz';
-import { base64UrlToString, exportChartAsImage } from '@/utils/tools';
+import {
+	base64UrlToString,
+	exportChartAsImage,
+	exportTableAsCSV
+} from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
@@ -296,6 +300,10 @@ function DataVizEvolution() {
 									priority={'secondary'}
 									title="Exporter"
 									onClick={() => {
+										if (dataVisualitionKind === 'table') {
+											exportTableAsCSV('table', slug);
+										}
+
 										if (chartRef.current && slug) {
 											exportChartAsImage(chartRef.current, slug);
 										}

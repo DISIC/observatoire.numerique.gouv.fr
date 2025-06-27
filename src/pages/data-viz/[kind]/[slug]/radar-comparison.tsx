@@ -4,7 +4,7 @@ import {
 	useIndicatorScoreByProcedureKindSlug,
 	useProcedureGroupByKind
 } from '@/utils/api';
-import { base64UrlToString } from '@/utils/tools';
+import { base64UrlToString, exportTableAsCSV } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
@@ -186,6 +186,9 @@ const RadarComparison = () => {
 								priority={'secondary'}
 								title="Exporter"
 								onClick={() => {
+									if (dataVisualitionKind === 'table') {
+										exportTableAsCSV('table', slug);
+									}
 									// TODO: export either both charts or merged single chart
 									// if (chartRef.current && openState?.dialogParams.title) {
 									// 	exportChartAsImage(
