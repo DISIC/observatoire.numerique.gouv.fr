@@ -289,15 +289,15 @@ export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
 export const exportChartAsPng = async (chartParent: HTMLElement) => {
 	const chartSVG = chartParent.children[0] as HTMLElement;
 
-	console.log('Exporting chart as PNG', chartSVG);
-
 	if (!chartSVG) {
 		console.error('Chart SVG element not found');
 		return;
 	}
 
 	const canvas = await html2canvas(chartSVG, {
-		// foreignObjectRendering: true
+		logging: false,
+		useCORS: true,
+		allowTaint: true
 	});
 
 	const pngBlob = await new Promise<Blob>((resolve, reject) => {
