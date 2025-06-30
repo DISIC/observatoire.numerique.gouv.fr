@@ -49,6 +49,7 @@
 		"@trpc/server": "^10.45.2",
 		"@types/node": "^20.0.0",
 		"@types/react-transition-group": "^4.4.5",
+		"@uidotdev/usehooks": "^2.4.1",
 		"bcrypt": "^5.1.1",
 		"cookies-next": "^5.0.2",
 		"date-fns": "^4.1.0",

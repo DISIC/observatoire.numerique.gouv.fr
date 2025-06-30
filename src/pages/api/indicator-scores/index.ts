@@ -13,7 +13,7 @@ export type ProcedureKind =
 
 const prisma = new PrismaClient();
 
-export async function getIndicatorScores(kind: ProcedureKind) {
+export async function getIndicatorScores(kind: ProcedureKind, search?: string) {
 	const currentEdition = await prisma.edition.findFirstOrThrow({
 		orderBy: {
 			created_at: 'desc'
@@ -23,7 +23,11 @@ export async function getIndicatorScores(kind: ProcedureKind) {
 	const elementGroupedByProcedureKind = await prisma.procedure.groupBy({
 		by: [kind],
 		where: {
-			editionId: currentEdition.id
+			editionId: currentEdition.id,
+			[kind]: {
+				contains: search,
+				mode: 'insensitive'
+			}
 		},
 		_count: true
 	});
@@ -71,7 +75,10 @@ export default async function handler(
 		if (req.query.kind) {
 			const { kind, slug } = req.query;
 			if (!slug || typeof slug !== 'string') {
-				const indicatorScores = await getIndicatorScores(kind as ProcedureKind);
+				const indicatorScores = await getIndicatorScores(
+					kind as ProcedureKind,
+					req.query.search as string | undefined
+				);
 				res.status(200).json(indicatorScores);
 			} else {
 				let indicatorScore = await getIndicatorScoresByProcedureKindSlug({

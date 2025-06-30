@@ -163,13 +163,17 @@ export function useProcedureGroupByKind({ kind }: { kind: ProcedureKind }) {
 
 type IndicatorScoreByProcedureKindProps = {
 	kind: ProcedureKind;
+	search?: string;
 };
 
 export function useIndicatorScoreByProcedureKind({
-	kind
+	kind,
+	search
 }: IndicatorScoreByProcedureKindProps) {
 	const { data, error, isLoading } = useSWR(
-		`/api/indicator-scores?kind=${kind}`,
+		`/api/indicator-scores?kind=${kind}${
+			search ? `&search=${encodeURIComponent(search)}` : ''
+		}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<RecordData[]>(stringify(await res.json()));

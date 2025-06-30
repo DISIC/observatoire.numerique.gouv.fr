@@ -10,6 +10,7 @@ import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { stringToBase64Url } from '@/utils/tools';
 import { ProcedureKind } from '../api/indicator-scores';
 import TableView from '@/components/data-viz/TableView';
+import { useDebounce } from '@uidotdev/usehooks';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -25,7 +26,14 @@ const TabContent = ({
 	kindLabel: string;
 }) => {
 	const { classes, cx } = useStyles();
-	const { data } = useIndicatorScoreByProcedureKind({ kind });
+
+	const [searchTerm, setSearchTerm] = useState<string>();
+	const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
+	const { data } = useIndicatorScoreByProcedureKind({
+		kind,
+		search: debouncedSearchTerm
+	});
 
 	const [showGoalRadar, setShowGoalRadar] = useState(false);
 	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
@@ -37,12 +45,13 @@ const TabContent = ({
 	return (
 		<div>
 			<DataVizTabHeader
+				search={searchTerm}
+				setSearch={setSearchTerm}
 				dataVisualitionKind={dataVisualitionKind}
 				setDataVisualitionKind={setDataVisualitionKind}
 				setShowGoalRadar={setShowGoalRadar}
 				setShowCrossScorePerimeter={setShowCrossScorePerimeter}
 			/>
-
 			{dataVisualitionKind === 'table' ? (
 				<TableView
 					headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
