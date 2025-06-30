@@ -6,8 +6,11 @@ import { fr } from '@codegouvfr/react-dsfr';
 import { DataVizKind } from '@/pages/data-viz';
 import { Dispatch, SetStateAction, useState } from 'react';
 import assert from 'assert';
+import { getProcedureKindLabel } from '@/utils/tools';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
 
 type DataVizTabHeaderProps = {
+	kind: ProcedureKind;
 	dataVisualitionKind: DataVizKind;
 	setDataVisualitionKind: Dispatch<SetStateAction<DataVizKind>>;
 	setShowGoalRadar: Dispatch<SetStateAction<boolean>>;
@@ -17,6 +20,7 @@ type DataVizTabHeaderProps = {
 };
 
 const DataVizTabHeader = ({
+	kind,
 	search,
 	setSearch,
 	dataVisualitionKind,
@@ -35,12 +39,15 @@ const DataVizTabHeader = ({
 			<div className={cx(classes.wrapperSearch)}>
 				<SearchBar
 					label="Rechercher"
+					className={cx(classes.searchInput)}
 					renderInput={({ className, id, type }) => (
 						<input
 							ref={setInputElement}
 							className={className}
 							id={id}
-							placeholder="Rechercher"
+							placeholder={`Rechercher un${
+								kind !== 'ministere' ? 'e' : ''
+							} ${getProcedureKindLabel(kind)}`}
 							type={type}
 							value={search}
 							onChange={event => setSearch(event.currentTarget.value)}
@@ -70,8 +77,9 @@ const DataVizTabHeader = ({
 			</div>
 			<div className={cx(classes.wrapperButtons)}>
 				<p className={cx(fr.cx('fr-mb-0'), classes.headerDescription)}>
-					Ces radars représentent le pourcentage des démarches par périmètre
-					ministériel, ayant atteint les objectifs des indicateurs.
+					Ces radars représentent le pourcentage des démarches par{' '}
+					{getProcedureKindLabel(kind)} ayant atteint les objectifs des
+					indicateurs.
 				</p>
 				<Checkbox
 					options={[
@@ -110,6 +118,9 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 		display: 'flex',
 		alignItems: 'baseline',
 		justifyContent: 'space-between'
+	},
+	searchInput: {
+		width: '35%'
 	},
 	checkboxWrapper: {
 		marginBottom: 0,

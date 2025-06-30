@@ -7,7 +7,8 @@ import {
 import {
 	base64UrlToString,
 	exportChartAsPng,
-	exportTableAsCSV
+	exportTableAsCSV,
+	getProcedureKindLabel
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
@@ -87,19 +88,6 @@ const RadarComparison = () => {
 			}
 		}
 	}, [selectedKindValue]);
-
-	const getKindLabel = () => {
-		switch (kind) {
-			case 'ministere':
-				return 'ministère';
-			case 'administration':
-				return 'administration';
-			case 'administration_central':
-				return 'administration centrale';
-			default:
-				return '';
-		}
-	};
 
 	const getRows = (): TableViewProps['rows'] => {
 		if (!radarData || radarData.length === 0 || !comparedIndicatorScores) {
@@ -316,9 +304,8 @@ const RadarComparison = () => {
 												<div className={classes.emptyStateContainer}>
 													<p>
 														Ajouter un
-														{kind !== 'ministere'
-															? 'e'
-															: ''} {getKindLabel()} à comparer
+														{kind !== 'ministere' ? 'e' : ''}{' '}
+														{getProcedureKindLabel(kind)} à comparer
 													</p>
 												</div>
 											</>

@@ -45,6 +45,7 @@ const TabContent = ({
 	return (
 		<div>
 			<DataVizTabHeader
+				kind={kind}
 				search={searchTerm}
 				setSearch={setSearchTerm}
 				dataVisualitionKind={dataVisualitionKind}

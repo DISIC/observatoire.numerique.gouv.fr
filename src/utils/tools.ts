@@ -7,6 +7,7 @@ import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -357,3 +358,16 @@ export function exportTableAsCSV(tableSelector: string, title: string) {
 
 	saveAs(csvBlob, filename);
 }
+
+export const getProcedureKindLabel = (kind: ProcedureKind) => {
+	switch (kind) {
+		case 'ministere':
+			return 'périmètre ministériel';
+		case 'administration':
+			return 'administration';
+		case 'administration_central':
+			return 'administration centrale';
+		default:
+			return '';
+	}
+};
