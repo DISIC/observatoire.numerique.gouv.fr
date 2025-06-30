@@ -51,22 +51,26 @@ const TabContent = ({
 				setDataVisualitionKind={setDataVisualitionKind}
 				setShowGoalRadar={setShowGoalRadar}
 				setShowCrossScorePerimeter={setShowCrossScorePerimeter}
+				kindLabel={kindLabel}
+				tableId={`table-${kind}`}
 			/>
-			{dataVisualitionKind === 'table' ? (
-				<TableView
-					headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
-					rows={data.map(item => ({
-						title: item.text,
-						cells: item.data.reduce(
-							(acc, current) => ({
-								...acc,
-								[current.slug]: `${current.score}%`
-							}),
-							{}
-						)
-					}))}
-				/>
-			) : (
+
+			<TableView
+				headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
+				rows={data.map(item => ({
+					title: item.text,
+					cells: item.data.reduce(
+						(acc, current) => ({
+							...acc,
+							[current.slug]: `${current.score}%`
+						}),
+						{}
+					)
+				}))}
+				hidden={dataVisualitionKind !== 'table'}
+				tableId={`table-${kind}`}
+			/>
+			{dataVisualitionKind === 'radar' && (
 				<div className={cx(classes.grid)}>
 					{data.map(item => (
 						<div key={item.text} className={cx(classes.gridItem)}>

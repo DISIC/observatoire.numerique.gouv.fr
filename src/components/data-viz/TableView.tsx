@@ -8,9 +8,11 @@ export type TableViewProps = {
 		description?: string;
 		cells: Record<string, string>;
 	}[];
+	hidden?: boolean;
+	tableId?: string;
 };
 
-const TableView = ({ headers, rows = [] }: TableViewProps) => {
+const TableView = ({ headers, rows = [], hidden, tableId }: TableViewProps) => {
 	const { classes, cx } = useStyles();
 
 	const displayRows = () => {
@@ -35,8 +37,11 @@ const TableView = ({ headers, rows = [] }: TableViewProps) => {
 	};
 
 	return (
-		<div className={cx(classes.tableContainer)}>
-			<table className={cx(fr.cx('fr-table'), classes.table)}>
+		<div className={cx(classes.tableContainer, hidden && classes.hiddenTable)}>
+			<table 
+				className={cx(fr.cx('fr-table'), classes.table)}
+				id={tableId}
+			>
 				<thead>
 					<tr>
 						{headers.map((h, index) =>
@@ -62,6 +67,13 @@ const useStyles = tss.create({
 	tableContainer: {
 		overflowX: 'auto',
 		width: '100%'
+	},
+	hiddenTable: {
+		position: 'absolute',
+		left: '-9999px',
+		visibility: 'hidden',
+		opacity: 0,
+		pointerEvents: 'none'
 	},
 	table: {
 		textAlign: 'center',
