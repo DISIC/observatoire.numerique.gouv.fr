@@ -1,18 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { isValidIndicatorSlug, validIndicatorSlugs } from '@/utils/data-viz';
 import { ProcedureKind } from '../indicator-scores';
 import getPayloadClient from '@/payload/payload-client';
-
-const validProcedureKinds: ProcedureKind[] = [
-	'administration',
-	'administration_central',
-	'ministere'
-];
-
-export function isValidProcedureKind(kind: string): kind is ProcedureKind {
-	return validProcedureKinds.includes(kind as ProcedureKind);
-}
+import {
+	isValidIndicatorSlug,
+	isValidProcedureKind,
+	validIndicatorSlugs,
+	validProcedureKinds
+} from '@/utils/data-viz-client';
 
 export type EvolutionViewType = 'year' | 'edition';
 

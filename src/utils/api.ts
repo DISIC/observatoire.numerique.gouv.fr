@@ -3,11 +3,11 @@ import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { Edition, OldProcedure } from '@prisma/client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { RecordData } from './data-viz';
 import {
 	GetIndicatorEvolutionProps,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
+import { RecordData } from './data-viz-client';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -44,6 +44,7 @@ type ProceduresProps = {
 	sort?: string;
 	department?: string;
 	administration?: string;
+	administration_central?: string;
 };
 export function useProcedures(props: ProceduresProps) {
 	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS

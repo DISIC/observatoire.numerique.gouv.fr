@@ -113,7 +113,14 @@ const TabContent = ({
 								>
 									Voir le détail
 								</Button>
-								<Button size="small">Voir les démarches</Button>
+								<Button
+									size="small"
+									linkProps={{
+										href: `/data-viz/${kind}/${stringToBase64Url(item.text)}`
+									}}
+								>
+									Voir les démarches
+								</Button>
 							</div>
 						</div>
 					))}

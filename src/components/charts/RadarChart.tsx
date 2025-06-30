@@ -1,4 +1,4 @@
-import { RecordData } from '@/utils/data-viz';
+import { RecordData } from '@/utils/data-viz-client';
 import { fr } from '@codegouvfr/react-dsfr';
 import React, { useState } from 'react';
 import {

@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import {
 	getIndicatorScoresByProcedureKind,
-	getIndicatorScoresByProcedureKindSlug,
-	RecordData
+	getIndicatorScoresByProcedureKindSlug
 } from '@/utils/data-viz';
+import { RecordData } from '@/utils/data-viz-client';
 
 export type ProcedureKind =
 	| 'administration'

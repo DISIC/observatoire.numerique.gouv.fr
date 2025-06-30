@@ -1,39 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-import getPayloadClient from '@/payload/payload-client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
+import getPayloadClient from '@/payload/payload-client';
 import { PayloadIndicator } from '@/payload/payload-types';
+import { PrismaClient } from '@prisma/client';
+import { RecordData, validIndicatorSlugs } from './data-viz-client';
 import { desufligyText } from './tools';
 
 const prisma = new PrismaClient();
-
-export const validIndicatorSlugs = [
-	'satisfaction',
-	'handicap',
-	'dlnuf',
-	'auth',
-	'simplicity'
-] as const;
-
-export function isValidIndicatorSlug(
-	slug: string
-): slug is (typeof validIndicatorSlugs)[number] {
-	return validIndicatorSlugs.includes(
-		slug as (typeof validIndicatorSlugs)[number]
-	);
-}
-
-export type RecordData = {
-	text: string;
-	count: number;
-	data: {
-		score: number;
-		goal: number;
-		cross: number;
-		slug: string;
-		name: string;
-		icon: string;
-	}[];
-};
 
 async function getIndicatorScores(props: {
 	kind: ProcedureKind;

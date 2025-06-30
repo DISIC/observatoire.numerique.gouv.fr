@@ -6,7 +6,7 @@ import {
 } from '@/pages/api/indicator-evolution';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { useIndicatorEvolution } from '@/utils/api';
-import { validIndicatorSlugs } from '@/utils/data-viz';
+import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import {
 	base64UrlToString,
 	exportChartAsImage,
@@ -350,7 +350,7 @@ function DataVizEvolution() {
 const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 	root: {
 		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
-		padding: `${fr.spacing('12v')} 0`,
+		padding: `${fr.spacing('8v')} 0`,
 		['& > div  > h1']: {
 			lineHeight: '2.25rem',
 			fontSize: '1.75rem'

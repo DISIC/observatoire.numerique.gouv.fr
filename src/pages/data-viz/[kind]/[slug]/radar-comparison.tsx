@@ -332,7 +332,7 @@ const RadarComparison = () => {
 const useStyles = tss.withName(RadarComparison.name).create(() => ({
 	root: {
 		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
-		padding: `${fr.spacing('12v')} 0`,
+		padding: `${fr.spacing('8v')} 0`,
 		['& > div  > h1']: {
 			lineHeight: '2.25rem',
 			fontSize: '1.75rem'
