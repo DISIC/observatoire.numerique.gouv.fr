@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import assert from 'assert';
 import { getProcedureKindLabel } from '@/utils/tools';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { exportTableAsCSV } from '@/utils/tools';
 
 type DataVizTabHeaderProps = {
 	kind: ProcedureKind;
@@ -17,6 +18,8 @@ type DataVizTabHeaderProps = {
 	setShowCrossScorePerimeter: Dispatch<SetStateAction<boolean>>;
 	search?: string;
 	setSearch: Dispatch<SetStateAction<string | undefined>>;
+	kindLabel: string;
+	tableId: string;
 };
 
 const DataVizTabHeader = ({
@@ -26,7 +29,9 @@ const DataVizTabHeader = ({
 	dataVisualitionKind,
 	setDataVisualitionKind,
 	setShowGoalRadar,
-	setShowCrossScorePerimeter
+	setShowCrossScorePerimeter,
+	kindLabel,
+	tableId
 }: DataVizTabHeaderProps) => {
 	const { classes, cx } = useStyles();
 
@@ -60,19 +65,35 @@ const DataVizTabHeader = ({
 						/>
 					)}
 				/>
-				<div className={cx(classes.buttonsGroup)}>
+				<div className={classes.tabsActions}>
+					<div className={cx(classes.buttonsGroup)}>
+						<Button
+							iconId="ri-pentagon-line"
+							onClick={() => setDataVisualitionKind('radar')}
+							priority={
+								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
+							}
+							title="Radar"
+						/>
+						<Button
+							iconId="ri-table-line"
+							onClick={() => setDataVisualitionKind('table')}
+							priority={
+								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
+							}
+							title="Table"
+						/>
+					</div>
 					<Button
-						iconId="ri-pentagon-line"
-						onClick={() => setDataVisualitionKind('radar')}
-						priority={dataVisualitionKind === 'radar' ? 'primary' : 'secondary'}
-						title="Radar"
-					/>
-					<Button
-						iconId="ri-table-line"
-						onClick={() => setDataVisualitionKind('table')}
-						priority={dataVisualitionKind === 'table' ? 'primary' : 'secondary'}
-						title="Table"
-					/>
+						iconId="ri-download-line"
+						priority={'secondary'}
+						title="Exporter"
+						onClick={() => {
+							exportTableAsCSV(`#${tableId}`, kindLabel);
+						}}
+					>
+						Exporter
+					</Button>
 				</div>
 			</div>
 			<div className={cx(classes.wrapperButtons)}>
@@ -136,9 +157,14 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 		fontSize: '0.875rem',
 		color: fr.colors.decisions.text.mention.grey.default
 	},
+	tabsActions: {
+		display: 'flex',
+		alignItems: 'center'
+	},
 	buttonsGroup: {
 		display: 'flex',
-		gap: fr.spacing('2v')
+		gap: fr.spacing('2v'),
+		marginRight: fr.spacing('8v')
 	}
 }));
 
