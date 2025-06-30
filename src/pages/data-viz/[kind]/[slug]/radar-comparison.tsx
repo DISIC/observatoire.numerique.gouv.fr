@@ -227,6 +227,7 @@ const RadarComparison = () => {
 											}}
 										>
 											<RadarChartCustom
+												customRef={chartRef}
 												data={radarData}
 												compareData={radarCompareData}
 												showGoalRadar={false}
