@@ -71,6 +71,24 @@ export function useProcedures(props: ProceduresProps) {
 	};
 }
 
+export function useProcedureById(id: string) {
+	const { data, error, isLoading } = useSWR(
+		id ? `/api/procedures?id=${id}` : null,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<ProcedureWithFieldsAndEditions>(
+				stringify(await res.json())
+			);
+		}
+	);
+
+	return {
+		data,
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
 export function useEditions() {
 	const { data, error } = useSWR(
 		`/api/editions`,
@@ -232,11 +250,14 @@ export function useIndicatorEvolution({
 	view,
 	slug,
 	kind,
-	value
+	kindValue,
+	procedureId
 }: GetIndicatorEvolutionProps) {
 	const { data, error, isLoading } = useSWR(
-		kind && value
-			? `/api/indicator-evolution?view=${view}&slug=${slug}&kind=${kind}&value=${value}`
+		kind && kindValue
+			? `/api/indicator-evolution?view=${view}&slug=${slug}&kind=${kind}&value=${kindValue}`
+			: procedureId
+			? `/api/indicator-evolution?view=${view}&slug=${slug}&procedureId=${procedureId}`
 			: null,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);

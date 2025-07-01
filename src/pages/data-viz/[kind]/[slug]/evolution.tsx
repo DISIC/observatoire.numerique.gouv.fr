@@ -1,3 +1,4 @@
+import IndicatorTabContent from '@/components/data-viz/IndicatorTabContent';
 import TableView, { TableViewProps } from '@/components/data-viz/TableView';
 import { LightSelect } from '@/components/generic/LightSelect';
 import {
@@ -20,111 +21,8 @@ import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useId, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { tss } from 'tss-react';
-
-const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
-
-type TabContentProps = {
-	procedureKind: ProcedureKind;
-	indicatorSlug: string;
-	shouldShowGoalLine?: boolean;
-	shouldShowCrossScorePerimeter?: boolean;
-	setViewType: (viewType: EvolutionViewType) => void;
-	data: RecordDataGrouped[];
-	chartRef: React.RefObject<HTMLDivElement | null>;
-};
-
-const TabContent = ({
-	procedureKind,
-	indicatorSlug,
-	shouldShowGoalLine,
-	shouldShowCrossScorePerimeter,
-	data,
-	setViewType,
-	chartRef
-}: TabContentProps) => {
-	const { classes, cx } = useStyles();
-
-	const [showGoalLine, setShowGoalLine] = useState(false);
-	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
-
-	return (
-		<div className={classes.tabContent}>
-			{(shouldShowGoalLine || shouldShowCrossScorePerimeter) && (
-				<div style={{ display: 'flex', alignItems: 'center' }}>
-					{shouldShowGoalLine && (
-						<Checkbox
-							options={[
-								{
-									label: 'Objectif',
-									nativeInputProps: {
-										name: 'checkboxes-1',
-										value: 'value1',
-										onChange: e => setShowGoalLine(e.target.checked)
-									}
-								}
-							]}
-							orientation="horizontal"
-							state="default"
-							small
-						/>
-					)}
-					{shouldShowCrossScorePerimeter && (
-						<Checkbox
-							options={[
-								{
-									label: 'Moyenne inter-périmètre',
-									nativeInputProps: {
-										name: 'checkboxes-1',
-										value: 'value2',
-										onChange: e => setShowCrossScorePerimeter(e.target.checked)
-									}
-								}
-							]}
-							orientation="horizontal"
-							state="default"
-							small
-						/>
-					)}
-				</div>
-			)}
-
-			<div className={cx(classes.chart)} ref={chartRef}>
-				<BarChartCustom
-					dataKeys={
-						data[0]?.values.map(value => ({
-							label: value.label,
-							color: value.color,
-							position: value.position
-						})) || []
-					}
-					data={data}
-				/>
-			</div>
-			<div className={classes.viewTypeContainer}>
-				<LightSelect
-					label=""
-					id="select-view"
-					options={[
-						{
-							label: 'Éditions',
-							value: 'edition'
-						},
-						{
-							label: 'Années',
-							value: 'year'
-						}
-					]}
-					defaultValue={'edition'}
-					size="small"
-					onChange={value => setViewType(value as EvolutionViewType)}
-					className={classes.selectViewType}
-				/>
-			</div>
-		</div>
-	);
-};
 
 function DataVizEvolution() {
 	const router = useRouter();
@@ -145,14 +43,13 @@ function DataVizEvolution() {
 
 	const { classes, cx } = useStyles();
 
-	const id = useId();
 	const chartRef = useRef<HTMLDivElement>(null);
 
 	const { data: apiData } = useIndicatorEvolution({
 		view: viewType || 'edition',
 		slug: selectedTabId,
 		kind,
-		value: slug
+		kindValue: slug
 	});
 
 	const tabs = [
@@ -319,11 +216,7 @@ function DataVizEvolution() {
 								rows={getRows()}
 							/>
 						) : (
-							<TabContent
-								procedureKind={kind}
-								indicatorSlug={selectedTabId}
-								shouldShowGoalLine={false}
-								shouldShowCrossScorePerimeter={false}
+							<IndicatorTabContent
 								setViewType={setViewType}
 								data={apiData}
 								chartRef={chartRef}
@@ -391,29 +284,10 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 		gap: fr.spacing('2v'),
 		marginRight: fr.spacing('8v')
 	},
-	tabContent: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		textAlign: 'center',
-		borderRadius: fr.spacing('2v'),
-		padding: `${fr.spacing('3w')} ${fr.spacing('4v')}`,
-		border: `1px solid ${fr.colors.decisions.background.contrast.blueFrance.default}`
-	},
-	chart: {
-		width: '100%',
-		height: '500px'
-	},
 	chartLegend: {
 		color: fr.colors.decisions.text.mention.grey.default,
 		fontSize: '14px',
 		marginBottom: 0
-	},
-	viewTypeContainer: {
-		width: '100%',
-		display: 'flex',
-		justifyContent: 'flex-end'
 	},
 	linkContainer: {
 		width: '100%',
@@ -426,12 +300,6 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 				'--icon-size': '14px'
 			}
 		}
-	},
-	selectViewType: {
-		['select.fr-select']: {
-			width: '100%'
-		},
-		width: '7rem'
 	}
 }));
 

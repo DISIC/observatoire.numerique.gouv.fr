@@ -14,8 +14,9 @@ export type EvolutionViewType = 'year' | 'edition';
 export type GetIndicatorEvolutionProps = {
 	view: EvolutionViewType;
 	slug: (typeof validIndicatorSlugs)[number];
-	kind: ProcedureKind;
-	value: string;
+	kind?: ProcedureKind;
+	kindValue?: string;
+	procedureId?: string;
 };
 
 export type DataLevel = {
@@ -34,7 +35,8 @@ export async function getIndicatorEvolution({
 	view,
 	slug,
 	kind,
-	value
+	kindValue,
+	procedureId
 }: GetIndicatorEvolutionProps): Promise<RecordDataGrouped[] | null> {
 	if (view !== 'year' && view !== 'edition') return null;
 
@@ -88,7 +90,7 @@ export async function getIndicatorEvolution({
 						editionId: {
 							in: editionIds
 						},
-						[kind]: value
+						[kind ? kind : 'id']: kind ? kindValue : procedureId
 					},
 					select: {
 						id: true
@@ -148,7 +150,7 @@ export async function getIndicatorEvolution({
 			const procedures = await prisma.procedure.findMany({
 				where: {
 					editionId: edition.id,
-					[kind]: value
+					[kind ? kind : 'id']: kind ? kindValue : procedureId
 				},
 				select: {
 					id: true
@@ -208,21 +210,16 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (req.method === 'GET') {
-		if (
-			!req.query.view ||
-			!req.query.slug ||
-			!req.query.kind ||
-			!req.query.value
-		) {
+		if (!req.query.view || !req.query.slug) {
 			return res.status(400).json({
-				message: 'Missing view, slug, kind or value query parameter.'
+				message: 'Missing view or slug query parameter.'
 			});
 		}
 
-		const { view, slug, kind, value } = req.query;
+		const { view, slug, kind, kindValue, procedureId } = req.query;
 
 		// Validate kind parameter
-		if (!isValidProcedureKind(kind as string)) {
+		if (kind && !isValidProcedureKind(kind as string)) {
 			return res.status(400).json({
 				message: `Invalid kind parameter. Must be one of: ${validProcedureKinds.join(
 					', '
@@ -230,7 +227,7 @@ export default async function handler(
 			});
 		}
 		// Validate slug parameter
-		if (!isValidIndicatorSlug(slug as string)) {
+		if (slug && !isValidIndicatorSlug(slug as string)) {
 			return res.status(400).json({
 				message: `Invalid slug parameter. Must be one of: ${validIndicatorSlugs.join(
 					', '
@@ -238,19 +235,20 @@ export default async function handler(
 			});
 		}
 
-		const administrationsCentral = await getIndicatorEvolution({
+		const indicatorEvolutionData = await getIndicatorEvolution({
 			view: view as EvolutionViewType,
 			slug: slug as (typeof validIndicatorSlugs)[number],
 			kind: kind as ProcedureKind,
-			value: value as string
+			kindValue: kindValue as string,
+			procedureId: procedureId as string
 		});
 
-		if (!administrationsCentral) {
+		if (!indicatorEvolutionData) {
 			return res.status(404).json({
 				message: 'No data found for the given parameters.'
 			});
 		}
-		res.status(200).json(administrationsCentral);
+		res.status(200).json(indicatorEvolutionData);
 	} else {
 		res.status(400).json({ message: 'Unsupported method' });
 	}

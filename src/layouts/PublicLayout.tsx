@@ -117,7 +117,7 @@ const PublicLayout = (props: Props) => {
 							href: '/data-viz',
 							target: '_self'
 						},
-						isActive: router.pathname === '/data-viz',
+						isActive: router.pathname.startsWith('/data-viz'),
 						text: 'DataViz'
 					},
 					{

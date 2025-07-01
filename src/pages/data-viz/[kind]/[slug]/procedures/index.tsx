@@ -142,111 +142,99 @@ const DataVizProcedures = () => {
 							</Button>
 						</div>
 					</div>
-					{isLoading || !procedures ? (
-						<div className={cx(classes.loader)}>
-							<div>
-								<i className={fr.cx('ri-loader-4-line')} />
-							</div>
 
-							<p className={fr.cx('fr-pt-4v')}>Recherche en cours...</p>
-						</div>
-					) : (
-						<>
-							<TableView
-								headers={[
-									'Démarches',
-									...(procedures[0]?.fields.map(
-										d =>
-											indicators.find(i => i.slug === d.slug)?.label || d.slug
-									) || [])
-								]}
-								rows={procedures.map(item => ({
-									title: item.title,
-									cells: item.fields.reduce((acc, current) => {
-										const finalLabel =
-											current.label.includes('Partiel') && current.value
-												? current.label + ` - ${current.value}%`
-												: current.label;
-										return {
-											...acc,
-											[current.slug]: finalLabel
-										};
-									}, {})
-								}))}
-								hidden={dataVisualitionKind !== 'table'}
-							/>
-							{dataVisualitionKind === 'list' && (
-								<div className={cx(classes.grid)}>
-									{procedures?.map(item => (
-										<div key={item.id} className={cx(classes.gridItem)}>
-											<div>
-												<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-													{item.title}
-												</h2>
-												<p className={cx('fr-text--xs', 'fr-mb-0')}>
-													{item.administration}
-												</p>
-											</div>
-											<div className={cx(classes.procredureStats)}>
-												{indicators.map((indicator, index) => {
-													const field = item.fields.find(
-														f => f.slug === indicator.slug
-													);
+					{procedures && (
+						<TableView
+							headers={[
+								'Démarches',
+								...(procedures[0]?.fields.map(
+									d => indicators.find(i => i.slug === d.slug)?.label || d.slug
+								) || [])
+							]}
+							rows={procedures.map(item => ({
+								title: item.title,
+								cells: item.fields.reduce((acc, current) => {
+									const finalLabel =
+										current.label.includes('Partiel') && current.value
+											? current.label + ` - ${current.value}%`
+											: current.label;
+									return {
+										...acc,
+										[current.slug]: finalLabel
+									};
+								}, {})
+							}))}
+							hidden={dataVisualitionKind !== 'table'}
+						/>
+					)}
+					{dataVisualitionKind === 'list' && (
+						<div className={cx(classes.grid)}>
+							{procedures?.map(item => (
+								<div key={item.id} className={cx(classes.gridItem)}>
+									<div>
+										<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+											{item.title}
+										</h2>
+										<p className={cx('fr-text--xs', 'fr-mb-0')}>
+											{item.administration}
+										</p>
+									</div>
+									<div className={cx(classes.procredureStats)}>
+										{indicators.map((indicator, index) => {
+											const field = item.fields.find(
+												f => f.slug === indicator.slug
+											);
 
-													if (!field) return null;
+											if (!field) return null;
 
-													return (
-														<div
-															key={`${item.id}-${indicator.id}`}
-															className={classes.indicator}
-															style={{
-																backgroundColor:
-																	index % 2
-																		? fr.colors.decisions.artwork.background
-																				.blueFrance.default
-																		: 'transparent'
-															}}
-														>
-															<div className={classes.indicatorLabelContainer}>
-																<i
-																	className={cx(
-																		fr.cx(indicator.icon, 'fr-mr-2v')
-																	)}
-																/>
-																<span className={classes.indicatorLabel}>
-																	{indicator.label}
-																</span>
-															</div>
-															<IndicatorLabel {...field} />
-														</div>
-													);
-												})}
-											</div>
-											<div className={cx(classes.buttonsGroup)}>
-												<Button
-													priority="secondary"
-													size="small"
-													linkProps={{
-														href: `/data-viz/${kind}/${tmpSlug}/radar-comparison`
+											return (
+												<div
+													key={`${item.id}-${indicator.id}`}
+													className={classes.indicator}
+													style={{
+														backgroundColor:
+															index % 2
+																? fr.colors.decisions.artwork.background
+																		.blueFrance.default
+																: 'transparent'
 													}}
 												>
-													Comparer
-												</Button>
-												<Button
-													priority="secondary"
-													size="small"
-													linkProps={{
-														href: `/data-viz/${kind}/${tmpSlug}/evolution`
-													}}
-												>
-													Voir le détail
-												</Button>
-											</div>
-										</div>
-									))}
+													<div className={classes.indicatorLabelContainer}>
+														<i
+															className={cx(fr.cx(indicator.icon, 'fr-mr-2v'))}
+														/>
+														<span className={classes.indicatorLabel}>
+															{indicator.label}
+														</span>
+													</div>
+													<IndicatorLabel {...field} />
+												</div>
+											);
+										})}
+									</div>
+									<div className={cx(classes.buttonsGroup)}>
+										<Button
+											priority="secondary"
+											size="small"
+											linkProps={{
+												href: `/data-viz/${kind}/${tmpSlug}/procedures/${item.id}/comparison`
+											}}
+										>
+											Comparer
+										</Button>
+										<Button
+											priority="secondary"
+											size="small"
+											linkProps={{
+												href: `/data-viz/${kind}/${tmpSlug}/procedures/${item.id}/details`
+											}}
+										>
+											Voir le détail
+										</Button>
+									</div>
 								</div>
-							)}
-						</>
+							))}
+						</div>
 					)}
 				</div>
 			</div>
