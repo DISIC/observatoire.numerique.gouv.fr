@@ -8,7 +8,8 @@ import {
 	base64UrlToString,
 	exportChartAsPng,
 	exportTableAsCSV,
-	getProcedureKindLabel
+	getProcedureKindLabel,
+	stringToBase64Url
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
@@ -236,7 +237,14 @@ const RadarComparison = () => {
 											/>
 										</div>
 										{!shouldRadarOverlay && (
-											<Button priority="secondary">Voir le détail</Button>
+											<Button
+												priority="secondary"
+												linkProps={{
+													href: `/data-viz/${kind}/${tmpSlug}/evolution`
+												}}
+											>
+												Voir le détail
+											</Button>
 										)}
 									</div>
 								</div>
@@ -277,7 +285,16 @@ const RadarComparison = () => {
 														/>
 													</div>
 
-													<Button priority="secondary">Voir le détail</Button>
+													<Button
+														priority="secondary"
+														linkProps={{
+															href: `/data-viz/${kind}/${stringToBase64Url(
+																selectedKindValue
+															)}/evolution`
+														}}
+													>
+														Voir le détail
+													</Button>
 												</div>
 											</>
 										) : (
