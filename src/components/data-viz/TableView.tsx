@@ -38,15 +38,16 @@ const TableView = ({ headers, rows = [], hidden, tableId }: TableViewProps) => {
 
 	return (
 		<div className={cx(classes.tableContainer, hidden && classes.hiddenTable)}>
-			<table 
-				className={cx(fr.cx('fr-table'), classes.table)}
-				id={tableId}
-			>
+			<table className={cx(fr.cx('fr-table'), classes.table)} id={tableId}>
 				<thead>
 					<tr>
 						{headers.map((h, index) =>
 							index === 0 && h !== '' ? (
-								<th scope="row" key={`${h}_${index}`}>
+								<th
+									scope="row"
+									key={`${h}_${index}`}
+									style={{ textAlign: 'left' }}
+								>
 									{h}
 								</th>
 							) : (
@@ -91,7 +92,13 @@ const useStyles = tss.create({
 		thead: {
 			background: fr.colors.decisions.background.contrast.grey.default,
 			tr: {
-				borderBottom: '2px solid black'
+				borderBottom: '2px solid black',
+				th: {
+					'&:first-of-type': {
+						fontWeight: 'bold',
+						paddingLeft: '1rem'
+					}
+				}
 			}
 		},
 		tbody: {

@@ -53,13 +53,19 @@ const DataVizProcedures = () => {
 			isValidIndicatorSlug(indicator.slug)
 		) || [];
 
-	const {
-		data: procedures,
-		isError,
-		isLoading
-	} = useProcedures({
+	const { data, isError, isLoading } = useProcedures({
 		search,
 		[kindKey]: slug
+	});
+
+	const procedures = data?.map(procedure => {
+		const fields = procedure.fields.filter(field =>
+			isValidIndicatorSlug(field.slug)
+		);
+		return {
+			...procedure,
+			fields
+		};
 	});
 
 	if (isError) return <div>Une erreur est survenue.</div>;
@@ -129,14 +135,14 @@ const DataVizProcedures = () => {
 								priority={'secondary'}
 								title="Exporter"
 								onClick={() => {
-									// exportTableAsCSV(`#${tableId}`, kindLabel);
+									exportTableAsCSV(`table`, `demarches-${slug}`);
 								}}
 							>
 								Exporter
 							</Button>
 						</div>
 					</div>
-					{isLoading ? (
+					{isLoading || !procedures ? (
 						<div className={cx(classes.loader)}>
 							<div>
 								<i className={fr.cx('ri-loader-4-line')} />
@@ -145,84 +151,102 @@ const DataVizProcedures = () => {
 							<p className={fr.cx('fr-pt-4v')}>Recherche en cours...</p>
 						</div>
 					) : (
-						<></>
-					)}
-					{/* <TableView
-						headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
-						rows={data.map(item => ({
-							title: item.text,
-							cells: item.data.reduce(
-								(acc, current) => ({
-									...acc,
-									[current.slug]: `${current.score}%`
-								}),
-								{}
-							)
-						}))}
-						hidden={dataVisualitionKind !== 'table'}
-						tableId={`table-${kind}`}
-					/> */}
-					{dataVisualitionKind === 'list' && (
-						<div className={cx(classes.grid)}>
-							{procedures?.map(item => (
-								<div key={item.id} className={cx(classes.gridItem)}>
-									<div>
-										<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-											{item.title}
-										</h2>
-										<p className={cx('fr-text--xs', 'fr-mb-0')}>
-											{item.administration}
-										</p>
-									</div>
-									<div className={cx(classes.procredureStats)}>
-										{indicators.map(indicator => {
-											const field = item.fields.find(
-												f => f.slug === indicator.slug
-											);
+						<>
+							<TableView
+								headers={[
+									'Démarches',
+									...(procedures[0]?.fields.map(
+										d =>
+											indicators.find(i => i.slug === d.slug)?.label || d.slug
+									) || [])
+								]}
+								rows={procedures.map(item => ({
+									title: item.title,
+									cells: item.fields.reduce((acc, current) => {
+										const finalLabel =
+											current.label.includes('Partiel') && current.value
+												? current.label + ` - ${current.value}%`
+												: current.label;
+										return {
+											...acc,
+											[current.slug]: finalLabel
+										};
+									}, {})
+								}))}
+								hidden={dataVisualitionKind !== 'table'}
+							/>
+							{dataVisualitionKind === 'list' && (
+								<div className={cx(classes.grid)}>
+									{procedures?.map(item => (
+										<div key={item.id} className={cx(classes.gridItem)}>
+											<div>
+												<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+													{item.title}
+												</h2>
+												<p className={cx('fr-text--xs', 'fr-mb-0')}>
+													{item.administration}
+												</p>
+											</div>
+											<div className={cx(classes.procredureStats)}>
+												{indicators.map((indicator, index) => {
+													const field = item.fields.find(
+														f => f.slug === indicator.slug
+													);
 
-											if (!field) return null;
+													if (!field) return null;
 
-											return (
-												<div
-													key={`${item.id}-${indicator.id}`}
-													className={classes.indicator}
+													return (
+														<div
+															key={`${item.id}-${indicator.id}`}
+															className={classes.indicator}
+															style={{
+																backgroundColor:
+																	index % 2
+																		? fr.colors.decisions.artwork.background
+																				.blueFrance.default
+																		: 'transparent'
+															}}
+														>
+															<div className={classes.indicatorLabelContainer}>
+																<i
+																	className={cx(
+																		fr.cx(indicator.icon, 'fr-mr-2v')
+																	)}
+																/>
+																<span className={classes.indicatorLabel}>
+																	{indicator.label}
+																</span>
+															</div>
+															<IndicatorLabel {...field} />
+														</div>
+													);
+												})}
+											</div>
+											<div className={cx(classes.buttonsGroup)}>
+												<Button
+													priority="secondary"
+													size="small"
+													linkProps={{
+														href: `/data-viz/${kind}/${tmpSlug}/radar-comparison`
+													}}
 												>
-													<div className={classes.indicatorLabelContainer}>
-														<i
-															className={cx(fr.cx(indicator.icon, 'fr-mr-2v'))}
-														/>
-														<span className={classes.indicatorLabel}>
-															{indicator.label}
-														</span>
-													</div>
-													<IndicatorLabel {...field} />
-												</div>
-											);
-										})}
-									</div>
-									<div className={cx(classes.buttonsGroup)}>
-										<Button
-											priority="secondary"
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${tmpSlug}/radar-comparison`
-											}}
-										>
-											Comparer
-										</Button>
-										<Button
-											priority="secondary"
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${tmpSlug}/evolution`
-											}}
-										>
-											Voir le détail
-										</Button>
-									</div>
+													Comparer
+												</Button>
+												<Button
+													priority="secondary"
+													size="small"
+													linkProps={{
+														href: `/data-viz/${kind}/${tmpSlug}/evolution`
+													}}
+												>
+													Voir le détail
+												</Button>
+											</div>
+										</div>
+									))}
 								</div>
-							))}
-						</div>
+							)}
+						</>
 					)}
 				</div>
 			</div>
@@ -310,6 +334,7 @@ const useStyles = tss.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		padding: fr.spacing('4v'),
+		borderRadius: fr.spacing('3v'),
 		width: '100%',
 		'i::before, i::after ': {
 			'--icon-size': '1.25rem',
