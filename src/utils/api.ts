@@ -246,19 +246,15 @@ export function useAdministrationsCentral() {
 	};
 }
 
-export function useIndicatorEvolution({
-	view,
-	slug,
-	kind,
-	kindValue,
-	procedureId
-}: GetIndicatorEvolutionProps) {
+export function useIndicatorEvolution(props: GetIndicatorEvolutionProps) {
+	const fakeProps: { [key: string]: any } = props;
+	Object.keys(fakeProps).forEach(
+		key => fakeProps[key] === undefined && delete fakeProps[key]
+	);
+
+	const searchUrl = new URLSearchParams(fakeProps);
 	const { data, error, isLoading } = useSWR(
-		kind && kindValue
-			? `/api/indicator-evolution?view=${view}&slug=${slug}&kind=${kind}&value=${kindValue}`
-			: procedureId
-			? `/api/indicator-evolution?view=${view}&slug=${slug}&procedureId=${procedureId}`
-			: null,
+		`/api/indicator-evolution?${searchUrl}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<RecordDataGrouped[]>(stringify(await res.json()));

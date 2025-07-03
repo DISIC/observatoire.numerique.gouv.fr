@@ -105,7 +105,7 @@ const ComposedChartCustom = ({
 				>
 					<Label
 						position={'insideLeft'}
-						value={'CACACACACAC'}
+						value={'Critique'}
 						offset={10}
 						style={{ fill: 'red' }}
 					/>

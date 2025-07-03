@@ -59,7 +59,8 @@ const ProcedureDetails = () => {
 	const { data: indicatorData } = useIndicatorEvolution({
 		view: viewType || 'edition',
 		slug: selectedTabId,
-		procedureId: id
+		columnKey: 'title_normalized',
+		columnValue: procedure?.title_normalized
 	});
 
 	const tabs = [

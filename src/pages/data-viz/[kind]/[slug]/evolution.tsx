@@ -48,8 +48,8 @@ function DataVizEvolution() {
 	const { data: apiData } = useIndicatorEvolution({
 		view: viewType || 'edition',
 		slug: selectedTabId,
-		kind,
-		kindValue: slug
+		columnKey: kind,
+		columnValue: slug
 	});
 
 	const tabs = [

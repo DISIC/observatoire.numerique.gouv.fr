@@ -1,22 +1,21 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
-import { ProcedureKind } from '../indicator-scores';
 import getPayloadClient from '@/payload/payload-client';
 import {
 	isValidIndicatorSlug,
-	isValidProcedureKind,
-	validIndicatorSlugs,
-	validProcedureKinds
+	isValidProcedureColumnKey,
+	validIndicatorSlugs
 } from '@/utils/data-viz-client';
+import { PrismaClient } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { ProcedureKind } from '../indicator-scores';
 
 export type EvolutionViewType = 'year' | 'edition';
 
 export type GetIndicatorEvolutionProps = {
 	view: EvolutionViewType;
 	slug: (typeof validIndicatorSlugs)[number];
-	kind?: ProcedureKind;
-	kindValue?: string;
-	procedureId?: string;
+	columnKey: ProcedureKind | 'title_normalized';
+	columnValue?: string;
+	singleValue?: boolean;
 };
 
 export type DataLevel = {
@@ -28,15 +27,15 @@ export type DataLevel = {
 
 export type RecordDataGrouped = {
 	name: string;
-	values: (DataLevel & { value: number })[];
+	values: (DataLevel & { value: number; valueLabel?: string })[];
 };
 
 export async function getIndicatorEvolution({
 	view,
 	slug,
-	kind,
-	kindValue,
-	procedureId
+	columnKey,
+	columnValue,
+	singleValue = false
 }: GetIndicatorEvolutionProps): Promise<RecordDataGrouped[] | null> {
 	if (view !== 'year' && view !== 'edition') return null;
 
@@ -64,7 +63,7 @@ export async function getIndicatorEvolution({
 		orderBy: {
 			created_at: 'desc'
 		},
-		take: view === 'edition' ? 5 : undefined
+		take: view === 'edition' && !singleValue ? 5 : undefined
 	});
 
 	editions.sort((a, b) => {
@@ -90,23 +89,43 @@ export async function getIndicatorEvolution({
 						editionId: {
 							in: editionIds
 						},
-						[kind ? kind : 'id']: kind ? kindValue : procedureId
+						[columnKey]: columnValue
 					},
-					select: {
-						id: true
+					include: {
+						fields: true
 					}
 				});
 
-				const fields = await prisma.field.findMany({
-					where: {
-						slug: {
-							equals: slug
-						},
-						procedureId: {
-							in: procedures.map(procedure => procedure.id)
-						}
-					}
-				});
+				if (singleValue && procedures[0] && procedures[0].fields.length > 0) {
+					const totalValue = procedures.reduce((sum, procedure) => {
+						const field = procedure.fields.find(
+							f => f.slug === validIndicator.slug
+						);
+						return sum + (field ? parseFloat(field.value || '0') : 0);
+					}, 0);
+					const averageValue =
+						procedures.length > 0
+							? Math.round((totalValue / procedures.length) * 10) / 10
+							: 0;
+					const newLabelValue = procedures[0]?.fields
+						.find(f => f.slug === validIndicator.slug)
+						?.label.includes('/ 10')
+						? `${averageValue} / 10`
+						: procedures[0]?.fields.find(f => f.slug === validIndicator.slug)
+								?.label;
+					return {
+						year: year,
+						levels: [
+							{
+								label: `Moyenne ${validIndicator.label}`,
+								value: averageValue,
+								valueLabel: newLabelValue
+							}
+						]
+					};
+				}
+
+				const fields = procedures.flatMap(p => p.fields);
 
 				const levelCounts = indicatorLevels
 					.map(level => {
@@ -150,23 +169,32 @@ export async function getIndicatorEvolution({
 			const procedures = await prisma.procedure.findMany({
 				where: {
 					editionId: edition.id,
-					[kind ? kind : 'id']: kind ? kindValue : procedureId
+					[columnKey]: columnValue
 				},
-				select: {
-					id: true
+				include: {
+					fields: true
 				}
 			});
 
-			const fields = await prisma.field.findMany({
-				where: {
-					slug: {
-						equals: slug
-					},
-					procedureId: {
-						in: procedures.map(procedure => procedure.id)
-					}
-				}
-			});
+			if (singleValue && procedures[0] && procedures[0].fields.length > 0) {
+				return {
+					edition: edition.name,
+					levels: [
+						{
+							label: `Moyenne ${validIndicator.label}`,
+							value: parseFloat(
+								procedures[0].fields.find(f => f.slug === validIndicator.slug)
+									?.value || '0'
+							),
+							valueLabel: procedures[0].fields.find(
+								f => f.slug === validIndicator.slug
+							)?.label
+						}
+					]
+				};
+			}
+
+			const fields = procedures.flatMap(p => p.fields);
 
 			const levelCounts = indicatorLevels
 				.map(level => {
@@ -210,20 +238,23 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (req.method === 'GET') {
-		if (!req.query.view || !req.query.slug) {
+		if (
+			!req.query.view ||
+			!req.query.slug ||
+			!req.query.columnKey ||
+			!req.query.columnValue
+		) {
 			return res.status(400).json({
 				message: 'Missing view or slug query parameter.'
 			});
 		}
 
-		const { view, slug, kind, kindValue, procedureId } = req.query;
+		const { view, slug, columnKey, columnValue, singleValue } = req.query;
 
-		// Validate kind parameter
-		if (kind && !isValidProcedureKind(kind as string)) {
+		// Validate columnKey parameter
+		if (columnKey && !isValidProcedureColumnKey(columnKey as string)) {
 			return res.status(400).json({
-				message: `Invalid kind parameter. Must be one of: ${validProcedureKinds.join(
-					', '
-				)}`
+				message: `Invalid columnKey parameter.`
 			});
 		}
 		// Validate slug parameter
@@ -238,9 +269,9 @@ export default async function handler(
 		const indicatorEvolutionData = await getIndicatorEvolution({
 			view: view as EvolutionViewType,
 			slug: slug as (typeof validIndicatorSlugs)[number],
-			kind: kind as ProcedureKind,
-			kindValue: kindValue as string,
-			procedureId: procedureId as string
+			columnKey: columnKey as ProcedureKind | 'title_normalized',
+			columnValue: columnValue as string,
+			singleValue: singleValue === 'true'
 		});
 
 		if (!indicatorEvolutionData) {
