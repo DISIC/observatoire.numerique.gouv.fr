@@ -1,88 +1,55 @@
-import { RecordData } from '@/utils/data-viz-client';
+import { DataLevel, RecordDataGrouped } from '@/pages/api/indicator-evolution';
 import { fr } from '@codegouvfr/react-dsfr';
-import { cpSync } from 'fs';
 import {
-	Area,
 	ComposedChart,
-	Customized,
 	Label,
-	LabelList,
 	Legend,
 	Line,
 	ReferenceArea,
 	ResponsiveContainer,
-	Text,
 	Tooltip,
 	XAxis,
 	YAxis
 } from 'recharts';
 
-const data = [
-	{
-		name: 'Page A',
-		uv: 4000,
-		pv: 2400,
-		amt: 2400
-	},
-	{
-		name: 'Page B',
-		uv: 3000,
-		pv: 1398,
-		amt: 2400
-	},
-	{
-		name: 'Page C',
-		uv: 2000,
-		pv: 9800,
-		amt: 2400
-	},
-	{
-		name: 'Page D',
-		uv: 2780,
-		pv: 3908,
-		amt: 2400
-	},
-	{
-		name: 'Page E',
-		uv: 1890,
-		pv: 4800,
-		amt: 2400
-	},
-	{
-		name: 'Page F',
-		uv: 2390,
-		pv: 3800,
-		amt: 2400
-	},
-	{
-		name: 'Page G',
-		uv: 3490,
-		pv: 4300,
-		amt: 2400
-	}
-];
-
 type ComposedChartCustomProps = {
-	data?: RecordData['data'];
-	showGoalLine?: boolean;
+	data: RecordDataGrouped[];
 	showCrossScorePerimeter?: boolean;
+	ticks?: (number | string)[];
+	areas?: (DataLevel & { treshold: number })[];
 };
 
 const ComposedChartCustom = ({
-	showGoalLine,
-	showCrossScorePerimeter
+	data,
+	showCrossScorePerimeter,
+	ticks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 }: ComposedChartCustomProps) => {
 	return (
 		<ResponsiveContainer width="100%" height="100%">
-			<ComposedChart data={data}>
-				<XAxis dataKey="name" tickLine={false} />
-				<YAxis tickCount={10} domain={[0, 10]} tickLine={false} />
+			<ComposedChart data={data} margin={{ bottom: 20, left: -20 }}>
+				<XAxis
+					dataKey="name"
+					tickLine={false}
+					axisLine={{
+						stroke: fr.colors.decisions.background.contrast.blueFrance.default
+					}}
+					fontSize="0.825rem"
+				/>
+				<YAxis
+					tickCount={ticks.length}
+					ticks={ticks}
+					tickLine={false}
+					axisLine={{
+						stroke: fr.colors.decisions.background.contrast.blueFrance.default
+					}}
+					fontSize="0.825rem"
+				/>
 				<Tooltip />
 				<Legend
 					verticalAlign="top"
 					align="left"
 					iconType="circle"
-					wrapperStyle={{ paddingBottom: 20 }}
+					wrapperStyle={{ paddingBottom: 20, left: 0 }}
 				/>
 				<Line
 					type="linear"
@@ -99,7 +66,7 @@ const ComposedChartCustom = ({
 				<ReferenceArea
 					type={'monotone'}
 					y1={0}
-					y2={3000}
+					y2={3}
 					fill="#CE050014"
 					stroke="#CE050014"
 				>
@@ -111,22 +78,6 @@ const ComposedChartCustom = ({
 					/>
 				</ReferenceArea>
 
-				{showGoalLine && (
-					<Line
-						type="linear"
-						activeDot={false}
-						dot={{
-							r: 4,
-							strokeWidth: 0,
-							fill: fr.colors.decisions.background.flat.success.default
-						}}
-						dataKey="uv"
-						strokeWidth={1.5}
-						stroke={fr.colors.decisions.background.flat.success.default}
-						strokeDasharray="6 6"
-						strokeLinecap="round"
-					/>
-				)}
 				{showCrossScorePerimeter && (
 					<Line
 						type="linear"
@@ -136,7 +87,7 @@ const ComposedChartCustom = ({
 							strokeWidth: 0,
 							fill: fr.colors.options.orangeTerreBattue.main645.default
 						}}
-						dataKey="amt"
+						dataKey="cross"
 						strokeWidth={1.5}
 						stroke={fr.colors.options.orangeTerreBattue.main645.default}
 						strokeDasharray="6 6"

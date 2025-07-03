@@ -1,16 +1,9 @@
 import IndicatorTabContent from '@/components/data-viz/IndicatorTabContent';
-import TableView from '@/components/data-viz/TableView';
-import { LightSelect } from '@/components/generic/LightSelect';
-import {
-	EvolutionViewType,
-	RecordDataGrouped
-} from '@/pages/api/indicator-evolution';
+import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
+import { Loader } from '@/components/generic/Loader';
+import { EvolutionViewType } from '@/pages/api/indicator-evolution';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import {
-	useIndicatorEvolution,
-	useProcedureById,
-	useProcedures
-} from '@/utils/api';
+import { useIndicatorEvolution, useProcedureById } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import {
 	base64UrlToString,
@@ -20,11 +13,10 @@ import {
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
-import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { tss } from 'tss-react';
 
 const ProcedureDetails = () => {
@@ -60,8 +52,11 @@ const ProcedureDetails = () => {
 		view: viewType || 'edition',
 		slug: selectedTabId,
 		columnKey: 'title_normalized',
-		columnValue: procedure?.title_normalized
+		columnValue: procedure?.title_normalized,
+		singleValue: true
 	});
+
+	console.log('indicatorData', indicatorData);
 
 	const tabs = [
 		{
@@ -158,61 +153,75 @@ const ProcedureDetails = () => {
 						...tab
 					}))}
 				>
-					<div className={classes.tabsHeaderWrapper}>
-						<p className={classes.chartLegend}>
-							{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-						</p>
-						<div className={classes.tabsActions}>
-							<div className={classes.buttonsGroup}>
-								<Button
-									iconId="ri-line-chart-line"
-									onClick={() => setDataVisualitionKind('line')}
-									priority={
-										dataVisualitionKind === 'line' ? 'primary' : 'secondary'
-									}
-									title="Chart"
-								/>
-								<Button
-									iconId="ri-table-line"
-									onClick={() => setDataVisualitionKind('table')}
-									priority={
-										dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-									}
-									title="Table"
-								/>
-							</div>
-							<Button
-								iconId="ri-download-line"
-								priority={'secondary'}
-								title="Exporter"
-								onClick={() => {
-									if (dataVisualitionKind === 'table') {
-										exportTableAsCSV('table', slug);
-									}
+					{indicatorData ? (
+						<>
+							<div className={classes.tabsHeaderWrapper}>
+								<p className={classes.chartLegend}>
+									{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+								</p>
+								<div className={classes.tabsActions}>
+									<div className={classes.buttonsGroup}>
+										<Button
+											iconId="ri-line-chart-line"
+											onClick={() => setDataVisualitionKind('line')}
+											priority={
+												dataVisualitionKind === 'line' ? 'primary' : 'secondary'
+											}
+											title="Chart"
+										/>
+										<Button
+											iconId="ri-table-line"
+											onClick={() => setDataVisualitionKind('table')}
+											priority={
+												dataVisualitionKind === 'table'
+													? 'primary'
+													: 'secondary'
+											}
+											title="Table"
+										/>
+									</div>
+									<Button
+										iconId="ri-download-line"
+										priority={'secondary'}
+										title="Exporter"
+										onClick={() => {
+											if (dataVisualitionKind === 'table') {
+												exportTableAsCSV('table', slug);
+											}
 
-									if (chartRef.current && slug) {
-										exportChartAsImage(chartRef.current, slug);
-									}
-								}}
-							>
-								Exporter
-							</Button>
-						</div>
-					</div>
-					{dataVisualitionKind === 'table' ? (
-						// <TableView
-						// 	headers={['', ...(apiData.map(d => d.name) || [])]}
-						// 	rows={getRows()}
-						// />
-						<></>
+											if (chartRef.current && slug) {
+												exportChartAsImage(chartRef.current, slug);
+											}
+										}}
+									>
+										Exporter
+									</Button>
+								</div>
+							</div>
+							{dataVisualitionKind === 'table' ? (
+								// <TableView
+								// 	headers={['', ...(apiData.map(d => d.name) || [])]}
+								// 	rows={getRows()}
+								// />
+								<></>
+							) : (
+								<IndicatorTabContent
+									shouldShowCrossScorePerimeter
+									setViewType={setViewType}
+									data={indicatorData}
+									chartRef={chartRef}
+									chartType="line"
+								/>
+							)}
+						</>
 					) : (
-						<IndicatorTabContent
-							shouldShowCrossScorePerimeter
-							setViewType={setViewType}
-							data={indicatorData}
-							chartRef={chartRef}
-							chartType="line"
-						/>
+						<>
+							{isLoading && (
+								<EmptyScreenZone>
+									<Loader loadingMessage="Chargement du contenu en cours..." />
+								</EmptyScreenZone>
+							)}
+						</>
 					)}
 					<div className={classes.linkContainer}>
 						<Link

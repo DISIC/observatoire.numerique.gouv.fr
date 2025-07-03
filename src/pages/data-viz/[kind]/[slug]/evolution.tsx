@@ -1,6 +1,8 @@
 import IndicatorTabContent from '@/components/data-viz/IndicatorTabContent';
 import TableView, { TableViewProps } from '@/components/data-viz/TableView';
+import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { LightSelect } from '@/components/generic/LightSelect';
+import { Loader } from '@/components/generic/Loader';
 import {
 	EvolutionViewType,
 	RecordDataGrouped
@@ -45,7 +47,7 @@ function DataVizEvolution() {
 
 	const chartRef = useRef<HTMLDivElement>(null);
 
-	const { data: apiData } = useIndicatorEvolution({
+	const { data: apiData, isLoading } = useIndicatorEvolution({
 		view: viewType || 'edition',
 		slug: selectedTabId,
 		columnKey: kind,
@@ -118,14 +120,14 @@ function DataVizEvolution() {
 	};
 
 	const getRows = (): TableViewProps['rows'] => {
-		if (!apiData || apiData.length === 0) return [];
+		if (!apiData || apiData.groupedData.length === 0) return [];
 
-		return apiData[0]?.values
+		return apiData.groupedData[0]?.values
 			.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
 			.map(value => ({
 				title: value.label,
 				description: value.description,
-				cells: apiData.reduce((acc, current) => {
+				cells: apiData.groupedData.reduce((acc, current) => {
 					const total = current.values.reduce((sum, v) => sum + v.value, 0);
 					return {
 						...acc,
@@ -169,58 +171,77 @@ function DataVizEvolution() {
 							...tab
 						}))}
 					>
-						<div className={classes.tabsHeaderWrapper}>
-							<p className={classes.chartLegend}>
-								{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-							</p>
-							<div className={classes.tabsActions}>
-								<div className={classes.buttonsGroup}>
-									<Button
-										iconId="ri-bar-chart-line"
-										onClick={() => setDataVisualitionKind('line')}
-										priority={
-											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
-										}
-										title="Chart"
-									/>
-									<Button
-										iconId="ri-table-line"
-										onClick={() => setDataVisualitionKind('table')}
-										priority={
-											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-										}
-										title="Table"
-									/>
-								</div>
-								<Button
-									iconId="ri-download-line"
-									priority={'secondary'}
-									title="Exporter"
-									onClick={() => {
-										if (dataVisualitionKind === 'table') {
-											exportTableAsCSV('table', slug);
-										}
+						{apiData ? (
+							<>
+								<div className={classes.tabsHeaderWrapper}>
+									<p className={classes.chartLegend}>
+										{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+									</p>
+									<div className={classes.tabsActions}>
+										<div className={classes.buttonsGroup}>
+											<Button
+												iconId="ri-bar-chart-line"
+												onClick={() => setDataVisualitionKind('line')}
+												priority={
+													dataVisualitionKind === 'line'
+														? 'primary'
+														: 'secondary'
+												}
+												title="Chart"
+											/>
+											<Button
+												iconId="ri-table-line"
+												onClick={() => setDataVisualitionKind('table')}
+												priority={
+													dataVisualitionKind === 'table'
+														? 'primary'
+														: 'secondary'
+												}
+												title="Table"
+											/>
+										</div>
+										<Button
+											iconId="ri-download-line"
+											priority={'secondary'}
+											title="Exporter"
+											onClick={() => {
+												if (dataVisualitionKind === 'table') {
+													exportTableAsCSV('table', slug);
+												}
 
-										if (chartRef.current && slug) {
-											exportChartAsImage(chartRef.current, slug);
-										}
-									}}
-								>
-									Exporter
-								</Button>
-							</div>
-						</div>
-						{dataVisualitionKind === 'table' ? (
-							<TableView
-								headers={['', ...(apiData.map(d => d.name) || [])]}
-								rows={getRows()}
-							/>
+												if (chartRef.current && slug) {
+													exportChartAsImage(chartRef.current, slug);
+												}
+											}}
+										>
+											Exporter
+										</Button>
+									</div>
+								</div>
+								{dataVisualitionKind === 'table' ? (
+									<TableView
+										headers={[
+											'',
+											...(apiData?.groupedData.map(d => d.name) || [])
+										]}
+										rows={getRows()}
+									/>
+								) : (
+									<IndicatorTabContent
+										setViewType={setViewType}
+										data={apiData}
+										chartRef={chartRef}
+									/>
+								)}
+							</>
 						) : (
-							<IndicatorTabContent
-								setViewType={setViewType}
-								data={apiData}
-								chartRef={chartRef}
-							/>
+							<>
+								{isLoading && (
+									<EmptyScreenZone>
+										<Loader loadingMessage="Chargement du contenu en cours..." />
+									</EmptyScreenZone>
+								)}
+							</>
 						)}
 						<div className={classes.linkContainer}>
 							<Link

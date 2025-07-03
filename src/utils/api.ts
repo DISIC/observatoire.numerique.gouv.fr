@@ -5,6 +5,7 @@ import { Edition, OldProcedure } from '@prisma/client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import {
 	GetIndicatorEvolutionProps,
+	IndicatorEvolutionResponse,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
 import { RecordData } from './data-viz-client';
@@ -257,12 +258,14 @@ export function useIndicatorEvolution(props: GetIndicatorEvolutionProps) {
 		`/api/indicator-evolution?${searchUrl}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<RecordDataGrouped[]>(stringify(await res.json()));
+			return superJSONParse<IndicatorEvolutionResponse>(
+				stringify(await res.json())
+			);
 		}
 	);
 
 	return {
-		data: data || [],
+		data: data,
 		isError: error,
 		isLoading: (!error && !data) || isLoading
 	};

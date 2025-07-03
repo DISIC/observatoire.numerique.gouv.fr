@@ -7,6 +7,7 @@ import {
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ProcedureKind } from '../indicator-scores';
+import { PayloadIndicator } from '@/payload/payload-types';
 
 export type EvolutionViewType = 'year' | 'edition';
 
@@ -30,13 +31,18 @@ export type RecordDataGrouped = {
 	values: (DataLevel & { value: number; valueLabel?: string })[];
 };
 
+export type IndicatorEvolutionResponse = {
+	indicator: PayloadIndicator;
+	groupedData: RecordDataGrouped[];
+};
+
 export async function getIndicatorEvolution({
 	view,
 	slug,
 	columnKey,
 	columnValue,
 	singleValue = false
-}: GetIndicatorEvolutionProps): Promise<RecordDataGrouped[] | null> {
+}: GetIndicatorEvolutionProps): Promise<IndicatorEvolutionResponse | null> {
 	if (view !== 'year' && view !== 'edition') return null;
 
 	const prisma = new PrismaClient();
@@ -161,7 +167,10 @@ export async function getIndicatorEvolution({
 				values: editionData.levels
 			}));
 
-		return result;
+		return {
+			indicator: validIndicator,
+			groupedData: result
+		};
 	}
 
 	const data = await Promise.all(
@@ -230,7 +239,7 @@ export async function getIndicatorEvolution({
 			values: editionData.levels
 		}));
 
-	return result;
+	return { indicator: validIndicator, groupedData: result };
 }
 
 export default async function handler(

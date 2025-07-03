@@ -1,5 +1,6 @@
 import {
 	EvolutionViewType,
+	IndicatorEvolutionResponse,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
 import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
@@ -16,7 +17,7 @@ const ComposedChartCustom = dynamic(
 
 type TabContentProps = {
 	setViewType: (viewType: EvolutionViewType) => void;
-	data: RecordDataGrouped[];
+	data: IndicatorEvolutionResponse;
 	chartRef: React.RefObject<HTMLDivElement | null>;
 	chartType?: 'bar' | 'line';
 	shouldShowGoalLine?: boolean;
@@ -89,16 +90,16 @@ const IndicatorTabContent = ({
 				{chartType === 'bar' ? (
 					<BarChartCustom
 						dataKeys={
-							data[0]?.values.map(value => ({
+							data.groupedData[0]?.values.map(value => ({
 								label: value.label,
 								color: value.color,
 								position: value.position
 							})) || []
 						}
-						data={data}
+						data={data.groupedData}
 					/>
 				) : (
-					<ComposedChartCustom />
+					<ComposedChartCustom data={data.groupedData} areas={[]} />
 				)}
 			</div>
 			<div className={classes.viewTypeContainer}>
