@@ -32,7 +32,6 @@ export function ProceduresTable(props: Props) {
 	const { procedures, edition, onSortApply } = props;
 	const { classes, cx } = useStyles();
 
-	const [isRight, setIsRight] = useState<boolean>(false);
 	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort | null>(
 		null
 	);
@@ -107,8 +106,8 @@ export function ProceduresTable(props: Props) {
 		);
 	if (!indicators) return <div>Aucune colonne de démarche</div>;
 
-	const getClosestColScrollPosition = (scrollPosition: number): number => {
-		if (!scrollRef.current || !tableRef.current) return scrollPosition;
+	const getClosestColScrollPosition = (scrollContainerWidth: number, isRight: boolean): number => {
+		if (!scrollRef.current || !tableRef.current) return scrollContainerWidth;
 
 		const thElements = tableRef.current.querySelectorAll('thead th');
 		const thPositions = Array.from(thElements)
@@ -118,16 +117,25 @@ export function ProceduresTable(props: Props) {
 			})
 			.sort((a, b) => a - b);
 
-		const closest = thPositions
-			.filter(num => num < scrollPosition)
-			.reduce((a, b) =>
-				Math.abs(b - scrollPosition) < Math.abs(a - scrollPosition) ? b : a
-			);
 
-		return closest;
+		if (isRight) {
+			return thPositions
+				.filter(num => num < scrollContainerWidth)
+				.reduce((a, b) =>
+					Math.abs(b - scrollContainerWidth) < Math.abs(a - scrollContainerWidth) ? b : a
+				);
+		} else {
+			const negativePositions = thPositions.filter(pos => pos < 0);
+
+			if (negativePositions.length === 0) return scrollContainerWidth;
+
+			return Math.abs(negativePositions.reduce((a, b) =>
+				Math.abs(b) < Math.abs(a) ? b : a
+			))
+		}
 	};
 
-	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
+	const handleScrollX = (isRight: boolean, disabledSmooth?: boolean) => {
 		if (!scrollRef.current || !firstColRef.current || !stickyHeaderRef.current)
 			return;
 
@@ -136,29 +144,25 @@ export function ProceduresTable(props: Props) {
 		const _firstColSize = firstColRef.current.clientWidth;
 		const _userViewportAvailable = window.innerWidth - 40;
 		const isSticky = stickyHeaderRef.current.classList.contains('sticked-row');
-		const scrollLeftPosition =
+
+		const stepSize =
 			_userViewportAvailable < 1400
-				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
+				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize, isRight) +
 				scrollRef.current.scrollLeft -
 				_firstColSize -
 				20
 				: _containerWidth -
 				_firstColSize -
-				_arrowSlideSize +
-				scrollRef.current.scrollLeft;
+				_arrowSlideSize;
 
-		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
+		const currentScroll = scrollRef.current.scrollLeft;
+
+		const scrollLeft = currentScroll + (isRight ? stepSize : -stepSize);
 
 		scrollRef.current.scrollTo({
-			left: scrollLeft,
+			left: scrollLeft >= 0 ? scrollLeft : 0,
 			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
-
-		const hasReachedMaxScroll =
-			scrollLeft + 1 >=
-			scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
-
-		setIsRight(hasReachedMaxScroll);
 	};
 
 	const onSort = (sortObject: ProcedureHeaderSort | null) => {
@@ -219,26 +223,41 @@ export function ProceduresTable(props: Props) {
 								);
 							})}
 							<th className={classes.arrowTh}>
-								<Button
-									className={cx(classes.arrow)}
-									onClick={() => {
-										handleScrollX(!isRight);
-									}}
-									nativeButtonProps={{
-										tabIndex: -1
-									}}
-									aria-label={
-										!isRight
-											? 'Voir les indicateurs suivants'
-											: 'Voir les indicateurs précédents'
-									}
-								>
-									<i
-										className={fr.cx(
-											!isRight ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'
-										)}
-									/>
-								</Button>
+								<div className={classes.arrowsContainer}>
+									<Button
+										className={cx(classes.arrow)}
+										onClick={() => {
+											handleScrollX(false);
+										}}
+										nativeButtonProps={{
+											tabIndex: -1
+										}}
+										aria-label={'Voir les indicateurs précédents'}
+									>
+										<i
+											className={fr.cx(
+												'ri-arrow-left-s-line'
+											)}
+										/>
+									</Button>
+									<Button
+										className={cx(classes.arrow)}
+										onClick={() => {
+											handleScrollX(true);
+										}}
+										nativeButtonProps={{
+											tabIndex: -1
+										}}
+										aria-label={'Voir les indicateurs suivants'
+										}
+									>
+										<i
+											className={fr.cx(
+												'ri-arrow-right-s-line'
+											)}
+										/>
+									</Button>
+								</div>
 							</th>
 						</tr>
 					</thead>
@@ -406,7 +425,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 
 						['&:last-child']: {
 							position: 'sticky',
-							right: 0,
+							right: -1,
 							zIndex: 11,
 							width: `${_arrowSlideSize}px !important`,
 							['& > div']: {
@@ -539,14 +558,10 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			width: `${_arrowSlideSize}px !important`,
 			backgroundColor:
 				fr.colors.decisions.background.actionHigh.blueFrance.default,
-			position: 'absolute',
-			right: -1,
-			top: 0,
-			height: '100%',
+			flexGrow: 1,
 			display: 'flex',
 			alignItems: 'center',
 			justifyContent: 'center',
-			borderTopRightRadius: _thRadius,
 			i: {
 				color: fr.colors.decisions.background.default.grey.default,
 				display: 'block !important'
@@ -555,7 +570,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 		arrowTh: {
 			backgroundColor: `${fr.colors.decisions.background.contrast.info.default} !important`,
 			width: `${_arrowSlideSize}px !important`,
-			position: 'relative'
+			position: 'relative',
 		},
 		loader: {
 			padding: fr.spacing('30v'),
@@ -589,6 +604,17 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			justifyContent: 'space-between',
 			paddingTop: fr.spacing('2v'),
 			paddingBottom: fr.spacing('2v')
+		},
+		arrowsContainer: {
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			borderTopRightRadius: _thRadius,
+			borderBottomRightRadius: _thRadius,
+			overflow: 'hidden',
+			button: {
+				height: '50%'
+			}
 		}
 	};
 });
