@@ -153,49 +153,53 @@ const ProcedureDetails = () => {
 				>
 					{indicatorData ? (
 						<>
-							<div className={classes.tabsHeaderWrapper}>
-								<p className={classes.chartLegend}>
-									{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-								</p>
-								<div className={classes.tabsActions}>
-									<div className={classes.buttonsGroup}>
+							{slug === 'auth' && (
+								<div className={classes.tabsHeaderWrapper}>
+									<p className={classes.chartLegend}>
+										{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+									</p>
+									<div className={classes.tabsActions}>
+										<div className={classes.buttonsGroup}>
+											<Button
+												iconId="ri-line-chart-line"
+												onClick={() => setDataVisualitionKind('line')}
+												priority={
+													dataVisualitionKind === 'line'
+														? 'primary'
+														: 'secondary'
+												}
+												title="Chart"
+											/>
+											<Button
+												iconId="ri-table-line"
+												onClick={() => setDataVisualitionKind('table')}
+												priority={
+													dataVisualitionKind === 'table'
+														? 'primary'
+														: 'secondary'
+												}
+												title="Table"
+											/>
+										</div>
 										<Button
-											iconId="ri-line-chart-line"
-											onClick={() => setDataVisualitionKind('line')}
-											priority={
-												dataVisualitionKind === 'line' ? 'primary' : 'secondary'
-											}
-											title="Chart"
-										/>
-										<Button
-											iconId="ri-table-line"
-											onClick={() => setDataVisualitionKind('table')}
-											priority={
-												dataVisualitionKind === 'table'
-													? 'primary'
-													: 'secondary'
-											}
-											title="Table"
-										/>
-									</div>
-									<Button
-										iconId="ri-download-line"
-										priority={'secondary'}
-										title="Exporter"
-										onClick={() => {
-											if (dataVisualitionKind === 'table') {
-												exportTableAsCSV('table', slug);
-											}
+											iconId="ri-download-line"
+											priority={'secondary'}
+											title="Exporter"
+											onClick={() => {
+												if (dataVisualitionKind === 'table') {
+													exportTableAsCSV('table', slug);
+												}
 
-											if (chartRef.current && slug) {
-												exportChartAsImage(chartRef.current, slug);
-											}
-										}}
-									>
-										Exporter
-									</Button>
+												if (chartRef.current && slug) {
+													exportChartAsImage(chartRef.current, slug);
+												}
+											}}
+										>
+											Exporter
+										</Button>
+									</div>
 								</div>
-							</div>
+							)}
 							{dataVisualitionKind === 'table' ? (
 								// <TableView
 								// 	headers={['', ...(apiData.map(d => d.name) || [])]}
@@ -207,6 +211,7 @@ const ProcedureDetails = () => {
 									shouldShowCrossScorePerimeter
 									setViewType={setViewType}
 									data={indicatorData}
+									field={procedure?.fields.find(f => f.slug === selectedTabId)}
 									chartRef={chartRef}
 									chartType="line"
 								/>

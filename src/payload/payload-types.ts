@@ -223,6 +223,7 @@ export interface PayloadIndicator {
   position: number;
   moreInfosTitle?: string | null;
   moreInfos?: string | null;
+  threshold_max?: number | null;
   levels?: {
     docs?: (string | PayloadIndicatorLevel)[];
     hasNextPage?: boolean;
@@ -244,7 +245,6 @@ export interface PayloadIndicatorLevel {
   indicator: string | PayloadIndicator;
   position: number;
   threshold?: number | null;
-  threshold_max?: number | null;
   noBackground?: boolean | null;
   goal_reached?: boolean | null;
   updatedAt: string;
@@ -363,6 +363,7 @@ export interface PayloadIndicatorsSelect<T extends boolean = true> {
   position?: T;
   moreInfosTitle?: T;
   moreInfos?: T;
+  threshold_max?: T;
   levels?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -379,7 +380,6 @@ export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
   indicator?: T;
   position?: T;
   threshold?: T;
-  threshold_max?: T;
   noBackground?: T;
   goal_reached?: T;
   updatedAt?: T;

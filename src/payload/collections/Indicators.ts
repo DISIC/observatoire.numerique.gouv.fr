@@ -30,6 +30,7 @@ export const Indicators: CollectionConfig = {
 		description_html: true,
 		moreInfos: true,
 		moreInfosTitle: true,
+		threshold_max: true,
 		levels: true
 	},
 	labels: {
@@ -113,6 +114,11 @@ export const Indicators: CollectionConfig = {
 			name: 'moreInfos',
 			type: 'textarea',
 			label: 'Informations supplémentaires'
+		},
+		{
+			name: 'threshold_max',
+			type: 'number',
+			label: 'Seuil (maximum)'
 		},
 		{
 			name: 'levels',

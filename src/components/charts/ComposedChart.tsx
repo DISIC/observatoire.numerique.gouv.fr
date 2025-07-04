@@ -17,13 +17,15 @@ type ComposedChartCustomProps = {
 	showCrossScorePerimeter?: boolean;
 	ticks?: (number | string)[];
 	areas?: (DataLevel & { threshold: number })[];
+	isReversed?: boolean;
 };
 
 const ComposedChartCustom = ({
 	data,
 	showCrossScorePerimeter,
 	ticks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-	areas
+	areas,
+	isReversed
 }: ComposedChartCustomProps) => {
 	return (
 		<ResponsiveContainer width="100%" height="100%">
@@ -35,6 +37,7 @@ const ComposedChartCustom = ({
 						stroke: fr.colors.decisions.background.contrast.blueFrance.default
 					}}
 					fontSize="0.825rem"
+					orientation={isReversed ? 'top' : 'bottom'}
 				/>
 				<YAxis
 					tickCount={ticks.length}
@@ -43,6 +46,8 @@ const ComposedChartCustom = ({
 					axisLine={{
 						stroke: fr.colors.decisions.background.contrast.blueFrance.default
 					}}
+					reversed={isReversed}
+					unit={ticks[ticks.length - 1] === 100 ? '%' : ''}
 					fontSize="0.825rem"
 				/>
 				<Tooltip />
@@ -64,29 +69,28 @@ const ComposedChartCustom = ({
 					strokeWidth={1.5}
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 				/>
-				{areas
-					?.sort((a, b) => (b.position ?? 0) - (a.position ?? 0))
-					.map((area, index) => {
-						const minThreshold = index === 0 ? 0 : areas[index - 1].threshold;
-						const maxThreshold = area.threshold;
-						return (
-							<ReferenceArea
-								type={'monotone'}
-								y1={minThreshold}
-								y2={maxThreshold}
-								fill={area.color + '14'}
-								stroke={area.color + '14'}
-							>
-								<Label
-									position={'insideLeft'}
-									value={area.label}
-									offset={10}
-									style={{ fill: area.color }}
-									fontSize="0.75rem"
-								/>
-							</ReferenceArea>
-						);
-					})}
+				{areas?.map((area, index) => {
+					const minThreshold = area.threshold;
+					const maxThreshold =
+						areas[index + 1]?.threshold ?? (ticks[ticks.length - 1] as number);
+					return (
+						<ReferenceArea
+							type={'monotone'}
+							y1={minThreshold}
+							y2={maxThreshold}
+							fill={area.color + '14'}
+							stroke={area.color + '14'}
+						>
+							<Label
+								position={'insideLeft'}
+								value={area.label}
+								offset={10}
+								style={{ fill: area.color }}
+								fontSize="0.75rem"
+							/>
+						</ReferenceArea>
+					);
+				})}
 
 				{showCrossScorePerimeter && (
 					<Line

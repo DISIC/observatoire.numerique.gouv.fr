@@ -101,7 +101,8 @@ export const indicatorLevels: Record<
 			description: 'Le service est 100% conforme au RGAA.',
 			position: 1,
 			threshold: 100,
-			goal_reached: true
+			goal_reached: true,
+			label_stats: 'Oui'
 		},
 		{
 			label: 'Partiel',
@@ -109,7 +110,8 @@ export const indicatorLevels: Record<
 			description: 'Entre 50% et 99% de conformité au RGAA.',
 			position: 2,
 			threshold: 50,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Partiel'
 		},
 		{
 			label: 'Non',
@@ -118,7 +120,8 @@ export const indicatorLevels: Record<
 				'Moins de 50% de conformité au RGAA, ou aucune déclaration d’accessibilité, ou une déclaration ne respectant pas les critères ennoncés ci-dessus.',
 			position: 3,
 			threshold: 0,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Non'
 		},
 		{
 			label: 'À venir',
@@ -137,7 +140,8 @@ export const indicatorLevels: Record<
 				'Un effort très faible est demandé aux usagers : aucune ou une seule information est requise.',
 			position: 1,
 			threshold: 0,
-			goal_reached: true
+			goal_reached: true,
+			label_stats: 'Optimal'
 		},
 		{
 			label: 'Partiel',
@@ -146,7 +150,8 @@ export const indicatorLevels: Record<
 				'Un effort modéré est demandé aux usagers : 2 à 4 informations sont requises.',
 			position: 2,
 			threshold: 2,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Partiel'
 		},
 		{
 			label: 'Faible',
@@ -155,7 +160,8 @@ export const indicatorLevels: Record<
 				'Un effort important est demandé aux usagers : plus de 4 informations sont requises.',
 			position: 3,
 			threshold: 5,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Faible'
 		},
 		{
 			label: 'Non applicable',
@@ -197,7 +203,8 @@ export const indicatorLevels: Record<
 			description: 'Moyenne des notes au dessus de 8/10.',
 			position: 1,
 			threshold: 8,
-			goal_reached: true
+			goal_reached: true,
+			label_stats: 'Très bien'
 		},
 		{
 			label: 'X / 10',
@@ -205,7 +212,8 @@ export const indicatorLevels: Record<
 			description: 'Moyenne des notes entre 5 et 8/10.',
 			position: 2,
 			threshold: 5,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Insuffisant'
 		},
 		{
 			label: 'X / 10',
@@ -213,7 +221,8 @@ export const indicatorLevels: Record<
 			description: 'Moyenne inférieure à 5/10.',
 			position: 3,
 			threshold: 0,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Critique'
 		},
 		{
 			label: 'À venir',
@@ -230,7 +239,8 @@ export const indicatorLevels: Record<
 			description:
 				'La démarche n’a pas encore recueilli le minimum de 100 avis d’usagers pour que le calcul de cette note soit représentatif.',
 			position: 5,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: "Nombre d'avis insuffisant"
 		}
 	],
 	help_reachable: [
@@ -415,14 +425,16 @@ export const indicatorLevels: Record<
 			color: 'blue',
 			description: 'Le service est équipé du dispositif FranceConnect.',
 			position: 1,
-			goal_reached: true
+			goal_reached: true,
+			label_stats: 'FranceConnect'
 		},
 		{
 			label: 'FranceConnect +',
 			color: 'blue',
 			description: 'Le service est équipé du dispositif FranceConnect+.',
 			position: 2,
-			goal_reached: true
+			goal_reached: true,
+			label_stats: 'FranceConnect'
 		},
 		{
 			label: 'Non',
@@ -430,7 +442,8 @@ export const indicatorLevels: Record<
 			description:
 				'Le service n’est équipé ni du dispositif FranceConnect ni du dispositif FranceConnect+.',
 			position: 3,
-			goal_reached: false
+			goal_reached: false,
+			label_stats: 'Non'
 		},
 		{
 			label: 'Non applicable',

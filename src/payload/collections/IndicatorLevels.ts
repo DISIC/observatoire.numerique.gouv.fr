@@ -78,11 +78,6 @@ export const IndicatorLevels: CollectionConfig = {
 			label: 'Seuil (à partir de)'
 		},
 		{
-			name: 'threshold_max',
-			type: 'number',
-			label: 'Seuil (maximum)'
-		},
-		{
 			name: 'noBackground',
 			type: 'checkbox',
 			label: "Pas d'arrière-plan"

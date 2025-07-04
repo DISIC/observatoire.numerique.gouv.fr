@@ -33,7 +33,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				'Pour calculer la note de satisfaction, nous réalisons une moyenne des réponses données à la question « Comment s’est passée cette démarche pour vous ? » en attribuant une note sur 10 à chaque option de réponses proposée dans le questionnaire.',
 			icon: 'ri-emoji-sticker-line',
-			position: 2
+			position: 2,
+			threshold_max: 10
 		},
 		{
 			slug: 'online',
@@ -123,7 +124,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				"Afin d’évaluer l’efficacité de ce pré-remplissage, nous comptons le nombre d’informations au sein de la démarche demandées par l'administration à l'usager qui pourraient être pré-remplies.",
 			icon: 'ri-pass-valid-line',
-			position: 4
+			position: 4,
+			threshold_max: 5
 		},
 		{
 			slug: 'handicap',
@@ -135,7 +137,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				"Le taux de conformité au RGAA est déterminé à la suite d'un audit réalisé par un.e expert.e accessibilité.",
 			icon: 'ri-open-arm-line',
-			position: 3
+			position: 3,
+			threshold_max: 100
 		},
 		{
 			slug: 'simplicity',
@@ -146,7 +149,8 @@ const indicatorsTask = async (payload: BasePayload) => {
 			moreInfos:
 				'Pour calculer la note de clarté du langage, nous réalisons une moyenne des réponses données à la question « Que pensez-vous du langage utilisé ? » en attribuant une note /10 aux trois réponses proposées dans le questionnaire.',
 			icon: 'ri-speak-line',
-			position: 6
+			position: 6,
+			threshold_max: 10
 		},
 		{
 			slug: 'help_used',
