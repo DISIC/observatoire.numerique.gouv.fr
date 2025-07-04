@@ -53,7 +53,9 @@ const ProcedureDetails = () => {
 		slug: selectedTabId,
 		columnKey: 'title_normalized',
 		columnValue: procedure?.title_normalized,
-		singleValue: true
+		singleValue: true,
+		kind: kind,
+		kindValue: slug
 	});
 
 	const tabs = [
@@ -214,6 +216,7 @@ const ProcedureDetails = () => {
 									field={procedure?.fields.find(f => f.slug === selectedTabId)}
 									chartRef={chartRef}
 									chartType="line"
+									title={procedure?.title}
 								/>
 							)}
 						</>

@@ -27,6 +27,7 @@ type TabContentProps = {
 	chartType?: 'bar' | 'line';
 	shouldShowGoalLine?: boolean;
 	shouldShowCrossScorePerimeter?: boolean;
+	title?: string;
 };
 
 const IndicatorTabContent = ({
@@ -36,7 +37,8 @@ const IndicatorTabContent = ({
 	shouldShowGoalLine,
 	shouldShowCrossScorePerimeter,
 	chartType = 'bar',
-	field
+	field,
+	title
 }: TabContentProps) => {
 	const { classes, cx } = useStyles();
 	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
@@ -62,7 +64,8 @@ const IndicatorTabContent = ({
 							width: '100%',
 							display: 'flex',
 							alignItems: 'center',
-							justifyContent: 'end'
+							justifyContent: 'end',
+							zIndex: 10
 						}}
 					>
 						{shouldShowGoalLine && (
@@ -119,7 +122,7 @@ const IndicatorTabContent = ({
 							/>
 						) : (
 							<ComposedChartCustom
-								data={data.groupedData}
+								data={data.groupedData || []}
 								ticks={
 									(data.indicator?.threshold_max ?? 0) > 10
 										? Array.from({ length: 11 }, (_, i) =>
@@ -157,7 +160,9 @@ const IndicatorTabContent = ({
 												: (b.position ?? 0) - (a.position ?? 0)
 										) || []
 								}
+								showCrossScorePerimeter={showCrossScorePerimeter}
 								isReversed={data.indicator?.slug === 'dlnuf'}
+								title={title}
 							/>
 						)}
 					</div>

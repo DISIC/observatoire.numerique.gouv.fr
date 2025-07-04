@@ -1,13 +1,14 @@
 import getPayloadClient from '@/payload/payload-client';
+import { PayloadIndicator } from '@/payload/payload-types';
 import {
 	isValidIndicatorSlug,
 	isValidProcedureColumnKey,
+	isValidProcedureKind,
 	validIndicatorSlugs
 } from '@/utils/data-viz-client';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ProcedureKind } from '../indicator-scores';
-import { PayloadIndicator } from '@/payload/payload-types';
 
 export type EvolutionViewType = 'year' | 'edition';
 
@@ -17,6 +18,8 @@ export type GetIndicatorEvolutionProps = {
 	columnKey: ProcedureKind | 'title_normalized';
 	columnValue?: string;
 	singleValue?: boolean;
+	kind?: ProcedureKind;
+	kindValue?: string;
 };
 
 export type DataLevel = {
@@ -28,7 +31,11 @@ export type DataLevel = {
 
 export type RecordDataGrouped = {
 	name: string;
-	values: (DataLevel & { value: number; valueLabel?: string })[];
+	values: (DataLevel & {
+		value: number;
+		valueLabel?: string;
+		cross?: number;
+	})[];
 };
 
 export type IndicatorEvolutionResponse = {
@@ -41,7 +48,9 @@ export async function getIndicatorEvolution({
 	slug,
 	columnKey,
 	columnValue,
-	singleValue = false
+	singleValue = false,
+	kind,
+	kindValue
 }: GetIndicatorEvolutionProps): Promise<IndicatorEvolutionResponse | null> {
 	if (view !== 'year' && view !== 'edition') return null;
 
@@ -102,6 +111,44 @@ export async function getIndicatorEvolution({
 					}
 				});
 
+				let cross;
+				if (kind !== undefined && kindValue !== undefined) {
+					const procedureKindElements = await prisma.procedure.findMany({
+						where: {
+							editionId: {
+								in: editionIds
+							},
+							[kind]: kindValue
+						},
+						include: {
+							fields: true
+						}
+					});
+
+					cross =
+						procedureKindElements.length > 0
+							? (() => {
+									const values = procedureKindElements
+										.map(p => {
+											const field = p.fields.find(
+												f => f.slug === validIndicator.slug
+											);
+											const value =
+												field && field.value ? parseFloat(field.value) : NaN;
+											return isNaN(value) ? null : value;
+										})
+										.filter((v): v is number => v !== null);
+									if (values.length === 0) return undefined;
+									return (
+										Math.round(
+											(values.reduce((acc, v) => acc + v, 0) / values.length) *
+												10
+										) / 10
+									);
+							  })()
+							: undefined;
+				}
+
 				if (singleValue && procedures[0] && procedures[0].fields.length > 0) {
 					const totalValue = procedures.reduce((sum, procedure) => {
 						const field = procedure.fields.find(
@@ -125,7 +172,8 @@ export async function getIndicatorEvolution({
 							{
 								label: `Moyenne ${validIndicator.label}`,
 								value: averageValue,
-								valueLabel: newLabelValue
+								valueLabel: newLabelValue,
+								cross: cross
 							}
 						]
 					};
@@ -185,6 +233,41 @@ export async function getIndicatorEvolution({
 				}
 			});
 
+			let cross;
+			if (kind !== undefined && kindValue !== undefined) {
+				const procedureKindElements = await prisma.procedure.findMany({
+					where: {
+						editionId: edition.id,
+						[kind]: kindValue
+					},
+					include: {
+						fields: true
+					}
+				});
+
+				cross =
+					procedureKindElements.length > 0
+						? (() => {
+								const values = procedureKindElements
+									.map(p => {
+										const field = p.fields.find(
+											f => f.slug === validIndicator.slug
+										);
+										const value =
+											field && field.value ? parseFloat(field.value) : NaN;
+										return isNaN(value) ? null : value;
+									})
+									.filter((v): v is number => v !== null);
+								if (values.length === 0) return undefined;
+								return (
+									Math.round(
+										(values.reduce((acc, v) => acc + v, 0) / values.length) * 10
+									) / 10
+								);
+						  })()
+						: undefined;
+			}
+
 			if (singleValue && procedures[0] && procedures[0].fields.length > 0) {
 				return {
 					edition: edition.name,
@@ -197,7 +280,8 @@ export async function getIndicatorEvolution({
 							),
 							valueLabel: procedures[0].fields.find(
 								f => f.slug === validIndicator.slug
-							)?.label
+							)?.label,
+							cross: cross
 						}
 					]
 				};
@@ -258,15 +342,19 @@ export default async function handler(
 			});
 		}
 
-		const { view, slug, columnKey, columnValue, singleValue } = req.query;
+		const { view, slug, columnKey, columnValue, singleValue, kind, kindValue } =
+			req.query;
 
-		// Validate columnKey parameter
 		if (columnKey && !isValidProcedureColumnKey(columnKey as string)) {
 			return res.status(400).json({
 				message: `Invalid columnKey parameter.`
 			});
 		}
-		// Validate slug parameter
+		if (kind !== undefined && !isValidProcedureKind(kind as string)) {
+			return res.status(400).json({
+				message: `Invalid kind parameter.`
+			});
+		}
 		if (slug && !isValidIndicatorSlug(slug as string)) {
 			return res.status(400).json({
 				message: `Invalid slug parameter. Must be one of: ${validIndicatorSlugs.join(
@@ -280,7 +368,9 @@ export default async function handler(
 			slug: slug as (typeof validIndicatorSlugs)[number],
 			columnKey: columnKey as ProcedureKind | 'title_normalized',
 			columnValue: columnValue as string,
-			singleValue: singleValue === 'true'
+			singleValue: singleValue === 'true',
+			kind: kind as ProcedureKind | undefined,
+			kindValue: kindValue as string | undefined
 		});
 
 		if (!indicatorEvolutionData) {
