@@ -1,4 +1,5 @@
 import { DataLevel, RecordDataGrouped } from '@/pages/api/indicator-evolution';
+import { getColorValue } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import React from 'react';
 import {
@@ -10,28 +11,6 @@ import {
 	XAxis,
 	YAxis
 } from 'recharts';
-
-const getColorValue = (value?: string) => {
-	switch (value) {
-		case 'green':
-			return fr.colors.getHex({ isDark: false }).decisions.text.default.success
-				.default;
-		case 'blue':
-			return fr.colors.getHex({ isDark: false }).decisions.text.default.info
-				.default;
-		case 'yellow':
-			return fr.colors.getHex({ isDark: false }).options.orangeTerreBattue
-				.main645.default;
-		case 'red':
-			return fr.colors.getHex({ isDark: false }).decisions.text.default.error
-				.default;
-		case 'gray':
-			return fr.colors.getHex({ isDark: false }).decisions.text.default.grey
-				.default;
-		default:
-			return '#000';
-	}
-};
 
 const renderLegend = (props: any) => {
 	const { payload } = props;

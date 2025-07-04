@@ -5,6 +5,7 @@ import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { fr as frDsfr } from '@codegouvfr/react-dsfr';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
@@ -369,5 +370,27 @@ export const getProcedureKindLabel = (kind: ProcedureKind) => {
 			return 'administration centrale';
 		default:
 			return '';
+	}
+};
+
+export const getColorValue = (value?: string) => {
+	switch (value) {
+		case 'green':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default
+				.success.default;
+		case 'blue':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default.info
+				.default;
+		case 'yellow':
+			return frDsfr.colors.getHex({ isDark: false }).options.orangeTerreBattue
+				.main645.default;
+		case 'red':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default
+				.error.default;
+		case 'gray':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default.grey
+				.default;
+		default:
+			return '#000';
 	}
 };

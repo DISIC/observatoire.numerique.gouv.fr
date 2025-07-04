@@ -5,6 +5,7 @@ export const IndicatorLevels: CollectionConfig = {
 	defaultPopulate: {
 		label: true,
 		label_stats: true,
+		threshold_max: true,
 		color: true,
 		description: true,
 		position: true,
@@ -75,6 +76,11 @@ export const IndicatorLevels: CollectionConfig = {
 			name: 'threshold',
 			type: 'number',
 			label: 'Seuil (à partir de)'
+		},
+		{
+			name: 'threshold_max',
+			type: 'number',
+			label: 'Seuil (maximum)'
 		},
 		{
 			name: 'noBackground',

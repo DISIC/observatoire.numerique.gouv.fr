@@ -56,8 +56,6 @@ const ProcedureDetails = () => {
 		singleValue: true
 	});
 
-	console.log('indicatorData', indicatorData);
-
 	const tabs = [
 		{
 			tabId: 'satisfaction',

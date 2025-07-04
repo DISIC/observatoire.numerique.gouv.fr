@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { tss } from 'tss-react';
 import { LightSelect } from '../generic/LightSelect';
 import { fr } from '@codegouvfr/react-dsfr';
+import { getColorValue } from '@/utils/tools';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 const ComposedChartCustom = dynamic(
@@ -99,7 +100,29 @@ const IndicatorTabContent = ({
 						data={data.groupedData}
 					/>
 				) : (
-					<ComposedChartCustom data={data.groupedData} areas={[]} />
+					<ComposedChartCustom
+						data={data.groupedData}
+						areas={
+							data.indicator?.levels?.docs
+								?.map(level => {
+									if (
+										typeof level === 'string' ||
+										!level.label_stats ||
+										level.threshold_max === undefined ||
+										level.threshold_max === null
+									)
+										return;
+
+									return {
+										label: level.label_stats,
+										threshold: level.threshold_max,
+										color: getColorValue(level.color),
+										position: level.position
+									};
+								})
+								.filter(e => !!e) || []
+						}
+					/>
 				)}
 			</div>
 			<div className={classes.viewTypeContainer}>

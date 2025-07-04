@@ -16,13 +16,14 @@ type ComposedChartCustomProps = {
 	data: RecordDataGrouped[];
 	showCrossScorePerimeter?: boolean;
 	ticks?: (number | string)[];
-	areas?: (DataLevel & { treshold: number })[];
+	areas?: (DataLevel & { threshold: number })[];
 };
 
 const ComposedChartCustom = ({
 	data,
 	showCrossScorePerimeter,
-	ticks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	ticks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	areas
 }: ComposedChartCustomProps) => {
 	return (
 		<ResponsiveContainer width="100%" height="100%">
@@ -63,20 +64,29 @@ const ComposedChartCustom = ({
 					strokeWidth={1.5}
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 				/>
-				<ReferenceArea
-					type={'monotone'}
-					y1={0}
-					y2={3}
-					fill="#CE050014"
-					stroke="#CE050014"
-				>
-					<Label
-						position={'insideLeft'}
-						value={'Critique'}
-						offset={10}
-						style={{ fill: 'red' }}
-					/>
-				</ReferenceArea>
+				{areas
+					?.sort((a, b) => (b.position ?? 0) - (a.position ?? 0))
+					.map((area, index) => {
+						const minThreshold = index === 0 ? 0 : areas[index - 1].threshold;
+						const maxThreshold = area.threshold;
+						return (
+							<ReferenceArea
+								type={'monotone'}
+								y1={minThreshold}
+								y2={maxThreshold}
+								fill={area.color + '14'}
+								stroke={area.color + '14'}
+							>
+								<Label
+									position={'insideLeft'}
+									value={area.label}
+									offset={10}
+									style={{ fill: area.color }}
+									fontSize="0.75rem"
+								/>
+							</ReferenceArea>
+						);
+					})}
 
 				{showCrossScorePerimeter && (
 					<Line
