@@ -1,18 +1,18 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
-import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
-import { IndicatorLabel } from './IndicatorLabel';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { IndicatorValue } from './IndicatorValue';
-import { IndicatorContent } from './IndicatorContent';
-import { getDisplayedVolume } from '@/utils/tools';
-import { IndicatorProactive } from './IndicatorProactive';
 import { SkipLinks } from '@/components/generic/SkipLinks';
-import Button from '@codegouvfr/react-dsfr/Button';
+import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { useWindowResize } from '@/utils/hooks';
-import { Edition, IndicatorSlug } from '@prisma/client';
+import { getDisplayedVolume } from '@/utils/tools';
 import { trpc } from '@/utils/trpc';
+import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
+import Button from '@codegouvfr/react-dsfr/Button';
+import { Edition, IndicatorSlug } from '@prisma/client';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { tss } from 'tss-react';
+import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
+import { IndicatorContent } from './IndicatorContent';
+import { IndicatorLabel } from './IndicatorLabel';
+import { IndicatorProactive } from './IndicatorProactive';
+import { IndicatorValue } from './IndicatorValue';
 
 const MIDDLE_ELEMENT_INDEX = 7;
 
@@ -33,10 +33,6 @@ export function ProceduresTable(props: Props) {
 	const { classes, cx } = useStyles();
 
 	const [isRight, setIsRight] = useState<boolean>(false);
-	const [isScrollingManually, setIsScrollingManually] =
-		useState<boolean>(false);
-	const [scrollingManuallyTimeout, setScrollingManuallyTimeout] =
-		useState<NodeJS.Timeout>();
 	const [currentSort, setCurrentSort] = useState<ProcedureHeaderSort | null>(
 		null
 	);
@@ -132,43 +128,24 @@ export function ProceduresTable(props: Props) {
 	};
 
 	const handleScrollX = (tmpIsRight: boolean, disabledSmooth?: boolean) => {
-		if (scrollingManuallyTimeout) clearTimeout(scrollingManuallyTimeout);
-		if (
-			!scrollRef.current ||
-			!firstColRef.current ||
-			!stickyHeaderRef.current ||
-			!tableRef.current
-		)
+		if (!scrollRef.current || !firstColRef.current || !stickyHeaderRef.current)
 			return;
 
-		setIsScrollingManually(true);
-
-		const _arrowSlideSize = 0;
+		const _arrowSlideSize = 40;
 		const _containerWidth = scrollRef.current.clientWidth;
 		const _firstColSize = firstColRef.current.clientWidth;
-		// const _userViewportAvailable = window.innerWidth - _arrowSlideSize;
+		const _userViewportAvailable = window.innerWidth - 40;
 		const isSticky = stickyHeaderRef.current.classList.contains('sticked-row');
-		const thElements = tableRef.current.querySelectorAll('thead th');
-		const seventhColElement = thElements[MIDDLE_ELEMENT_INDEX];
-
-		let scrollLeftPosition = 0;
-
-		if (seventhColElement) {
-			const seventhColRect = seventhColElement.getBoundingClientRect();
-			const tableRect = tableRef.current.getBoundingClientRect();
-			scrollLeftPosition =
-				scrollRef.current.scrollLeft +
-				(seventhColRect.left - tableRect.left) -
-				_firstColSize +
-				5;
-		} else {
-			// Fallback to original calculation if element not found
-			scrollLeftPosition =
-				_containerWidth -
+		const scrollLeftPosition =
+			_userViewportAvailable < 1400
+				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
+				scrollRef.current.scrollLeft -
+				_firstColSize -
+				20
+				: _containerWidth -
 				_firstColSize -
 				_arrowSlideSize +
 				scrollRef.current.scrollLeft;
-		}
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -177,40 +154,11 @@ export function ProceduresTable(props: Props) {
 			behavior: isSticky ? 'auto' : disabledSmooth ? 'auto' : 'smooth'
 		});
 
-		setIsRight(tmpIsRight);
-		let timeoutId = setTimeout(() => setIsScrollingManually(false), 800);
-		setScrollingManuallyTimeout(timeoutId);
-	};
+		const hasReachedMaxScroll =
+			scrollLeft + 1 >=
+			scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
 
-	const onScrollTable = () => {
-		if (!scrollRef.current || isScrollingManually || !tableRef.current) return;
-
-		const scrollPosition = scrollRef.current.scrollLeft;
-		const thElements = tableRef.current.querySelectorAll('thead th');
-		const seventhColElement = thElements[MIDDLE_ELEMENT_INDEX];
-
-		if (seventhColElement) {
-			// Get the position of the seventh column relative to the table
-			const tableRect = tableRef.current.getBoundingClientRect();
-			const seventhColRect = seventhColElement.getBoundingClientRect();
-			const seventhColPosition = seventhColRect.left - tableRect.left;
-
-			// Check if we've scrolled past the seventh column
-			const firstColWidth = firstColRef.current?.clientWidth || 0;
-			const isPastSeventhCol =
-				scrollPosition + firstColWidth >= seventhColPosition;
-
-			setIsRight(isPastSeventhCol);
-		} else {
-			// Fallback to the previous logic if seventh column not found
-			const maxScroll =
-				scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
-			setIsRight(
-				!isRight
-					? scrollPosition > maxScroll * 0.9
-					: scrollPosition > maxScroll * 0.1
-			);
-		}
+		setIsRight(hasReachedMaxScroll);
 	};
 
 	const onSort = (sortObject: ProcedureHeaderSort | null) => {
@@ -219,32 +167,9 @@ export function ProceduresTable(props: Props) {
 
 	return (
 		<>
-			<div className={cx(classes.tabsWrapper)}>
-				<Button
-					className="fr-tabs__tab"
-					nativeButtonProps={{
-						tabIndex: -1
-					}}
-					aria-selected={!isRight}
-					onClick={() => handleScrollX(false)}
-				>
-					Indicateurs principaux
-				</Button>
-				<Button
-					className="fr-tabs__tab"
-					nativeButtonProps={{
-						tabIndex: -1
-					}}
-					aria-selected={isRight}
-					onClick={() => handleScrollX(true)}
-				>
-					Autres indicateurs
-				</Button>
-			</div>
 			<div
 				className={cx(classes.root)}
 				ref={scrollRef}
-				onScroll={onScrollTable}
 			>
 				<table
 					className={cx(classes.table)}
@@ -293,6 +218,28 @@ export function ProceduresTable(props: Props) {
 									</th>
 								);
 							})}
+							<th className={classes.arrowTh}>
+								<Button
+									className={cx(classes.arrow)}
+									onClick={() => {
+										handleScrollX(!isRight);
+									}}
+									nativeButtonProps={{
+										tabIndex: -1
+									}}
+									aria-label={
+										!isRight
+											? 'Voir les indicateurs suivants'
+											: 'Voir les indicateurs précédents'
+									}
+								>
+									<i
+										className={fr.cx(
+											!isRight ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'
+										)}
+									/>
+								</Button>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -408,7 +355,7 @@ export function ProceduresTable(props: Props) {
 }
 
 const useStyles = tss.withName(ProceduresTable.name).create(() => {
-	const _arrowSlideSize = 0;
+	const _arrowSlideSize = 40;
 	const _userViewportAvailable = window.innerWidth - _arrowSlideSize;
 	const _containerWidth =
 		_userViewportAvailable < 1400 ? _userViewportAvailable : 1400;
@@ -427,7 +374,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 		},
 		table: {
 			width: 'max-content',
-			marginTop: fr.spacing('1v'),
+			marginTop: fr.spacing('10v'),
 			height: '100%',
 			borderSpacing: `0 ${fr.spacing('2v')}`,
 			['&.table-has-sticked-row']: {
@@ -440,7 +387,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 							fr.colors.decisions.background.default.grey.default,
 						height: '100%',
 						['&:nth-of-type(n + 2)']: {
-							width: (_containerWidth - _firstColSize) / 6
+							width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 						},
 						['& > button']: {
 							marginLeft: 'auto',
@@ -456,12 +403,16 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 						['&:nth-of-type(2)']: {
 							borderTopLeftRadius: _thRadius
 						},
+
 						['&:last-child']: {
-							borderTopRightRadius: _thRadius
+							position: 'sticky',
+							right: 0,
+							zIndex: 11,
+							width: `${_arrowSlideSize}px !important`,
+							['& > div']: {
+								borderTopRightRadius: _thRadius
+							}
 						},
-						['&:not(:first-of-type):not(:last-child)']: {
-							// verticalAlign: 'top'
-						}
 					},
 					['&.sticked-row']: {
 						overflowX: 'scroll',
@@ -476,13 +427,13 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 						maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 						th: {
 							borderBottom: `3px solid ${fr.colors.decisions.background.contrast.info.default}`,
-							borderTopLeftRadius: _thRadius
+							borderTopLeftRadius: _thRadius,
 						},
 						['th:nth-of-type(2)']: {
 							borderTopLeftRadius: 0
 						},
 						['th:nth-of-type(n + 2)']: {
-							minWidth: (_containerWidth - _firstColSize) / 6
+							minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 						},
 						['th:last-child']: {
 							minWidth: _arrowSlideSize
@@ -559,7 +510,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 					position: 'relative',
 					textAlign: 'center',
 					['&:nth-of-type(n + 1)']: {
-						width: (_containerWidth - _firstColSize) / 6
+						width: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
 					},
 					['&:last-child']: {
 						width: _arrowSlideSize,
@@ -585,7 +536,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 			}
 		},
 		arrow: {
-			width: _arrowSlideSize,
+			width: `${_arrowSlideSize}px !important`,
 			backgroundColor:
 				fr.colors.decisions.background.actionHigh.blueFrance.default,
 			position: 'absolute',
@@ -603,7 +554,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 		},
 		arrowTh: {
 			backgroundColor: `${fr.colors.decisions.background.contrast.info.default} !important`,
-			width: _arrowSlideSize,
+			width: `${_arrowSlideSize}px !important`,
 			position: 'relative'
 		},
 		loader: {
