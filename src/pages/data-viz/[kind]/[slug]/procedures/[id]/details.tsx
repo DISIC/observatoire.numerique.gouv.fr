@@ -138,7 +138,7 @@ const ProcedureDetails = () => {
 					currentPageLabel={`Détail des indicateurs de la démarche ${procedure?.title}`}
 					className={cx('fr-mb-1v')}
 				/>
-				<h1>Détail des indicateurs de la démarche {procedure?.title}</h1>
+				<h1>Détail des indicateurs de la démarche "{procedure?.title}"</h1>
 				<Tabs
 					className={classes.tabsWrapper}
 					selectedTabId={selectedTabId}

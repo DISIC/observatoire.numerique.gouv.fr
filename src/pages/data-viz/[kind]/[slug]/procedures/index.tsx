@@ -1,17 +1,9 @@
+import ProcedureIndicatorsGridItem from '@/components/data-viz/ProcedureIndicatorsGridItem';
 import TableView from '@/components/data-viz/TableView';
-import { IndicatorLabel } from '@/components/top250/table/IndicatorLabel';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { useProcedures } from '@/utils/api';
-import {
-	isValidIndicatorSlug,
-	validIndicatorSlugs
-} from '@/utils/data-viz-client';
-import {
-	base64UrlToString,
-	exportTableAsCSV,
-	getProcedureKindLabel,
-	stringToBase64Url
-} from '@/utils/tools';
+import { isValidIndicatorSlug } from '@/utils/data-viz-client';
+import { base64UrlToString, exportTableAsCSV } from '@/utils/tools';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
@@ -20,7 +12,7 @@ import SearchBar from '@codegouvfr/react-dsfr/SearchBar';
 import { useDebounce } from '@uidotdev/usehooks';
 import assert from 'assert';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { tss } from 'tss-react';
 
 const DataVizProcedures = () => {
@@ -172,69 +164,11 @@ const DataVizProcedures = () => {
 					{dataVisualitionKind === 'list' && (
 						<div className={cx(classes.grid)}>
 							{procedures?.map(item => (
-								<div key={item.id} className={cx(classes.gridItem)}>
-									<div>
-										<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-											{item.title}
-										</h2>
-										<p className={cx('fr-text--xs', 'fr-mb-0')}>
-											{item.administration}
-										</p>
-									</div>
-									<div className={cx(classes.procredureStats)}>
-										{indicators.map((indicator, index) => {
-											const field = item.fields.find(
-												f => f.slug === indicator.slug
-											);
-
-											if (!field) return null;
-
-											return (
-												<div
-													key={`${item.id}-${indicator.id}`}
-													className={classes.indicator}
-													style={{
-														backgroundColor:
-															index % 2
-																? fr.colors.decisions.artwork.background
-																		.blueFrance.default
-																: 'transparent'
-													}}
-												>
-													<div className={classes.indicatorLabelContainer}>
-														<i
-															className={cx(fr.cx(indicator.icon, 'fr-mr-2v'))}
-														/>
-														<span className={classes.indicatorLabel}>
-															{indicator.label}
-														</span>
-													</div>
-													<IndicatorLabel {...field} />
-												</div>
-											);
-										})}
-									</div>
-									<div className={cx(classes.buttonsGroup)}>
-										<Button
-											priority="secondary"
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${tmpSlug}/procedures/${item.id}/comparison`
-											}}
-										>
-											Comparer
-										</Button>
-										<Button
-											priority="secondary"
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${tmpSlug}/procedures/${item.id}/details`
-											}}
-										>
-											Voir le détail
-										</Button>
-									</div>
-								</div>
+								<ProcedureIndicatorsGridItem
+									key={item.id}
+									procedure={item}
+									indicators={indicators}
+								/>
 							))}
 						</div>
 					)}
