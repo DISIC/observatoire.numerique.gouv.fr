@@ -1,4 +1,5 @@
 import IndicatorTabContent from '@/components/data-viz/IndicatorTabContent';
+import TableView from '@/components/data-viz/TableView';
 import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
 import { EvolutionViewType } from '@/pages/api/indicator-evolution';
@@ -116,11 +117,6 @@ const ProcedureDetails = () => {
 		}
 	];
 
-	const getPercentage = (value: number, total: number) => {
-		if (total === 0) return 0;
-		return Math.round(Math.round((value / total) * 10000) / 100);
-	};
-
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
@@ -146,16 +142,17 @@ const ProcedureDetails = () => {
 				<Tabs
 					className={classes.tabsWrapper}
 					selectedTabId={selectedTabId}
-					onTabChange={tabId =>
-						setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number])
-					}
+					onTabChange={tabId => {
+						setSelectedTabId(tabId as (typeof validIndicatorSlugs)[number]);
+						setDataVisualitionKind('line');
+					}}
 					tabs={tabs.map(tab => ({
 						...tab
 					}))}
 				>
 					{indicatorData ? (
 						<>
-							{slug === 'auth' && (
+							{selectedTabId !== 'auth' && (
 								<div className={classes.tabsHeaderWrapper}>
 									<p className={classes.chartLegend}>
 										{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
@@ -189,7 +186,12 @@ const ProcedureDetails = () => {
 											title="Exporter"
 											onClick={() => {
 												if (dataVisualitionKind === 'table') {
-													exportTableAsCSV('table', slug);
+													exportTableAsCSV(
+														'table',
+														indicatorData.indicator.label +
+															'-' +
+															procedure?.title_normalized || ''
+													);
 												}
 
 												if (chartRef.current && slug) {
@@ -203,11 +205,24 @@ const ProcedureDetails = () => {
 								</div>
 							)}
 							{dataVisualitionKind === 'table' ? (
-								// <TableView
-								// 	headers={['', ...(apiData.map(d => d.name) || [])]}
-								// 	rows={getRows()}
-								// />
-								<></>
+								<TableView
+									headers={[
+										'',
+										...(indicatorData.groupedData.map(d => d.name) || [])
+									]}
+									rows={[
+										{
+											title: indicatorData.groupedData[0].values[0].label,
+											cells: indicatorData.groupedData.reduce(
+												(acc, current) => ({
+													...acc,
+													[current.name]: current.values[0].valueLabel
+												}),
+												{}
+											)
+										}
+									]}
+								/>
 							) : (
 								<IndicatorTabContent
 									shouldShowCrossScorePerimeter
@@ -222,11 +237,9 @@ const ProcedureDetails = () => {
 						</>
 					) : (
 						<>
-							{isLoading && (
-								<EmptyScreenZone>
-									<Loader loadingMessage="Chargement du contenu en cours..." />
-								</EmptyScreenZone>
-							)}
+							<EmptyScreenZone>
+								<Loader loadingMessage="Chargement du contenu en cours..." />
+							</EmptyScreenZone>
 						</>
 					)}
 					<div className={classes.linkContainer}>
