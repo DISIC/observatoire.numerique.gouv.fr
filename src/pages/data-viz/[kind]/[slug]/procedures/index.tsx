@@ -17,6 +17,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
 import SearchBar from '@codegouvfr/react-dsfr/SearchBar';
+import { useDebounce } from '@uidotdev/usehooks';
 import assert from 'assert';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -34,6 +35,7 @@ const DataVizProcedures = () => {
 		'list' | 'table'
 	>('list');
 	const [search, setSearch] = useState<string>();
+	const debouncedSearchTerm = useDebounce(search, 300);
 
 	const { classes, cx } = useStyles();
 
@@ -54,7 +56,7 @@ const DataVizProcedures = () => {
 		) || [];
 
 	const { data, isError, isLoading } = useProcedures({
-		search,
+		search: debouncedSearchTerm,
 		[kindKey]: slug
 	});
 

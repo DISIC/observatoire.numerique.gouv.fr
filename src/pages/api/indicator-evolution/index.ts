@@ -35,6 +35,7 @@ export type RecordDataGrouped = {
 		value: number;
 		valueLabel?: string;
 		cross?: number;
+		crossValueLabel?: string;
 	})[];
 };
 
@@ -85,6 +86,9 @@ export async function getIndicatorEvolution({
 		return new Date(a.start_date).getTime() - new Date(b.start_date).getTime();
 	});
 
+	let cross: number | undefined;
+	let crossValueLabel: string | undefined;
+
 	if (view === 'year') {
 		const yearEditionIds: Record<string, string[]> = {};
 		editions.forEach(edition => {
@@ -111,7 +115,6 @@ export async function getIndicatorEvolution({
 					}
 				});
 
-				let cross;
 				if (kind !== undefined && kindValue !== undefined) {
 					const procedureKindElements = await prisma.procedure.findMany({
 						where: {
@@ -147,9 +150,19 @@ export async function getIndicatorEvolution({
 									);
 							  })()
 							: undefined;
+
+					crossValueLabel =
+						procedures[0]?.fields
+							.find(f => f.slug === validIndicator.slug)
+							?.label.includes('/ 10') && cross !== undefined
+							? `${cross} / 10`
+							: procedures[0]?.fields.find(f => f.slug === validIndicator.slug)
+									?.label;
 				}
 
-				if (singleValue && procedures[0] && procedures[0].fields.length > 0) {
+				if (singleValue) {
+					if (!procedures[0] || procedures[0].fields.length === 0) return;
+
 					const totalValue = procedures.reduce((sum, procedure) => {
 						const field = procedure.fields.find(
 							f => f.slug === validIndicator.slug
@@ -166,14 +179,19 @@ export async function getIndicatorEvolution({
 						? `${averageValue} / 10`
 						: procedures[0]?.fields.find(f => f.slug === validIndicator.slug)
 								?.label;
+
 					return {
 						year: year,
 						levels: [
 							{
-								label: `Moyenne ${validIndicator.label}`,
+								label:
+									(slug === 'satisfaction' || slug === 'simplicity'
+										? 'Moyenne '
+										: '') + validIndicator.label,
 								value: averageValue,
 								valueLabel: newLabelValue,
-								cross: cross
+								cross: cross,
+								crossValueLabel: crossValueLabel
 							}
 						]
 					};
@@ -209,7 +227,7 @@ export async function getIndicatorEvolution({
 		);
 
 		const result: RecordDataGrouped[] = data
-			.filter(editionData => editionData.levels.some(level => level.value > 0))
+			.filter(e => !!e)
 			.map(editionData => ({
 				name: editionData.year,
 				values: editionData.levels
@@ -233,7 +251,6 @@ export async function getIndicatorEvolution({
 				}
 			});
 
-			let cross;
 			if (kind !== undefined && kindValue !== undefined) {
 				const procedureKindElements = await prisma.procedure.findMany({
 					where: {
@@ -266,14 +283,25 @@ export async function getIndicatorEvolution({
 								);
 						  })()
 						: undefined;
+				crossValueLabel =
+					procedures[0]?.fields
+						.find(f => f.slug === validIndicator.slug)
+						?.label.includes('/ 10') && cross !== undefined
+						? `${cross} / 10`
+						: procedures[0]?.fields.find(f => f.slug === validIndicator.slug)
+								?.label;
 			}
 
-			if (singleValue && procedures[0] && procedures[0].fields.length > 0) {
+			if (singleValue) {
+				if (!procedures[0] || procedures[0].fields.length === 0) return;
 				return {
 					edition: edition.name,
 					levels: [
 						{
-							label: `Moyenne ${validIndicator.label}`,
+							label:
+								(slug === 'satisfaction' || slug === 'simplicity'
+									? 'Moyenne '
+									: '') + validIndicator.label,
 							value: parseFloat(
 								procedures[0].fields.find(f => f.slug === validIndicator.slug)
 									?.value || '0'
@@ -281,7 +309,8 @@ export async function getIndicatorEvolution({
 							valueLabel: procedures[0].fields.find(
 								f => f.slug === validIndicator.slug
 							)?.label,
-							cross: cross
+							cross: cross,
+							crossValueLabel: crossValueLabel
 						}
 					]
 				};
@@ -317,7 +346,7 @@ export async function getIndicatorEvolution({
 	);
 
 	const result: RecordDataGrouped[] = data
-		.filter(editionData => editionData.levels.some(level => level.value > 0))
+		.filter(e => !!e)
 		.map(editionData => ({
 			name: editionData.edition,
 			values: editionData.levels

@@ -43,6 +43,36 @@ const ComposedChartCustom = ({
 		};
 	});
 
+	const CustomTooltip = ({ active, payload, label }: any) => {
+		if (active && payload && payload[0] && payload[0].payload.values.length) {
+			return (
+				<div
+					style={{
+						backgroundColor:
+							fr.colors.decisions.background.default.grey.default,
+						padding: '10px',
+						boxShadow: '0px 2px 6px 0px #00001229',
+						textAlign: 'left'
+					}}
+				>
+					<b>{payload[0].payload.name}</b>
+					<p style={{ margin: 0 }}>
+						{payload[0].payload.values[0].label}:{' '}
+						<b>{payload[0].payload.values[0].valueLabel}</b>
+					</p>
+					{showCrossScorePerimeter && (
+						<p style={{ margin: 0 }}>
+							Moyenne inter-perimètre:{' '}
+							<b>{payload[0].payload.values[0].crossValueLabel}</b>
+						</p>
+					)}
+				</div>
+			);
+		}
+
+		return null;
+	};
+
 	return (
 		<ResponsiveContainer width="100%" height="100%">
 			<ComposedChart data={formattedData} margin={{ bottom: 20, left: -20 }}>
@@ -66,7 +96,7 @@ const ComposedChartCustom = ({
 					unit={ticks[ticks.length - 1] === 100 ? '%' : ''}
 					fontSize="0.825rem"
 				/>
-				<Tooltip />
+				<Tooltip cursor={false} content={<CustomTooltip />} />
 				<Legend
 					verticalAlign="top"
 					align="left"
@@ -101,7 +131,7 @@ const ComposedChartCustom = ({
 						areas[index + 1]?.threshold ?? (ticks[ticks.length - 1] as number);
 					return (
 						<ReferenceArea
-							type={'monotone'}
+							key={index}
 							y1={minThreshold}
 							y2={maxThreshold}
 							fill={area.color + '14'}
