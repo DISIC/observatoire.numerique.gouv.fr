@@ -96,7 +96,6 @@ export function ColumnHeaderDefinition(props: Props) {
 							);
 						}}
 						nativeButtonProps={{
-							title: `Trier les démarches par rapport à la valeur de "${text}" de manière descendante`,
 							className: cx(
 								classes.sortButton,
 								currentSort?.slug === slug &&
@@ -120,7 +119,6 @@ export function ColumnHeaderDefinition(props: Props) {
 							);
 						}}
 						nativeButtonProps={{
-							title: `Trier les démarches par rapport à la valeur de "${text}" de manière ascendante`,
 							className: cx(
 								classes.sortButton,
 								currentSort?.slug === slug &&
