@@ -212,7 +212,8 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 		borderRadius: fr.spacing('2v')
 	},
 	sortButtonActive: {
-		backgroundColor: `${fr.colors.decisions.background.contrast.blueFrance.active}!important`
+		backgroundColor: `${fr.colors.decisions.background.flat.blueEcume.default}!important`,
+		color: fr.colors.decisions.background.default.grey.default
 	},
 	sortIcon: {
 		':before': {
