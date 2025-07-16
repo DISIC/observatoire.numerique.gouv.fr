@@ -191,7 +191,7 @@ export function ProceduresTable(props: Props) {
 							</th>
 							{indicators.map((indicator, index) => {
 								return (
-									<th key={indicator.label} scope="col">
+									<th key={indicator.label} scope="col" aria-sort={currentSort?.slug === indicator.slug ? `${currentSort.direction}ending` : undefined}>
 										<div className={classes.indicatorWrapper}>
 											<ColumnHeaderDefinition
 												slug={indicator.slug as IndicatorSlug}

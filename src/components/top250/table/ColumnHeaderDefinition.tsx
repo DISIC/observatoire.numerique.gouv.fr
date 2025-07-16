@@ -100,12 +100,15 @@ export function ColumnHeaderDefinition(props: Props) {
 							className: cx(
 								classes.sortButton,
 								currentSort?.slug === slug &&
-									currentSort?.direction === 'desc' &&
-									classes.sortButtonActive
+								currentSort?.direction === 'desc' &&
+								classes.sortButtonActive
 							)
 						}}
 					>
 						<i className={cx(fr.cx('ri-arrow-down-line'), classes.sortIcon)} />
+						<span className={fr.cx('fr-sr-only')}>
+							Trier les démarches par rapport à la valeur de "{text}" de manière descendante
+						</span>
 					</Button>
 					<Button
 						priority="tertiary no outline"
@@ -121,12 +124,15 @@ export function ColumnHeaderDefinition(props: Props) {
 							className: cx(
 								classes.sortButton,
 								currentSort?.slug === slug &&
-									currentSort?.direction === 'asc' &&
-									classes.sortButtonActive
+								currentSort?.direction === 'asc' &&
+								classes.sortButtonActive
 							)
 						}}
 					>
 						<i className={cx(fr.cx('ri-arrow-up-line'), classes.sortIcon)} />
+						<span className={fr.cx('fr-sr-only')}>
+							Trier les démarches par rapport à la valeur de "{text}" de manière ascendante
+						</span>
 					</Button>
 				</div>
 			)}
@@ -208,7 +214,7 @@ const useStyles = tss.withName(ColumnHeaderDefinition.name).create(() => ({
 		borderRadius: fr.spacing('2v')
 	},
 	sortButtonActive: {
-		backgroundColor: `${fr.colors.decisions.background.alt.blueFrance.default}!important`
+		backgroundColor: `${fr.colors.decisions.background.contrast.blueFrance.active}!important`
 	},
 	sortIcon: {
 		':before': {
