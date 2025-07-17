@@ -2,13 +2,14 @@ import ProcedureIndicatorsGridItem from '@/components/data-viz/ProcedureIndicato
 import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { useProcedureById } from '@/utils/api';
+import { useProcedureById, useProcedures } from '@/utils/api';
 import { isValidIndicatorSlug } from '@/utils/data-viz-client';
 import { base64UrlToString, exportTableAsCSV } from '@/utils/tools';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
+import Select from '@codegouvfr/react-dsfr/Select';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { tss } from 'tss-react';
@@ -30,19 +31,38 @@ const ProcedureComparison = () => {
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'list' | 'table'
 	>('list');
-	const [selectedKindValue, setSelectedKindValue] = useState<string>('');
+	const [selectedProcedureId, setSelectedProcedureId] = useState<string>('');
 
-	const { data: procedure, isError, isLoading } = useProcedureById(id);
+	const { data: procedure, isLoading } = useProcedureById(id);
+	const { data: comparedProcedure, isLoading: isLoadingCompared } =
+		useProcedureById(selectedProcedureId);
 
 	const { data: procdeureHeadersRequest, isLoading: isLoadingIndicators } =
 		trpc.indicators.getList.useQuery({
 			page: 1,
 			perPage: 100
 		});
+
 	const indicators =
 		procdeureHeadersRequest?.data.filter(indicator =>
 			isValidIndicatorSlug(indicator.slug)
 		) || [];
+
+	const kindKey = kind !== 'ministere' ? kind : 'department';
+
+	const { data, isLoading: isLoadingProcedures } = useProcedures({
+		[kindKey]: slug
+	});
+
+	const procedures = data?.map(procedure => {
+		const fields = procedure.fields.filter(field =>
+			isValidIndicatorSlug(field.slug)
+		);
+		return {
+			...procedure,
+			fields
+		};
+	});
 
 	return (
 		<div className={cx(classes.root)}>
@@ -85,7 +105,7 @@ const ProcedureComparison = () => {
 										dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 									}
 									title="Table"
-									disabled={selectedKindValue === ''}
+									disabled={selectedProcedureId === ''}
 								/>
 							</div>
 							<Button
@@ -100,13 +120,50 @@ const ProcedureComparison = () => {
 							</Button>
 						</div>
 					</div>
-					{!isLoading && procedure ? (
+					{!isLoading &&
+					!isLoadingProcedures &&
+					!isLoadingIndicators &&
+					procedure ? (
 						<div className={cx(classes.grid)}>
 							<ProcedureIndicatorsGridItem
 								procedure={procedure}
 								indicators={indicators}
 								showCompareButton={false}
 							/>
+							{!isLoadingCompared && comparedProcedure ? (
+								<ProcedureIndicatorsGridItem
+									procedure={comparedProcedure}
+									indicators={indicators}
+									showCompareButton={false}
+									onClose={() => setSelectedProcedureId('')}
+								/>
+							) : (
+								<div className={cx(classes.gridItem)}>
+									<Select
+										label="Démarche"
+										nativeSelectProps={{
+											id: `select-kind-${id}`,
+											onChange: event =>
+												setSelectedProcedureId(event.target.value),
+											value: selectedProcedureId
+										}}
+									>
+										<option value="" disabled>
+											Sélectionner une option
+										</option>
+										{procedures
+											?.filter(option => option.id !== id)
+											.map(option => (
+												<option key={option.id} value={option.id}>
+													{option.title}
+												</option>
+											))}
+									</Select>
+									<div className={classes.emptyStateContainer}>
+										<p>Ajouter une démarche à comparer</p>
+									</div>
+								</div>
+							)}
 						</div>
 					) : (
 						<EmptyScreenZone>
@@ -151,6 +208,26 @@ const useStyles = tss.withName(ProcedureComparison.name).create(() => ({
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2, 1fr)',
 		gap: fr.spacing('6v')
+	},
+	gridItem: {
+		display: 'flex',
+		flexDirection: 'column',
+		borderRadius: fr.spacing('2v'),
+		padding: `${fr.spacing('3w')} ${fr.spacing('4v')}`,
+		border: `1px solid ${fr.colors.decisions.background.contrast.blueFrance.default}`
+	},
+	emptyStateContainer: {
+		width: '100%',
+		height: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		textAlign: 'center',
+		p: {
+			fontWeight: 500,
+			color: fr.colors.decisions.text.title.blueFrance.default,
+			fontSize: '1.125rem'
+		}
 	}
 }));
 

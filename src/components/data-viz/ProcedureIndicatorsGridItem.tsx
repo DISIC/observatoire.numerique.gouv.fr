@@ -11,11 +11,13 @@ type ProcedureIndicatorsGridItemProps = {
 	procedure: ProcedureWithFieldsAndEditions;
 	indicators: PayloadIndicator[];
 	showCompareButton?: boolean;
+	onClose?: () => void;
 };
 const ProcedureIndicatorsGridItem = ({
 	procedure,
 	indicators,
-	showCompareButton = true
+	showCompareButton = true,
+	onClose
 }: ProcedureIndicatorsGridItemProps) => {
 	const router = useRouter();
 	const { kind, slug: tmpSlug } = router.query as {
@@ -27,9 +29,23 @@ const ProcedureIndicatorsGridItem = ({
 	return (
 		<div className={cx(classes.gridItem)}>
 			<div>
-				<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-					{procedure.title}
-				</h2>
+				<div className={classes.removableTitleContainer}>
+					<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+						{procedure.title}
+					</h2>
+					{onClose && (
+						<Button
+							priority="tertiary no outline"
+							iconId="ri-close-circle-fill"
+							onClick={onClose}
+							children={''}
+							size="large"
+							className={classes.clearButton}
+							title="Supprimer la sélection"
+							aria-label="Supprimer la sélection"
+						/>
+					)}
+				</div>
 				<p className={cx('fr-text--xs', 'fr-mb-0')}>
 					{procedure.administration}
 				</p>
@@ -104,6 +120,16 @@ const useStyles = tss.create({
 		fontWeight: 500,
 		color: fr.colors.decisions.text.title.grey.default,
 		marginBottom: fr.spacing('1v')
+	},
+	removableTitleContainer: {
+		display: 'flex',
+		alignItems: 'center'
+	},
+	clearButton: {
+		...fr.spacing('padding', { rightLeft: '2v', topBottom: 0 }),
+		'::before': {
+			margin: '0!important'
+		}
 	},
 	procredureStats: {
 		...fr.spacing('padding', { rightLeft: '4v' }),
