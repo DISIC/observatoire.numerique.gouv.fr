@@ -1,4 +1,5 @@
 import ProcedureIndicatorsGridItem from '@/components/data-viz/ProcedureIndicatorsGridItem';
+import TableView, { TableViewProps } from '@/components/data-viz/TableView';
 import { EmptyScreenZone } from '@/components/generic/EmptyScreenZone';
 import { Loader } from '@/components/generic/Loader';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
@@ -64,6 +65,42 @@ const ProcedureComparison = () => {
 		};
 	});
 
+	const getRows = (): TableViewProps['rows'] => {
+		if (!indicators || !procedure || !comparedProcedure) return [];
+		return [
+			{
+				title: procedure.title,
+				cells: procedure.fields.reduce((acc, current) => {
+					if (!isValidIndicatorSlug(current.slug)) return acc;
+					const finalLabel =
+						current.label.includes('Partiel') && current.value
+							? current.label + ` - ${current.value}%`
+							: current.label;
+					return {
+						...acc,
+						[current.slug]: finalLabel
+					};
+				}, {})
+			},
+			{
+				title: comparedProcedure.title,
+				cells: comparedProcedure.fields.reduce((acc, current) => {
+					if (!isValidIndicatorSlug(current.slug)) return acc;
+					const finalLabel =
+						current.label.includes('Partiel') && current.value
+							? current.label + ` - ${current.value}%`
+							: current.label;
+					return {
+						...acc,
+						[current.slug]: finalLabel
+					};
+				}, {})
+			}
+		];
+	};
+
+	const headers = getRows()[0] && Object.keys(getRows()[0].cells);
+
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
@@ -113,58 +150,74 @@ const ProcedureComparison = () => {
 								priority={'secondary'}
 								title="Exporter"
 								onClick={() => {
-									exportTableAsCSV('table', slug);
+									if (!procedure) return;
+									exportTableAsCSV(`table`, procedure.title);
 								}}
+								disabled={!procedure || !comparedProcedure}
 							>
 								Exporter
 							</Button>
 						</div>
 					</div>
+
+					<TableView
+						headers={[
+							'',
+							...(headers?.map(
+								h => indicators.find(i => i.slug === h)?.label || ''
+							) || [])
+						]}
+						rows={getRows()}
+						hidden={dataVisualitionKind !== 'table'}
+					/>
+
 					{!isLoading &&
 					!isLoadingProcedures &&
 					!isLoadingIndicators &&
 					procedure ? (
-						<div className={cx(classes.grid)}>
-							<ProcedureIndicatorsGridItem
-								procedure={procedure}
-								indicators={indicators}
-								showCompareButton={false}
-							/>
-							{!isLoadingCompared && comparedProcedure ? (
+						dataVisualitionKind === 'list' && (
+							<div className={cx(classes.grid)}>
 								<ProcedureIndicatorsGridItem
-									procedure={comparedProcedure}
+									procedure={procedure}
 									indicators={indicators}
 									showCompareButton={false}
-									onClose={() => setSelectedProcedureId('')}
 								/>
-							) : (
-								<div className={cx(classes.gridItem)}>
-									<Select
-										label="Démarche"
-										nativeSelectProps={{
-											id: `select-kind-${id}`,
-											onChange: event =>
-												setSelectedProcedureId(event.target.value),
-											value: selectedProcedureId
-										}}
-									>
-										<option value="" disabled>
-											Sélectionner une option
-										</option>
-										{procedures
-											?.filter(option => option.id !== id)
-											.map(option => (
-												<option key={option.id} value={option.id}>
-													{option.title}
-												</option>
-											))}
-									</Select>
-									<div className={classes.emptyStateContainer}>
-										<p>Ajouter une démarche à comparer</p>
+								{!isLoadingCompared && comparedProcedure ? (
+									<ProcedureIndicatorsGridItem
+										procedure={comparedProcedure}
+										indicators={indicators}
+										showCompareButton={false}
+										onClose={() => setSelectedProcedureId('')}
+									/>
+								) : (
+									<div className={cx(classes.gridItem)}>
+										<Select
+											label="Démarche"
+											nativeSelectProps={{
+												id: `select-kind-${id}`,
+												onChange: event =>
+													setSelectedProcedureId(event.target.value),
+												value: selectedProcedureId
+											}}
+										>
+											<option value="" disabled>
+												Sélectionner une option
+											</option>
+											{procedures
+												?.filter(option => option.id !== id)
+												.map(option => (
+													<option key={option.id} value={option.id}>
+														{option.title}
+													</option>
+												))}
+										</Select>
+										<div className={classes.emptyStateContainer}>
+											<p>Ajouter une démarche à comparer</p>
+										</div>
 									</div>
-								</div>
-							)}
-						</div>
+								)}
+							</div>
+						)
 					) : (
 						<EmptyScreenZone>
 							<Loader loadingMessage="Chargement du contenu en cours..." />
