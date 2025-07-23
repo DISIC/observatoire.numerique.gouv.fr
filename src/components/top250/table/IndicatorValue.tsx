@@ -7,6 +7,7 @@ import { tss } from 'tss-react';
 type Props = {
 	slug: IndicatorSlug;
 	procedureId: number | null;
+	gristId: number | null;
 	procedureTitle: string | null;
 	edition?: Edition;
 	value: string;
@@ -29,6 +30,7 @@ function IndicatorValueDisplay(props: Props): ReactNode {
 		value,
 		label,
 		procedureId,
+		gristId,
 		procedureTitle,
 		edition,
 		noJdma,
@@ -74,15 +76,14 @@ function IndicatorValueDisplay(props: Props): ReactNode {
 
 		let datesParam = `date-debut=2022-04-01&date-fin=2023-03-31`;
 		if (edition)
-			datesParam = `date-debut=${
-				edition.start_date.toString().split('T')[0]
-			}&date-fin=${edition.end_date.toString().split('T')[0]}`;
+			datesParam = `date-debut=${edition.start_date.toString().split('T')[0]
+				}&date-fin=${edition.end_date.toString().split('T')[0]}`;
 
 		return (
 			<Link
 				ref={linkRef}
 				title={`Voir le détail : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
-				href={`/Demarches/${procedureId}?view-mode=statistics&${datesParam}`}
+				href={gristId !== procedureId ? `https://jedonnemonavis.numerique.gouv.fr/public/product/${procedureId}/stats?view-mode=statistics&${datesParam}` : `/Demarches/${procedureId}?view-mode=statistics&${datesParam}`}
 				target="_blank"
 			>
 				Voir le détail

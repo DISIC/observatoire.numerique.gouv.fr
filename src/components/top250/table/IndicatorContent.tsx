@@ -3,6 +3,9 @@ import { fr } from '@codegouvfr/react-dsfr';
 import React from 'react';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { tss } from 'tss-react';
+import ReactMarkdown from 'react-markdown';
+import WysiwygInterpretor from '@/components/generic/WysiwygInterpretor';
+
 
 type Props = {
 	indicator: PayloadIndicator;
@@ -24,10 +27,9 @@ export const IndicatorContent = (props: Props) => {
 				</>
 			)}
 			{isFull && indicator.description_html && (
-				<div
-					className={cx(classes.description)}
-					dangerouslySetInnerHTML={{ __html: indicator.description_html }}
-				/>
+				<div className={cx(classes.description)}>
+					<WysiwygInterpretor wysiwyg_html={indicator.description_html} />
+				</div>
 			)}
 			<p>
 				<b>Légende</b>
@@ -59,7 +61,7 @@ export const IndicatorContent = (props: Props) => {
 			{isFull && indicator.moreInfos && (
 				<div className={cx(classes.moreInfos)}>
 					{indicator.moreInfosTitle && <b>{indicator.moreInfosTitle}</b>}
-					<p>{indicator.moreInfos}</p>
+					<ReactMarkdown>{indicator.moreInfos}</ReactMarkdown>
 				</div>
 			)}
 		</div>
@@ -71,13 +73,16 @@ const useStyles = tss.withName(IndicatorContent.name).create(() => ({
 		h5: {
 			fontSize: '20px'
 		},
-		p: {
+		'p, ul': {
 			fontSize: '14px'
-		}
+		},
 	},
 	description: {
 		fontSize: '14px',
-		marginBottom: fr.spacing('4v')
+		marginBottom: fr.spacing('4v'),
+		ul: {
+			paddingLeft: fr.spacing('5v'),
+		}
 	},
 	label: {
 		marginRight: fr.spacing('2v')
@@ -103,6 +108,10 @@ const useStyles = tss.withName(IndicatorContent.name).create(() => ({
 			marginBottom: 0,
 			marginTop: fr.spacing('1v'),
 			whiteSpace: 'pre-wrap'
+		},
+		ul: {
+			marginTop: 0,
+			marginLeft: fr.spacing('2v'),
 		}
 	},
 	moreInfosBlue: {

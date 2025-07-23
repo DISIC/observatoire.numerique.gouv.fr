@@ -133,8 +133,7 @@ export function useDepartments(
 	editionId: string | undefined
 ) {
 	const { data, error, isLoading } = useSWR(
-		`/api/departments?kind=${kind}${
-			editionId ? `&editionId=${editionId}` : ''
+		`/api/departments?kind=${kind}${editionId ? `&editionId=${editionId}` : ''
 		}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
@@ -149,9 +148,9 @@ export function useDepartments(
 	};
 }
 
-export function useAdministrations() {
+export function useAdministrations(editionId: string | undefined) {
 	const { data, error, isLoading } = useSWR(
-		`/api/administrations`,
+		`/api/administrations?editionId=${editionId}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<string[]>(stringify(await res.json()));

@@ -19,7 +19,7 @@ export function CustomFooter() {
 		<>
 			<Footer
 				id="footer"
-				accessibility="non compliant"
+				accessibility="fully compliant"
 				accessibilityLinkProps={{
 					href: '/accessibilite'
 				}}
