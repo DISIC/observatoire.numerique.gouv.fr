@@ -54,8 +54,6 @@ const ProcedureIndicatorsGridItem = ({
 				{indicators.map((indicator, index) => {
 					const field = procedure.fields.find(f => f.slug === indicator.slug);
 
-					if (!field) return null;
-
 					return (
 						<div
 							key={`${procedure.id}-${indicator.id}`}
@@ -73,7 +71,11 @@ const ProcedureIndicatorsGridItem = ({
 									{indicator.label}
 								</span>
 							</div>
-							<IndicatorLabel {...field} />
+							<IndicatorLabel
+								label={field?.label || '-'}
+								color={field?.color || 'gray'}
+								noBackground={field?.noBackground}
+							/>
 						</div>
 					);
 				})}

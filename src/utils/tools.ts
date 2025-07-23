@@ -328,7 +328,7 @@ export const exportChartAsPng = async (chartParent: HTMLElement) => {
 
 export function stringToBase64Url(str: string): string {
 	const base64 = btoa(unescape(encodeURIComponent(str)));
-	return encodeURIComponent(base64).substring(0, base64.length - 1);
+	return encodeURIComponent(base64);
 }
 
 export function base64UrlToString(base64Url: string): string {
