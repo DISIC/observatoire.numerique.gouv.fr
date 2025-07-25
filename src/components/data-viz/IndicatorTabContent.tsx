@@ -20,6 +20,7 @@ const ComposedChartCustom = dynamic(
 );
 
 type TabContentProps = {
+	viewType: EvolutionViewType;
 	setViewType: (viewType: EvolutionViewType) => void;
 	data: IndicatorEvolutionResponse;
 	field?: Field;
@@ -32,6 +33,7 @@ type TabContentProps = {
 
 const IndicatorTabContent = ({
 	data,
+	viewType,
 	setViewType,
 	chartRef,
 	shouldShowGoalLine,
@@ -180,7 +182,7 @@ const IndicatorTabContent = ({
 									value: 'year'
 								}
 							]}
-							defaultValue={'edition'}
+							defaultValue={viewType}
 							size="small"
 							onChange={value => setViewType(value as EvolutionViewType)}
 							className={classes.selectViewType}

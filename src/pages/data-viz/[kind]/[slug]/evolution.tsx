@@ -228,6 +228,7 @@ function DataVizEvolution() {
 									/>
 								) : (
 									<IndicatorTabContent
+										viewType={viewType}
 										setViewType={setViewType}
 										data={apiData}
 										chartRef={chartRef}

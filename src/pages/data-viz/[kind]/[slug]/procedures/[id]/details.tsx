@@ -226,6 +226,7 @@ const ProcedureDetails = () => {
 							) : (
 								<IndicatorTabContent
 									shouldShowCrossScorePerimeter
+									viewType={viewType}
 									setViewType={setViewType}
 									data={indicatorData}
 									field={procedure?.fields.find(f => f.slug === selectedTabId)}

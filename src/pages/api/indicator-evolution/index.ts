@@ -219,9 +219,21 @@ export async function getIndicatorEvolution({
 					})
 					.filter(item => item !== null);
 
+				const groupedBySameLabel = levelCounts.reduce((acc, current) => {
+					const existing = acc.find(
+						item => item.label === current.label && item.color === current.color
+					);
+					if (existing) {
+						existing.value += current.value;
+					} else {
+						acc.push({ ...current });
+					}
+					return acc;
+				}, [] as RecordDataGrouped['values'][number][]);
+
 				return {
 					year: year,
-					levels: levelCounts
+					levels: groupedBySameLabel
 				};
 			})
 		);
@@ -338,9 +350,21 @@ export async function getIndicatorEvolution({
 				})
 				.filter(item => item !== null);
 
+			const groupedBySameLabel = levelCounts.reduce((acc, current) => {
+				const existing = acc.find(
+					item => item.label === current.label && item.color === current.color
+				);
+				if (existing) {
+					existing.value += current.value;
+				} else {
+					acc.push({ ...current });
+				}
+				return acc;
+			}, [] as RecordDataGrouped['values'][number][]);
+
 			return {
 				edition: edition.name,
-				levels: levelCounts
+				levels: groupedBySameLabel
 			};
 		})
 	);
