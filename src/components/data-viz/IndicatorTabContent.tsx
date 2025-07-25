@@ -106,7 +106,7 @@ const IndicatorTabContent = ({
 					</div>
 				)}
 
-			{data.indicator?.slug !== 'auth' ? (
+			{data.indicator?.slug !== 'auth' || chartType === 'bar' ? (
 				<>
 					<div className={cx(classes.chart)} ref={chartRef}>
 						{chartType === 'bar' ? (
@@ -191,7 +191,11 @@ const IndicatorTabContent = ({
 				<>
 					<div className={classes.indicatorValueContainer}>
 						<span>{data.indicator?.label}&nbsp;:</span>
-						{field && <IndicatorLabel {...field} />}
+						<IndicatorLabel
+							label={field?.label || 'Aucune donnée disponible'}
+							color={field?.color || 'gray'}
+							noBackground={field?.noBackground}
+						/>
 					</div>
 					<Alert
 						severity="info"
