@@ -70,29 +70,37 @@ const ProcedureComparison = () => {
 		return [
 			{
 				title: procedure.title,
-				cells: procedure.fields.reduce((acc, current) => {
-					if (!isValidIndicatorSlug(current.slug)) return acc;
-					const finalLabel =
-						current.label.includes('Partiel') && current.value
-							? current.label + ` - ${current.value}%`
-							: current.label;
+				cells: indicators.reduce((acc, indicator) => {
+					const field = procedure.fields.find(f => f.slug === indicator.slug);
+					let finalLabel = '-';
+					if (field) {
+						finalLabel =
+							field.label.includes('Partiel') && field.value
+								? field.label + ` - ${field.value}%`
+								: field.label;
+					}
 					return {
 						...acc,
-						[current.slug]: finalLabel
+						[indicator.slug]: finalLabel
 					};
 				}, {})
 			},
 			{
 				title: comparedProcedure.title,
-				cells: comparedProcedure.fields.reduce((acc, current) => {
-					if (!isValidIndicatorSlug(current.slug)) return acc;
-					const finalLabel =
-						current.label.includes('Partiel') && current.value
-							? current.label + ` - ${current.value}%`
-							: current.label;
+				cells: indicators.reduce((acc, indicator) => {
+					const field = comparedProcedure.fields.find(
+						f => f.slug === indicator.slug
+					);
+					let finalLabel = '-';
+					if (field) {
+						finalLabel =
+							field.label.includes('Partiel') && field.value
+								? field.label + ` - ${field.value}%`
+								: field.label;
+					}
 					return {
 						...acc,
-						[current.slug]: finalLabel
+						[indicator.slug]: finalLabel
 					};
 				}, {})
 			}
