@@ -60,17 +60,17 @@ if __name__ == "__main__":
         
         updates = []
         for procedure in procedures_chunk:
-            # Get procedure from Grist based on the id
-            procedure_grist_id = procedure['jdma_identifier']
-            procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Dashlord_ID_JDMA': procedure_grist_id})
-            if (len(procedure_grist) > 0):
-                procedure_grist = procedure_grist[0]._asdict()
-                updates.append(UpdateOne(
-                    {"_id": procedure['_id']},
-                    {"$set": {
-                        "administration_central": procedure_grist['Nom_Administration_Centrale'],
-                    }}
-                ))
+            if 'jdma_identifier' in procedure:
+                procedure_grist_id = procedure['jdma_identifier']
+                procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Dashlord_ID_JDMA': procedure_grist_id})
+                if (len(procedure_grist) > 0):
+                    procedure_grist = procedure_grist[0]._asdict()
+                    updates.append(UpdateOne(
+                        {"_id": procedure['_id']},
+                        {"$set": {
+                            "administration_central": procedure_grist['Nom_Perimetre'],
+                        }}
+                    ))
         
         # Execute bulk update if there are any updates
         if updates:
