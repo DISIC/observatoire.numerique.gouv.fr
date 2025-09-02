@@ -4,6 +4,7 @@ import {
 	useIndicatorScoreByProcedureKindSlug,
 	useProcedureGroupByKind
 } from '@/utils/api';
+import { RecordData } from '@/utils/data-viz-client';
 import {
 	base64UrlToString,
 	exportChartAsPng,
@@ -39,6 +40,12 @@ const RadarComparison = () => {
 	const chartRef = useRef<HTMLDivElement | null>(null);
 
 	const [selectedKindValue, setSelectedKindValue] = useState<string>('');
+	const [crossPerimeterValues, setCrossPerimeterValues] = useState<
+		{
+			slug: string;
+			value: number;
+		}[]
+	>([]);
 
 	const { data: baseIndicatorScores } = useIndicatorScoreByProcedureKindSlug({
 		kind,
@@ -68,11 +75,19 @@ const RadarComparison = () => {
 	const radarData = shouldRadarOverlay
 		? (baseIndicatorScores?.data || []).map(item => ({
 				...item,
+				cross:
+					crossPerimeterValues.find(crossItem => crossItem.slug === item.slug)
+						?.value || 0,
 				compareScore: comparedIndicatorScores?.data.find(
 					compareItem => compareItem.slug === item.slug
 				)?.score
 		  }))
-		: baseIndicatorScores?.data || [];
+		: baseIndicatorScores?.data.map(item => ({
+				...item,
+				cross:
+					crossPerimeterValues.find(crossItem => crossItem.slug === item.slug)
+						?.value || 0
+		  })) || [];
 
 	const radarCompareData = shouldRadarOverlay
 		? {
@@ -89,6 +104,24 @@ const RadarComparison = () => {
 			}
 		}
 	}, [selectedKindValue]);
+
+	useEffect(() => {
+		if (
+			comparedIndicatorScores &&
+			(comparedIndicatorScores as unknown as RecordData[])[0] &&
+			(comparedIndicatorScores as unknown as RecordData[])[0].data &&
+			crossPerimeterValues.length === 0
+		) {
+			setCrossPerimeterValues(
+				(comparedIndicatorScores as unknown as RecordData[])[0].data.map(
+					item => ({
+						slug: item.slug,
+						value: item.cross
+					})
+				)
+			);
+		}
+	}, [comparedIndicatorScores]);
 
 	const getRows = (): TableViewProps['rows'] => {
 		if (!radarData || radarData.length === 0 || !comparedIndicatorScores) {
@@ -275,7 +308,15 @@ const RadarComparison = () => {
 												<div style={{ width: '100%' }}>
 													<div className={cx(classes.chart)}>
 														<RadarChartCustom
-															data={comparedIndicatorScores?.data || []}
+															data={
+																comparedIndicatorScores?.data.map(item => ({
+																	...item,
+																	cross:
+																		crossPerimeterValues.find(
+																			crossItem => crossItem.slug === item.slug
+																		)?.value || 0
+																})) || []
+															}
 															showGoalRadar={false}
 															showCrossScorePerimeter={showCrossScorePerimeter}
 															color={
