@@ -354,11 +354,14 @@ const RadarComparison = () => {
 													</option>
 													{groupByProcedureKind
 														.filter(option => option !== slug)
-														.map(option => (
-															<option key={option} value={option}>
-																{option}
-															</option>
-														))}
+														.map(
+															option =>
+																option && (
+																	<option key={option} value={option}>
+																		{option}
+																	</option>
+																)
+														)}
 												</Select>
 												<div className={classes.emptyStateContainer}>
 													<p>
