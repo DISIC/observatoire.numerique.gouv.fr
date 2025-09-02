@@ -222,11 +222,12 @@ const RadarChartCustom = ({
 				)}
 				{showCrossScorePerimeter && (
 					<Radar
-						name="Moyenne cross-perimètre"
+						name="Moyenne inter-périmètre"
 						dataKey="cross"
 						stroke={fr.colors.options.orangeTerreBattue.main645.default}
 						fill={fr.colors.options.orangeTerreBattue.main645.default}
 						fillOpacity={0.2}
+						isAnimationActive={enableAnimation}
 					/>
 				)}
 				{compareData && (
@@ -262,7 +263,8 @@ const RadarChartCustom = ({
 					labelFormatter={(_, payload) => payload[0]?.payload.name || ''}
 					formatter={(value, _, { name }) => [`${value}%`, name]}
 					contentStyle={{
-						textAlign: 'left'
+						textAlign: 'left',
+						whiteSpace: 'pre-line'
 					}}
 					labelStyle={{
 						textAlign: 'center'

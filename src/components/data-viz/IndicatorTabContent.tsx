@@ -20,6 +20,7 @@ const ComposedChartCustom = dynamic(
 );
 
 type TabContentProps = {
+	viewType: EvolutionViewType;
 	setViewType: (viewType: EvolutionViewType) => void;
 	data: IndicatorEvolutionResponse;
 	field?: Field;
@@ -32,6 +33,7 @@ type TabContentProps = {
 
 const IndicatorTabContent = ({
 	data,
+	viewType,
 	setViewType,
 	chartRef,
 	shouldShowGoalLine,
@@ -106,7 +108,7 @@ const IndicatorTabContent = ({
 					</div>
 				)}
 
-			{data.indicator?.slug !== 'auth' ? (
+			{data.indicator?.slug !== 'auth' || chartType === 'bar' ? (
 				<>
 					<div className={cx(classes.chart)} ref={chartRef}>
 						{chartType === 'bar' ? (
@@ -180,7 +182,7 @@ const IndicatorTabContent = ({
 									value: 'year'
 								}
 							]}
-							defaultValue={'edition'}
+							defaultValue={viewType}
 							size="small"
 							onChange={value => setViewType(value as EvolutionViewType)}
 							className={classes.selectViewType}
@@ -191,7 +193,11 @@ const IndicatorTabContent = ({
 				<>
 					<div className={classes.indicatorValueContainer}>
 						<span>{data.indicator?.label}&nbsp;:</span>
-						{field && <IndicatorLabel {...field} />}
+						<IndicatorLabel
+							label={field?.label || 'Aucune donnée disponible'}
+							color={field?.color || 'gray'}
+							noBackground={field?.noBackground}
+						/>
 					</div>
 					<Alert
 						severity="info"
