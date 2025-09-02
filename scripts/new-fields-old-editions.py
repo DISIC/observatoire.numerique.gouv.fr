@@ -2,6 +2,7 @@ from grist_api import GristDocAPI
 import os
 from dotenv import load_dotenv
 from pymongo import MongoClient, UpdateOne
+from bson import ObjectId
 
 # Load environment variables
 load_dotenv()
@@ -60,8 +61,8 @@ if __name__ == "__main__":
         updates = []
         for procedure in procedures_chunk:
             # Get procedure from Grist based on the id
-            procedure_grist_id = procedure['grist_identifier']
-            procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Dashlord_ID_XWIKI': procedure_grist_id})
+            procedure_grist_id = procedure['jdma_identifier']
+            procedure_grist = api.fetch_table(os.getenv('GRIST_TABLE_PROCEDURE'), {'Dashlord_ID_JDMA': procedure_grist_id})
             if (len(procedure_grist) > 0):
                 procedure_grist = procedure_grist[0]._asdict()
                 updates.append(UpdateOne(
