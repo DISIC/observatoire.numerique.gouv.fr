@@ -64,7 +64,7 @@ function DataVizEvolution() {
 				</span>
 			),
 			legend:
-				'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du périmètre ministériel.'
+				'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du périmètre.'
 		},
 		{
 			tabId: 'handicap',
@@ -77,7 +77,7 @@ function DataVizEvolution() {
 				</span>
 			),
 			legend:
-				'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches du périmètre ministériel.'
+				'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches du périmètre.'
 		},
 		{
 			tabId: 'dlnuf',
@@ -88,7 +88,7 @@ function DataVizEvolution() {
 				</span>
 			),
 			legend:
-				'Cet histogramme représente la répartition en pourcentage du niveau de simplification des démarches du périmètre ministériel.'
+				'Cet histogramme représente la répartition en pourcentage du niveau de simplification des démarches du périmètre.'
 		},
 		{
 			tabId: 'auth',
@@ -110,7 +110,7 @@ function DataVizEvolution() {
 				</span>
 			),
 			legend:
-				'Cet histogramme représente la répartition en pourcentage des niveaux de clarté des démarches du périmètre ministériel.'
+				'Cet histogramme représente la répartition en pourcentage des niveaux de clarté des démarches du périmètre.'
 		}
 	];
 

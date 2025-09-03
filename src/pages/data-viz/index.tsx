@@ -152,20 +152,20 @@ const DataViz = () => {
 					className={classes.tabsWrapper}
 					tabs={[
 						{
-							label: 'Administrations centrales',
+							label: 'Périmètres',
 							content: (
 								<TabContent
 									kind="administration_central"
-									kindLabel="Administrations centrales"
+									kindLabel="Périmètres"
 								/>
 							)
 						},
 						{
-							label: 'Périmètres ministériels',
+							label: 'Ministères',
 							content: (
 								<TabContent
 									kind="ministere"
-									kindLabel="Périmètres ministériels"
+									kindLabel="Ministères"
 								/>
 							)
 						},

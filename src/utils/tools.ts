@@ -370,11 +370,11 @@ export function exportTableAsCSV(tableSelector: string, title: string) {
 export const getProcedureKindLabel = (kind: ProcedureKind) => {
 	switch (kind) {
 		case 'ministere':
-			return 'périmètre ministériel';
+			return 'ministère';
 		case 'administration':
 			return 'administration';
 		case 'administration_central':
-			return 'administration centrale';
+			return 'périmètre';
 		default:
 			return '';
 	}

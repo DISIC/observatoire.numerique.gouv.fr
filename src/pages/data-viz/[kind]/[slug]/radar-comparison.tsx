@@ -341,7 +341,10 @@ const RadarComparison = () => {
 										) : (
 											<>
 												<Select
-													label="Choisir un périmètre"
+													label={`Choisir un${
+														(kind === 'administration' ? 'e ' : ' ') +
+														getProcedureKindLabel(kind)
+													}`}
 													nativeSelectProps={{
 														id: `select-kind-${id}`,
 														onChange: event =>
@@ -365,8 +368,8 @@ const RadarComparison = () => {
 												</Select>
 												<div className={classes.emptyStateContainer}>
 													<p>
-														Ajouter un
-														{kind !== 'ministere' ? 'e' : ''}{' '}
+														Sélectionner un
+														{kind === 'administration' ? 'e' : ''}{' '}
 														{getProcedureKindLabel(kind)} à comparer
 													</p>
 												</div>
