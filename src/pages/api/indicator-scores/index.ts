@@ -1,10 +1,11 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 import {
+	getAllProceduresIndicatorScores,
 	getIndicatorScoresByProcedureKind,
 	getIndicatorScoresByProcedureKindSlug
 } from '@/utils/data-viz';
-import { RecordData } from '@/utils/data-viz-client';
+import { validIndicatorSlugs } from '@/utils/data-viz-client';
+import { PrismaClient } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export type ProcedureKind =
 	| 'administration'
@@ -44,21 +45,27 @@ export async function getIndicatorScores(kind: ProcedureKind, search?: string) {
 		groupByKind
 	});
 
-	const dataCrossKind = records
-		.reduce((acc, current) => {
-			current.data.forEach((item, i) => {
-				if (!acc[i]) acc[i] = { ...item, score: 0 };
-				acc[i].score += item.score;
-			});
-			return acc;
-		}, [] as RecordData['data'])
-		.map(item => Math.round(item.score / records.length));
+	const allProceduresRecords = await getAllProceduresIndicatorScores(
+		currentEdition.id
+	);
+
+	const dataCrossKind: { slug: string; value: number }[] =
+		validIndicatorSlugs.map(slug => {
+			const total = allProceduresRecords.length;
+			const reached = allProceduresRecords.filter(item =>
+				item.data.find(data => data.slug === slug && data.goalReached)
+			).length;
+			return {
+				slug,
+				value: total > 0 ? Math.round((reached / total) * 100) : 0
+			};
+		});
 
 	records = records.map(item => ({
 		...item,
-		data: item.data.map((data, subIndex) => ({
+		data: item.data.map(data => ({
 			...data,
-			cross: dataCrossKind[subIndex]
+			cross: dataCrossKind.find(d => d.slug === data.slug)?.value || 0
 		}))
 	}));
 

@@ -10,9 +10,20 @@ const prisma = new PrismaClient();
 async function getIndicatorScores(props: {
 	kind: ProcedureKind;
 	group: GetIndicatorScoresByProcedureKindProps['groupByKind'][number];
-	validIndicators: PayloadIndicator[];
 }) {
-	const { group, kind, validIndicators } = props;
+	const { group, kind } = props;
+	const payload = await getPayloadClient({ seed: false });
+
+	const validIndicators = (
+		await payload.find({
+			collection: 'payload-indicators',
+			where: {
+				slug: {
+					in: validIndicatorSlugs
+				}
+			}
+		})
+	).docs;
 
 	const procedures = await prisma.procedure.findMany({
 		where: {
@@ -90,26 +101,12 @@ export async function getIndicatorScoresByProcedureKind({
 	kind,
 	groupByKind
 }: GetIndicatorScoresByProcedureKindProps) {
-	const payload = await getPayloadClient({ seed: false });
-
-	const validIndicators = (
-		await payload.find({
-			collection: 'payload-indicators',
-			where: {
-				slug: {
-					in: validIndicatorSlugs
-				}
-			}
-		})
-	).docs;
-
 	const records = await Promise.all(
 		groupByKind.map(
 			async group =>
 				await getIndicatorScores({
 					kind,
-					group,
-					validIndicators
+					group
 				})
 		)
 	);
@@ -126,6 +123,15 @@ export async function getIndicatorScoresByProcedureKindSlug({
 	kind,
 	slug
 }: GetIndicatorScoresByProcedureKindSlugProps) {
+	const data = await getIndicatorScores({
+		kind,
+		group: { text: desufligyText(slug), _count: 0 }
+	});
+
+	return data;
+}
+
+export async function getAllProceduresIndicatorScores(editionId: string) {
 	const payload = await getPayloadClient({ seed: false });
 
 	const validIndicators = (
@@ -139,11 +145,67 @@ export async function getIndicatorScoresByProcedureKindSlug({
 		})
 	).docs;
 
-	const data = await getIndicatorScores({
-		kind,
-		group: { text: desufligyText(slug), _count: 0 },
-		validIndicators
+	const procedures = await prisma.procedure.findMany({
+		where: {
+			editionId: editionId
+		}
 	});
 
-	return data;
+	const results: {
+		title: string;
+		data: { slug: string; goalReached: boolean }[];
+	}[] = await Promise.all(
+		procedures.map(async procedure => {
+			const fields = await prisma.field.groupBy({
+				by: ['slug', 'goalReached'],
+				where: {
+					slug: {
+						in: [...validIndicatorSlugs]
+					},
+					procedureId: procedure.id,
+					goalReached: {
+						not: null
+					}
+				},
+				orderBy: {
+					slug: 'asc'
+				},
+				_count: true
+			});
+
+			const indicators = validIndicators.map(indicator => ({
+				goalReached: false,
+				slug: indicator.slug
+			}));
+
+			for (const slug of validIndicatorSlugs) {
+				const fieldData = fields.filter(fieldData => fieldData.slug === slug);
+				let countReached = 0;
+				let countNotReached = 0;
+
+				if (fieldData.length > 0) {
+					const reachedData = fieldData.find(f => f.goalReached);
+					const notReachedData = fieldData.find(f => !f.goalReached);
+
+					countReached = reachedData ? reachedData._count : 0;
+					countNotReached = notReachedData ? notReachedData._count : 0;
+				}
+
+				const totalCount = countReached + countNotReached;
+
+				const score =
+					totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
+
+				indicators[
+					indicators.findIndex(indicator => indicator.slug === slug)
+				].goalReached = score >= 80;
+			}
+			return {
+				title: procedure.title,
+				data: indicators
+			};
+		})
+	);
+
+	return results;
 }
