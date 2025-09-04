@@ -51,8 +51,9 @@ const DataVizTabHeader = ({
 							className={className}
 							id={id}
 							placeholder={`Rechercher un${
-								kind !== 'ministere' ? 'e' : ''
-							} ${getProcedureKindLabel(kind)}`}
+								(kind === 'administration' ? 'e ' : ' ') +
+								getProcedureKindLabel(kind)
+							}`}
 							type={type}
 							value={search}
 							onChange={event => setSearch(event.currentTarget.value)}
