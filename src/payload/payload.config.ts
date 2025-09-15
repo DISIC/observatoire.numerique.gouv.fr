@@ -15,6 +15,7 @@ import { CMSHelp } from './globals/cms/Help';
 import { CMSLegals } from './globals/cms/Legals';
 import { CMSFooter } from './globals/cms/Footer';
 import IndicatorLevels from './collections/IndicatorLevels';
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -37,6 +38,19 @@ export default buildConfig({
 		url: process.env.DATABASE_URI || ''
 	}),
 	sharp,
+	email: nodemailerAdapter({
+		defaultFromAddress:
+			process.env.NODEMAILER_FROM ?? 'noreply@observatoire.numerique.gouv.fr',
+		defaultFromName: 'Vos démarches ensentielles',
+		transportOptions: {
+			host: process.env.NODEMAILER_HOST,
+			port: process.env.NODEMAILER_PORT ?? 587,
+			auth: {
+				user: process.env.NODEMAILER_USER || process.env.MAILPACE_API_KEY,
+				pass: process.env.NODEMAILER_PASSWORD || process.env.MAILPACE_API_KEY
+			}
+		}
+	}),
 	plugins: [
 		s3Storage({
 			collections: {
