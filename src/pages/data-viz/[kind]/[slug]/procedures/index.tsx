@@ -211,7 +211,16 @@ const useStyles = tss.create({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		marginBottom: fr.spacing('6v')
+		marginBottom: fr.spacing('6v'),
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			alignItems: 'stretch',
+			gap: fr.spacing('4v'),
+			'& > div': {
+				width: '100%',
+				justifyContent: 'space-between'
+			}
+		}
 	},
 	searchInput: {
 		width: '35%'
@@ -228,7 +237,10 @@ const useStyles = tss.create({
 	grid: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2, 1fr)',
-		gap: fr.spacing('6v')
+		gap: fr.spacing('6v'),
+		[fr.breakpoints.down('md')]: {
+			gridTemplateColumns: '1fr'
+		}
 	},
 	gridItem: {
 		display: 'flex',

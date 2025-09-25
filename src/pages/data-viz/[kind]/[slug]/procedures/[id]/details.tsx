@@ -14,6 +14,7 @@ import {
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import Button from '@codegouvfr/react-dsfr/Button';
+import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
 import Tabs from '@codegouvfr/react-dsfr/Tabs';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -42,6 +43,8 @@ const ProcedureDetails = () => {
 		useState<(typeof validIndicatorSlugs)[number]>('satisfaction');
 
 	const [viewType, setViewType] = useState<EvolutionViewType>('edition');
+
+	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
 
 	const { classes, cx } = useStyles();
 
@@ -154,54 +157,72 @@ const ProcedureDetails = () => {
 						<>
 							{selectedTabId !== 'auth' && (
 								<div className={classes.tabsHeaderWrapper}>
-									<p className={classes.chartLegend}>
-										{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
-									</p>
-									<div className={classes.tabsActions}>
-										<div className={classes.buttonsGroup}>
+									<div className={classes.tabsHeaderActionsWrapper}>
+										<p className={classes.chartLegend}>
+											{tabs.find(tab => tab.tabId === selectedTabId)?.legend}
+										</p>
+										<div className={classes.tabsActions}>
+											<div className={classes.buttonsGroup}>
+												<Button
+													iconId="ri-line-chart-line"
+													onClick={() => setDataVisualitionKind('line')}
+													priority={
+														dataVisualitionKind === 'line'
+															? 'primary'
+															: 'secondary'
+													}
+													title="Chart"
+												/>
+												<Button
+													iconId="ri-table-line"
+													onClick={() => setDataVisualitionKind('table')}
+													priority={
+														dataVisualitionKind === 'table'
+															? 'primary'
+															: 'secondary'
+													}
+													title="Table"
+												/>
+											</div>
 											<Button
-												iconId="ri-line-chart-line"
-												onClick={() => setDataVisualitionKind('line')}
-												priority={
-													dataVisualitionKind === 'line'
-														? 'primary'
-														: 'secondary'
-												}
-												title="Chart"
-											/>
-											<Button
-												iconId="ri-table-line"
-												onClick={() => setDataVisualitionKind('table')}
-												priority={
-													dataVisualitionKind === 'table'
-														? 'primary'
-														: 'secondary'
-												}
-												title="Table"
-											/>
-										</div>
-										<Button
-											iconId="ri-download-line"
-											priority={'secondary'}
-											title="Exporter"
-											onClick={() => {
-												if (dataVisualitionKind === 'table') {
-													exportTableAsCSV(
-														'table',
-														indicatorData.indicator.label +
-															'-' +
-															procedure?.title_normalized || ''
-													);
-												}
+												iconId="ri-download-line"
+												priority={'secondary'}
+												title="Exporter"
+												onClick={() => {
+													if (dataVisualitionKind === 'table') {
+														exportTableAsCSV(
+															'table',
+															indicatorData.indicator.label +
+																'-' +
+																procedure?.title_normalized || ''
+														);
+													}
 
-												if (chartRef.current && slug) {
-													exportChartAsImage(chartRef.current, slug);
-												}
-											}}
-										>
-											Exporter
-										</Button>
+													if (chartRef.current && slug) {
+														exportChartAsImage(chartRef.current, slug);
+													}
+												}}
+											>
+												Exporter
+											</Button>
+										</div>
 									</div>
+									<Checkbox
+										options={[
+											{
+												label: 'Moyenne inter-périmètre',
+												nativeInputProps: {
+													name: 'checkboxes-1',
+													value: 'value2',
+													onChange: e =>
+														setShowCrossScorePerimeter(e.target.checked)
+												}
+											}
+										]}
+										orientation="horizontal"
+										state="default"
+										small
+									/>
 								</div>
 							)}
 							{dataVisualitionKind === 'table' ? (
@@ -225,7 +246,6 @@ const ProcedureDetails = () => {
 								/>
 							) : (
 								<IndicatorTabContent
-									shouldShowCrossScorePerimeter
 									viewType={viewType}
 									setViewType={setViewType}
 									data={indicatorData}
@@ -233,6 +253,7 @@ const ProcedureDetails = () => {
 									chartRef={chartRef}
 									chartType="line"
 									title={procedure?.title}
+									showCrossScorePerimeter={showCrossScorePerimeter}
 								/>
 							)}
 						</>
@@ -284,13 +305,20 @@ const useStyles = tss.withName(ProcedureDetails.name).create({
 		}
 	},
 	tabsHeaderWrapper: {
+		marginBottom: fr.spacing('3v')
+	},
+	tabsHeaderActionsWrapper: {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		marginBottom: fr.spacing('6v'),
+		marginBottom: fr.spacing('2v'),
 		[fr.breakpoints.down('md')]: {
 			flexDirection: 'column-reverse',
-			gap: fr.spacing('4v')
+			gap: fr.spacing('4v'),
+			'& > div': {
+				width: '100%',
+				justifyContent: 'space-between'
+			}
 		}
 	},
 	chartLegend: {

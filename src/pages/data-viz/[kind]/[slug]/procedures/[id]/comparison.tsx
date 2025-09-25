@@ -258,7 +258,11 @@ const useStyles = tss.withName(ProcedureComparison.name).create(() => ({
 		marginBottom: fr.spacing('5v'),
 		'& > div': {
 			display: 'flex',
-			gap: fr.spacing('10v')
+			gap: fr.spacing('10v'),
+			[fr.breakpoints.down('md')]: {
+				width: '100%',
+				justifyContent: 'space-between'
+			}
 		}
 	},
 	buttonsGroup: {
@@ -268,7 +272,11 @@ const useStyles = tss.withName(ProcedureComparison.name).create(() => ({
 	grid: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2, 1fr)',
-		gap: fr.spacing('6v')
+		gap: fr.spacing('6v'),
+		[fr.breakpoints.down('md')]: {
+			gridTemplateColumns: '1fr',
+			'& > :first-of-type': { order: 2 }
+		}
 	},
 	gridItem: {
 		display: 'flex',

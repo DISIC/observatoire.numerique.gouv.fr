@@ -55,7 +55,6 @@ const TabContent = ({
 				kindLabel={kindLabel}
 				tableId={`table-${kind}`}
 			/>
-
 			<TableView
 				headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
 				rows={data.map(item => ({
@@ -210,7 +209,10 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 	grid: {
 		display: 'grid',
 		gridTemplateColumns: 'repeat(3, 1fr)',
-		gap: fr.spacing('6v')
+		gap: fr.spacing('6v'),
+		[fr.breakpoints.down('md')]: {
+			gridTemplateColumns: '1fr'
+		}
 	},
 	gridItem: {
 		display: 'flex',

@@ -134,12 +134,27 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 	wrapperSearch: {
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('3w'),
+			'& > div': {
+				width: '100%',
+				justifyContent: 'space-between'
+			}
+		}
 	},
 	wrapperButtons: {
 		display: 'flex',
 		alignItems: 'baseline',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('2w'),
+			'& > div': {
+				marginLeft: 0
+			}
+		}
 	},
 	searchInput: {
 		width: '35%'

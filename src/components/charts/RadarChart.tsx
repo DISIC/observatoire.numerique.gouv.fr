@@ -120,7 +120,7 @@ const CustomAxisTickLabel = (props: any) => {
 					<text
 						x={newX + iconSize + 8}
 						y={newY + 5}
-						textAnchor="right"
+						textAnchor="end"
 						fontSize={14}
 						fill="white"
 					>
@@ -255,6 +255,7 @@ const RadarChartCustom = ({
 									{value}
 								</span>
 							)}
+							height={60}
 							wrapperStyle={{ position: 'relative' }}
 						/>
 					</>
