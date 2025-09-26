@@ -136,16 +136,6 @@ const DataViz = () => {
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
-				<Breadcrumb
-					segments={[
-						{
-							label: 'Accueil',
-							linkProps: { href: '/' }
-						}
-					]}
-					currentPageLabel="Dataviz"
-					className={cx('fr-mb-1v')}
-				/>
 				<h1>DataViz</h1>
 				<Tabs
 					className={classes.tabsWrapper}
@@ -161,12 +151,7 @@ const DataViz = () => {
 						},
 						{
 							label: 'Ministères',
-							content: (
-								<TabContent
-									kind="ministere"
-									kindLabel="Ministères"
-								/>
-							)
+							content: <TabContent kind="ministere" kindLabel="Ministères" />
 						},
 						{
 							label: 'Administrations',
