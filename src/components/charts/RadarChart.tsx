@@ -251,7 +251,7 @@ const RadarChartCustom = ({
 				)}
 				{showCrossScorePerimeter && (
 					<Radar
-						name="Moyenne inter-périmètre"
+						name="Moyenne de l'observatoire"
 						dataKey="cross"
 						stroke={fr.colors.options.orangeTerreBattue.main645.default}
 						fill={fr.colors.options.orangeTerreBattue.main645.default}

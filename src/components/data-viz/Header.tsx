@@ -124,7 +124,7 @@ const DataVizTabHeader = ({
 				<Checkbox
 					options={[
 						{
-							label: 'Moyenne inter-périmètre',
+							label: "Moyenne de l'observatoire",
 							nativeInputProps: {
 								name: 'checkboxes-1',
 								value: 'value2',

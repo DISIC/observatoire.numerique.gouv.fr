@@ -62,7 +62,7 @@ const ComposedChartCustom = ({
 					</p>
 					{showCrossScorePerimeter && (
 						<p style={{ margin: 0 }}>
-							Moyenne inter-périmètre:{' '}
+							Moyenne de l'observatoire:{' '}
 							<b>{payload[0].payload.values[0].crossValueLabel}</b>
 						</p>
 					)}
@@ -157,7 +157,7 @@ const ComposedChartCustom = ({
 							fill: 'black'
 						}}
 						dataKey="cross"
-						name="Moyenne inter-périmètre"
+						name="Moyenne de l'observatoire"
 						strokeWidth={1.5}
 						stroke={'black'}
 						strokeDasharray="6 6"
