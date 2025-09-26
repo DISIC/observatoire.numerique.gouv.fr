@@ -9,6 +9,7 @@ import assert from 'assert';
 import { getProcedureKindLabel } from '@/utils/tools';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { exportTableAsCSV } from '@/utils/tools';
+import Link from 'next/link';
 
 type DataVizTabHeaderProps = {
 	kind: ProcedureKind;
@@ -100,8 +101,25 @@ const DataVizTabHeader = ({
 			<div className={cx(classes.wrapperButtons)}>
 				<p className={cx(fr.cx('fr-mb-0'), classes.headerDescription)}>
 					Ces radars représentent le pourcentage des démarches par{' '}
-					{getProcedureKindLabel(kind)} ayant atteint les objectifs des
-					indicateurs.
+					{getProcedureKindLabel(kind)} ayant atteint les{' '}
+					<Link
+						href="/Aide/Observatoire"
+						target="_blank"
+						rel="noreferrer"
+						title="VDE - Objectifs, nouvelle fenêtre"
+					>
+						objectifs
+					</Link>{' '}
+					des{' '}
+					<Link
+						href="/Aide/Observatoire?tab=2"
+						target="_blank"
+						rel="noreferrer"
+						title="VDE - Indicateurs, nouvelle fenêtre"
+					>
+						indicateurs
+					</Link>{' '}
+					.
 				</p>
 				<Checkbox
 					options={[
