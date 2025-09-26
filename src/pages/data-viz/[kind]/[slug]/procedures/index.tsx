@@ -1,5 +1,6 @@
 import ProcedureIndicatorsGridItem from '@/components/data-viz/ProcedureIndicatorsGridItem';
 import TableView from '@/components/data-viz/TableView';
+import { Loader } from '@/components/generic/Loader';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { useProcedures } from '@/utils/api';
 import { isValidIndicatorSlug } from '@/utils/data-viz-client';
@@ -42,12 +43,17 @@ const DataVizProcedures = () => {
 			page: 1,
 			perPage: 100
 		});
+
 	const indicators =
 		procdeureHeadersRequest?.data.filter(indicator =>
 			isValidIndicatorSlug(indicator.slug)
 		) || [];
 
-	const { data, isError, isLoading } = useProcedures({
+	const {
+		data,
+		isError,
+		isLoading: isLoadingProcedures
+	} = useProcedures({
 		search: debouncedSearchTerm,
 		[kindKey]: slug
 	});
@@ -61,6 +67,11 @@ const DataVizProcedures = () => {
 			fields
 		};
 	});
+
+	const isLoading =
+		isLoadingProcedures ||
+		isLoadingIndicators ||
+		debouncedSearchTerm !== search;
 
 	if (isError) return <div>Une erreur est survenue.</div>;
 
@@ -136,41 +147,64 @@ const DataVizProcedures = () => {
 							</Button>
 						</div>
 					</div>
-
-					{procedures && (
-						<TableView
-							headers={[
-								'Démarches',
-								...(procedures[0]?.fields.map(
-									d => indicators.find(i => i.slug === d.slug)?.label || d.slug
-								) || [])
-							]}
-							rows={procedures.map(item => ({
-								title: item.title,
-								cells: item.fields.reduce((acc, current) => {
-									const finalLabel =
-										current.label.includes('Partiel') && current.value
-											? current.label + ` - ${current.value}%`
-											: current.label;
-									return {
-										...acc,
-										[current.slug]: finalLabel
-									};
-								}, {})
-							}))}
-							hidden={dataVisualitionKind !== 'table'}
-						/>
-					)}
-					{dataVisualitionKind === 'list' && (
-						<div className={cx(classes.grid)}>
-							{procedures?.map(item => (
-								<ProcedureIndicatorsGridItem
-									key={item.id}
-									procedure={item}
-									indicators={indicators}
-								/>
-							))}
+					{isLoading ? (
+						<div className={fr.cx('fr-py-20v', 'fr-mt-4w')}>
+							<Loader />
 						</div>
+					) : procedures?.length === 0 ? (
+						<div className={fr.cx('fr-grid-row', 'fr-grid-row--center')}>
+							<div
+								className={cx(
+									fr.cx('fr-col-12', 'fr-col-md-5', 'fr-my-30v'),
+									classes.textContainer
+								)}
+								role="status"
+							>
+								<p aria-live="assertive">
+									Aucune démarche{' '}
+									{search ? `pour la recherche "${search}"` : ''}
+								</p>
+							</div>
+						</div>
+					) : (
+						<>
+							{procedures && (
+								<TableView
+									headers={[
+										'Démarches',
+										...(procedures[0]?.fields.map(
+											d =>
+												indicators.find(i => i.slug === d.slug)?.label || d.slug
+										) || [])
+									]}
+									rows={procedures.map(item => ({
+										title: item.title,
+										cells: item.fields.reduce((acc, current) => {
+											const finalLabel =
+												current.label.includes('Partiel') && current.value
+													? current.label + ` - ${current.value}%`
+													: current.label;
+											return {
+												...acc,
+												[current.slug]: finalLabel
+											};
+										}, {})
+									}))}
+									hidden={dataVisualitionKind !== 'table'}
+								/>
+							)}
+							{dataVisualitionKind === 'list' && (
+								<div className={cx(classes.grid)}>
+									{procedures?.map(item => (
+										<ProcedureIndicatorsGridItem
+											key={item.id}
+											procedure={item}
+											indicators={indicators}
+										/>
+									))}
+								</div>
+							)}
+						</>
 					)}
 				</div>
 			</div>
@@ -284,6 +318,13 @@ const useStyles = tss.create({
 		fontWeight: 500,
 		fontSize: '0.875rem',
 		lineHeight: '1.5rem'
+	},
+	textContainer: {
+		textAlign: 'center',
+		p: {
+			margin: 0,
+			fontWeight: 'bold'
+		}
 	}
 });
 

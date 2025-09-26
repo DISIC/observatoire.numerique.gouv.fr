@@ -6,11 +6,11 @@ import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
-import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
-import { stringToBase64Url } from '@/utils/tools';
+import { getProcedureKindLabel, stringToBase64Url } from '@/utils/tools';
 import { ProcedureKind } from '../api/indicator-scores';
 import TableView from '@/components/data-viz/TableView';
 import { useDebounce } from '@uidotdev/usehooks';
+import { Loader } from '@/components/generic/Loader';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -30,10 +30,11 @@ const TabContent = ({
 	const [searchTerm, setSearchTerm] = useState<string>();
 	const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-	const { data } = useIndicatorScoreByProcedureKind({
-		kind,
-		search: debouncedSearchTerm
-	});
+	const { data, isLoading: isLoadingIndicatorScores } =
+		useIndicatorScoreByProcedureKind({
+			kind,
+			search: debouncedSearchTerm
+		});
 
 	const [showGoalRadar, setShowGoalRadar] = useState(false);
 	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
@@ -41,6 +42,9 @@ const TabContent = ({
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'radar' | 'table'
 	>('radar');
+
+	const isLoading =
+		isLoadingIndicatorScores || debouncedSearchTerm !== searchTerm;
 
 	return (
 		<div>
@@ -55,77 +59,101 @@ const TabContent = ({
 				kindLabel={kindLabel}
 				tableId={`table-${kind}`}
 			/>
-			<TableView
-				headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
-				rows={data.map(item => ({
-					title: item.text,
-					cells: item.data.reduce(
-						(acc, current) => ({
-							...acc,
-							[current.slug]: `${current.score}%`
-						}),
-						{}
-					)
-				}))}
-				hidden={dataVisualitionKind !== 'table'}
-				tableId={`table-${kind}`}
-			/>
-			{dataVisualitionKind === 'radar' && (
-				<div className={cx(classes.grid)}>
-					{data.map(item => (
-						<div key={item.text} className={cx(classes.gridItem)}>
-							<div>
-								<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-									{item.text}
-								</h2>
-								<p className={cx('fr-text--xs')}>
-									(Nombre de démarches : {item.count})
-								</p>
-							</div>
-							<div className={cx(classes.chart)}>
-								<RadarChartCustom
-									data={item.data}
-									showGoalRadar={showGoalRadar}
-									showCrossScorePerimeter={showCrossScorePerimeter}
-								/>
-							</div>
-							<div className={cx(classes.buttonsGroup)}>
-								<Button
-									priority="secondary"
-									size="small"
-									linkProps={{
-										href: `/data-viz/${kind}/${stringToBase64Url(
-											item.text
-										)}/radar-comparison`
-									}}
-								>
-									Comparer
-								</Button>
-								<Button
-									priority="secondary"
-									size="small"
-									linkProps={{
-										href: `/data-viz/${kind}/${stringToBase64Url(
-											item.text
-										)}/evolution`
-									}}
-								>
-									Voir le détail
-								</Button>
-								<Button
-									size="small"
-									linkProps={{
-										href: `/data-viz/${kind}/${stringToBase64Url(
-											item.text
-										)}/procedures`
-									}}
-								>
-									Voir les démarches
-								</Button>
-							</div>
-						</div>
-					))}
+			{isLoading ? (
+				<div className={fr.cx('fr-py-20v', 'fr-mt-4w')}>
+					<Loader />
 				</div>
+			) : data.length === 0 ? (
+				<div className={fr.cx('fr-grid-row', 'fr-grid-row--center')}>
+					<div
+						className={cx(
+							fr.cx('fr-col-12', 'fr-col-md-5', 'fr-my-30v'),
+							classes.textContainer
+						)}
+						role="status"
+					>
+						<p aria-live="assertive">
+							Aucun{kind === 'administration' ? 'e' : ''}{' '}
+							{getProcedureKindLabel(kind)}{' '}
+							{searchTerm ? `pour la recherche "${searchTerm}"` : ''}
+						</p>
+					</div>
+				</div>
+			) : (
+				<>
+					<TableView
+						headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
+						rows={data.map(item => ({
+							title: item.text,
+							cells: item.data.reduce(
+								(acc, current) => ({
+									...acc,
+									[current.slug]: `${current.score}%`
+								}),
+								{}
+							)
+						}))}
+						hidden={dataVisualitionKind !== 'table'}
+						tableId={`table-${kind}`}
+					/>
+					{dataVisualitionKind === 'radar' && (
+						<div className={cx(classes.grid)}>
+							{data.map(item => (
+								<div key={item.text} className={cx(classes.gridItem)}>
+									<div>
+										<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+											{item.text}
+										</h2>
+										<p className={cx('fr-text--xs')}>
+											(Nombre de démarches : {item.count})
+										</p>
+									</div>
+									<div className={cx(classes.chart)}>
+										<RadarChartCustom
+											data={item.data}
+											showGoalRadar={showGoalRadar}
+											showCrossScorePerimeter={showCrossScorePerimeter}
+										/>
+									</div>
+									<div className={cx(classes.buttonsGroup)}>
+										<Button
+											priority="secondary"
+											size="small"
+											linkProps={{
+												href: `/data-viz/${kind}/${stringToBase64Url(
+													item.text
+												)}/radar-comparison`
+											}}
+										>
+											Comparer
+										</Button>
+										<Button
+											priority="secondary"
+											size="small"
+											linkProps={{
+												href: `/data-viz/${kind}/${stringToBase64Url(
+													item.text
+												)}/evolution`
+											}}
+										>
+											Voir le détail
+										</Button>
+										<Button
+											size="small"
+											linkProps={{
+												href: `/data-viz/${kind}/${stringToBase64Url(
+													item.text
+												)}/procedures`
+											}}
+										>
+											Voir les démarches
+										</Button>
+									</div>
+								</div>
+							))}
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);
@@ -229,6 +257,13 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 	},
 	modal: {
 		textAlign: 'start'
+	},
+	textContainer: {
+		textAlign: 'center',
+		p: {
+			margin: 0,
+			fontWeight: 'bold'
+		}
 	}
 }));
 
