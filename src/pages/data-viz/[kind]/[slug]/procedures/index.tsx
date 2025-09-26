@@ -73,6 +73,30 @@ const DataVizProcedures = () => {
 		isLoadingIndicators ||
 		debouncedSearchTerm !== search;
 
+	const headers = [
+		'Démarches',
+		...((procedures &&
+			procedures[0]?.fields.map(
+				d => indicators.find(i => i.slug === d.slug)?.label || d.slug
+			)) ||
+			[])
+	];
+
+	const rows =
+		procedures?.map(item => ({
+			title: item.title,
+			cells: item.fields.reduce((acc, current) => {
+				const finalLabel =
+					current.label.includes('Partiel') && current.value
+						? current.label + ` - ${current.value}%`
+						: current.label;
+				return {
+					...acc,
+					[current.slug]: finalLabel
+				};
+			}, {})
+		})) || [];
+
 	if (isError) return <div>Une erreur est survenue.</div>;
 
 	return (
@@ -170,26 +194,8 @@ const DataVizProcedures = () => {
 						<>
 							{procedures && (
 								<TableView
-									headers={[
-										'Démarches',
-										...(procedures[0]?.fields.map(
-											d =>
-												indicators.find(i => i.slug === d.slug)?.label || d.slug
-										) || [])
-									]}
-									rows={procedures.map(item => ({
-										title: item.title,
-										cells: item.fields.reduce((acc, current) => {
-											const finalLabel =
-												current.label.includes('Partiel') && current.value
-													? current.label + ` - ${current.value}%`
-													: current.label;
-											return {
-												...acc,
-												[current.slug]: finalLabel
-											};
-										}, {})
-									}))}
+									headers={headers}
+									rows={rows}
 									hidden={dataVisualitionKind !== 'table'}
 								/>
 							)}

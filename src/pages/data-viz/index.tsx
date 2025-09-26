@@ -46,6 +46,26 @@ const TabContent = ({
 	const isLoading =
 		isLoadingIndicatorScores || debouncedSearchTerm !== searchTerm;
 
+	const headers = [
+		'',
+		...(data[0]?.data.map(d => d.name) || []),
+		'Nombre de démarches'
+	];
+
+	const rows = data.map(item => ({
+		title: item.text,
+		cells: {
+			...item.data.reduce(
+				(acc, current) => ({
+					...acc,
+					[current.slug]: `${current.score}%`
+				}),
+				{}
+			),
+			Démarches: item.count.toString()
+		}
+	}));
+
 	return (
 		<div>
 			<DataVizTabHeader
@@ -82,17 +102,8 @@ const TabContent = ({
 			) : (
 				<>
 					<TableView
-						headers={['', ...(data[0]?.data.map(d => d.name) || [])]}
-						rows={data.map(item => ({
-							title: item.text,
-							cells: item.data.reduce(
-								(acc, current) => ({
-									...acc,
-									[current.slug]: `${current.score}%`
-								}),
-								{}
-							)
-						}))}
+						headers={headers}
+						rows={rows}
 						hidden={dataVisualitionKind !== 'table'}
 						tableId={`table-${kind}`}
 					/>
