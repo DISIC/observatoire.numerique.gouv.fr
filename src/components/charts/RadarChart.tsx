@@ -9,7 +9,8 @@ import {
 	PolarRadiusAxis,
 	ResponsiveContainer,
 	Tooltip,
-	Legend
+	Legend,
+	TooltipProps
 } from 'recharts';
 import { tss } from 'tss-react';
 
@@ -130,6 +131,34 @@ const CustomAxisTickLabel = (props: any) => {
 			)}
 		</g>
 	);
+};
+
+const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
+	if (active && payload && payload.length) {
+		return (
+			<div
+				style={{
+					backgroundColor:
+						fr.colors.decisions.background.actionHigh.blueFrance.default,
+					padding: '5px 10px',
+					boxShadow: '0px 2px 6px 0px #00001229',
+					textAlign: 'center'
+				}}
+			>
+				{payload.map((payloadItem, index: number) => {
+					return (
+						<p key={index} style={{ margin: 0, color: 'white', fontSize: 13 }}>
+							{payloadItem.value}% des démarches ont atteint de l'objectif de
+							l'indicateur "{payloadItem.payload.name}", fixé à{' '}
+							{payloadItem.payload.goalLabel}
+						</p>
+					);
+				})}
+			</div>
+		);
+	}
+
+	return null;
 };
 
 type RadarChartCustomProps = {
@@ -261,14 +290,10 @@ const RadarChartCustom = ({
 					</>
 				)}
 				<Tooltip
-					labelFormatter={(_, payload) => payload[0]?.payload.name || ''}
-					formatter={(value, _, { name }) => [`${value}%`, name]}
+					content={CustomTooltip}
 					contentStyle={{
 						textAlign: 'left',
 						whiteSpace: 'pre-line'
-					}}
-					labelStyle={{
-						textAlign: 'center'
 					}}
 				/>
 			</RadarChart>
