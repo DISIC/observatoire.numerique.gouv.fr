@@ -9,6 +9,7 @@ import assert from 'assert';
 import { getProcedureKindLabel } from '@/utils/tools';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { exportTableAsCSV } from '@/utils/tools';
+import Link from 'next/link';
 
 type DataVizTabHeaderProps = {
 	kind: ProcedureKind;
@@ -100,13 +101,30 @@ const DataVizTabHeader = ({
 			<div className={cx(classes.wrapperButtons)}>
 				<p className={cx(fr.cx('fr-mb-0'), classes.headerDescription)}>
 					Ces radars représentent le pourcentage des démarches par{' '}
-					{getProcedureKindLabel(kind)} ayant atteint les objectifs des
-					indicateurs.
+					{getProcedureKindLabel(kind)} ayant atteint les{' '}
+					<Link
+						href="/Aide/Observatoire"
+						target="_blank"
+						rel="noreferrer"
+						title="VDE - Objectifs, nouvelle fenêtre"
+					>
+						objectifs
+					</Link>{' '}
+					des{' '}
+					<Link
+						href="/Aide/Observatoire?tab=2"
+						target="_blank"
+						rel="noreferrer"
+						title="VDE - Indicateurs, nouvelle fenêtre"
+					>
+						indicateurs
+					</Link>{' '}
+					.
 				</p>
 				<Checkbox
 					options={[
 						{
-							label: 'Moyenne inter-périmètre',
+							label: "Moyenne de l'observatoire",
 							nativeInputProps: {
 								name: 'checkboxes-1',
 								value: 'value2',
@@ -134,12 +152,27 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 	wrapperSearch: {
 		display: 'flex',
 		alignItems: 'center',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('3w'),
+			'& > div': {
+				width: '100%',
+				justifyContent: 'space-between'
+			}
+		}
 	},
 	wrapperButtons: {
 		display: 'flex',
 		alignItems: 'baseline',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('2w'),
+			'& > div': {
+				marginLeft: 0
+			}
+		}
 	},
 	searchInput: {
 		width: '35%'
