@@ -20,7 +20,7 @@ import Select from '@codegouvfr/react-dsfr/Select';
 import ToggleSwitch from '@codegouvfr/react-dsfr/ToggleSwitch';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { tss } from 'tss-react';
 
 const RadarChartCustom = dynamic(
@@ -38,6 +38,7 @@ const RadarComparison = () => {
 
 	const id = useId();
 	const chartRef = useRef<HTMLDivElement | null>(null);
+	const [isMobile, setIsMobile] = useState(false);
 
 	const [selectedKindValue, setSelectedKindValue] = useState<string>('');
 	const [crossPerimeterValues, setCrossPerimeterValues] = useState<
@@ -95,6 +96,10 @@ const RadarComparison = () => {
 				compareTitle: selectedKindValue
 		  }
 		: undefined;
+
+	useEffect(() => {
+		setIsMobile(window.innerWidth <= fr.breakpoints.getPxValues().md);
+	}, []);
 
 	useEffect(() => {
 		if (mainContainerRef.current) {
@@ -175,7 +180,7 @@ const RadarComparison = () => {
 						<Checkbox
 							options={[
 								{
-									label: 'Moyenne inter-périmètre',
+									label: "Moyenne de l'observatoire",
 									nativeInputProps: {
 										name: 'checkboxes-1',
 										value: 'value2',
@@ -232,7 +237,7 @@ const RadarComparison = () => {
 							rows={getRows()}
 						/>
 					) : (
-						<>
+						<div className={classes.wrapperMainContainer}>
 							<div className={classes.mainContainer} ref={mainContainerRef}>
 								<div
 									className={cx(
@@ -241,8 +246,11 @@ const RadarComparison = () => {
 										shouldRadarOverlay && fr.cx('fr-py-0')
 									)}
 									style={{
-										minHeight: maxReachedHeight,
-										height: shouldRadarOverlay ? maxReachedHeight : undefined
+										minHeight: !isMobile ? maxReachedHeight : undefined,
+										height:
+											shouldRadarOverlay && !isMobile
+												? maxReachedHeight
+												: undefined
 									}}
 								>
 									{!shouldRadarOverlay && (
@@ -255,8 +263,10 @@ const RadarComparison = () => {
 											className={cx(classes.chart)}
 											style={{
 												height:
-													shouldRadarOverlay && maxReachedHeight
+													shouldRadarOverlay && maxReachedHeight && !isMobile
 														? maxReachedHeight
+														: isMobile
+														? '450px'
 														: '325px'
 											}}
 										>
@@ -385,7 +395,7 @@ const RadarComparison = () => {
 									onChange={checked => setShouldRadarOverlay(checked)}
 								/>
 							)}
-						</>
+						</div>
 					)}
 				</div>
 			</div>
@@ -422,6 +432,14 @@ const useStyles = tss.withName(RadarComparison.name).create(() => ({
 		'& > div': {
 			display: 'flex',
 			gap: fr.spacing('10v')
+		},
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column-reverse',
+			gap: fr.spacing('4v'),
+			'& > div': {
+				justifyContent: 'space-between',
+				width: '100%'
+			}
 		}
 	},
 	checkboxWrapper: {
@@ -435,10 +453,27 @@ const useStyles = tss.withName(RadarComparison.name).create(() => ({
 		display: 'flex',
 		gap: fr.spacing('2v')
 	},
+	wrapperMainContainer: {
+		[fr.breakpoints.down('md')]: {
+			display: 'flex',
+			gap: fr.spacing('3w'),
+			flexDirection: 'column-reverse',
+			'& > .fr-toggle > .fr-toggle__label': {
+				width: '100%'
+			}
+		}
+	},
 	mainContainer: {
 		display: 'flex',
 		gap: fr.spacing('6v'),
-		marginBottom: fr.spacing('9v')
+		marginBottom: fr.spacing('9v'),
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column-reverse',
+			'& > div': {
+				justifyContent: 'start',
+				display: 'block'
+			}
+		}
 	},
 	container: {
 		flex: 1,

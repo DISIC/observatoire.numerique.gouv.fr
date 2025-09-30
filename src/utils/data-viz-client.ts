@@ -46,5 +46,6 @@ export type RecordData = {
 		slug: string;
 		name: string;
 		icon: string;
+		goalLabel: string;
 	}[];
 };

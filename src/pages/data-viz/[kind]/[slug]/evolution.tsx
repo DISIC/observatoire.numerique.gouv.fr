@@ -293,8 +293,12 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 		justifyContent: 'space-between',
 		marginBottom: fr.spacing('6v'),
 		[fr.breakpoints.down('md')]: {
-			flexDirection: 'column-reverse',
-			gap: fr.spacing('4v')
+			flexDirection: 'column',
+			gap: fr.spacing('4v'),
+			'& > div': {
+				width: '100%',
+				justifyContent: 'space-between',
+			}
 		}
 	},
 	tabsActions: {

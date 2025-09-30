@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   mongo:
@@ -9,4 +9,10 @@ services:
       MONGO_REPLICA_HOST: localhost
       MONGO_REPLICA_PORT: 27018
     ports:
-      - '27018:27018'
+      - "27018:27018"
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"

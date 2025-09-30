@@ -11,19 +11,26 @@ import {
 	XAxis,
 	YAxis
 } from 'recharts';
+import { tss } from 'tss-react';
 
 const renderLegend = (props: any) => {
 	const { payload } = props;
 
+	const { css } = useStyles();
+
 	return (
 		<div
-			style={{
+			className={css({
 				display: 'flex',
 				gap: '20px',
+				[fr.breakpoints.down('md')]: {
+					gap: '10px'
+				},
+				alignItems: 'center',
 				marginLeft: '25px',
 				marginBottom: fr.spacing('6v'),
 				flexWrap: 'wrap'
-			}}
+			})}
 		>
 			{payload
 				.sort((a: any, b: any) => a.position - b.position)
@@ -171,13 +178,7 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 					fontSize="0.75rem"
 				/>
 				<Tooltip cursor={false} content={<CustomTooltip />} />
-				<Legend
-					verticalAlign="top"
-					align="left"
-					height={60}
-					content={renderLegend}
-				/>
-
+				<Legend verticalAlign="top" align="left" content={renderLegend} />
 				{dataKeys
 					.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
 					.map((key, index) => {
@@ -199,5 +200,7 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 		</ResponsiveContainer>
 	);
 };
+
+const useStyles = tss.withName(CustomBarChart.name).create({});
 
 export default CustomBarChart;

@@ -27,8 +27,8 @@ type TabContentProps = {
 	chartRef: React.RefObject<HTMLDivElement | null>;
 	chartType?: 'bar' | 'line';
 	shouldShowGoalLine?: boolean;
-	shouldShowCrossScorePerimeter?: boolean;
 	title?: string;
+	showCrossScorePerimeter?: boolean;
 };
 
 const IndicatorTabContent = ({
@@ -37,13 +37,12 @@ const IndicatorTabContent = ({
 	setViewType,
 	chartRef,
 	shouldShowGoalLine,
-	shouldShowCrossScorePerimeter,
 	chartType = 'bar',
 	field,
-	title
+	title,
+	showCrossScorePerimeter
 }: TabContentProps) => {
 	const { classes, cx } = useStyles();
-	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
 	const [showGoalLine, setShowGoalLine] = useState(false);
 
 	return (
@@ -57,57 +56,37 @@ const IndicatorTabContent = ({
 				)
 			)}
 		>
-			{(shouldShowGoalLine || shouldShowCrossScorePerimeter) &&
-				data.indicator?.slug !== 'auth' && (
-					<div
-						style={{
-							position: 'absolute',
-							top: '2.25rem',
-							width: '100%',
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'end',
-							zIndex: 10
-						}}
-					>
-						{shouldShowGoalLine && (
-							<Checkbox
-								options={[
-									{
-										label: 'Objectif',
-										nativeInputProps: {
-											name: 'checkboxes-1',
-											value: 'value1',
-											onChange: e => setShowGoalLine(e.target.checked)
-										}
+			{shouldShowGoalLine && data.indicator?.slug !== 'auth' && (
+				<div
+					style={{
+						position: 'absolute',
+						top: '2.25rem',
+						width: '100%',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'end',
+						zIndex: 10
+					}}
+				>
+					{shouldShowGoalLine && (
+						<Checkbox
+							options={[
+								{
+									label: 'Objectif',
+									nativeInputProps: {
+										name: 'checkboxes-1',
+										value: 'value1',
+										onChange: e => setShowGoalLine(e.target.checked)
 									}
-								]}
-								orientation="horizontal"
-								state="default"
-								small
-							/>
-						)}
-						{shouldShowCrossScorePerimeter && (
-							<Checkbox
-								options={[
-									{
-										label: 'Moyenne inter-périmètre',
-										nativeInputProps: {
-											name: 'checkboxes-1',
-											value: 'value2',
-											onChange: e =>
-												setShowCrossScorePerimeter(e.target.checked)
-										}
-									}
-								]}
-								orientation="horizontal"
-								state="default"
-								small
-							/>
-						)}
-					</div>
-				)}
-
+								}
+							]}
+							orientation="horizontal"
+							state="default"
+							small
+						/>
+					)}
+				</div>
+			)}
 			{data.indicator?.slug !== 'auth' || chartType === 'bar' ? (
 				<>
 					<div className={cx(classes.chart)} ref={chartRef}>

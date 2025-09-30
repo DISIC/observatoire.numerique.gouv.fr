@@ -1,6 +1,9 @@
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import getPayloadClient from '@/payload/payload-client';
-import { PayloadIndicator } from '@/payload/payload-types';
+import {
+	PayloadIndicator,
+	PayloadIndicatorLevel
+} from '@/payload/payload-types';
 import { PrismaClient } from '@prisma/client';
 import { RecordData, validIndicatorSlugs } from './data-viz-client';
 import { desufligyText } from './tools';
@@ -53,14 +56,47 @@ async function getIndicatorScores(props: {
 		_count: true
 	});
 
-	const indicators = validIndicators.map(indicator => ({
-		score: 0,
-		goal: 80,
-		cross: 0,
-		slug: indicator.slug,
-		name: indicator.label,
-		icon: indicator.icon
-	})) as RecordData['data'];
+	const indicators = validIndicators.map(indicator => {
+		const indicatorLevels = indicator.levels?.docs?.filter(
+			level => typeof level !== 'string'
+		);
+		const goalReachedIndicatorLevels =
+			indicatorLevels?.filter(level => level.goal_reached) || [];
+		let goalLabel = '';
+
+		switch (indicator.slug) {
+			case 'satisfaction':
+			case 'simplicity':
+				goalLabel = goalReachedIndicatorLevels[0]?.threshold
+					? goalReachedIndicatorLevels[0].label
+							.replace(/\s*/g, '')
+							.replace(
+								/X{1,5}/g,
+								goalReachedIndicatorLevels[0].threshold.toString()
+							)
+					: '';
+				break;
+			case 'auth':
+				goalLabel = goalReachedIndicatorLevels
+					.map(level => level.label)
+					.join(' ou ');
+				break;
+			case 'handicap':
+			case 'dlnuf':
+				goalLabel = `"${goalReachedIndicatorLevels[0].description}"`;
+				break;
+		}
+
+		return {
+			score: 0,
+			goal: 80,
+			cross: 0,
+			slug: indicator.slug,
+			name: indicator.label,
+			icon: indicator.icon,
+			goalLabel
+		};
+	}) as RecordData['data'];
 
 	for (const field of validIndicatorSlugs) {
 		const fieldData = fields.filter(fieldData => fieldData.slug === field);
