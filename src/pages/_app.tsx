@@ -9,6 +9,7 @@ import { ReactNode, useEffect } from 'react';
 import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
 import '../utils/keyframes.css';
 import { init } from '@socialgouv/matomo-next';
+import Hotjar from '@hotjar/browser';
 import { trpc } from '../utils/trpc';
 import { AuthProvider } from '@/providers/Auth';
 
@@ -32,11 +33,15 @@ export { augmentDocumentWithEmotionCache, dsfrDocumentApi };
 const MATOMO_URL = process.env.NEXT_PUBLIC_MATOMO_URL as string;
 const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID as string;
 
+const HOTJAR_SITE_ID = parseInt(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID || '0');
+const HOTJAR_VERSION = parseInt(process.env.NEXT_PUBLIC_HOTJAR_VERSION || '6');
+
 function App({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 
 	useEffect(() => {
 		init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+		Hotjar.init(HOTJAR_SITE_ID, HOTJAR_VERSION);
 	}, []);
 
 	const getLayout = (children: ReactNode) => {

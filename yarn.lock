@@ -2962,6 +2962,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hotjar/browser@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@hotjar/browser@npm:1.0.9"
+  checksum: 10c0/9dee998245031729ef79f0087cbd5bad99bf04de981f88fe40f62e998db2907f36182c703e92e6af0073c62962774c98edc790cd7d5f62c1c0399357b7c70b51
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.8":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -14481,6 +14488,7 @@ __metadata:
     "@codegouvfr/react-dsfr": "npm:^1.20.2"
     "@emotion/react": "npm:^11.10.6"
     "@emotion/server": "npm:^11.10.0"
+    "@hotjar/browser": "npm:^1.0.9"
     "@lhci/cli": "npm:^0.11.0"
     "@lhci/server": "npm:^0.11.0"
     "@next/font": "npm:13.1.6"
