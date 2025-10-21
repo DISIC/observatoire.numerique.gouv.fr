@@ -150,6 +150,9 @@ const useStyles = tss.create({
 		'i::before, i::after ': {
 			'--icon-size': '1.25rem',
 			color: fr.colors.decisions.text.title.blueFrance.default
+		},
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column'
 		}
 	},
 	indicatorLabelContainer: {
