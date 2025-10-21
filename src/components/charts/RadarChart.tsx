@@ -53,20 +53,6 @@ const CustomAxisTickLabel = (props: any) => {
 	const newY = y + Math.sin(angle) * spacing;
 
 	const isActive = activeIcon === payload.value;
-	// const displayName = data.find((d: any) => d.icon === activeIcon)?.name || '';
-	const displayName = 'test';
-
-	const handleMouseEnter = () => {
-		if (onMouseEnter && payload) {
-			onMouseEnter(payload);
-		}
-	};
-
-	const handleMouseLeave = () => {
-		if (onMouseLeave) {
-			onMouseLeave();
-		}
-	};
 
 	return (
 		<g>
@@ -108,27 +94,6 @@ const CustomAxisTickLabel = (props: any) => {
 								.contrastOverlap.grey.active
 				}
 			/>
-			{isActive && (
-				<>
-					<rect
-						x={newX + iconSize}
-						y={newY - 30 / 2}
-						height={30}
-						width={displayName.length * 8}
-						rx={2}
-						fill={fr.colors.decisions.background.flat.blueFrance.default}
-					></rect>
-					<text
-						x={newX + iconSize + 8}
-						y={newY + 5}
-						textAnchor="end"
-						fontSize={14}
-						fill="white"
-					>
-						{displayName}
-					</text>
-				</>
-			)}
 		</g>
 	);
 };
