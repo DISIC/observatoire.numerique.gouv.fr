@@ -96,39 +96,77 @@ const PublicLayout = (props: Props) => {
 						text: 'Accueil'
 					},
 					{
-						linkProps: {
-							href: '/observatoire',
-							target: '_self'
-						},
-						isActive: router.pathname === '/observatoire',
-
-						text: `Edition ${currentEdition?.name.toLowerCase() || ''}`
-					},
-					{
-						linkProps: {
-							href: '/Aide/Observatoire',
-							target: '_self'
-						},
-						isActive: router.pathname === '/Aide/Observatoire',
-						text: 'Tout comprendre sur les indicateurs'
-					},
-					{
-						linkProps: {
-							href: '/data-viz',
-							target: '_self'
-						},
-						isActive: router.pathname.startsWith('/data-viz'),
-						text: 'DataViz'
-					},
-					{
-						linkProps: {
-							href: '/observatoire/editions',
-							target: '_self'
-						},
 						isActive:
+							router.pathname === '/observatoire' ||
 							router.pathname.startsWith('/observatoire/editions') ||
 							router.pathname.startsWith('/observatoire/old'),
-						text: 'Éditions précédentes'
+						text: 'Éditions',
+						menuLinks: [
+							{
+								linkProps: {
+									href: '/observatoire',
+									target: '_self'
+								},
+								isActive: router.pathname === '/observatoire',
+								text: `Dernière édition publiée (${
+									currentEdition?.name.toLowerCase() || ''
+								})`
+							},
+							{
+								linkProps: {
+									href: '/observatoire/editions',
+									target: '_self'
+								},
+								isActive:
+									router.pathname.startsWith('/observatoire/editions') ||
+									router.pathname.startsWith('/observatoire/old'),
+								text: 'Éditions précédentes'
+							}
+						]
+					},
+					{
+						isActive: router.pathname.startsWith('/data-viz'),
+						text: 'Graphiques',
+						menuLinks: [
+							{
+								linkProps: {
+									href: '/data-viz?tab=administration_central',
+									target: '_self'
+								},
+								isActive: router.query.tab === 'administration_central',
+								text: 'Périmètres'
+							},
+							{
+								linkProps: {
+									href: '/data-viz?tab=ministere',
+									target: '_self'
+								},
+								isActive: router.query.tab === 'ministere',
+								text: 'Ministères'
+							},
+							{
+								linkProps: {
+									href: '/data-viz?tab=administration',
+									target: '_self'
+								},
+								isActive: router.query.tab === 'administration',
+								text: 'Administrations'
+							}
+						]
+					},
+					{
+						isActive: router.pathname === '/Aide/Observatoire',
+						text: 'Informations',
+						menuLinks: [
+							{
+								text: 'Tout comprendre sur les indicateurs',
+								isActive: router.pathname === '/Aide/Observatoire',
+								linkProps: {
+									href: '/Aide/Observatoire',
+									target: '_self'
+								}
+							}
+						]
 					}
 				]}
 				quickAccessItems={accessItems}

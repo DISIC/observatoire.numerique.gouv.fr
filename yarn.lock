@@ -14544,7 +14544,7 @@ __metadata:
     otpauth: "npm:^9.3.6"
     pako: "npm:^2.1.0"
     payload: "npm:^3.3.0"
-    powerhooks: "npm:^1.0.20"
+    powerhooks: "npm:^2.0.1"
     prettier: "npm:^2.8.4"
     prisma: "npm:^4.11.0"
     react: "npm:^19.0.0"
@@ -15072,14 +15072,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"powerhooks@npm:^1.0.20":
-  version: 1.0.21
-  resolution: "powerhooks@npm:1.0.21"
+"powerhooks@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "powerhooks@npm:2.0.1"
   dependencies:
     evt: "npm:^2.5.9"
     memoizee: "npm:^0.4.17"
     tsafe: "npm:^1.8.5"
-  checksum: 10c0/eb6d6c67b02cb38cade64fb068da6ce0acaca9a8dac59fe12adb1168cf9347503b16b93c512ada4a32f5a30d1754d92005dbf0100d9cbcbc3c414414d9f0de1d
+  checksum: 10c0/a79546f9a50f41cba3a9f04b496cf68d5110d395630d85f6d39b548778022de042346bab70ab4a1e88d95cefbc82dc7046846fdbd07d098c5107808bfae8a9d7
   languageName: node
   linkType: hard
 

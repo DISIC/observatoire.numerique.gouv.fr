@@ -110,7 +110,7 @@ const DataVizProcedures = () => {
 						},
 						{
 							label: 'Dataviz',
-							linkProps: { href: '/data-viz' }
+							linkProps: { href: `/data-viz?tab=${kind}` }
 						}
 					]}
 					currentPageLabel={`Démarches du périmètre ${slug}`}

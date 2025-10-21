@@ -1,16 +1,18 @@
 import { tss } from 'tss-react';
 import { fr } from '@codegouvfr/react-dsfr';
-import Tabs from '@codegouvfr/react-dsfr/Tabs';
+import { type TabsProps } from '@codegouvfr/react-dsfr/Tabs';
+import { Tabs } from '@/components/dsfr-custom/Tabs';
 import { useIndicatorScoreByProcedureKind } from '@/utils/api';
 import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getProcedureKindLabel, stringToBase64Url } from '@/utils/tools';
 import { ProcedureKind } from '../api/indicator-scores';
 import TableView from '@/components/data-viz/TableView';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Loader } from '@/components/generic/Loader';
+import { useRouter } from 'next/router';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -172,34 +174,57 @@ const TabContent = ({
 
 const DataViz = () => {
 	const { classes, cx } = useStyles();
+	const router = useRouter();
+
+	const { tab } = router.query;
+	const [selectedTabId, setSelectedTabId] = useState<ProcedureKind>(
+		'administration_central'
+	);
+
+	const tabs = [
+		{
+			tabId: 'administration_central',
+			label: 'Périmètres'
+		},
+		{
+			tabId: 'ministere',
+			label: 'Ministères'
+		},
+		{
+			tabId: 'administration',
+			label: 'Administrations'
+		}
+	] as TabsProps.Controlled['tabs'];
+
+	const handleTabChange = (tabId: string) => {
+		setSelectedTabId(tabId as ProcedureKind);
+		router.push(`?tab=${tabId}`, undefined, { shallow: true });
+	};
+
+	useEffect(() => {
+		if (!router.isReady) return;
+		if (tab) setSelectedTabId(tab as ProcedureKind);
+	}, [router.isReady, router.query]);
+
 	return (
 		<div className={cx(classes.root)}>
 			<div className="fr-container">
 				<h1>DataViz</h1>
 				<Tabs
 					className={classes.tabsWrapper}
-					tabs={[
-						{
-							label: 'Périmètres',
-							content: (
-								<TabContent
-									kind="administration_central"
-									kindLabel="Périmètres"
-								/>
-							)
-						},
-						{
-							label: 'Ministères',
-							content: <TabContent kind="ministere" kindLabel="Ministères" />
-						},
-						{
-							label: 'Administrations',
-							content: (
-								<TabContent kind="administration" kindLabel="Administrations" />
-							)
+					selectedTabId={selectedTabId}
+					onTabChange={handleTabChange}
+					tabs={tabs}
+				>
+					<TabContent
+						kind={selectedTabId}
+						kindLabel={
+							tabs
+								.find(tab => tab.tabId === selectedTabId)
+								?.label?.toString() || ''
 						}
-					]}
-				/>
+					/>
+				</Tabs>
 			</div>
 		</div>
 	);
