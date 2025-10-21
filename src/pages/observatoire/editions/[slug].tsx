@@ -40,15 +40,16 @@ export default function ObservatoireEdition() {
 
 	return (
 		<>
-			<div className={fr.cx('fr-container')}>
+			<div className={fr.cx('fr-container', 'fr-mt-10v')}>
 				<Breadcrumb
-					currentPageLabel={edition?.name}
+					currentPageLabel={`Édition de ${edition?.name.toLowerCase()}`}
 					segments={[
 						{
 							label: 'Éditions précédentes',
 							linkProps: { href: '/observatoire/editions' }
 						}
 					]}
+					homeLinkProps={{ href: '/' }}
 					className={fr.cx('fr-mb-0', 'fr-mt-4w')}
 				/>
 				<Top250Header

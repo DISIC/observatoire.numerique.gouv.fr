@@ -152,7 +152,6 @@ const useStyles = tss
 	.withParams<{ isMainEdition: boolean }>()
 	.create(({ isMainEdition }) => ({
 		root: {
-			paddingTop: isMainEdition ? fr.spacing('10v') : fr.spacing('1w'),
 			paddingBottom: fr.spacing('18v')
 			// [fr.breakpoints.down('lg')]: {
 			// 	paddingTop: fr.spacing('12v')

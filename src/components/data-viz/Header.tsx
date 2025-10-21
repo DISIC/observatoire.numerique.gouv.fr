@@ -3,7 +3,7 @@ import SearchBar from '@codegouvfr/react-dsfr/SearchBar';
 import { tss } from 'tss-react';
 import { Checkbox } from '@codegouvfr/react-dsfr/Checkbox';
 import { fr } from '@codegouvfr/react-dsfr';
-import { DataVizKind } from '@/pages/data-viz';
+import { DataVizKind } from '@/pages/data-viz/[kind]';
 import { Dispatch, SetStateAction, useState } from 'react';
 import assert from 'assert';
 import { getProcedureKindLabel } from '@/utils/tools';

@@ -7,6 +7,7 @@ import { tss } from 'tss-react';
 import { formatDateRangeFR, slugifyText } from '@/utils/tools';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { useRouter } from 'next/router';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 
 type EditionTab = {
 	kind: 'base' | 'old';
@@ -101,8 +102,9 @@ export default function ObservatoireEditions() {
 		return currentEdition.editions.map(edition => ({
 			name: edition.name,
 			period: edition.period,
-			link: `/observatoire/${edition.kind === 'base' ? 'editions' : 'old'}/${edition.id
-				}`
+			link: `/observatoire/${edition.kind === 'base' ? 'editions' : 'old'}/${
+				edition.id
+			}`
 		})) as { name: string; period: string; link: string }[];
 	}, [selectedTabId, editionTabs]);
 
@@ -116,6 +118,12 @@ export default function ObservatoireEditions() {
 	return (
 		<>
 			<div className={cx(fr.cx('fr-container'), 'fr-mt-10v')}>
+				<Breadcrumb
+					segments={[]}
+					homeLinkProps={{ href: '/' }}
+					currentPageLabel="Éditions précédentes"
+					className={cx('fr-mb-1v')}
+				/>
 				<h1 className={cx(classes.title)}>Éditions précédentes</h1>
 			</div>
 			<div className={cx(classes.tableContainer)}>
@@ -140,7 +148,9 @@ export default function ObservatoireEditions() {
 								<tbody>
 									{currentTableData.map((row, i) => (
 										<tr key={i} data-fr-js-table-row="true">
-											<td className={classes.editionName}>{row.name.toLowerCase()}</td>
+											<td className={classes.editionName}>
+												{row.name.toLowerCase()}
+											</td>
 											<td>{row.period}</td>
 											<td>
 												<Button
@@ -174,7 +184,7 @@ const useStyles = tss.withName(ObservatoireEditions.name).create(() => ({
 		}
 	},
 	editionName: {
-		textTransform: 'capitalize',
+		textTransform: 'capitalize'
 	},
 	tableContainer: {
 		backgroundColor: fr.colors.decisions.background.contrast.info.default

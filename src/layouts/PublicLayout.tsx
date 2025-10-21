@@ -130,26 +130,26 @@ const PublicLayout = (props: Props) => {
 						menuLinks: [
 							{
 								linkProps: {
-									href: '/data-viz?tab=administration_central',
+									href: '/data-viz/administration_central',
 									target: '_self'
 								},
-								isActive: router.query.tab === 'administration_central',
+								isActive: router.query.kind === 'administration_central',
 								text: 'Périmètres'
 							},
 							{
 								linkProps: {
-									href: '/data-viz?tab=ministere',
+									href: '/data-viz/ministere',
 									target: '_self'
 								},
-								isActive: router.query.tab === 'ministere',
+								isActive: router.query.kind === 'ministere',
 								text: 'Ministères'
 							},
 							{
 								linkProps: {
-									href: '/data-viz?tab=administration',
+									href: '/data-viz/administration',
 									target: '_self'
 								},
-								isActive: router.query.tab === 'administration',
+								isActive: router.query.kind === 'administration',
 								text: 'Administrations'
 							}
 						]

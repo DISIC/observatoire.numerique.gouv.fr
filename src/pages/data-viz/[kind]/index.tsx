@@ -1,18 +1,17 @@
 import { tss } from 'tss-react';
 import { fr } from '@codegouvfr/react-dsfr';
-import { type TabsProps } from '@codegouvfr/react-dsfr/Tabs';
-import { Tabs } from '@/components/dsfr-custom/Tabs';
 import { useIndicatorScoreByProcedureKind } from '@/utils/api';
 import dynamic from 'next/dynamic';
 import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getProcedureKindLabel, stringToBase64Url } from '@/utils/tools';
-import { ProcedureKind } from '../api/indicator-scores';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
 import TableView from '@/components/data-viz/TableView';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Loader } from '@/components/generic/Loader';
 import { useRouter } from 'next/router';
+import Breadcrumb from '@/components/dsfr-custom/Breadcrumb';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -176,55 +175,27 @@ const DataViz = () => {
 	const { classes, cx } = useStyles();
 	const router = useRouter();
 
-	const { tab } = router.query;
-	const [selectedTabId, setSelectedTabId] = useState<ProcedureKind>(
-		'administration_central'
-	);
+	const { kind } = router.query as { kind: ProcedureKind };
 
-	const tabs = [
-		{
-			tabId: 'administration_central',
-			label: 'Périmètres'
-		},
-		{
-			tabId: 'ministere',
-			label: 'Ministères'
-		},
-		{
-			tabId: 'administration',
-			label: 'Administrations'
-		}
-	] as TabsProps.Controlled['tabs'];
-
-	const handleTabChange = (tabId: string) => {
-		setSelectedTabId(tabId as ProcedureKind);
-		router.push(`?tab=${tabId}`, undefined, { shallow: true });
-	};
-
-	useEffect(() => {
-		if (!router.isReady) return;
-		if (tab) setSelectedTabId(tab as ProcedureKind);
-	}, [router.isReady, router.query]);
+	const kindLabel =
+		getProcedureKindLabel(kind as ProcedureKind, {
+			plural: true,
+			uppercaseFirst: true
+		}) || '';
 
 	return (
 		<div className={cx(classes.root)}>
-			<div className="fr-container">
-				<h1>DataViz</h1>
-				<Tabs
-					className={classes.tabsWrapper}
-					selectedTabId={selectedTabId}
-					onTabChange={handleTabChange}
-					tabs={tabs}
-				>
-					<TabContent
-						kind={selectedTabId}
-						kindLabel={
-							tabs
-								.find(tab => tab.tabId === selectedTabId)
-								?.label?.toString() || ''
-						}
-					/>
-				</Tabs>
+			<div className={fr.cx('fr-container', 'fr-pt-6v')}>
+				<Breadcrumb
+					segments={[{ label: 'Graphiques' }]}
+					homeLinkProps={{ href: '/' }}
+					currentPageLabel={kindLabel}
+					className={fr.cx('fr-mb-1v')}
+				/>
+				<h1>{kindLabel}</h1>
+				<div className={cx(classes.tabsWrapper)}>
+					<TabContent kind={kind} kindLabel={kindLabel} />
+				</div>
 			</div>
 		</div>
 	);
@@ -233,27 +204,16 @@ const DataViz = () => {
 const useStyles = tss.withName(DataViz.name).create(() => ({
 	root: {
 		backgroundColor: fr.colors.decisions.background.alt.blueFrance.default,
-		padding: `${fr.spacing('12v')} 0`,
 		['& > div > h1']: {
 			...fr.typography[11].style,
 			color: fr.colors.decisions.background.actionHigh.blueFrance.default
 		}
 	},
 	tabsWrapper: {
-		boxShadow: 'none',
+		backgroundColor: 'white',
 		border: 'none',
-		'&::before': {
-			boxShadow: 'none'
-		},
-		['& > .fr-tabs__list']: {
-			marginBottom: fr.spacing('1v')
-		},
-		['& > .fr-tabs__panel']: {
-			backgroundColor: 'white',
-			border: 'none',
-			padding: fr.spacing('6v'),
-			borderRadius: fr.spacing('2v')
-		}
+		padding: fr.spacing('6v'),
+		borderRadius: fr.spacing('2v')
 	},
 	grid: {
 		display: 'grid',

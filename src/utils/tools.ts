@@ -20,8 +20,9 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
-					}`;
+				return `${millions}.${Math.floor(units / 100)} million${
+					millions > 1 ? 's' : ''
+				}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}
@@ -156,9 +157,9 @@ export const sortProcedures = (
 		) {
 			return sortConfig.direction === 'asc'
 				? SPECIAL_VALUES.indexOf(valueA as string) -
-				SPECIAL_VALUES.indexOf(valueB as string)
+						SPECIAL_VALUES.indexOf(valueB as string)
 				: SPECIAL_VALUES.indexOf(valueB as string) -
-				SPECIAL_VALUES.indexOf(valueA as string);
+						SPECIAL_VALUES.indexOf(valueA as string);
 		}
 
 		const valueToCompareA = isNaN(Number(valueA)) ? valueA : Number(valueA);
@@ -367,17 +368,35 @@ export function exportTableAsCSV(tableSelector: string, title: string) {
 	saveAs(csvBlob, filename);
 }
 
-export const getProcedureKindLabel = (kind: ProcedureKind) => {
+export const getProcedureKindLabel = (
+	kind: ProcedureKind,
+	{ plural = false, uppercaseFirst = false } = {}
+): string => {
+	let label = '';
+
 	switch (kind) {
 		case 'ministere':
-			return 'ministère';
+			label = 'ministère';
+			break;
 		case 'administration':
-			return 'administration';
+			label = 'administration';
+			break;
 		case 'administration_central':
-			return 'périmètre';
+			label = 'périmètre';
+			break;
 		default:
 			return '';
 	}
+
+	if (plural && label && !label.endsWith('s')) {
+		label = `${label}s`;
+	}
+
+	if (uppercaseFirst && label) {
+		label = label.charAt(0).toUpperCase() + label.slice(1);
+	}
+
+	return label;
 };
 
 export const getColorValue = (value?: string) => {
