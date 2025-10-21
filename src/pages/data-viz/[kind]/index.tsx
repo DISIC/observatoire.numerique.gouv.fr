@@ -11,7 +11,8 @@ import TableView from '@/components/data-viz/TableView';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Loader } from '@/components/generic/Loader';
 import { useRouter } from 'next/router';
-import Breadcrumb from '@/components/dsfr-custom/Breadcrumb';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import { GetServerSidePropsContext } from 'next';
 
 const RadarChartCustom = dynamic(
 	() => import('@/components/charts/RadarChart')
@@ -129,36 +130,14 @@ const TabContent = ({
 									</div>
 									<div className={cx(classes.buttonsGroup)}>
 										<Button
-											priority="secondary"
 											size="small"
 											linkProps={{
 												href: `/data-viz/${kind}/${stringToBase64Url(
 													item.text
-												)}/radar-comparison`
+												)}`
 											}}
 										>
-											Comparer
-										</Button>
-										<Button
-											priority="secondary"
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${stringToBase64Url(
-													item.text
-												)}/evolution`
-											}}
-										>
-											Voir le détail
-										</Button>
-										<Button
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${stringToBase64Url(
-													item.text
-												)}/procedures`
-											}}
-										>
-											Voir les démarches
+											Analyser les indicateurs
 										</Button>
 									</div>
 								</div>
@@ -171,11 +150,23 @@ const TabContent = ({
 	);
 };
 
-const DataViz = () => {
-	const { classes, cx } = useStyles();
-	const router = useRouter();
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+	const kind = ctx.query.kind;
 
-	const { kind } = router.query as { kind: ProcedureKind };
+	if (typeof kind !== 'string')
+		return {
+			notFound: true
+		};
+
+	return {
+		props: {
+			kind
+		}
+	};
+}
+
+const DataViz = ({ kind }: { kind: ProcedureKind }) => {
+	const { classes, cx } = useStyles();
 
 	const kindLabel =
 		getProcedureKindLabel(kind as ProcedureKind, {
@@ -187,9 +178,9 @@ const DataViz = () => {
 		<div className={cx(classes.root)}>
 			<div className={fr.cx('fr-container', 'fr-pt-6v')}>
 				<Breadcrumb
-					segments={[{ label: 'Graphiques' }]}
+					segments={[]}
 					homeLinkProps={{ href: '/' }}
-					currentPageLabel={kindLabel}
+					currentPageLabel={`Graphiques - ${kindLabel}`}
 					className={fr.cx('fr-mb-1v')}
 				/>
 				<h1>{kindLabel}</h1>

@@ -13,6 +13,7 @@ import { getColorValue } from '@/utils/tools';
 import { IndicatorLabel } from '../top250/table/IndicatorLabel';
 import { Field } from '@prisma/client';
 import Alert from '@codegouvfr/react-dsfr/Alert';
+import Link from 'next/link';
 
 const BarChartCustom = dynamic(() => import('@/components/charts/BarChart'));
 const ComposedChartCustom = dynamic(
@@ -148,6 +149,17 @@ const IndicatorTabContent = ({
 						)}
 					</div>
 					<div className={classes.viewTypeContainer}>
+						<div className={classes.linkContainer}>
+							<Link
+								href="/Aide/Observatoire?tab=indicators"
+								className={fr.cx('fr-link')}
+							>
+								Tout comprendre sur les indicateurs{' '}
+								<i
+									className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')}
+								/>
+							</Link>
+						</div>
 						<LightSelect
 							label=""
 							id="select-view"
@@ -207,7 +219,9 @@ const useStyles = tss.create({
 	viewTypeContainer: {
 		width: '100%',
 		display: 'flex',
-		justifyContent: 'flex-end'
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: `0 ${fr.spacing('2v')}`
 	},
 	selectViewType: {
 		['select.fr-select']: {
@@ -224,6 +238,16 @@ const useStyles = tss.create({
 		display: 'flex',
 		gap: fr.spacing('2v'),
 		marginBottom: fr.spacing('10v')
+	},
+	linkContainer: {
+		width: '100%',
+		display: 'flex',
+		a: {
+			fontSize: '14px',
+			'i::after, i::before': {
+				'--icon-size': '14px'
+			}
+		}
 	}
 });
 

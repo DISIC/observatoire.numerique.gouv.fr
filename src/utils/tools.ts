@@ -9,6 +9,7 @@ import { fr as frDsfr } from '@codegouvfr/react-dsfr';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { validIndicatorSlugs } from './data-viz-client';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -394,6 +395,34 @@ export const getProcedureKindLabel = (
 
 	if (uppercaseFirst && label) {
 		label = label.charAt(0).toUpperCase() + label.slice(1);
+	}
+
+	return label;
+};
+
+export const getValidIndicatorLabel = (
+	kind: (typeof validIndicatorSlugs)[number]
+): string => {
+	let label = '';
+
+	switch (kind) {
+		case 'satisfaction':
+			label = 'Satisfaction usager';
+			break;
+		case 'handicap':
+			label = 'Prise en compte du handicap';
+			break;
+		case 'dlnuf':
+			label = 'Dites-le-nous une fois';
+			break;
+		case 'auth':
+			label = 'Authentification';
+			break;
+		case 'simplicity':
+			label = 'Clarté du langage';
+			break;
+		default:
+			return '';
 	}
 
 	return label;

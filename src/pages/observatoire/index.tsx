@@ -1,4 +1,4 @@
-import Breadcrumb from '@/components/dsfr-custom/Breadcrumb';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
@@ -36,9 +36,11 @@ export default function Observatoire() {
 		<>
 			<div className={cx(classes.root, fr.cx('fr-container'))}>
 				<Breadcrumb
-					segments={[{ label: 'Éditions' }]}
+					segments={[]}
 					homeLinkProps={{ href: '/' }}
-					currentPageLabel={`Édition de ${currentEdition?.name.toLowerCase()}`}
+					currentPageLabel={`Éditions - Édition de ${
+						currentEdition?.name.toLowerCase() || '...'
+					}`}
 					className={cx('fr-mb-1v')}
 				/>
 				<Top250Header
