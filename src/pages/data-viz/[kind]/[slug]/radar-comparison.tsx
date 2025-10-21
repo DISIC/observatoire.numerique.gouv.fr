@@ -177,22 +177,25 @@ const RadarComparison = () => {
 				<h1>Comparer le périmètre {baseIndicatorScores?.text}</h1>
 				<div className={classes.pageContent}>
 					<div className={classes.actions}>
-						<Checkbox
-							options={[
-								{
-									label: "Moyenne de l'observatoire",
-									nativeInputProps: {
-										name: 'checkboxes-1',
-										value: 'value2',
-										onChange: e => setShowCrossScorePerimeter(e.target.checked)
+						{dataVisualitionKind === 'radar' && (
+							<Checkbox
+								options={[
+									{
+										label: "Moyenne de l'observatoire",
+										nativeInputProps: {
+											name: 'checkboxes-1',
+											value: 'value2',
+											onChange: e =>
+												setShowCrossScorePerimeter(e.target.checked)
+										}
 									}
-								}
-							]}
-							orientation="horizontal"
-							state="default"
-							className={classes.checkboxWrapper}
-							small
-						/>
+								]}
+								orientation="horizontal"
+								state="default"
+								className={classes.checkboxWrapper}
+								small
+							/>
+						)}
 						<div>
 							<div className={classes.buttonsGroup}>
 								<Button

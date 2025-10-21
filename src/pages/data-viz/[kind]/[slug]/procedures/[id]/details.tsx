@@ -207,22 +207,24 @@ const ProcedureDetails = () => {
 											</Button>
 										</div>
 									</div>
-									<Checkbox
-										options={[
-											{
-												label: "Moyenne de l'observatoire",
-												nativeInputProps: {
-													name: 'checkboxes-1',
-													value: 'value2',
-													onChange: e =>
-														setShowCrossScorePerimeter(e.target.checked)
+									{dataVisualitionKind === 'line' && (
+										<Checkbox
+											options={[
+												{
+													label: "Moyenne de l'observatoire",
+													nativeInputProps: {
+														name: 'checkboxes-1',
+														value: 'value2',
+														onChange: e =>
+															setShowCrossScorePerimeter(e.target.checked)
+													}
 												}
-											}
-										]}
-										orientation="horizontal"
-										state="default"
-										small
-									/>
+											]}
+											orientation="horizontal"
+											state="default"
+											small
+										/>
+									)}
 								</div>
 							)}
 							{dataVisualitionKind === 'table' ? (
