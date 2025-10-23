@@ -7,14 +7,13 @@ import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import {
-	base64UrlToString,
 	exportChartAsImage,
+	exportChartAsPng,
 	exportTableAsCSV,
 	getValidIndicatorLabel
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { tss } from 'tss-react';
 
@@ -26,8 +25,6 @@ type EvolutionProps = {
 };
 
 function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
-	const router = useRouter();
-
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'line' | 'table'
 	>('line');
@@ -44,6 +41,16 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 		columnKey: kind,
 		columnValue: slug
 	});
+
+	const exportChart = () => {
+		if (dataVisualitionKind === 'table') {
+			exportTableAsCSV('table', slug);
+		} else if (chartRef.current && slug) {
+			const matches = slug.match(/\b([A-Z])/g) ?? [];
+			const titleChart = matches.join('');
+			exportChartAsImage(chartRef.current, `${titleChart}-${indicator}`);
+		}
+	};
 
 	const getPercentage = (value: number, total: number) => {
 		if (total === 0) return 0;
@@ -90,35 +97,37 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 									<Button
 										iconId="ri-bar-chart-line"
 										onClick={() => setDataVisualitionKind('line')}
+										size="small"
 										priority={
 											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
 										}
 										title="Chart"
-									/>
+									>
+										Graphique
+									</Button>
 									<Button
 										iconId="ri-table-line"
 										onClick={() => setDataVisualitionKind('table')}
+										size="small"
 										priority={
 											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 										}
 										title="Table"
-									/>
+									>
+										Tableau
+									</Button>
 								</div>
 								<Button
 									iconId="ri-download-line"
-									priority={'secondary'}
-									title="Exporter"
-									onClick={() => {
-										if (dataVisualitionKind === 'table') {
-											exportTableAsCSV('table', slug);
-										}
-
-										if (chartRef.current && slug) {
-											exportChartAsImage(chartRef.current, slug);
-										}
-									}}
+									priority="secondary"
+									title={`Exporter en ${
+										dataVisualitionKind === 'table' ? 'CSV' : 'PNG'
+									}`}
+									size="small"
+									className={classes.buttonExport}
+									onClick={exportChart}
 								>
-									Exporter
+									Exporter en {dataVisualitionKind === 'table' ? 'CSV' : 'PNG'}
 								</Button>
 							</div>
 						</div>
@@ -163,6 +172,7 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		marginBottom: fr.spacing('6v'),
+		gap: fr.spacing('10v'),
 		[fr.breakpoints.down('md')]: {
 			flexDirection: 'column',
 			gap: fr.spacing('4v'),
@@ -185,12 +195,20 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 	},
 	tabsActions: {
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('4v'),
+			alignItems: 'flex-start'
+		}
 	},
 	buttonsGroup: {
 		display: 'flex',
 		gap: fr.spacing('2v'),
-		marginRight: fr.spacing('8v')
+		marginRight: fr.spacing('6v')
+	},
+	buttonExport: {
+		minWidth: 'max-content'
 	},
 	chartLegend: {
 		color: fr.colors.decisions.text.mention.grey.default,

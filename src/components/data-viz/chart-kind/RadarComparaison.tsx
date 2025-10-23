@@ -8,21 +8,16 @@ import { RecordData } from '@/utils/data-viz-client';
 import {
 	exportChartAsPng,
 	exportTableAsCSV,
-	getProcedureKindLabel,
-	stringToBase64Url
+	getProcedureKindLabel
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
 import Select from '@codegouvfr/react-dsfr/Select';
 import ToggleSwitch from '@codegouvfr/react-dsfr/ToggleSwitch';
-import dynamic from 'next/dynamic';
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { tss } from 'tss-react';
-
-const RadarChartCustom = dynamic(
-	() => import('@/components/charts/RadarChart')
-);
+import RadarWrapper from '../RadarWrapper';
 
 type RadarComparisonProps = {
 	kind: ProcedureKind;
@@ -34,7 +29,6 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 
 	const id = useId();
 	const chartRef = useRef<HTMLDivElement | null>(null);
-	const [isMobile, setIsMobile] = useState(false);
 
 	const [selectedKindValue, setSelectedKindValue] = useState<string>('');
 	const [crossPerimeterValues, setCrossPerimeterValues] = useState<
@@ -92,10 +86,6 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 				compareTitle: selectedKindValue
 		  }
 		: undefined;
-
-	useEffect(() => {
-		setIsMobile(window.innerWidth <= fr.breakpoints.getPxValues().md);
-	}, []);
 
 	useEffect(() => {
 		if (mainContainerRef.current) {
@@ -156,60 +146,71 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 	return (
 		<div className={classes.pageContent}>
 			<div className={classes.actions}>
-				{dataVisualitionKind === 'radar' && (
-					<Checkbox
-						options={[
-							{
-								label: "Moyenne de l'observatoire",
-								nativeInputProps: {
-									name: 'checkboxes-1',
-									value: 'value2',
-									onChange: e => setShowCrossScorePerimeter(e.target.checked)
-								}
-							}
-						]}
-						orientation="horizontal"
-						state="default"
-						className={classes.checkboxWrapper}
-						small
-					/>
-				)}
 				<div>
+					{dataVisualitionKind === 'radar' && (
+						<Checkbox
+							options={[
+								{
+									label: "Moyenne de l'observatoire",
+									nativeInputProps: {
+										name: 'checkboxes-1',
+										value: 'value2',
+										onChange: e => setShowCrossScorePerimeter(e.target.checked)
+									}
+								}
+							]}
+							orientation="horizontal"
+							state="default"
+							className={classes.checkboxWrapper}
+							small
+						/>
+					)}
+				</div>
+				<div className={classes.buttonsWrapper}>
 					<div className={classes.buttonsGroup}>
 						<Button
 							iconId="ri-pentagon-line"
 							onClick={() => setDataVisualitionKind('radar')}
+							size="small"
 							priority={
 								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
 							}
 							title="Chart"
-						/>
+						>
+							Radars
+						</Button>
 						<Button
 							iconId="ri-table-line"
 							onClick={() => setDataVisualitionKind('table')}
+							size="small"
 							priority={
 								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 							}
 							title="Table"
 							disabled={selectedKindValue === ''}
-						/>
+						>
+							Tableaux
+						</Button>
 					</div>
-					<Button
-						iconId="ri-download-line"
-						priority={'secondary'}
-						title="Exporter"
-						onClick={() => {
-							if (dataVisualitionKind === 'table') {
-								exportTableAsCSV('table', slug);
-							} else {
-								if (chartRef.current) {
-									exportChartAsPng(chartRef.current);
+					{dataVisualitionKind === 'table' && (
+						<Button
+							iconId="ri-download-line"
+							priority="secondary"
+							size="small"
+							title="Exporter en CSV"
+							onClick={() => {
+								if (dataVisualitionKind === 'table') {
+									exportTableAsCSV('table', slug);
+								} else {
+									if (chartRef.current) {
+										exportChartAsPng(chartRef.current);
+									}
 								}
-							}
-						}}
-					>
-						Exporter
-					</Button>
+							}}
+						>
+							Exporter en CSV
+						</Button>
+					)}
 				</div>
 			</div>
 			{dataVisualitionKind === 'table' ? (
@@ -220,117 +221,65 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 			) : (
 				<div className={classes.wrapperMainContainer}>
 					<div className={classes.mainContainer} ref={mainContainerRef}>
-						<div
-							className={cx(
+						<RadarWrapper
+							kind={kind}
+							item={{
+								text: baseIndicatorScores?.text || 'Radar de comparaison',
+								count: baseIndicatorScores?.count || 0,
+								data: radarData
+							}}
+							radarCustomChartProps={{
+								compareData: radarCompareData,
+								showCrossScorePerimeter,
+								showGoalRadar: false,
+								enableAnimation: false
+							}}
+							classNameCXArgs={[
 								classes.container,
 								classes.radarCard,
-								shouldRadarOverlay && fr.cx('fr-py-0')
-							)}
-							style={{
-								minHeight: !isMobile ? maxReachedHeight : undefined,
-								height:
-									shouldRadarOverlay && !isMobile ? maxReachedHeight : undefined
-							}}
-						>
-							{!shouldRadarOverlay && (
-								<h2 className={cx(classes.title, 'fr-text--lg')}>
-									{baseIndicatorScores?.text || 'Radar de comparaison'}
-								</h2>
-							)}
-							<div style={{ width: '100%' }}>
-								<div
-									className={cx(classes.chart)}
-									style={{
-										height:
-											shouldRadarOverlay && maxReachedHeight && !isMobile
-												? maxReachedHeight
-												: isMobile
-												? '450px'
-												: '325px'
-									}}
-								>
-									<RadarChartCustom
-										customRef={chartRef}
-										data={radarData}
-										compareData={radarCompareData}
-										showGoalRadar={false}
-										showCrossScorePerimeter={showCrossScorePerimeter}
-										enableAnimation={false}
-									/>
-								</div>
-								{!shouldRadarOverlay && (
-									<Button
-										priority="secondary"
-										linkProps={{
-											href: `/data-viz/${kind}/${stringToBase64Url(
-												slug
-											)}/evolution`
-										}}
-									>
-										Voir le détail
-									</Button>
-								)}
-							</div>
-						</div>
+								shouldRadarOverlay && fr.cx('fr-pt-0')
+							]}
+						/>
 						{!shouldRadarOverlay && (
-							<div
-								className={cx(
-									classes.container,
-									selectedKindValue && classes.radarCard
-								)}
-							>
+							<>
 								{selectedKindValue ? (
-									<>
-										<div className={classes.removableTitleContainer}>
-											<h2 className={cx(classes.title, 'fr-text--lg')}>
-												{selectedKindValue}
-											</h2>
+									<RadarWrapper
+										kind={kind}
+										item={{
+											text: selectedKindValue,
+											count: comparedIndicatorScores?.count || 0,
+											data:
+												comparedIndicatorScores?.data.map(item => ({
+													...item,
+													cross:
+														crossPerimeterValues.find(
+															crossItem => crossItem.slug === item.slug
+														)?.value || 0
+												})) || []
+										}}
+										radarCustomChartProps={{
+											showCrossScorePerimeter,
+											showGoalRadar: false,
+											enableAnimation: false
+										}}
+										classNameCXArgs={[classes.container]}
+										titleChildren={
 											<Button
 												priority="tertiary no outline"
 												iconId="ri-close-circle-fill"
 												onClick={() => setSelectedKindValue('')}
-												children={''}
-												size="large"
-												className={classes.clearButton}
 												title="Supprimer la sélection"
 												aria-label="Supprimer la sélection"
 											/>
-										</div>
-										<div style={{ width: '100%' }}>
-											<div className={cx(classes.chart)}>
-												<RadarChartCustom
-													data={
-														comparedIndicatorScores?.data.map(item => ({
-															...item,
-															cross:
-																crossPerimeterValues.find(
-																	crossItem => crossItem.slug === item.slug
-																)?.value || 0
-														})) || []
-													}
-													showGoalRadar={false}
-													showCrossScorePerimeter={showCrossScorePerimeter}
-													color={
-														fr.colors.options.purpleGlycine._925_125.active
-													}
-													enableAnimation={false}
-												/>
-											</div>
-
-											<Button
-												priority="secondary"
-												linkProps={{
-													href: `/data-viz/${kind}/${stringToBase64Url(
-														selectedKindValue
-													)}/evolution`
-												}}
-											>
-												Voir le détail
-											</Button>
-										</div>
-									</>
+										}
+									/>
 								) : (
-									<>
+									<div
+										className={cx(
+											classes.container,
+											selectedKindValue && classes.radarCard
+										)}
+									>
 										<Select
 											label={`Choisir un${
 												(kind === 'administration' ? 'e ' : ' ') +
@@ -364,9 +313,9 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 												{getProcedureKindLabel(kind)} à comparer
 											</p>
 										</div>
-									</>
+									</div>
 								)}
-							</div>
+							</>
 						)}
 					</div>
 					{selectedKindValue && (
@@ -420,6 +369,13 @@ const useStyles = tss.withName(RadarComparison.name).create(() => ({
 				marginTop: 0
 			}
 	},
+	buttonsWrapper: {
+		[fr.breakpoints.down('md')]: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: `${fr.spacing('4v')} !important`
+		}
+	},
 	buttonsGroup: {
 		display: 'flex',
 		gap: fr.spacing('2v')
@@ -468,12 +424,6 @@ const useStyles = tss.withName(RadarComparison.name).create(() => ({
 	removableTitleContainer: {
 		display: 'flex',
 		alignItems: 'center'
-	},
-	clearButton: {
-		padding: '0.5rem',
-		'::before': {
-			margin: '0!important'
-		}
 	},
 	chart: {
 		width: '100%',

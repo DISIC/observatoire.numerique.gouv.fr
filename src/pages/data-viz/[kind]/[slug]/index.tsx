@@ -107,7 +107,6 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 	tabsWrapper: {
 		boxShadow: 'none',
 		border: 'none',
-
 		'&::before': {
 			boxShadow: 'none'
 		},

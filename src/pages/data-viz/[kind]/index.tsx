@@ -1,8 +1,6 @@
 import { tss } from 'tss-react';
 import { fr } from '@codegouvfr/react-dsfr';
 import { useIndicatorScoreByProcedureKind } from '@/utils/api';
-import dynamic from 'next/dynamic';
-import Button from '@codegouvfr/react-dsfr/Button';
 import DataVizTabHeader from '@/components/data-viz/Header';
 import { useState } from 'react';
 import { getProcedureKindLabel, stringToBase64Url } from '@/utils/tools';
@@ -10,13 +8,9 @@ import { ProcedureKind } from '@/pages/api/indicator-scores';
 import TableView from '@/components/data-viz/TableView';
 import { useDebounce } from '@uidotdev/usehooks';
 import { Loader } from '@/components/generic/Loader';
-import { useRouter } from 'next/router';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { GetServerSidePropsContext } from 'next';
-
-const RadarChartCustom = dynamic(
-	() => import('@/components/charts/RadarChart')
-);
+import RadarWrapper from '@/components/data-viz/RadarWrapper';
 
 export type DataVizKind = 'radar' | 'table';
 
@@ -112,35 +106,15 @@ const TabContent = ({
 					{dataVisualitionKind === 'radar' && (
 						<div className={cx(classes.grid)}>
 							{data.map(item => (
-								<div key={item.text} className={cx(classes.gridItem)}>
-									<div>
-										<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
-											{item.text}
-										</h2>
-										<p className={cx('fr-text--xs')}>
-											(Nombre de démarches : {item.count})
-										</p>
-									</div>
-									<div className={cx(classes.chart)}>
-										<RadarChartCustom
-											data={item.data}
-											showGoalRadar={showGoalRadar}
-											showCrossScorePerimeter={showCrossScorePerimeter}
-										/>
-									</div>
-									<div className={cx(classes.buttonsGroup)}>
-										<Button
-											size="small"
-											linkProps={{
-												href: `/data-viz/${kind}/${stringToBase64Url(
-													item.text
-												)}`
-											}}
-										>
-											Analyser les indicateurs
-										</Button>
-									</div>
-								</div>
+								<RadarWrapper
+									key={item.text}
+									item={item}
+									kind={kind}
+									radarCustomChartProps={{
+										showGoalRadar,
+										showCrossScorePerimeter
+									}}
+								/>
 							))}
 						</div>
 					)}
@@ -213,34 +187,6 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 		[fr.breakpoints.down('md')]: {
 			gridTemplateColumns: '1fr'
 		}
-	},
-	gridItem: {
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		textAlign: 'center',
-		borderRadius: fr.spacing('2v'),
-		padding: `${fr.spacing('3w')} ${fr.spacing('4v')}`,
-		border: `1px solid ${fr.colors.decisions.background.contrast.blueFrance.default}`
-	},
-	gridTitle: {
-		fontWeight: 500,
-		color: fr.colors.decisions.text.title.grey.default,
-		marginBottom: fr.spacing('1v')
-	},
-	chart: {
-		width: '100%',
-		height: '325px',
-		marginTop: 'auto'
-	},
-	buttonsGroup: {
-		display: 'flex',
-		gap: fr.spacing('3v'),
-		justifyContent: 'center',
-		alignItems: 'center',
-		flexWrap: 'wrap',
-		marginTop: fr.spacing('2v')
 	},
 	modal: {
 		textAlign: 'start'

@@ -296,7 +296,10 @@ export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
 	saveAs(svgBlob, `${filename}.svg`);
 };
 
-export const exportChartAsPng = async (chartParent: HTMLElement) => {
+export const exportChartAsPng = async (
+	chartParent: HTMLElement,
+	titleChart?: string
+) => {
 	const chartSVG = chartParent.children[0] as HTMLElement;
 
 	if (!chartSVG) {
@@ -321,9 +324,9 @@ export const exportChartAsPng = async (chartParent: HTMLElement) => {
 	});
 
 	if (pngBlob) {
-		const filename = `export-${slugifyText(
-			chartSVG.getAttribute('title') || 'chart'
-		)}-${new Date().toISOString().slice(0, 10)}.png`;
+		const filename = `export-${
+			titleChart || slugifyText(chartSVG.getAttribute('title') || 'chart')
+		}-${new Date().toISOString().slice(0, 10)}.png`;
 		saveAs(pngBlob, filename);
 	}
 };

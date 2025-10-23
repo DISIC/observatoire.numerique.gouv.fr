@@ -76,7 +76,9 @@ const DataVizTabHeader = ({
 								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
 							}
 							title="Radar"
-						/>
+						>
+							Radars
+						</Button>
 						<Button
 							iconId="ri-table-line"
 							onClick={() => setDataVisualitionKind('table')}
@@ -84,18 +86,21 @@ const DataVizTabHeader = ({
 								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 							}
 							title="Table"
-						/>
+						>
+							Tableaux
+						</Button>
 					</div>
-					<Button
-						iconId="ri-download-line"
-						priority={'secondary'}
-						title="Exporter"
-						onClick={() => {
-							exportTableAsCSV(`#${tableId}`, kindLabel);
-						}}
-					>
-						Exporter
-					</Button>
+					{dataVisualitionKind === 'table' && (
+						<Button
+							iconId="ri-download-line"
+							priority="secondary"
+							title="Exporter"
+							className={fr.cx('fr-ml-10v')}
+							onClick={() => exportTableAsCSV(`#${tableId}`, kindLabel)}
+						>
+							Exporter en CSV
+						</Button>
+					)}
 				</div>
 			</div>
 			<div className={cx(classes.wrapperButtons)}>
@@ -148,8 +153,8 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
-		gap: fr.spacing('5v'),
-		marginBottom: fr.spacing('3v')
+		gap: fr.spacing('6v'),
+		marginBottom: fr.spacing('6v')
 	},
 	wrapperSearch: {
 		display: 'flex',
@@ -199,8 +204,7 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 	},
 	buttonsGroup: {
 		display: 'flex',
-		gap: fr.spacing('2v'),
-		marginRight: fr.spacing('8v')
+		gap: fr.spacing('2v')
 	}
 }));
 

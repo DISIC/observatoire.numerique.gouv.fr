@@ -40,8 +40,10 @@ function App({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 
 	useEffect(() => {
-		init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
-		Hotjar.init(HOTJAR_SITE_ID, HOTJAR_VERSION);
+		if (process.env.NODE_ENV === 'production') {
+			init({ url: MATOMO_URL, siteId: MATOMO_SITE_ID });
+			Hotjar.init(HOTJAR_SITE_ID, HOTJAR_VERSION);
+		}
 	}, []);
 
 	const getLayout = (children: ReactNode) => {

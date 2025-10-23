@@ -126,7 +126,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 	return null;
 };
 
-type RadarChartCustomProps = {
+export type RadarChartCustomProps = {
 	data: RecordData['data'] & {
 		compareScore?: number;
 	};
