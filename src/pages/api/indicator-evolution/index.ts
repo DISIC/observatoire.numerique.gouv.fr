@@ -371,10 +371,18 @@ export async function getIndicatorEvolution({
 
 	const result: RecordDataGrouped[] = data
 		.filter(e => !!e)
-		.map(editionData => ({
-			name: editionData.edition,
-			values: editionData.levels
-		}));
+		.map(editionData => {
+			const [firstPart, ...rest] = (editionData.edition || '').split(' ');
+			const formattedName = firstPart
+				? `${firstPart.charAt(0).toUpperCase()}${firstPart
+						.slice(1)
+						.toLowerCase()} ${rest.join(' ')}`
+				: editionData.edition;
+			return {
+				name: formattedName,
+				values: editionData.levels
+			};
+		});
 
 	return { indicator: validIndicator, groupedData: result };
 }

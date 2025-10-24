@@ -8,7 +8,6 @@ import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import {
 	exportChartAsImage,
-	exportChartAsPng,
 	exportTableAsCSV,
 	getValidIndicatorLabel
 } from '@/utils/tools';
