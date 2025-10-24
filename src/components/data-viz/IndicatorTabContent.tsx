@@ -27,7 +27,6 @@ type TabContentProps = {
 	field?: Field;
 	chartRef: React.RefObject<HTMLDivElement | null>;
 	chartType?: 'bar' | 'line';
-	shouldShowGoalLine?: boolean;
 	title?: string;
 	showCrossScorePerimeter?: boolean;
 };
@@ -37,14 +36,12 @@ const IndicatorTabContent = ({
 	viewType,
 	setViewType,
 	chartRef,
-	shouldShowGoalLine,
 	chartType = 'bar',
 	field,
 	title,
 	showCrossScorePerimeter
 }: TabContentProps) => {
 	const { classes, cx } = useStyles();
-	const [showGoalLine, setShowGoalLine] = useState(false);
 
 	return (
 		<div
@@ -57,37 +54,6 @@ const IndicatorTabContent = ({
 				)
 			)}
 		>
-			{shouldShowGoalLine && data.indicator?.slug !== 'auth' && (
-				<div
-					style={{
-						position: 'absolute',
-						top: '2.25rem',
-						width: '100%',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'end',
-						zIndex: 10
-					}}
-				>
-					{shouldShowGoalLine && (
-						<Checkbox
-							options={[
-								{
-									label: 'Objectif',
-									nativeInputProps: {
-										name: 'checkboxes-1',
-										value: 'value1',
-										onChange: e => setShowGoalLine(e.target.checked)
-									}
-								}
-							]}
-							orientation="horizontal"
-							state="default"
-							small
-						/>
-					)}
-				</div>
-			)}
 			{data.indicator?.slug !== 'auth' || chartType === 'bar' ? (
 				<>
 					<div className={cx(classes.chart)} ref={chartRef}>
@@ -221,7 +187,12 @@ const useStyles = tss.create({
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		padding: `0 ${fr.spacing('2v')}`
+		padding: `0 ${fr.spacing('2v')}`,
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column-reverse',
+			gap: fr.spacing('4v'),
+			alignItems: 'flex-end'
+		}
 	},
 	selectViewType: {
 		['select.fr-select']: {

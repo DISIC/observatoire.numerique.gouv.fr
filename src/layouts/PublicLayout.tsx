@@ -151,6 +151,14 @@ const PublicLayout = (props: Props) => {
 								},
 								isActive: router.query.kind === 'administration',
 								text: 'Administrations'
+							},
+							{
+								linkProps: {
+									href: '/data-viz/procedure',
+									target: '_self'
+								},
+								isActive: router.pathname.startsWith('/data-viz/procedure'),
+								text: 'Démarches'
 							}
 						]
 					},

@@ -2,7 +2,7 @@ import ProcedureIndicatorsGridItem from '@/components/data-viz/ProcedureIndicato
 import TableView from '@/components/data-viz/TableView';
 import { Loader } from '@/components/generic/Loader';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { useProcedures } from '@/utils/api';
+import { ProceduresProps, useProcedures } from '@/utils/api';
 import { isValidIndicatorSlug } from '@/utils/data-viz-client';
 import { exportTableAsCSV } from '@/utils/tools';
 import { trpc } from '@/utils/trpc';
@@ -14,8 +14,8 @@ import { useState } from 'react';
 import { tss } from 'tss-react';
 
 type DataVizProceduresListProps = {
-	kind: ProcedureKind;
-	slug: string;
+	kind?: ProcedureKind;
+	slug?: string;
 };
 
 const DataVizProceduresList = ({ kind, slug }: DataVizProceduresListProps) => {
@@ -44,14 +44,19 @@ const DataVizProceduresList = ({ kind, slug }: DataVizProceduresListProps) => {
 			isValidIndicatorSlug(indicator.slug)
 		) || [];
 
+	const query: ProceduresProps = {
+		search: debouncedSearchTerm
+	};
+
+	if (slug && kindKey) {
+		query[kindKey] = slug;
+	}
+
 	const {
 		data,
 		isError,
 		isLoading: isLoadingProcedures
-	} = useProcedures({
-		search: debouncedSearchTerm,
-		[kindKey]: slug
-	});
+	} = useProcedures(query);
 
 	const procedures = data?.map(procedure => {
 		const fields = procedure.fields.filter(field =>

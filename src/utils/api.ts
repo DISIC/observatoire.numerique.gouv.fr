@@ -39,7 +39,7 @@ export function useOldProcedures(props: OldProceduresProps) {
 	};
 }
 
-type ProceduresProps = {
+export type ProceduresProps = {
 	editionId?: string;
 	search?: string;
 	sort?: string;

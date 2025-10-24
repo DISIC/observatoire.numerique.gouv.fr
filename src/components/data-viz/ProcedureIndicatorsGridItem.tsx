@@ -1,9 +1,7 @@
-import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
-import { useRouter } from 'next/router';
 import { tss } from 'tss-react';
 import { IndicatorLabel } from '../top250/table/IndicatorLabel';
 
@@ -19,11 +17,6 @@ const ProcedureIndicatorsGridItem = ({
 	showCompareButton = true,
 	onClose
 }: ProcedureIndicatorsGridItemProps) => {
-	const router = useRouter();
-	const { kind, slug: tmpSlug } = router.query as {
-		kind: ProcedureKind;
-		slug: string;
-	};
 	const { classes, cx } = useStyles();
 
 	return (
@@ -83,24 +76,14 @@ const ProcedureIndicatorsGridItem = ({
 			<div className={cx(classes.buttonsGroup)}>
 				{showCompareButton && (
 					<Button
-						priority="secondary"
 						size="small"
 						linkProps={{
-							href: `/data-viz/${kind}/${tmpSlug}/procedures/${procedure.id}/comparison`
+							href: `/data-viz/procedure/${procedure.id}`
 						}}
 					>
-						Comparer
+						Analyser les indicateurs
 					</Button>
 				)}
-				<Button
-					priority="secondary"
-					size="small"
-					linkProps={{
-						href: `/data-viz/${kind}/${tmpSlug}/procedures/${procedure.id}/details`
-					}}
-				>
-					Voir le détail
-				</Button>
 			</div>
 		</div>
 	);
