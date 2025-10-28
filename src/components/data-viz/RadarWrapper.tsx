@@ -119,7 +119,8 @@ const useStyles = tss.withName(RadarWrapper.name).create(() => ({
 	gridItemDownload: {
 		position: 'absolute',
 		top: fr.spacing('4v'),
-		right: fr.spacing('4v')
+		right: fr.spacing('4v'),
+		zIndex: 1
 	},
 	chart: {
 		width: '100%',
