@@ -110,35 +110,37 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 					textAlign: 'center'
 				}}
 			>
-				{payload.map((payloadItem, index: number) => {
-					if (
-						payloadItem.dataKey === 'goal' ||
-						payloadItem.dataKey === 'cross'
-					) {
-						return null;
-					}
-					if (payloadItem.payload.description) {
+				{payload
+					.filter(
+						payloadItem =>
+							payloadItem.dataKey !== 'goal' && payloadItem.dataKey !== 'cross'
+					)
+					.map((payloadItem, index: number) => {
+						if (payloadItem.payload.description) {
+							return (
+								<p
+									key={index}
+									style={{ margin: 0, color: 'white', fontSize: 13 }}
+								>
+									{payloadItem.payload.description.replace(
+										'X',
+										payloadItem.value
+									)}
+								</p>
+							);
+						}
+
 						return (
 							<p
 								key={index}
 								style={{ margin: 0, color: 'white', fontSize: 13 }}
 							>
-								{payloadItem.payload.description.replace(
-									'X',
-									payloadItem.value
-								)}
+								{payloadItem.value}% des démarches ont atteint de l'objectif de
+								l'indicateur "{payloadItem.payload.name}", fixé à{' '}
+								{payloadItem.payload.goalLabel}
 							</p>
 						);
-					}
-
-					return (
-						<p key={index} style={{ margin: 0, color: 'white', fontSize: 13 }}>
-							{payloadItem.value}% des démarches ont atteint de l'objectif de
-							l'indicateur "{payloadItem.payload.name}", fixé à{' '}
-							{payloadItem.payload.goalLabel}
-						</p>
-					);
-				})}
+					})}
 			</div>
 		);
 	}
