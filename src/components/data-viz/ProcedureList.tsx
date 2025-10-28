@@ -19,9 +19,6 @@ type DataVizProceduresListProps = {
 };
 
 const DataVizProceduresList = ({ kind, slug }: DataVizProceduresListProps) => {
-	const [dataVisualitionKind, setDataVisualitionKind] = useState<
-		'list' | 'table'
-	>('list');
 	const [search, setSearch] = useState<string>();
 	const debouncedSearchTerm = useDebounce(search, 300);
 
@@ -143,26 +140,15 @@ const DataVizProceduresList = ({ kind, slug }: DataVizProceduresListProps) => {
 					</div>
 				</div>
 			) : (
-				<>
-					{procedures && (
-						<TableView
-							headers={headers}
-							rows={rows}
-							hidden={dataVisualitionKind !== 'table'}
+				<div className={cx(classes.grid)}>
+					{procedures?.map(item => (
+						<ProcedureIndicatorsGridItem
+							key={item.id}
+							procedure={item}
+							indicators={indicators}
 						/>
-					)}
-					{dataVisualitionKind === 'list' && (
-						<div className={cx(classes.grid)}>
-							{procedures?.map(item => (
-								<ProcedureIndicatorsGridItem
-									key={item.id}
-									procedure={item}
-									indicators={indicators}
-								/>
-							))}
-						</div>
-					)}
-				</>
+					))}
+				</div>
 			)}
 		</div>
 	);

@@ -198,15 +198,7 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 							priority="secondary"
 							size="small"
 							title="Exporter en CSV"
-							onClick={() => {
-								if (dataVisualitionKind === 'table') {
-									exportTableAsCSV('table', slug);
-								} else {
-									if (chartRef.current) {
-										exportChartAsPng(chartRef.current);
-									}
-								}
-							}}
+							onClick={() => exportTableAsCSV('table', slug)}
 						>
 							Exporter en CSV
 						</Button>
