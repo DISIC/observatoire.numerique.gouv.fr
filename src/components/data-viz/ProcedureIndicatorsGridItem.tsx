@@ -4,6 +4,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { tss } from 'tss-react';
 import { IndicatorLabel } from '../top250/table/IndicatorLabel';
+import { useRouter } from 'next/router';
 
 type ProcedureIndicatorsGridItemProps = {
 	procedure: ProcedureWithFieldsAndEditions;
@@ -18,6 +19,9 @@ const ProcedureIndicatorsGridItem = ({
 	onClose
 }: ProcedureIndicatorsGridItemProps) => {
 	const { classes, cx } = useStyles();
+
+	const router = useRouter();
+	const { kind } = router.query;
 
 	return (
 		<div className={cx(classes.gridItem)}>
@@ -78,10 +82,11 @@ const ProcedureIndicatorsGridItem = ({
 					<Button
 						size="small"
 						linkProps={{
-							href: `/data-viz/procedure/${procedure.id}`
+							href: `/data-viz/procedure/${procedure.id}`,
+							target: kind ? '_blank' : '_self'
 						}}
 					>
-						Analyser les indicateurs
+						{kind ? 'Analyser la démarche' : 'Analyser les indicateurs'}
 					</Button>
 				)}
 			</div>
