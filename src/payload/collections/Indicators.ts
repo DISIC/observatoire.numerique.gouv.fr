@@ -64,6 +64,11 @@ export const Indicators: CollectionConfig = {
 			label: 'Description succincte'
 		},
 		{
+			name: 'description_radar',
+			type: 'textarea',
+			label: 'Description des jauges du radar'
+		},
+		{
 			name: 'description_obj',
 			type: 'richText',
 			label: 'Description complète',

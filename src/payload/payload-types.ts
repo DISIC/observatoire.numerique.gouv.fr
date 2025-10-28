@@ -196,6 +196,7 @@ export interface PayloadIndicator {
     | 'auth';
   label: string;
   description?: string | null;
+  description_radar?: string | null;
   description_obj?: {
     root: {
       type: string;
@@ -372,6 +373,7 @@ export interface PayloadIndicatorsSelect<T extends boolean = true> {
   slug?: T;
   label?: T;
   description?: T;
+  description_radar?: T;
   description_obj?: T;
   description_html?: T;
   icon?: T;

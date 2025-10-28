@@ -111,6 +111,20 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 				}}
 			>
 				{payload.map((payloadItem, index: number) => {
+					if (payloadItem.payload.description) {
+						return (
+							<p
+								key={index}
+								style={{ margin: 0, color: 'white', fontSize: 13 }}
+							>
+								{payloadItem.payload.description.replace(
+									'X',
+									payloadItem.value
+								)}
+							</p>
+						);
+					}
+
 					return (
 						<p key={index} style={{ margin: 0, color: 'white', fontSize: 13 }}>
 							{payloadItem.value}% des démarches ont atteint de l'objectif de
