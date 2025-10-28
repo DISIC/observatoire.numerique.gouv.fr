@@ -111,6 +111,12 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 				}}
 			>
 				{payload.map((payloadItem, index: number) => {
+					if (
+						payloadItem.dataKey === 'goal' ||
+						payloadItem.dataKey === 'cross'
+					) {
+						return null;
+					}
 					if (payloadItem.payload.description) {
 						return (
 							<p
@@ -217,6 +223,12 @@ const RadarChartCustom = ({
 					stroke={color || fr.colors.decisions.artwork.minor.blueFrance.default}
 					fill={color || fr.colors.decisions.artwork.minor.blueFrance.default}
 					fillOpacity={0.2}
+					dot={{
+						fill: color || fr.colors.decisions.artwork.minor.blueFrance.default,
+						fillOpacity: 1,
+						stroke:
+							color || fr.colors.decisions.artwork.minor.blueFrance.default
+					}}
 					isAnimationActive={enableAnimation}
 				/>
 				{showGoalRadar && (
@@ -226,6 +238,11 @@ const RadarChartCustom = ({
 						stroke={fr.colors.decisions.background.flat.success.default}
 						fill={fr.colors.decisions.background.flat.success.default}
 						fillOpacity={0.2}
+						dot={{
+							fill: fr.colors.decisions.background.flat.success.default,
+							fillOpacity: 1,
+							stroke: fr.colors.decisions.background.flat.success.default
+						}}
 					/>
 				)}
 				{showCrossScorePerimeter && (
@@ -235,6 +252,11 @@ const RadarChartCustom = ({
 						stroke={fr.colors.options.orangeTerreBattue.main645.default}
 						fill={fr.colors.options.orangeTerreBattue.main645.default}
 						fillOpacity={0.2}
+						dot={{
+							fill: fr.colors.options.orangeTerreBattue.main645.default,
+							fillOpacity: 1,
+							stroke: fr.colors.options.orangeTerreBattue.main645.default
+						}}
 						isAnimationActive={enableAnimation}
 					/>
 				)}
@@ -246,6 +268,11 @@ const RadarChartCustom = ({
 							stroke={fr.colors.options.purpleGlycine._925_125.active}
 							fill={fr.colors.options.purpleGlycine._925_125.active}
 							fillOpacity={0.2}
+							dot={{
+								fill: fr.colors.options.purpleGlycine._925_125.active,
+								fillOpacity: 1,
+								stroke: fr.colors.options.purpleGlycine._925_125.active
+							}}
 							isAnimationActive={enableAnimation}
 						/>
 						<Legend
