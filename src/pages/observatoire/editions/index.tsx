@@ -17,20 +17,48 @@ type EditionTab = {
 };
 
 const oldEditions = [
-	{ slug: '2022-octobre', display: 'Octobre 2022' },
-	{ slug: '2022-juillet', display: 'Juillet 2022' },
-	{ slug: '2022-avril', display: 'Avril 2022' },
-	{ slug: '2022-janvier', display: 'Janvier 2022' },
-	{ slug: '2021-octobre', display: 'Octobre 2021' },
-	{ slug: '2021-juillet', display: 'Juillet 2021' },
-	{ slug: '2021-avril', display: 'Avril 2021' },
-	{ slug: '2021-janvier', display: 'Janvier 2021' },
-	{ slug: '2020-octobre', display: 'Octobre 2020' },
-	{ slug: '2020-juillet', display: 'Juillet 2020' },
-	{ slug: '2020-avril', display: 'Avril 2020' },
-	{ slug: '2020-janvier', display: 'Janvier 2020' },
-	{ slug: '2019-octobre', display: 'Octobre 2019' },
-	{ slug: '2019-juin', display: 'Juin 2019' }
+	{
+		slug: '2022-octobre',
+		display: 'Octobre 2022',
+		period: 'De juillet à septembre'
+	},
+	{ slug: '2022-juillet', display: 'Juillet 2022', period: 'De avril à juin' },
+	{ slug: '2022-avril', display: 'Avril 2022', period: 'De janvier à mars' },
+	{
+		slug: '2022-janvier',
+		display: 'Janvier 2022',
+		period: 'De octobre à décembre'
+	},
+	{
+		slug: '2021-octobre',
+		display: 'Octobre 2021',
+		period: 'De juillet à septembre'
+	},
+	{ slug: '2021-juillet', display: 'Juillet 2021', period: 'De avril à juin' },
+	{ slug: '2021-avril', display: 'Avril 2021', period: 'De janvier à mars' },
+	{
+		slug: '2021-janvier',
+		display: 'Janvier 2021',
+		period: 'De octobre à décembre'
+	},
+	{
+		slug: '2020-octobre',
+		display: 'Octobre 2020',
+		period: 'De juillet à septembre'
+	},
+	{ slug: '2020-juillet', display: 'Juillet 2020', period: 'De avril à juin' },
+	{ slug: '2020-avril', display: 'Avril 2020', period: 'De janvier à mars' },
+	{
+		slug: '2020-janvier',
+		display: 'Janvier 2020',
+		period: 'De octobre à décembre'
+	},
+	{
+		slug: '2019-octobre',
+		display: 'Octobre 2019',
+		period: 'De juillet à septembre'
+	},
+	{ slug: '2019-juin', display: 'Juin 2019', period: 'De mars à mai' }
 ];
 
 export default function ObservatoireEditions() {
@@ -64,7 +92,11 @@ export default function ObservatoireEditions() {
 				id: slugifyText(edition.name),
 				name: edition.name,
 				period: formatDateRangeFR(
-					new Date(edition.start_date),
+					new Date(
+						new Date(edition.end_date).setMonth(
+							new Date(edition.end_date).getMonth() - 2
+						)
+					),
 					new Date(edition.end_date)
 				)
 			});
@@ -79,7 +111,7 @@ export default function ObservatoireEditions() {
 				kind: 'old',
 				id: edition.slug,
 				name: edition.display,
-				period: ''
+				period: edition.period
 			});
 		});
 
