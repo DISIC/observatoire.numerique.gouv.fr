@@ -68,10 +68,6 @@ const DataViz = ({ kind, slug }: { kind: ProcedureKind; slug: string }) => {
 		}
 	] as TabsProps.Uncontrolled['tabs'];
 
-	const currentPageLabel = `${getProcedureKindLabel(kind, {
-		uppercaseFirst: true
-	})} des ${slug}`;
-
 	return (
 		<div className={cx(classes.root)}>
 			<div className={fr.cx('fr-container', 'fr-pt-6v')}>
@@ -86,10 +82,10 @@ const DataViz = ({ kind, slug }: { kind: ProcedureKind; slug: string }) => {
 						}
 					]}
 					homeLinkProps={{ href: '/' }}
-					currentPageLabel={currentPageLabel}
+					currentPageLabel={slug}
 					className={fr.cx('fr-mb-1v')}
 				/>
-				<h1>{currentPageLabel}</h1>
+				<h1>{slug}</h1>
 				<Tabs tabs={tabs} className={classes.tabsWrapper} />
 			</div>
 		</div>
