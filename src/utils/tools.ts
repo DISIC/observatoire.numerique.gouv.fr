@@ -9,7 +9,7 @@ import { fr as frDsfr } from '@codegouvfr/react-dsfr';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { validIndicatorSlugs } from './data-viz-client';
+import { RecordData, validIndicatorSlugs } from './data-viz-client';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -353,6 +353,9 @@ export function exportTableAsCSV(tableSelector: string, title: string) {
 			const cellClone = cell.cloneNode(true) as HTMLElement;
 
 			cellClone.querySelectorAll('p').forEach(p => p.remove());
+			cellClone
+				.querySelectorAll('span.fr-tooltip')
+				.forEach(span => span.remove());
 
 			const text = cellClone.textContent?.trim().replace(/"/g, '""') ?? '';
 
@@ -451,4 +454,13 @@ export const getColorValue = (value?: string) => {
 		default:
 			return '#000';
 	}
+};
+
+export const getTableHeadersFromData = (data: RecordData['data']) => {
+	return (
+		data.map(d => ({
+			name: d.name,
+			description: d.description_header
+		})) || []
+	);
 };

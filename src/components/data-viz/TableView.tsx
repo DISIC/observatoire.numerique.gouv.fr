@@ -1,8 +1,9 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { tss } from 'tss-react';
+import { Tooltip } from '@codegouvfr/react-dsfr/Tooltip';
 
 export type TableViewProps = {
-	headers: string[];
+	headers: { name: string; description: string }[];
 	rows: {
 		title?: string;
 		description?: string;
@@ -42,17 +43,22 @@ const TableView = ({ headers, rows = [], hidden, tableId }: TableViewProps) => {
 				<thead>
 					<tr>
 						{headers.map((h, index) =>
-							index === 0 && h !== '' ? (
+							index === 0 && h.name !== '' ? (
 								<th
 									scope="row"
-									key={`${h}_${index}`}
+									key={`${h.name}_${index}`}
 									style={{ textAlign: 'left' }}
 								>
-									{h}
+									{h.name}
 								</th>
 							) : (
-								<th scope="col" key={`${h}_${index}`}>
-									{h}
+								<th scope="col" key={`${h.name}_${index}`}>
+									{h.name}
+									{h.description && (
+										<span className={fr.cx('fr-ml-0-5v')}>
+											<Tooltip kind="hover" title={h.description} />
+										</span>
+									)}
 								</th>
 							)
 						)}

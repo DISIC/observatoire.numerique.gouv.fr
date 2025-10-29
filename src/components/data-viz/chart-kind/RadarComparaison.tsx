@@ -8,7 +8,8 @@ import { RecordData } from '@/utils/data-viz-client';
 import {
 	exportChartAsPng,
 	exportTableAsCSV,
-	getProcedureKindLabel
+	getProcedureKindLabel,
+	getTableHeadersFromData
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
@@ -207,7 +208,10 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 			</div>
 			{dataVisualitionKind === 'table' ? (
 				<TableView
-					headers={['', ...(radarData.map(d => d.name) || [])]}
+					headers={[
+						{ name: '', description: '' },
+						...getTableHeadersFromData(radarData || [])
+					]}
 					rows={getRows()}
 				/>
 			) : (

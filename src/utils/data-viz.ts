@@ -93,7 +93,8 @@ async function getIndicatorScores(props: {
 			cross: 0,
 			slug: indicator.slug,
 			name: indicator.label,
-			description: indicator.description_radar,
+			description_radar: indicator.description_radar,
+			description_header: indicator.description_header,
 			icon: indicator.icon,
 			goalLabel
 		};

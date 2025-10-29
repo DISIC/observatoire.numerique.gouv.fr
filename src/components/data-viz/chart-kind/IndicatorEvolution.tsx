@@ -159,8 +159,11 @@ const DataVizIndicatorEvolution = ({
 					{dataVisualitionKind === 'table' ? (
 						<TableView
 							headers={[
-								'',
-								...(indicatorData.groupedData.map(d => d.name) || [])
+								{ name: '', description: '' },
+								...(indicatorData.groupedData.map(d => ({
+									name: d.name,
+									description: ''
+								})) || [])
 							]}
 							rows={[
 								{

@@ -1,16 +1,16 @@
-import { tss } from 'tss-react';
-import { fr } from '@codegouvfr/react-dsfr';
-import { useIndicatorScoreByProcedureKind } from '@/utils/api';
 import DataVizTabHeader from '@/components/data-viz/Header';
-import { useState } from 'react';
-import { getProcedureKindLabel, stringToBase64Url } from '@/utils/tools';
-import { ProcedureKind } from '@/pages/api/indicator-scores';
-import TableView from '@/components/data-viz/TableView';
-import { useDebounce } from '@uidotdev/usehooks';
-import { Loader } from '@/components/generic/Loader';
-import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
-import { GetServerSidePropsContext } from 'next';
 import RadarWrapper from '@/components/data-viz/RadarWrapper';
+import TableView from '@/components/data-viz/TableView';
+import { Loader } from '@/components/generic/Loader';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { useIndicatorScoreByProcedureKind } from '@/utils/api';
+import { getProcedureKindLabel, getTableHeadersFromData } from '@/utils/tools';
+import { fr } from '@codegouvfr/react-dsfr';
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
+import { useDebounce } from '@uidotdev/usehooks';
+import { GetServerSidePropsContext } from 'next';
+import { useState } from 'react';
+import { tss } from 'tss-react';
 
 export type DataVizKind = 'radar' | 'table';
 
@@ -43,9 +43,9 @@ const TabContent = ({
 		isLoadingIndicatorScores || debouncedSearchTerm !== searchTerm;
 
 	const headers = [
-		'',
-		...(data[0]?.data.map(d => d.name) || []),
-		'Nombre de démarches'
+		{ name: '', description: '' },
+		...getTableHeadersFromData(data[0]?.data || []),
+		{ name: 'Nombre de démarches', description: '' }
 	];
 
 	const rows = data.map(item => ({

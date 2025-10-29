@@ -116,13 +116,13 @@ const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 							payloadItem.dataKey !== 'goal' && payloadItem.dataKey !== 'cross'
 					)
 					.map((payloadItem, index: number) => {
-						if (payloadItem.payload.description) {
+						if (payloadItem.payload.description_radar) {
 							return (
 								<p
 									key={index}
 									style={{ margin: 0, color: 'white', fontSize: 13 }}
 								>
-									{payloadItem.payload.description.replace(
+									{payloadItem.payload.description_radar.replace(
 										'X',
 										payloadItem.value
 									)}

@@ -132,7 +132,13 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 						</div>
 						{dataVisualitionKind === 'table' ? (
 							<TableView
-								headers={['', ...(apiData?.groupedData.map(d => d.name) || [])]}
+								headers={[
+									{ name: '', description: '' },
+									...(apiData?.groupedData.map(d => ({
+										name: d.name,
+										description: ''
+									})) || [])
+								]}
 								rows={getRows()}
 							/>
 						) : (
