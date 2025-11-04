@@ -176,7 +176,6 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 							priority={
 								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
 							}
-							title="Chart"
 						>
 							Radars
 						</Button>
@@ -187,7 +186,6 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 							priority={
 								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 							}
-							title="Table"
 							disabled={selectedKindValue === ''}
 						>
 							Tableaux

@@ -75,7 +75,6 @@ const DataVizTabHeader = ({
 							priority={
 								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
 							}
-							title="Radar"
 						>
 							Radars
 						</Button>
@@ -85,7 +84,6 @@ const DataVizTabHeader = ({
 							priority={
 								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 							}
-							title="Table"
 						>
 							Tableaux
 						</Button>
@@ -94,7 +92,6 @@ const DataVizTabHeader = ({
 						<Button
 							iconId="ri-download-line"
 							priority="secondary"
-							title="Exporter"
 							className={fr.cx('fr-ml-10v')}
 							onClick={() => exportTableAsCSV(`#${tableId}`, kindLabel)}
 						>
@@ -111,7 +108,7 @@ const DataVizTabHeader = ({
 						href="/Aide/Observatoire"
 						target="_blank"
 						rel="noreferrer"
-						title="VDE - Objectifs, nouvelle fenêtre"
+						title="Objectifs - Vos démarches essentielles, nouvelle fenêtre"
 					>
 						objectifs
 					</Link>{' '}
@@ -120,7 +117,7 @@ const DataVizTabHeader = ({
 						href="/Aide/Observatoire?tab=2"
 						target="_blank"
 						rel="noreferrer"
-						title="VDE - Indicateurs, nouvelle fenêtre"
+						title="Indicateurs - Vos démarches essentielles, nouvelle fenêtre"
 					>
 						indicateurs
 					</Link>{' '}

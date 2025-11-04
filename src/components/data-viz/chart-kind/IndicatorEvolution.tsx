@@ -105,7 +105,6 @@ const DataVizIndicatorEvolution = ({
 										priority={
 											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
 										}
-										title="Chart"
 									>
 										Courbe
 									</Button>
@@ -116,7 +115,6 @@ const DataVizIndicatorEvolution = ({
 										priority={
 											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 										}
-										title="Table"
 									>
 										Tableau
 									</Button>

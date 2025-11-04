@@ -100,7 +100,6 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 										priority={
 											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
 										}
-										title="Chart"
 									>
 										Graphique
 									</Button>
@@ -111,7 +110,6 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 										priority={
 											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
 										}
-										title="Table"
 									>
 										Tableau
 									</Button>
