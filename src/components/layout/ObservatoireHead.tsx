@@ -28,9 +28,8 @@ export function ObservatoireHead() {
 		case '/observatoire/editions/[slug]':
 		case '/observatoire/old/[slug]':
 			const { slug: editionSlug } = router.query as { slug: string };
-			const formattedEditionSlug = editionSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-			pageTitle = `Éditions - Tableau de suivi - ${formattedEditionSlug} - Vos démarches essentielles`;
-			og.title = `Éditions - Tableau de suivi - ${formattedEditionSlug}`;
+			pageTitle = `Éditions - Tableau de suivi - ${editionSlug} - Vos démarches essentielles`;
+			og.title = `Éditions - Tableau de suivi - ${editionSlug}`;
 			break;
 		case '/Aide/Observatoire':
 			pageTitle =
@@ -43,13 +42,23 @@ export function ObservatoireHead() {
 		case '/data-viz/[kind]':
 		case '/data-viz/procedure':
 			const { kind } = router.query;
-			const slugTitle = getProcedureKindLabel(kind as ProcedureKind, { plural: true, uppercaseFirst: true}) || 'Démarches';
+			const slugTitle =
+				getProcedureKindLabel(kind as ProcedureKind, {
+					plural: true,
+					uppercaseFirst: true
+				}) || 'Démarches';
 			pageTitle = `Graphiques - ${slugTitle} - Vos démarches essentielles`;
 			break;
 		case '/data-viz/[kind]/[slug]':
 			const { kind: kindDetail, slug } = router.query;
-			const procedureTitle = slug ? base64UrlToString(slug as string) : 'Démarche';
-			const kindLabel = getProcedureKindLabel(kindDetail as ProcedureKind, { plural: true, uppercaseFirst: true }) || 'Démarche';
+			const procedureTitle = slug
+				? base64UrlToString(slug as string)
+				: 'Démarche';
+			const kindLabel =
+				getProcedureKindLabel(kindDetail as ProcedureKind, {
+					plural: true,
+					uppercaseFirst: true
+				}) || 'Démarche';
 			pageTitle = `Graphiques - ${procedureTitle} (${kindLabel}) - Vos démarches essentielles`;
 			break;
 	}
