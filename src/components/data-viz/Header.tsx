@@ -197,7 +197,15 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 	},
 	tabsActions: {
 		display: 'flex',
-		alignItems: 'center'
+		alignItems: 'center',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('2w'),
+			alignItems: 'start',
+			'& > button': {
+				marginLeft: '0 !important'
+			}
+		}
 	},
 	buttonsGroup: {
 		display: 'flex',
