@@ -9,6 +9,7 @@ import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import {
 	exportChartAsImage,
 	exportTableAsCSV,
+	getProcedureKindLabel,
 	getValidIndicatorLabel
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
@@ -130,8 +131,11 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 						</div>
 						{dataVisualitionKind === 'table' ? (
 							<TableView
+								title={`Tableau de l'évolution de l’indicateur ${getValidIndicatorLabel(
+									indicator
+								)} pour l'${getProcedureKindLabel(kind)} "${slug}"`}
 								headers={[
-									{ name: '', description: '' },
+									{ name: "Nom du niveau de l'indicateur", description: '' },
 									...(apiData?.groupedData.map(d => ({
 										name: d.name,
 										description: ''

@@ -206,8 +206,14 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 			</div>
 			{dataVisualitionKind === 'table' ? (
 				<TableView
+					title={`Tableau de comparaison des scores des ${getProcedureKindLabel(
+						kind,
+						{
+							plural: true
+						}
+					)} entre "${slug}" et "${selectedKindValue}"`}
 					headers={[
-						{ name: '', description: '' },
+						{ name: `Nom ${getProcedureKindLabel(kind)}`, description: '' },
 						...getTableHeadersFromData(radarData || [])
 					]}
 					rows={getRows()}

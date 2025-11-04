@@ -43,7 +43,7 @@ const TabContent = ({
 		isLoadingIndicatorScores || debouncedSearchTerm !== searchTerm;
 
 	const headers = [
-		{ name: '', description: '' },
+		{ name: `Nom ${getProcedureKindLabel(kind)}`, description: '' },
 		...getTableHeadersFromData(data[0]?.data || []),
 		{ name: 'Nombre de démarches', description: '' }
 	];
@@ -98,6 +98,9 @@ const TabContent = ({
 			) : (
 				<>
 					<TableView
+						title={`Tableau des scores des ${getProcedureKindLabel(kind, {
+							plural: true
+						})}`}
 						headers={headers}
 						rows={rows}
 						hidden={dataVisualitionKind !== 'table'}

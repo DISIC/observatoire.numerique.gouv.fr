@@ -156,8 +156,9 @@ const DataVizIndicatorEvolution = ({
 					</div>
 					{dataVisualitionKind === 'table' ? (
 						<TableView
+							title={`Tableau de l'évolution de l’indicateur ${indicatorData.indicator?.label} pour la démarche ${procedure?.title}`}
 							headers={[
-								{ name: '', description: '' },
+								{ name: "Moyenne de l'indicateur", description: '' },
 								...(indicatorData.groupedData.map(d => ({
 									name: d.name,
 									description: ''

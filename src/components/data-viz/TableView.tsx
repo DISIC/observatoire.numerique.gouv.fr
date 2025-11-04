@@ -11,25 +11,29 @@ export type TableViewProps = {
 	}[];
 	hidden?: boolean;
 	tableId?: string;
+	title: string;
 };
 
-const TableView = ({ headers, rows = [], hidden, tableId }: TableViewProps) => {
+const TableView = ({
+	headers,
+	rows = [],
+	hidden,
+	tableId,
+	title
+}: TableViewProps) => {
 	const { classes, cx } = useStyles();
 
 	const displayRows = () => {
 		return rows.map((row, index) => (
 			<tr key={`${row.title}_${index}`}>
 				{row.title && (
-					<td style={{ textAlign: 'left' }}>
+					<th scope="row" style={{ textAlign: 'left' }}>
 						{row.title}
 						{row.description && <p>{row.description}</p>}
-					</td>
+					</th>
 				)}
 				{Object.keys(row.cells).map((key, indexC) => (
-					<td
-						key={`${row.title}_${index}_${key}_${indexC}`}
-						title={row.cells[key]?.toString()}
-					>
+					<td key={`${row.title}_${index}_${key}_${indexC}`}>
 						{row.cells[key]}
 					</td>
 				))}
@@ -40,16 +44,13 @@ const TableView = ({ headers, rows = [], hidden, tableId }: TableViewProps) => {
 	return (
 		<div className={cx(classes.tableContainer, hidden && classes.hiddenTable)}>
 			<table className={cx(fr.cx('fr-table'), classes.table)} id={tableId}>
+				<caption className={fr.cx('fr-sr-only')}>{title}</caption>
 				<thead>
 					<tr>
 						{headers.map((h, index) =>
 							index === 0 && h.name !== '' ? (
-								<th
-									scope="row"
-									key={`${h.name}_${index}`}
-									style={{ textAlign: 'left' }}
-								>
-									{h.name}
+								<th scope="col" key={`${h.name}_${index}`}>
+									<span className={fr.cx('fr-sr-only')}>{h.name}</span>
 								</th>
 							) : (
 								<th scope="col" key={`${h.name}_${index}`}>
@@ -115,11 +116,11 @@ const useStyles = tss.create({
 				':nth-of-type(odd)': {
 					backgroundColor: fr.colors.decisions.background.default.grey.hover
 				},
+				th: {
+					fontWeight: 'bold',
+					paddingLeft: '1rem'
+				},
 				td: {
-					'&:first-of-type': {
-						fontWeight: 'bold',
-						paddingLeft: '1rem'
-					},
 					p: {
 						...fr.typography[17].style,
 						fontWeight: 'normal'
