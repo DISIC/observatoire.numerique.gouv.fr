@@ -14,6 +14,7 @@ import {
 } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
+import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 import { useRef, useState } from 'react';
 import { tss } from 'tss-react';
 
@@ -93,28 +94,28 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 								<p className={classes.chartLegend}>{legend}</p>
 							</div>
 							<div className={classes.tabsActions}>
-								<div className={classes.buttonsGroup}>
-									<Button
-										iconId="ri-bar-chart-line"
-										onClick={() => setDataVisualitionKind('line')}
-										size="small"
-										priority={
-											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
+								<SegmentedControl
+									hideLegend
+									small
+									segments={[
+										{
+											label: 'Graphique',
+											nativeInputProps: {
+												checked: dataVisualitionKind === 'line',
+												onClick: () => setDataVisualitionKind('line')
+											},
+											iconId: 'ri-bar-chart-line'
+										},
+										{
+											label: 'Tableaux',
+											nativeInputProps: {
+												checked: dataVisualitionKind === 'table',
+												onClick: () => setDataVisualitionKind('table')
+											},
+											iconId: 'ri-table-line'
 										}
-									>
-										Graphique
-									</Button>
-									<Button
-										iconId="ri-table-line"
-										onClick={() => setDataVisualitionKind('table')}
-										size="small"
-										priority={
-											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-										}
-									>
-										Tableau
-									</Button>
-								</div>
+									]}
+								/>
 								<Button
 									iconId="ri-download-line"
 									priority="secondary"
@@ -203,6 +204,7 @@ const useStyles = tss.withName(DataVizEvolution.name).create(() => ({
 	tabsActions: {
 		display: 'flex',
 		alignItems: 'center',
+		gap: fr.spacing('6v'),
 		[fr.breakpoints.down('md')]: {
 			flexDirection: 'column',
 			gap: fr.spacing('4v'),

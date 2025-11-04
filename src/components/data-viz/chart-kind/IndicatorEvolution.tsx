@@ -12,6 +12,7 @@ import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import { exportChartAsImage, exportTableAsCSV } from '@/utils/tools';
 import TableView from '../TableView';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 
 const indicatorLegends = [
 	{
@@ -97,28 +98,28 @@ const DataVizIndicatorEvolution = ({
 								</p>
 							</div>
 							<div className={classes.tabsActions}>
-								<div className={classes.buttonsGroup}>
-									<Button
-										iconId="ri-line-chart-line"
-										onClick={() => setDataVisualitionKind('line')}
-										size="small"
-										priority={
-											dataVisualitionKind === 'line' ? 'primary' : 'secondary'
+								<SegmentedControl
+									hideLegend
+									small
+									segments={[
+										{
+											label: 'Courbe',
+											nativeInputProps: {
+												checked: dataVisualitionKind === 'line',
+												onClick: () => setDataVisualitionKind('line')
+											},
+											iconId: 'ri-line-chart-line'
+										},
+										{
+											label: 'Tableaux',
+											nativeInputProps: {
+												checked: dataVisualitionKind === 'table',
+												onClick: () => setDataVisualitionKind('table')
+											},
+											iconId: 'ri-table-line'
 										}
-									>
-										Courbe
-									</Button>
-									<Button
-										iconId="ri-table-line"
-										onClick={() => setDataVisualitionKind('table')}
-										size="small"
-										priority={
-											dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-										}
-									>
-										Tableau
-									</Button>
-								</div>
+									]}
+								/>
 								<Button
 									iconId="ri-download-line"
 									priority={'secondary'}
@@ -240,6 +241,7 @@ const useStyles = tss.withName(DataVizIndicatorEvolution.name).create({
 	tabsActions: {
 		display: 'flex',
 		alignItems: 'center',
+		gap: fr.spacing('6v'),
 		[fr.breakpoints.down('md')]: {
 			flexDirection: 'column',
 			gap: fr.spacing('4v'),
@@ -250,11 +252,6 @@ const useStyles = tss.withName(DataVizIndicatorEvolution.name).create({
 		display: 'flex',
 		flexDirection: 'column',
 		gap: fr.spacing('1v')
-	},
-	buttonsGroup: {
-		display: 'flex',
-		gap: fr.spacing('2v'),
-		marginRight: fr.spacing('6v')
 	},
 	buttonExport: {
 		minWidth: 'max-content'

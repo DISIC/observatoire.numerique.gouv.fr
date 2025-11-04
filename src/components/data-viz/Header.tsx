@@ -10,6 +10,7 @@ import { getProcedureKindLabel } from '@/utils/tools';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { exportTableAsCSV } from '@/utils/tools';
 import Link from 'next/link';
+import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 
 type DataVizTabHeaderProps = {
 	kind: ProcedureKind;
@@ -68,26 +69,27 @@ const DataVizTabHeader = ({
 					)}
 				/>
 				<div className={classes.tabsActions}>
-					<div className={cx(classes.buttonsGroup)}>
-						<Button
-							iconId="ri-pentagon-line"
-							onClick={() => setDataVisualitionKind('radar')}
-							priority={
-								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
+					<SegmentedControl
+						hideLegend
+						segments={[
+							{
+								label: 'Radars',
+								nativeInputProps: {
+									checked: dataVisualitionKind === 'radar',
+									onClick: () => setDataVisualitionKind('radar')
+								},
+								iconId: 'ri-pentagon-line'
+							},
+							{
+								label: 'Tableaux',
+								nativeInputProps: {
+									checked: dataVisualitionKind === 'table',
+									onClick: () => setDataVisualitionKind('table')
+								},
+								iconId: 'ri-table-line'
 							}
-						>
-							Radars
-						</Button>
-						<Button
-							iconId="ri-table-line"
-							onClick={() => setDataVisualitionKind('table')}
-							priority={
-								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-							}
-						>
-							Tableaux
-						</Button>
-					</div>
+						]}
+					/>
 					{dataVisualitionKind === 'table' && (
 						<Button
 							iconId="ri-download-line"
@@ -206,10 +208,6 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 				marginLeft: '0 !important'
 			}
 		}
-	},
-	buttonsGroup: {
-		display: 'flex',
-		gap: fr.spacing('2v')
 	}
 }));
 
