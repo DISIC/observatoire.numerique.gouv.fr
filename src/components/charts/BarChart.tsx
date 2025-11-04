@@ -157,6 +157,8 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 				data={transformedData}
 				margin={{ bottom: 20 }}
 				ref={chartRef}
+				accessibilityLayer
+				tabIndex={-1}
 			>
 				<XAxis
 					axisLine={{
