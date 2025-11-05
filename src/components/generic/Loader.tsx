@@ -14,7 +14,9 @@ export const Loader = (props: Props) => {
 			<div>
 				<i className={fr.cx('ri-loader-4-line')} />
 			</div>
-			<p className={fr.cx('fr-pt-4v')}>{loadingMessage || 'Chargement...'}</p>
+			<p className={fr.cx('fr-pt-4v')} role="status">
+				{loadingMessage || 'Chargement...'}
+			</p>
 		</div>
 	);
 };

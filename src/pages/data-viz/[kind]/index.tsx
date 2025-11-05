@@ -86,9 +86,8 @@ const TabContent = ({
 							fr.cx('fr-col-12', 'fr-col-md-5', 'fr-my-30v'),
 							classes.textContainer
 						)}
-						role="status"
 					>
-						<p aria-live="assertive">
+						<p role="status">
 							Aucun{kind === 'administration' ? 'e' : ''}{' '}
 							{getProcedureKindLabel(kind)}{' '}
 							{searchTerm ? `pour la recherche "${searchTerm}"` : ''}
@@ -121,6 +120,9 @@ const TabContent = ({
 							))}
 						</div>
 					)}
+					<p role="status" className={fr.cx('fr-sr-only')}>
+						{data.length} résultats
+					</p>
 				</>
 			)}
 		</div>
