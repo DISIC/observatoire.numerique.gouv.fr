@@ -10,6 +10,7 @@ import { getProcedureKindLabel } from '@/utils/tools';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { exportTableAsCSV } from '@/utils/tools';
 import Link from 'next/link';
+import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 
 type DataVizTabHeaderProps = {
 	kind: ProcedureKind;
@@ -68,33 +69,31 @@ const DataVizTabHeader = ({
 					)}
 				/>
 				<div className={classes.tabsActions}>
-					<div className={cx(classes.buttonsGroup)}>
-						<Button
-							iconId="ri-pentagon-line"
-							onClick={() => setDataVisualitionKind('radar')}
-							priority={
-								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
+					<SegmentedControl
+						hideLegend
+						segments={[
+							{
+								label: 'Radars',
+								nativeInputProps: {
+									checked: dataVisualitionKind === 'radar',
+									onClick: () => setDataVisualitionKind('radar')
+								},
+								iconId: 'ri-pentagon-line'
+							},
+							{
+								label: 'Tableaux',
+								nativeInputProps: {
+									checked: dataVisualitionKind === 'table',
+									onClick: () => setDataVisualitionKind('table')
+								},
+								iconId: 'ri-table-line'
 							}
-							title="Radar"
-						>
-							Radars
-						</Button>
-						<Button
-							iconId="ri-table-line"
-							onClick={() => setDataVisualitionKind('table')}
-							priority={
-								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-							}
-							title="Table"
-						>
-							Tableaux
-						</Button>
-					</div>
+						]}
+					/>
 					{dataVisualitionKind === 'table' && (
 						<Button
 							iconId="ri-download-line"
 							priority="secondary"
-							title="Exporter"
 							className={fr.cx('fr-ml-10v')}
 							onClick={() => exportTableAsCSV(`#${tableId}`, kindLabel)}
 						>
@@ -111,7 +110,7 @@ const DataVizTabHeader = ({
 						href="/Aide/Observatoire"
 						target="_blank"
 						rel="noreferrer"
-						title="VDE - Objectifs, nouvelle fenêtre"
+						title="Objectifs - Vos démarches essentielles, nouvelle fenêtre"
 					>
 						objectifs
 					</Link>{' '}
@@ -120,7 +119,7 @@ const DataVizTabHeader = ({
 						href="/Aide/Observatoire?tab=2"
 						target="_blank"
 						rel="noreferrer"
-						title="VDE - Indicateurs, nouvelle fenêtre"
+						title="Indicateurs - Vos démarches essentielles, nouvelle fenêtre"
 					>
 						indicateurs
 					</Link>{' '}
@@ -200,11 +199,15 @@ const useStyles = tss.withName(DataVizTabHeader.name).create(() => ({
 	},
 	tabsActions: {
 		display: 'flex',
-		alignItems: 'center'
-	},
-	buttonsGroup: {
-		display: 'flex',
-		gap: fr.spacing('2v')
+		alignItems: 'center',
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column',
+			gap: fr.spacing('2w'),
+			alignItems: 'start',
+			'& > button': {
+				marginLeft: '0 !important'
+			}
+		}
 	}
 }));
 

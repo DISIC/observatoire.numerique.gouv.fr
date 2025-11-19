@@ -134,21 +134,26 @@ const DataVizProceduresList = ({ kind, slug }: DataVizProceduresListProps) => {
 						)}
 						role="status"
 					>
-						<p aria-live="assertive">
+						<p>
 							Aucune démarche {search ? `pour la recherche "${search}"` : ''}
 						</p>
 					</div>
 				</div>
 			) : (
-				<div className={cx(classes.grid)}>
-					{procedures?.map(item => (
-						<ProcedureIndicatorsGridItem
-							key={item.id}
-							procedure={item}
-							indicators={indicators}
-						/>
-					))}
-				</div>
+				<>
+					<div className={cx(classes.grid)}>
+						{procedures?.map(item => (
+							<ProcedureIndicatorsGridItem
+								key={item.id}
+								procedure={item}
+								indicators={indicators}
+							/>
+						))}
+					</div>
+					<p role="status" className={fr.cx('fr-sr-only')}>
+						{procedures?.length} résultats
+					</p>
+				</>
 			)}
 		</div>
 	);

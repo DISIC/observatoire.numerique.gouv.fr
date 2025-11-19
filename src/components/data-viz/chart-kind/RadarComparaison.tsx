@@ -19,6 +19,7 @@ import ToggleSwitch from '@codegouvfr/react-dsfr/ToggleSwitch';
 import { useEffect, useId, useRef, useState } from 'react';
 import { tss } from 'tss-react';
 import RadarWrapper from '../RadarWrapper';
+import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 
 type RadarComparisonProps = {
 	kind: ProcedureKind;
@@ -168,31 +169,29 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 					)}
 				</div>
 				<div className={classes.buttonsWrapper}>
-					<div className={classes.buttonsGroup}>
-						<Button
-							iconId="ri-pentagon-line"
-							onClick={() => setDataVisualitionKind('radar')}
-							size="small"
-							priority={
-								dataVisualitionKind === 'radar' ? 'primary' : 'secondary'
+					<SegmentedControl
+						hideLegend
+						small
+						segments={[
+							{
+								label: 'Radars',
+								nativeInputProps: {
+									checked: dataVisualitionKind === 'radar',
+									onClick: () => setDataVisualitionKind('radar')
+								},
+								iconId: 'ri-pentagon-line'
+							},
+							{
+								label: 'Tableaux',
+								nativeInputProps: {
+									checked: dataVisualitionKind === 'table',
+									onClick: () => setDataVisualitionKind('table'),
+									disabled: selectedKindValue === ''
+								},
+								iconId: 'ri-table-line'
 							}
-							title="Chart"
-						>
-							Radars
-						</Button>
-						<Button
-							iconId="ri-table-line"
-							onClick={() => setDataVisualitionKind('table')}
-							size="small"
-							priority={
-								dataVisualitionKind === 'table' ? 'primary' : 'secondary'
-							}
-							title="Table"
-							disabled={selectedKindValue === ''}
-						>
-							Tableaux
-						</Button>
-					</div>
+						]}
+					/>
 					{dataVisualitionKind === 'table' && (
 						<Button
 							iconId="ri-download-line"
@@ -208,8 +207,14 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 			</div>
 			{dataVisualitionKind === 'table' ? (
 				<TableView
+					title={`Tableau de comparaison des scores des ${getProcedureKindLabel(
+						kind,
+						{
+							plural: true
+						}
+					)} entre "${slug}" et "${selectedKindValue}"`}
 					headers={[
-						{ name: '', description: '' },
+						{ name: `Nom ${getProcedureKindLabel(kind)}`, description: '' },
 						...getTableHeadersFromData(radarData || [])
 					]}
 					rows={getRows()}

@@ -75,7 +75,12 @@ const ComposedChartCustom = ({
 
 	return (
 		<ResponsiveContainer width="100%" height="100%">
-			<ComposedChart data={formattedData} margin={{ bottom: 20, left: -20 }}>
+			<ComposedChart
+				data={formattedData}
+				margin={{ bottom: 20, left: -20 }}
+				accessibilityLayer
+				tabIndex={-1}
+			>
 				<XAxis
 					dataKey="name"
 					tickLine={false}

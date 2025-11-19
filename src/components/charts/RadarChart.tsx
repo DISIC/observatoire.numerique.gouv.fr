@@ -191,6 +191,7 @@ const RadarChartCustom = ({
 			<RadarChart
 				data={data}
 				accessibilityLayer
+				tabIndex={-1}
 				margin={{ top: 16 }}
 				style={{
 					display: 'flex',

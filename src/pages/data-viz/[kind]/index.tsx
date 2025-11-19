@@ -43,7 +43,7 @@ const TabContent = ({
 		isLoadingIndicatorScores || debouncedSearchTerm !== searchTerm;
 
 	const headers = [
-		{ name: '', description: '' },
+		{ name: `Nom ${getProcedureKindLabel(kind)}`, description: '' },
 		...getTableHeadersFromData(data[0]?.data || []),
 		{ name: 'Nombre de démarches', description: '' }
 	];
@@ -86,9 +86,8 @@ const TabContent = ({
 							fr.cx('fr-col-12', 'fr-col-md-5', 'fr-my-30v'),
 							classes.textContainer
 						)}
-						role="status"
 					>
-						<p aria-live="assertive">
+						<p role="status">
 							Aucun{kind === 'administration' ? 'e' : ''}{' '}
 							{getProcedureKindLabel(kind)}{' '}
 							{searchTerm ? `pour la recherche "${searchTerm}"` : ''}
@@ -98,6 +97,9 @@ const TabContent = ({
 			) : (
 				<>
 					<TableView
+						title={`Tableau des scores des ${getProcedureKindLabel(kind, {
+							plural: true
+						})}`}
 						headers={headers}
 						rows={rows}
 						hidden={dataVisualitionKind !== 'table'}
@@ -118,6 +120,9 @@ const TabContent = ({
 							))}
 						</div>
 					)}
+					<p role="status" className={fr.cx('fr-sr-only')}>
+						{data.length} résultats
+					</p>
 				</>
 			)}
 		</div>
