@@ -203,11 +203,17 @@ export async function getIndicatorEvolution({
 					.map(level => {
 						if (typeof level === 'string' || !level.label_stats) return null;
 
-						const count = fields.filter(field =>
-							field.color === 'gray'
-								? field.label === level.label_stats
-								: field.color === level.color
-						).length;
+						const count = new Set(
+							fields
+								.filter(
+									field =>
+										field.slug === slug &&
+										(field.color === 'gray'
+											? field.label === level.label_stats
+											: field.color === level.color)
+								)
+								.map(field => field.procedureId)
+						).size;
 
 						return {
 							label: level.label_stats,
@@ -334,11 +340,17 @@ export async function getIndicatorEvolution({
 				.map(level => {
 					if (typeof level === 'string' || !level.label_stats) return null;
 
-					const count = procedures.filter(procedure =>
-						procedure.fields.some(
-							f => f.slug === slug && f.color === level.color
-						)
-					).length;
+					const count = new Set(
+						fields
+							.filter(
+								field =>
+									field.slug === slug &&
+									(field.color === 'gray'
+										? field.label === level.label_stats
+										: field.color === level.color)
+							)
+							.map(field => field.procedureId)
+					).size;
 
 					return {
 						label: level.label_stats,
