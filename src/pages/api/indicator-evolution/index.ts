@@ -334,10 +334,10 @@ export async function getIndicatorEvolution({
 				.map(level => {
 					if (typeof level === 'string' || !level.label_stats) return null;
 
-					const count = fields.filter(field =>
-						field.color === 'gray'
-							? field.label === level.label_stats
-							: field.color === level.color
+					const count = procedures.filter(procedure =>
+						procedure.fields.some(
+							f => f.slug === slug && f.color === level.color
+						)
 					).length;
 
 					return {
