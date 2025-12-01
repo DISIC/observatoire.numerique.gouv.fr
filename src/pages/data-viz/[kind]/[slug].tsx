@@ -9,6 +9,7 @@ import DataVizEvolution from '@/components/data-viz/chart-kind/Evolution';
 import RadarComparison from '@/components/data-viz/chart-kind/RadarComparaison';
 import DataVizProceduresList from '@/components/data-viz/ProcedureList';
 import { GetServerSidePropsContext } from 'next';
+import { useEffect, useState } from 'react';
 
 const evolutionLegends = [
 	'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du périmètre.',
@@ -40,33 +41,51 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
 const DataViz = ({ kind, slug }: { kind: ProcedureKind; slug: string }) => {
 	const { classes, cx } = useStyles();
+	const [selectedTabId, setSelectedTabId] = useState('tab-0');
+
+	useEffect(() => {
+		setSelectedTabId('tab-0');
+	}, [slug]);
 
 	const tabs = [
 		{
-			label: `Analyser les indicateurs du ${getProcedureKindLabel(kind)}`,
-			content: (
-				<div className={classes.evolutionContainer}>
-					{validIndicatorSlugs.map((indicator, index) => (
-						<DataVizEvolution
-							key={indicator}
-							kind={kind}
-							slug={slug}
-							indicator={indicator}
-							legend={evolutionLegends[index]}
-						/>
-					))}
-				</div>
-			)
+			tabId: 'tab-0',
+			label: `Analyser les indicateurs du ${getProcedureKindLabel(kind)}`
 		},
 		{
-			label: `Comparer le ${getProcedureKindLabel(kind)}`,
-			content: <RadarComparison kind={kind} slug={slug} />
+			tabId: 'tab-1',
+			label: `Comparer le ${getProcedureKindLabel(kind)}`
 		},
 		{
-			label: `Voir les démarches du ${getProcedureKindLabel(kind)}`,
-			content: <DataVizProceduresList kind={kind} slug={slug} />
+			tabId: 'tab-2',
+			label: `Voir les démarches du ${getProcedureKindLabel(kind)}`
 		}
-	] as TabsProps.Uncontrolled['tabs'];
+	] as TabsProps.Controlled['tabs'];
+
+	const renderTabContent = () => {
+		switch (selectedTabId) {
+			case 'tab-0':
+				return (
+					<div className={classes.evolutionContainer}>
+						{validIndicatorSlugs.map((indicator, index) => (
+							<DataVizEvolution
+								key={indicator}
+								kind={kind}
+								slug={slug}
+								indicator={indicator}
+								legend={evolutionLegends[index]}
+							/>
+						))}
+					</div>
+				);
+			case 'tab-1':
+				return <RadarComparison kind={kind} slug={slug} />;
+			case 'tab-2':
+				return <DataVizProceduresList kind={kind} slug={slug} />;
+			default:
+				return null;
+		}
+	};
 
 	return (
 		<div className={cx(classes.root)}>
@@ -86,7 +105,14 @@ const DataViz = ({ kind, slug }: { kind: ProcedureKind; slug: string }) => {
 					className={fr.cx('fr-mb-1v')}
 				/>
 				<h1>{slug}</h1>
-				<Tabs tabs={tabs} className={classes.tabsWrapper} />
+				<Tabs
+					tabs={tabs}
+					className={classes.tabsWrapper}
+					selectedTabId={selectedTabId}
+					onTabChange={setSelectedTabId}
+				>
+					{renderTabContent()}
+				</Tabs>
 			</div>
 		</div>
 	);

@@ -240,6 +240,7 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 								classes.radarCard,
 								shouldRadarOverlay && fr.cx('fr-pt-0')
 							]}
+							hideButtonsGroup
 						/>
 						{!shouldRadarOverlay && (
 							<>
