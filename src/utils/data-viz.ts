@@ -163,7 +163,7 @@ export async function getIndicatorScoresByProcedureKindSlug({
 }: GetIndicatorScoresByProcedureKindSlugProps) {
 	const data = await getIndicatorScores({
 		kind,
-		group: { text: desufligyText(slug), _count: 0 }
+		group: { text: slug, _count: 0 }
 	});
 
 	return data;
