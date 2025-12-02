@@ -47,18 +47,25 @@ const DataViz = ({ kind, slug }: { kind: ProcedureKind; slug: string }) => {
 		setSelectedTabId('tab-0');
 	}, [slug]);
 
+	const procedureKindLabel = getProcedureKindLabel(kind);
 	const tabs = [
 		{
 			tabId: 'tab-0',
-			label: `Analyser les indicateurs du ${getProcedureKindLabel(kind)}`
+			label: `Analyser les indicateurs ${
+				kind === 'administration' ? "de l'" : 'du '
+			}${procedureKindLabel}`
 		},
 		{
 			tabId: 'tab-1',
-			label: `Comparer le ${getProcedureKindLabel(kind)}`
+			label: `Comparer ${
+				kind === 'administration' ? "l'" : 'le '
+			}${procedureKindLabel}`
 		},
 		{
 			tabId: 'tab-2',
-			label: `Voir les démarches du ${getProcedureKindLabel(kind)}`
+			label: `Voir les démarches ${
+				kind === 'administration' ? "de l'" : 'du '
+			}${procedureKindLabel}`
 		}
 	] as TabsProps.Controlled['tabs'];
 
