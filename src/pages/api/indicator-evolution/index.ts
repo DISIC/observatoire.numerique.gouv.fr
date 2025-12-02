@@ -75,6 +75,47 @@ export async function getIndicatorEvolution({
 
 	const indicatorLevels = validIndicator.levels?.docs || [];
 
+	const getCrossValueLabel = (
+		crossValue: number | undefined
+	): string | undefined => {
+		if (crossValue === undefined) return undefined;
+
+		const sortedLevels = indicatorLevels
+			.filter(
+				level =>
+					typeof level !== 'string' &&
+					level.label_stats &&
+					level.threshold !== undefined &&
+					level.threshold !== null
+			)
+			.sort((a, b) => {
+				if (typeof a === 'string' || typeof b === 'string') return 0;
+				return (b.threshold ?? 0) - (a.threshold ?? 0);
+			});
+
+		for (const level of sortedLevels) {
+			if (typeof level === 'string' || !level.label_stats) continue;
+
+			if (validIndicator.slug === 'dlnuf') {
+				if (crossValue >= (level.threshold ?? 0)) {
+					return level.label_stats;
+				}
+			} else {
+				if (crossValue >= (level.threshold ?? 0)) {
+					return (
+						level.label?.replace(/X/g, crossValue.toString()) || level.label
+					);
+				}
+			}
+		}
+
+		const lastLevel = sortedLevels[sortedLevels.length - 1];
+
+		return typeof lastLevel !== 'string' && lastLevel?.label_stats
+			? lastLevel.label_stats
+			: undefined;
+	};
+
 	const editions = await prisma.edition.findMany({
 		orderBy: {
 			created_at: 'desc'
@@ -115,50 +156,43 @@ export async function getIndicatorEvolution({
 					}
 				});
 
-				if (kind !== undefined && kindValue !== undefined) {
-					const procedureKindElements = await prisma.procedure.findMany({
-						where: {
-							editionId: {
-								in: editionIds
-							},
-							[kind]: kindValue
+				const procedureKindElements = await prisma.procedure.findMany({
+					where: {
+						editionId: {
+							in: editionIds
 						},
-						include: {
-							fields: true
-						}
-					});
+						...(kind !== undefined && kindValue !== undefined
+							? { [kind]: kindValue }
+							: {})
+					},
+					include: {
+						fields: true
+					}
+				});
 
-					cross =
-						procedureKindElements.length > 0
-							? (() => {
-									const values = procedureKindElements
-										.map(p => {
-											const field = p.fields.find(
-												f => f.slug === validIndicator.slug
-											);
-											const value =
-												field && field.value ? parseFloat(field.value) : NaN;
-											return isNaN(value) ? null : value;
-										})
-										.filter((v): v is number => v !== null);
-									if (values.length === 0) return undefined;
-									return (
-										Math.round(
-											(values.reduce((acc, v) => acc + v, 0) / values.length) *
-												10
-										) / 10
-									);
-							  })()
-							: undefined;
+				cross =
+					procedureKindElements.length > 0
+						? (() => {
+								const values = procedureKindElements
+									.map(p => {
+										const field = p.fields.find(
+											f => f.slug === validIndicator.slug
+										);
+										const value =
+											field && field.value ? parseFloat(field.value) : NaN;
+										return isNaN(value) ? null : value;
+									})
+									.filter((v): v is number => v !== null);
+								if (values.length === 0) return undefined;
+								return (
+									Math.round(
+										(values.reduce((acc, v) => acc + v, 0) / values.length) * 10
+									) / 10
+								);
+						  })()
+						: undefined;
 
-					crossValueLabel =
-						procedures[0]?.fields
-							.find(f => f.slug === validIndicator.slug)
-							?.label.includes('/ 10') && cross !== undefined
-							? `${cross} / 10`
-							: procedures[0]?.fields.find(f => f.slug === validIndicator.slug)
-									?.label;
-				}
+				crossValueLabel = getCrossValueLabel(cross);
 
 				if (singleValue) {
 					if (!procedures[0] || procedures[0].fields.length === 0) return;
@@ -269,46 +303,40 @@ export async function getIndicatorEvolution({
 				}
 			});
 
-			if (kind !== undefined && kindValue !== undefined) {
-				const procedureKindElements = await prisma.procedure.findMany({
-					where: {
-						editionId: edition.id,
-						[kind]: kindValue
-					},
-					include: {
-						fields: true
-					}
-				});
+			const procedureKindElements = await prisma.procedure.findMany({
+				where: {
+					editionId: edition.id,
+					...(kind !== undefined && kindValue !== undefined
+						? { [kind]: kindValue }
+						: {})
+				},
+				include: {
+					fields: true
+				}
+			});
 
-				cross =
-					procedureKindElements.length > 0
-						? (() => {
-								const values = procedureKindElements
-									.map(p => {
-										const field = p.fields.find(
-											f => f.slug === validIndicator.slug
-										);
-										const value =
-											field && field.value ? parseFloat(field.value) : NaN;
-										return isNaN(value) ? null : value;
-									})
-									.filter((v): v is number => v !== null);
-								if (values.length === 0) return undefined;
-								return (
-									Math.round(
-										(values.reduce((acc, v) => acc + v, 0) / values.length) * 10
-									) / 10
-								);
-						  })()
-						: undefined;
-				crossValueLabel =
-					procedures[0]?.fields
-						.find(f => f.slug === validIndicator.slug)
-						?.label.includes('/ 10') && cross !== undefined
-						? `${cross} / 10`
-						: procedures[0]?.fields.find(f => f.slug === validIndicator.slug)
-								?.label;
-			}
+			cross =
+				procedureKindElements.length > 0
+					? (() => {
+							const values = procedureKindElements
+								.map(p => {
+									const field = p.fields.find(
+										f => f.slug === validIndicator.slug
+									);
+									const value =
+										field && field.value ? parseFloat(field.value) : NaN;
+									return isNaN(value) ? null : value;
+								})
+								.filter((v): v is number => v !== null);
+							if (values.length === 0) return undefined;
+							return (
+								Math.round(
+									(values.reduce((acc, v) => acc + v, 0) / values.length) * 10
+								) / 10
+							);
+					  })()
+					: undefined;
+			crossValueLabel = getCrossValueLabel(cross);
 
 			if (singleValue) {
 				if (!procedures[0] || procedures[0].fields.length === 0) return;
