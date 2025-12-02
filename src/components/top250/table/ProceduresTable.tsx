@@ -139,13 +139,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				scrollRef.current.scrollLeft -
-				_firstColSize -
-				20
+				  scrollRef.current.scrollLeft -
+				  _firstColSize -
+				  20
 				: _containerWidth -
-				_firstColSize -
-				_arrowSlideSize +
-				scrollRef.current.scrollLeft;
+				  _firstColSize -
+				  _arrowSlideSize +
+				  scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -167,10 +167,7 @@ export function ProceduresTable(props: Props) {
 
 	return (
 		<>
-			<div
-				className={cx(classes.root)}
-				ref={scrollRef}
-			>
+			<div className={cx(classes.root)} ref={scrollRef}>
 				<table
 					className={cx(classes.table)}
 					ref={tableRef}
@@ -191,7 +188,15 @@ export function ProceduresTable(props: Props) {
 							</th>
 							{indicators.map((indicator, index) => {
 								return (
-									<th key={indicator.label} scope="col" aria-sort={currentSort?.slug === indicator.slug ? `${currentSort.direction}ending` : undefined}>
+									<th
+										key={indicator.label}
+										scope="col"
+										aria-sort={
+											currentSort?.slug === indicator.slug
+												? `${currentSort.direction}ending`
+												: undefined
+										}
+									>
 										<div className={classes.indicatorWrapper}>
 											<ColumnHeaderDefinition
 												slug={indicator.slug as IndicatorSlug}
@@ -235,7 +240,9 @@ export function ProceduresTable(props: Props) {
 								>
 									<i
 										className={fr.cx(
-											!isRight ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'
+											!isRight
+												? 'ri-arrow-right-s-line'
+												: 'ri-arrow-left-s-line'
 										)}
 									/>
 								</Button>
@@ -412,7 +419,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 							['& > div']: {
 								borderTopRightRadius: _thRadius
 							}
-						},
+						}
 					},
 					['&.sticked-row']: {
 						overflowX: 'scroll',
@@ -427,7 +434,7 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 						maxWidth: `calc(100% - ${_arrowSlideSize}px)`,
 						th: {
 							borderBottom: `3px solid ${fr.colors.decisions.background.contrast.info.default}`,
-							borderTopLeftRadius: _thRadius,
+							borderTopLeftRadius: _thRadius
 						},
 						['th:nth-of-type(2)']: {
 							borderTopLeftRadius: 0
