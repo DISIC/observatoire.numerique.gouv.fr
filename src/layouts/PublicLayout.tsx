@@ -42,15 +42,6 @@ const PublicLayout = (props: Props) => {
 		{
 			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: 'https://jedonnemonavis.numerique.gouv.fr',
-				target: '_blank',
-				title: 'Je donne mon avis, nouvelle fenêtre'
-			},
-			text: 'Je donne mon avis'
-		},
-		{
-			iconId: 'ri-user-star-line',
-			linkProps: {
 				href: 'https://www.data.gouv.fr/fr/datasets/observatoire-de-la-qualite-des-demarches-en-ligne',
 				target: '_blank',
 				title: 'Nos données sur data.gouv.fr, nouvelle fenêtre'
