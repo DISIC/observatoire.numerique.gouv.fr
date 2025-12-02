@@ -280,20 +280,39 @@ export const desufligyText = (text: string): string => {
 	return result.charAt(0).toUpperCase() + result.slice(1);
 };
 
-export const exportChartAsImage = (chartParent: HTMLElement, title: string) => {
-	const chartSVG = chartParent.children[0] as SVGElement;
+export const exportChartAsImage = async (
+	chartParent: HTMLElement,
+	title: string
+) => {
+	const chartSVG = chartParent.children[0] as HTMLElement;
 
 	if (!chartSVG) {
 		console.error('Chart SVG element not found');
 		return;
 	}
 
-	const filename = `export-${slugifyText(title)}-${new Date()
-		.toISOString()
-		.slice(0, 10)}`;
-	const svgURL = new XMLSerializer().serializeToString(chartSVG);
-	const svgBlob = new Blob([svgURL], { type: 'image/svg+xml;charset=utf-8' });
-	saveAs(svgBlob, `${filename}.svg`);
+	const canvas = await html2canvas(chartSVG, {
+		logging: false,
+		useCORS: true,
+		allowTaint: true
+	});
+
+	const pngBlob = await new Promise<Blob>((resolve, reject) => {
+		canvas.toBlob(blob => {
+			if (blob) {
+				resolve(blob);
+			} else {
+				reject(new Error('Failed to create PNG blob'));
+			}
+		}, 'image/png');
+	});
+
+	if (pngBlob) {
+		const filename = `export-${slugifyText(title)}-${new Date()
+			.toISOString()
+			.slice(0, 10)}.png`;
+		saveAs(pngBlob, filename);
+	}
 };
 
 export const exportChartAsPng = async (
