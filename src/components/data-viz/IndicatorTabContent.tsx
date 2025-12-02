@@ -140,6 +140,7 @@ const IndicatorTabContent = ({
 								}
 							]}
 							defaultValue={viewType}
+							triggerValue={viewType}
 							size="small"
 							onChange={value => {
 								if (!!value) setViewType(value as EvolutionViewType);
