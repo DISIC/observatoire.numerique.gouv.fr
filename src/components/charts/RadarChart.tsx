@@ -190,7 +190,7 @@ const RadarChartCustom = ({
 		>
 			<RadarChart
 				data={data}
-				accessibilityLayer
+				role="presentation"
 				tabIndex={-1}
 				margin={{ top: 16 }}
 				style={{
