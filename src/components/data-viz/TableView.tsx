@@ -56,7 +56,7 @@ const TableView = ({
 								<th scope="col" key={`${h.name}_${index}`}>
 									{h.name}
 									{h.description && (
-										<span className={fr.cx('fr-ml-0-5v')} tabIndex={0}>
+										<span className={fr.cx('fr-ml-0-5v')}>
 											<Tooltip kind="click" title={h.description} />
 										</span>
 									)}
