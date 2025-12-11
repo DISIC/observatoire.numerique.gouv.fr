@@ -57,7 +57,7 @@ const TableView = ({
 									{h.name}
 									{h.description && (
 										<span className={fr.cx('fr-ml-0-5v')} tabIndex={0}>
-											<Tooltip kind="hover" title={h.description} />
+											<Tooltip kind="click" title={h.description} />
 										</span>
 									)}
 								</th>
