@@ -95,6 +95,7 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 							</div>
 							<div className={classes.tabsActions}>
 								<SegmentedControl
+									legend="Sélection du mode de visualisation des données : radars ou tableaux"
 									hideLegend
 									small
 									segments={[

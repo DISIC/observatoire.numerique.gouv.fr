@@ -171,6 +171,7 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 				<div className={classes.buttonsWrapper}>
 					<SegmentedControl
 						hideLegend
+						legend="Sélection du mode de visualisation des données : radars ou tableaux"
 						small
 						segments={[
 							{
