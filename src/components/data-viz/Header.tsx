@@ -71,7 +71,7 @@ const DataVizTabHeader = ({
 				<div className={classes.tabsActions}>
 					<SegmentedControl
 						hideLegend
-						legend="Sélection du mode de visualisation des données : radars ou tableaux"
+						legend="Sélection du mode de visualisation des données"
 						segments={[
 							{
 								label: 'Radars',
