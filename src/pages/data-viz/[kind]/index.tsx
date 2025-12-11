@@ -87,7 +87,7 @@ const TabContent = ({
 							classes.textContainer
 						)}
 					>
-						<p role="status">
+						<p role="status" aria-atomic aria-live="polite">
 							Aucun{kind === 'administration' ? 'e' : ''}{' '}
 							{getProcedureKindLabel(kind)}{' '}
 							{searchTerm ? `pour la recherche "${searchTerm}"` : ''}
@@ -96,6 +96,18 @@ const TabContent = ({
 				</div>
 			) : (
 				<>
+					<p
+						className={fr.cx('fr-sr-only')}
+						role="status"
+						aria-atomic
+						aria-live="polite"
+					>
+						{data.length}{' '}
+						{getProcedureKindLabel(kind, {
+							plural: data.length > 1
+						})}{' '}
+						trouvés
+					</p>
 					<TableView
 						title={`Tableau des scores des ${getProcedureKindLabel(kind, {
 							plural: true

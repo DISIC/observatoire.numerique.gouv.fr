@@ -14,7 +14,12 @@ export const Loader = (props: Props) => {
 			<div>
 				<i className={fr.cx('ri-loader-4-line')} />
 			</div>
-			<p className={fr.cx('fr-pt-4v')} role="status">
+			<p
+				className={fr.cx('fr-pt-4v')}
+				aria-live="polite"
+				role="status"
+				aria-atomic
+			>
 				{loadingMessage || 'Chargement...'}
 			</p>
 		</div>
