@@ -51,7 +51,9 @@ export async function getIndicatorScores(kind: ProcedureKind, search?: string) {
 
 	const dataCrossKind: { slug: string; value: number }[] =
 		validIndicatorSlugs.map(slug => {
-			const total = allProceduresRecords.length;
+			const total = allProceduresRecords.filter(item =>
+				item.data.find(data => data.slug === slug && data.goalReached !== null)
+			).length;
 			const reached = allProceduresRecords.filter(item =>
 				item.data.find(data => data.slug === slug && data.goalReached)
 			).length;

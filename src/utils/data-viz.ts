@@ -28,9 +28,23 @@ async function getIndicatorScores(props: {
 		})
 	).docs;
 
+	const lastEdition = await prisma.edition.findFirst({
+		orderBy: {
+			created_at: 'desc'
+		}
+	});
+	const lastEditionId = lastEdition?.id;
+
 	const procedures = await prisma.procedure.findMany({
 		where: {
-			[kind]: group.text
+			[kind]: group.text,
+			editionId: lastEditionId,
+			fields: {
+				none: {
+					slug: 'online',
+					label: 'Non'
+				}
+			}
 		},
 		select: {
 			id: true
@@ -48,6 +62,9 @@ async function getIndicatorScores(props: {
 			},
 			goalReached: {
 				not: null
+			},
+			label: {
+				notIn: ['À venir', '-']
 			}
 		},
 		orderBy: {
@@ -115,6 +132,7 @@ async function getIndicatorScores(props: {
 		}
 
 		const totalCount = countReached + countNotReached;
+
 		const score =
 			totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
 
@@ -191,7 +209,7 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 
 	const results: {
 		title: string;
-		data: { slug: string; goalReached: boolean }[];
+		data: { slug: string; goalReached: boolean | null }[];
 	}[] = await Promise.all(
 		procedures.map(async procedure => {
 			const fields = await prisma.field.groupBy({
@@ -212,7 +230,7 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 			});
 
 			const indicators = validIndicators.map(indicator => ({
-				goalReached: false,
+				goalReached: null as boolean | null,
 				slug: indicator.slug
 			}));
 
@@ -227,17 +245,18 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 
 					countReached = reachedData ? reachedData._count : 0;
 					countNotReached = notReachedData ? notReachedData._count : 0;
+
+					const totalCount = countReached + countNotReached;
+
+					const score =
+						totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
+
+					indicators[
+						indicators.findIndex(indicator => indicator.slug === slug)
+					].goalReached = score >= 80;
 				}
-
-				const totalCount = countReached + countNotReached;
-
-				const score =
-					totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
-
-				indicators[
-					indicators.findIndex(indicator => indicator.slug === slug)
-				].goalReached = score >= 80;
 			}
+
 			return {
 				title: procedure.title,
 				data: indicators
