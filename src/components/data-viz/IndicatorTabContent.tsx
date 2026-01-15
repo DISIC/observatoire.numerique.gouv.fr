@@ -117,7 +117,7 @@ const IndicatorTabContent = ({
 					<div className={classes.viewTypeContainer}>
 						<div className={classes.linkContainer}>
 							<Link
-								href="/Aide/Observatoire?tab=indicators"
+								href={`/Aide/Observatoire?tab=indicators&indicator=${data.indicator?.slug}`}
 								className={fr.cx('fr-link')}
 							>
 								Tout comprendre sur les indicateurs{' '}
@@ -164,6 +164,17 @@ const IndicatorTabContent = ({
 						small
 						description="Cet indicateur ne permet pas d’afficher un graphique"
 					/>
+					<div className={cx(fr.cx('fr-mt-4w', 'fr-mb-n4w'), classes.linkContainer)}>
+						<Link
+							href={`/Aide/Observatoire?tab=indicators&indicator=${data.indicator?.slug}`}
+							className={fr.cx('fr-link')}
+						>
+							Tout comprendre sur les indicateurs{' '}
+							<i
+								className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')}
+							/>
+						</Link>
+					</div>
 				</>
 			)}
 		</div>
