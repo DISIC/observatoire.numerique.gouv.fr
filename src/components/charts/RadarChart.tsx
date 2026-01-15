@@ -98,47 +98,42 @@ const CustomAxisTickLabel = (props: any) => {
 	);
 };
 
+const TooltipBackgroundColors: Record<string, string> = {
+	cross: fr.colors.options.orangeTerreBattue.main645.default
+};
+
 const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
 	if (active && payload && payload.length) {
 		return (
-			<div
-				style={{
-					backgroundColor:
-						fr.colors.decisions.background.actionHigh.blueFrance.default,
-					padding: '5px 10px',
-					boxShadow: '0px 2px 6px 0px #00001229',
-					textAlign: 'center'
-				}}
-			>
+			<div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
 				{payload
-					.filter(
-						payloadItem =>
-							payloadItem.dataKey !== 'goal' && payloadItem.dataKey !== 'cross'
-					)
+					.filter(payloadItem => payloadItem.dataKey !== 'goal')
 					.map((payloadItem, index: number) => {
-						if (payloadItem.payload.description_radar) {
-							return (
-								<p
-									key={index}
-									style={{ margin: 0, color: 'white', fontSize: 13 }}
-								>
-									{payloadItem.payload.description_radar.replace(
-										'X',
-										payloadItem.value
-									)}
-								</p>
-							);
-						}
-
+						const text = payloadItem.payload.description_radar
+							? payloadItem.payload.description_radar.replace(
+									'X',
+									payloadItem.value
+							  )
+							: `${payloadItem.value}% des démarches ont atteint de l'objectif de l'indicateur "${payloadItem.payload.name}", fixé à ${payloadItem.payload.goalLabel}`;
 						return (
-							<p
+							<div
+								style={{
+									borderRadius: '4px',
+									padding: '5px 10px',
+									marginTop: 4,
+									backgroundColor:
+										TooltipBackgroundColors[payloadItem.dataKey as string] ||
+										fr.colors.decisions.background.actionHigh.blueFrance
+											.default,
+									boxShadow: '0px 2px 6px 0px #00001229',
+									textAlign: 'center'
+								}}
 								key={index}
-								style={{ margin: 0, color: 'white', fontSize: 13 }}
 							>
-								{payloadItem.value}% des démarches ont atteint de l'objectif de
-								l'indicateur "{payloadItem.payload.name}", fixé à{' '}
-								{payloadItem.payload.goalLabel}
-							</p>
+								<p style={{ margin: 0, color: 'white', fontSize: 13 }}>
+									{text}
+								</p>
+							</div>
 						);
 					})}
 			</div>
@@ -230,9 +225,11 @@ const RadarChartCustom = ({
 						fill: color || fr.colors.decisions.artwork.minor.blueFrance.default,
 						fillOpacity: 1,
 						stroke:
-							color || fr.colors.decisions.artwork.minor.blueFrance.default,
+							color || fr.colors.decisions.artwork.minor.blueFrance.default
 					}}
-					activeDot={{ stroke: fr.colors.decisions.artwork.minor.blueFrance.default }}
+					activeDot={{
+						stroke: fr.colors.decisions.artwork.minor.blueFrance.default
+					}}
 					isAnimationActive={enableAnimation}
 				/>
 				{showGoalRadar && (
@@ -247,7 +244,9 @@ const RadarChartCustom = ({
 							fillOpacity: 1,
 							stroke: fr.colors.decisions.background.flat.success.default
 						}}
-						activeDot={{ stroke: fr.colors.decisions.background.flat.success.default }}
+						activeDot={{
+							stroke: fr.colors.decisions.background.flat.success.default
+						}}
 					/>
 				)}
 				{showCrossScorePerimeter && (
@@ -263,7 +262,9 @@ const RadarChartCustom = ({
 							stroke: fr.colors.options.orangeTerreBattue.main645.default
 						}}
 						isAnimationActive={enableAnimation}
-						activeDot={{ stroke: fr.colors.options.orangeTerreBattue.main645.default }}
+						activeDot={{
+							stroke: fr.colors.options.orangeTerreBattue.main645.default
+						}}
 					/>
 				)}
 				{compareData && (
@@ -280,7 +281,9 @@ const RadarChartCustom = ({
 								stroke: fr.colors.options.purpleGlycine._925_125.active
 							}}
 							isAnimationActive={enableAnimation}
-							activeDot={{ stroke: fr.colors.options.purpleGlycine._925_125.active }}
+							activeDot={{
+								stroke: fr.colors.options.purpleGlycine._925_125.active
+							}}
 						/>
 						<Legend
 							verticalAlign="top"
