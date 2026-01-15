@@ -230,8 +230,9 @@ const RadarChartCustom = ({
 						fill: color || fr.colors.decisions.artwork.minor.blueFrance.default,
 						fillOpacity: 1,
 						stroke:
-							color || fr.colors.decisions.artwork.minor.blueFrance.default
+							color || fr.colors.decisions.artwork.minor.blueFrance.default,
 					}}
+					activeDot={{ stroke: fr.colors.decisions.artwork.minor.blueFrance.default }}
 					isAnimationActive={enableAnimation}
 				/>
 				{showGoalRadar && (
@@ -246,6 +247,7 @@ const RadarChartCustom = ({
 							fillOpacity: 1,
 							stroke: fr.colors.decisions.background.flat.success.default
 						}}
+						activeDot={{ stroke: fr.colors.decisions.background.flat.success.default }}
 					/>
 				)}
 				{showCrossScorePerimeter && (
@@ -261,6 +263,7 @@ const RadarChartCustom = ({
 							stroke: fr.colors.options.orangeTerreBattue.main645.default
 						}}
 						isAnimationActive={enableAnimation}
+						activeDot={{ stroke: fr.colors.options.orangeTerreBattue.main645.default }}
 					/>
 				)}
 				{compareData && (
@@ -277,6 +280,7 @@ const RadarChartCustom = ({
 								stroke: fr.colors.options.purpleGlycine._925_125.active
 							}}
 							isAnimationActive={enableAnimation}
+							activeDot={{ stroke: fr.colors.options.purpleGlycine._925_125.active }}
 						/>
 						<Legend
 							verticalAlign="top"
