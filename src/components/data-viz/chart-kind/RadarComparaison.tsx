@@ -123,7 +123,7 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 
 		return [
 			{
-				title: baseIndicatorScores?.text || 'Périmètre de base',
+				title: baseIndicatorScores?.text || 'Domaine de base',
 				cells: radarData.reduce(
 					(acc, current) => ({
 						...acc,
@@ -133,7 +133,7 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 				)
 			},
 			{
-				title: selectedKindValue || 'Périmètre comparé',
+				title: selectedKindValue || 'Domaine comparé',
 				cells: comparedIndicatorScores.data.reduce(
 					(acc, current) => ({
 						...acc,

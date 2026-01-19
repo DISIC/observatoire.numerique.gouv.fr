@@ -12,11 +12,11 @@ import { GetServerSidePropsContext } from 'next';
 import { useEffect, useState } from 'react';
 
 const evolutionLegends = [
-	'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du périmètre.',
-	'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches du périmètre.',
-	'Cet histogramme représente la répartition en pourcentage du niveau de simplification des démarches du périmètre.',
+	'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches du domaine.',
+	'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches du domaine.',
+	'Cet histogramme représente la répartition en pourcentage du niveau de simplification des démarches du domaine.',
 	'Cet histogramme représente la répartition en pourcentage des démarches de l’indicateur “Authentification”',
-	'Cet histogramme représente la répartition en pourcentage des niveaux de clarté des démarches du périmètre.'
+	'Cet histogramme représente la répartition en pourcentage des niveaux de clarté des démarches du domaine.'
 ];
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {

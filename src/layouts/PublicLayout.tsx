@@ -125,7 +125,7 @@ const PublicLayout = (props: Props) => {
 									target: '_self'
 								},
 								isActive: router.query.kind === 'administration_central',
-								text: 'Périmètres'
+								text: 'Domaines'
 							},
 							{
 								linkProps: {

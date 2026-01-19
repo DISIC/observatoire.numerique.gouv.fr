@@ -408,7 +408,7 @@ export const getProcedureKindLabel = (
 			label = 'administration';
 			break;
 		case 'administration_central':
-			label = 'périmètre';
+			label = 'domaine';
 			break;
 		default:
 			return '';
