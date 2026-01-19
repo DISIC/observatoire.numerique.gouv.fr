@@ -10,9 +10,20 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 	Legend,
-	TooltipProps
+	TooltipProps,
+	Customized
 } from 'recharts';
 import { tss } from 'tss-react';
+
+function clamp(n: number, min: number, max: number) {
+	return Math.max(min, Math.min(max, n));
+}
+
+function measureTextApprox(text: string, fontSize = 12) {
+	// decent approximation for sans fonts
+	const charW = fontSize * 0.6;
+	return Math.max(24, text.length * charW);
+}
 
 const CustomAxisTick = (props: any) => {
 	if (props.payload.value === 0) return <></>;
@@ -29,11 +40,83 @@ const CustomAxisTick = (props: any) => {
 	);
 };
 
-const CustomAxisTickLabel = (props: any) => {
-	const { classes, cx: cxStyles } = useStyles();
+type TickTip = null | { label: string; x: number; y: number };
 
-	const { x, y, payload, cx, cy, onMouseEnter, onMouseLeave, activeIcon } =
-		props;
+function SvgTickTooltip({
+	tip,
+	viewBox = { x: 0, y: 0, width: 300, height: 300 },
+	data
+}: {
+	tip: TickTip;
+	viewBox?: { x: number; y: number; width: number; height: number };
+	data: RecordData['data'];
+}) {
+	if (!tip) return null;
+
+	const { x: vbX, y: vbY, width, height } = viewBox;
+
+	const text = data.find(d => d.icon === tip.label)?.name || tip.label;
+
+	const fontSize = 12;
+	const padding = 5;
+	const textW = measureTextApprox(text, fontSize);
+	const textH = fontSize + 2;
+
+	const w = textW + padding * 2;
+	const h = textH + padding * 2;
+
+	const offset = 12; // distance from tick to tooltip box
+
+	// Try placing on the right first
+	const rightX = tip.x + offset;
+	const rightY = tip.y - h / 2;
+
+	// Check if right placement would go outside viewBox
+	const wouldOverflowRight = rightX + w > vbX + width;
+
+	// If it would overflow, place on left, otherwise place on right
+	let x0: number, y0: number;
+	if (wouldOverflowRight) {
+		x0 = tip.x - w - offset;
+		y0 = tip.y - h / 2;
+	} else {
+		x0 = rightX;
+		y0 = rightY;
+	}
+
+	// Clamp vertically to stay within viewBox
+	const minY = vbY;
+	const maxY = vbY + height - h;
+
+	const x = x0;
+	const y = clamp(y0, minY, maxY);
+
+	return (
+		<g pointerEvents="none">
+			<rect
+				x={x}
+				y={y}
+				width={w}
+				height={h}
+				rx={6}
+				ry={6}
+				fill={fr.colors.decisions.background.actionHigh.blueFrance.default}
+			/>
+			<text
+				x={x + w / 2}
+				y={y + padding + textH - 3}
+				textAnchor="middle"
+				fontSize={fontSize}
+				fill="#fff"
+			>
+				{text}
+			</text>
+		</g>
+	);
+}
+
+const CustomAxisTickLabel = (props: any) => {
+	const { x, y, payload, cx, cy, onHover, onLeave, activeTip } = props;
 
 	const iconSize = 20;
 
@@ -51,8 +134,6 @@ const CustomAxisTickLabel = (props: any) => {
 	// Using the angle to maintain the correct direction from the center
 	const newX = x + Math.cos(angle) * spacing;
 	const newY = y + Math.sin(angle) * spacing;
-
-	const isActive = activeIcon === payload.value;
 
 	return (
 		<g>
@@ -81,18 +162,32 @@ const CustomAxisTickLabel = (props: any) => {
 					<path d="M10.5199 19.8634C10.5955 18.6615 10.8833 17.5172 11.3463 16.4676C9.81124 16.3252 8.41864 15.6867 7.33309 14.7151L8.66691 13.2248C9.55217 14.0172 10.7188 14.4978 12 14.4978C12.1763 14.4978 12.3501 14.4887 12.5211 14.471C14.227 12.2169 16.8661 10.7083 19.8634 10.5199C19.1692 6.80877 15.9126 4 12 4C7.58172 4 4 7.58172 4 12C4 15.9126 6.80877 19.1692 10.5199 19.8634ZM19.0233 12.636C15.7891 13.2396 13.2396 15.7891 12.636 19.0233L19.0233 12.636ZM22 12C22 12.1677 21.9959 12.3344 21.9877 12.5L12.5 21.9877C12.3344 21.9959 12.1677 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM10 10C10 10.8284 9.32843 11.5 8.5 11.5C7.67157 11.5 7 10.8284 7 10C7 9.17157 7.67157 8.5 8.5 8.5C9.32843 8.5 10 9.17157 10 10ZM17 10C17 10.8284 16.3284 11.5 15.5 11.5C14.6716 11.5 14 10.8284 14 10C14 9.17157 14.6716 8.5 15.5 8.5C16.3284 8.5 17 9.17157 17 10Z" />
 				</symbol>
 			</defs>
-			<use
-				href={`#${payload.value}`}
+			<rect
 				x={newX - iconSize / 2}
 				y={newY - iconSize / 2}
 				width={iconSize}
 				height={iconSize}
-				fill={
-					isActive
-						? fr.colors.decisions.background.flat.blueFrance.default
+				fill="transparent"
+				pointerEvents="all"
+				onMouseEnter={() => onHover?.(payload.value, newX, newY)}
+				onMouseMove={() => onHover?.(payload.value, newX, newY)}
+				onMouseLeave={() => onLeave?.()}
+				style={{ cursor: 'default' }}
+			/>
+			<use
+				xlinkHref={`#${payload.value}`}
+				x={newX - iconSize / 2}
+				y={newY - iconSize / 2}
+				width={iconSize}
+				height={iconSize}
+				color={
+					activeTip && activeTip.label === payload.value
+						? fr.colors.getHex({ isDark: false }).decisions.background
+								.actionHigh.blueFrance.default
 						: fr.colors.getHex({ isDark: true }).decisions.background
 								.contrastOverlap.grey.active
 				}
+				pointerEvents="none" // important: don't steal events from rect
 			/>
 		</g>
 	);
@@ -167,15 +262,12 @@ const RadarChartCustom = ({
 	color,
 	customRef
 }: RadarChartCustomProps) => {
-	const [activeIcon, setActiveIcon] = useState<string | null>(null);
+	const [tip, setTip] = useState<TickTip>(null);
 
-	const handleIconMouseEnter = (dataItem: any) => {
-		setActiveIcon(dataItem.value);
+	const handleHover = (label: string, x: number, y: number) => {
+		setTip({ label, x, y });
 	};
-
-	const handleIconMouseLeave = () => {
-		setActiveIcon(null);
-	};
+	const handleLeave = () => setTip(null);
 
 	return (
 		<ResponsiveContainer
@@ -201,9 +293,9 @@ const RadarChartCustom = ({
 					tick={props => (
 						<CustomAxisTickLabel
 							{...props}
-							onMouseEnter={handleIconMouseEnter}
-							onMouseLeave={handleIconMouseLeave}
-							activeIcon={activeIcon}
+							activeTip={tip}
+							onHover={handleHover}
+							onLeave={handleLeave}
 						/>
 					)}
 				/>
@@ -311,6 +403,11 @@ const RadarChartCustom = ({
 						textAlign: 'left',
 						whiteSpace: 'pre-line'
 					}}
+				/>
+				<Customized
+					component={(p: any) => (
+						<SvgTickTooltip tip={tip} viewBox={p?.viewBox} data={data} />
+					)}
 				/>
 			</RadarChart>
 		</ResponsiveContainer>
