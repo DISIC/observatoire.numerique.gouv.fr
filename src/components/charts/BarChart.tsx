@@ -5,6 +5,9 @@ import React from 'react';
 import {
 	Bar,
 	BarChart,
+	Label,
+	LabelList,
+	LabelProps,
 	Legend,
 	ResponsiveContainer,
 	Tooltip,
@@ -150,6 +153,28 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 		return null;
 	};
 
+	const CustomLabelBar = (props: LabelProps & { keyLabel: string }) => {
+		console.log('Label props:', props);
+		const { content, value, name, keyLabel, ...rest } = props;
+
+		const originalItem = data.find(item => item.name === name);
+		const originalValue = originalItem?.values?.find(
+			({ label }) => label === keyLabel
+		);
+
+		const numValue =
+			typeof value === 'number' ? value : parseFloat(value as string);
+		return value && Math.round(numValue) >= 5 ? (
+			<Label
+				{...rest}
+				value={originalValue?.value.toString() || ''}
+				fill="white"
+				fontSize="14"
+				fontWeight="bold"
+			/>
+		) : null;
+	};
+
 	return (
 		<ResponsiveContainer width="100%" height="100%">
 			<BarChart
@@ -192,10 +217,16 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 								fill={getColorValue(key.color)}
 								radius={4}
 								stackId={'a'}
-								barSize={25}
+								barSize={45}
 								shape={<CustomBar color={getColorValue(key.color)} />}
 								style={{ stroke: '#fff', strokeWidth: 2 }}
-							/>
+							>
+								<LabelList
+									dataKey={key.label}
+									position="center"
+									content={<CustomLabelBar keyLabel={key.label} />}
+								/>
+							</Bar>
 						);
 					})}
 			</BarChart>
