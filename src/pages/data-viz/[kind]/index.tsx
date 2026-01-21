@@ -3,7 +3,7 @@ import RadarWrapper from '@/components/data-viz/RadarWrapper';
 import TableView from '@/components/data-viz/TableView';
 import { Loader } from '@/components/generic/Loader';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { useIndicatorScoreByProcedureKind } from '@/utils/api';
+import { useEdition, useIndicatorScoreByProcedureKind } from '@/utils/api';
 import { getProcedureKindLabel, getTableHeadersFromData } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
@@ -159,6 +159,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 const DataViz = ({ kind }: { kind: ProcedureKind }) => {
 	const { classes, cx } = useStyles();
 
+	const { data: currentEdition } = useEdition({
+		id: 'current',
+		kind: 'id'
+	});
+
 	const kindLabel =
 		getProcedureKindLabel(kind as ProcedureKind, {
 			plural: true,
@@ -174,7 +179,11 @@ const DataViz = ({ kind }: { kind: ProcedureKind }) => {
 					currentPageLabel={`Graphiques - ${kindLabel}`}
 					className={fr.cx('fr-mb-1v')}
 				/>
-				<h1>{kindLabel}</h1>
+				<h1 className={cx(classes.title)}>{kindLabel}</h1>
+				<h2 className={cx(fr.cx('fr-h3'), classes.subtitle)}>
+					Données basées sur la dernière édition (
+					{currentEdition?.name.toLowerCase() || 'N/A'})
+				</h2>
 				<div className={cx(classes.tabsWrapper)}>
 					<TabContent kind={kind} kindLabel={kindLabel} />
 				</div>
@@ -214,6 +223,14 @@ const useStyles = tss.withName(DataViz.name).create(() => ({
 			margin: 0,
 			fontWeight: 'bold'
 		}
+	},
+	title: {
+		color: fr.colors.decisions.background.actionHigh.blueFrance.default,
+		marginBottom: '0!important'
+	},
+	subtitle: {
+		color: fr.colors.decisions.artwork.minor.blueFrance.default,
+		marginBottom: fr.spacing('4w')
 	}
 }));
 
