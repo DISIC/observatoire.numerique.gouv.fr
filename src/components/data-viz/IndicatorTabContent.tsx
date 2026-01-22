@@ -119,11 +119,11 @@ const IndicatorTabContent = ({
 							<Link
 								href={`/Aide/Observatoire?tab=indicators&indicator=${data.indicator?.slug}`}
 								className={fr.cx('fr-link')}
+								target="_blank"
+								rel="noreferrer"
+								title={`Tout comprendre sur l’indicateur - nouvelle fenêtre`}
 							>
-								Tout comprendre sur les indicateurs{' '}
-								<i
-									className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')}
-								/>
+								Tout comprendre sur les indicateurs
 							</Link>
 						</div>
 						<LightSelect
@@ -164,15 +164,20 @@ const IndicatorTabContent = ({
 						small
 						description="Cet indicateur ne permet pas d’afficher un graphique"
 					/>
-					<div className={cx(fr.cx('fr-mt-4w', 'fr-mb-n4w'), classes.linkContainer)}>
+					<div
+						className={cx(
+							fr.cx('fr-mt-4w', 'fr-mb-n4w'),
+							classes.linkContainer
+						)}
+					>
 						<Link
 							href={`/Aide/Observatoire?tab=indicators&indicator=${data.indicator?.slug}`}
 							className={fr.cx('fr-link')}
+							target="_blank"
+							rel="noreferrer"
+							title={`Tout comprendre sur l’indicateur - nouvelle fenêtre`}
 						>
-							Tout comprendre sur les indicateurs{' '}
-							<i
-								className={fr.cx('fr-icon-external-link-line', 'fr-ml-1v')}
-							/>
+							Tout comprendre sur les indicateurs
 						</Link>
 					</div>
 				</>
