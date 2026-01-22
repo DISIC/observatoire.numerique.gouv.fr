@@ -28,7 +28,7 @@ const nextConfig = {
 			'next/babel'
 		]
 	},
-	transpilePackages: ['@codegouvfr/react-dsfr']
+	transpilePackages: ['@codegouvfr/react-dsfr', 'tss-react']
 };
 
 export default withPayload(nextConfig);

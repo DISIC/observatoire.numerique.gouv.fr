@@ -6,10 +6,10 @@ const prisma = new PrismaClient();
 
 export async function getProcedureGroupByKind(kind: ProcedureKind) {
 	const group = await prisma.procedure.groupBy({
-		by: [kind]
+		by: [kind],
 	});
 
-	return group.map(group => group[kind] as string);
+	return group.map(group => group[kind]).filter(value => value !== null).sort((a, b) => a.localeCompare(b));
 }
 
 export default async function handler(

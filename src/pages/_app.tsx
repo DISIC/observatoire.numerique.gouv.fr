@@ -12,6 +12,7 @@ import { init } from '@socialgouv/matomo-next';
 import Hotjar from '@hotjar/browser';
 import { trpc } from '../utils/trpc';
 import { AuthProvider } from '@/providers/Auth';
+import MuiDsfrThemeProvider from '@codegouvfr/react-dsfr/mui';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -55,10 +56,12 @@ function App({ Component, pageProps }: AppProps) {
 	};
 
 	return (
-		<AuthProvider>
-			<ObservatoireHead />
-			{getLayout(<Component {...pageProps} />)}
-		</AuthProvider>
+		<MuiDsfrThemeProvider>
+			<AuthProvider>
+				<ObservatoireHead />
+				{getLayout(<Component {...pageProps} />)}
+			</AuthProvider>
+		</MuiDsfrThemeProvider>
 	);
 }
 

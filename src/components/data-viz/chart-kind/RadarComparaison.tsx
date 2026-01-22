@@ -20,6 +20,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { tss } from 'tss-react';
 import RadarWrapper from '../RadarWrapper';
 import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
+import LightAutocomplete from '@/components/generic/LightAutocomplete';
 
 type RadarComparisonProps = {
 	kind: ProcedureKind;
@@ -283,32 +284,21 @@ const RadarComparison = ({ kind, slug }: RadarComparisonProps) => {
 											selectedKindValue && classes.radarCard
 										)}
 									>
-										<Select
+										<LightAutocomplete
+											id="select-kind-comparison"
 											label={`Choisir un${
 												(kind === 'administration' ? 'e ' : ' ') +
 												getProcedureKindLabel(kind)
 											}`}
-											nativeSelectProps={{
-												id: `select-kind-${id}`,
-												onChange: event =>
-													setSelectedKindValue(event.target.value),
-												value: selectedKindValue
-											}}
-										>
-											<option value="" disabled>
-												Sélectionner une option
-											</option>
-											{groupByProcedureKind
+											options={groupByProcedureKind
 												.filter(option => option !== slug)
-												.map(
-													option =>
-														option && (
-															<option key={option} value={option}>
-																{option}
-															</option>
-														)
-												)}
-										</Select>
+												.map(option => ({
+													label: option,
+													value: option
+												}))}
+											onSelect={value => setSelectedKindValue(value)}
+											value={selectedKindValue}
+										/>
 										<div className={classes.emptyStateContainer}>
 											<p>
 												Sélectionner un
