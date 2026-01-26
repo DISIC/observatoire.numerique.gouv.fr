@@ -26,7 +26,7 @@ export const grist_field_names = {
 		help_used: 'Niveau_Autonomie',
 		uptime: 'Dashlord_UpDown_Dispo',
 		performance: 'Dashlord_UpDown_Tps_Moy_Chargement',
-		handicap: 'Libelle_RGAA',
+		handicap: 'Taux_RGAA_Publie',
 		dlnuf: 'Score_DLNUF',
 		usage: 'Recours_au_Numerique',
 		auth: 'FranceConnect'
