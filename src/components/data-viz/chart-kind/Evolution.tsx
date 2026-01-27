@@ -89,6 +89,7 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 						<div className={classes.headerWrapper}>
 							<div className={classes.headingWrapper}>
 								<h2 className={fr.cx('fr-h3', 'fr-mb-0')}>
+									<i className={fr.cx(apiData.indicator.icon, 'fr-mr-2v')} />
 									{getValidIndicatorLabel(indicator)}
 								</h2>
 								<p className={classes.chartLegend}>{legend}</p>

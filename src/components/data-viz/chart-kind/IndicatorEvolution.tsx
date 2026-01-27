@@ -87,6 +87,7 @@ const DataVizIndicatorEvolution = ({
 						<div className={classes.tabsHeaderActionsWrapper}>
 							<div className={classes.headingWrapper}>
 								<h3 className={fr.cx('fr-mb-0')}>
+									<i className={fr.cx(indicatorData.indicator?.icon, 'fr-mr-2v')} />
 									{indicatorData.indicator?.label}
 								</h3>
 								<p className={classes.chartLegend}>

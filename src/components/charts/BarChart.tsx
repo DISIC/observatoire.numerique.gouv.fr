@@ -154,7 +154,6 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 	};
 
 	const CustomLabelBar = (props: LabelProps & { keyLabel: string }) => {
-		console.log('Label props:', props);
 		const { content, value, name, keyLabel, ...rest } = props;
 
 		const originalItem = data.find(item => item.name === name);
