@@ -66,10 +66,6 @@ export const grist = router({
 					const title = gristProcedure[grist_field_names.title]
 						.replace(/(?:\uD83D\uDCC4|#)/g, '')
 						.trim();
-					const administrationCentralId =
-						gristProcedure[grist_field_names.administration_central];
-					const administrationCentralName =
-						gristAdministrationCentralMap[administrationCentralId] || '';
 
 					return {
 						id: `preview-${gristProcedure[grist_field_names.id]}`,
@@ -79,7 +75,8 @@ export const grist = router({
 							.normalize('NFD')
 							.replace(/[\u0300-\u036f]/g, ''),
 						administration: gristProcedure[grist_field_names.administration],
-						administration_central: administrationCentralName,
+						administration_central:
+							gristProcedure[grist_field_names.administration_central],
 						sousorg: gristProcedure[grist_field_names.sousorg],
 						ministere: gristProcedure[grist_field_names.ministere],
 						grist_identifier: gristProcedure[grist_field_names.id],
