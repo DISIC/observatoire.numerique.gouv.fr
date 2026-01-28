@@ -236,13 +236,13 @@ export async function getIndicatorEvolution({
 				const levelCounts = indicatorLevels
 					.map(level => {
 						if (typeof level === 'string' || !level.label_stats) return null;
-
+						console.log(fields[0]);
 						const count = new Set(
 							fields
 								.filter(
 									field =>
 										field.slug === slug &&
-										(field.color === 'gray'
+										(field.color === 'gray' || field.slug === 'auth'
 											? field.label === level.label_stats
 											: field.color === level.color)
 								)
@@ -373,7 +373,7 @@ export async function getIndicatorEvolution({
 							.filter(
 								field =>
 									field.slug === slug &&
-									(field.color === 'gray'
+									(field.color === 'gray' || field.slug === 'auth'
 										? field.label === level.label_stats
 										: field.color === level.color)
 							)
