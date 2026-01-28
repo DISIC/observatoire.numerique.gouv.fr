@@ -9,6 +9,8 @@ export type GristEdition = {
 	name: string;
 	start_date: string;
 	end_date: string;
+	start_jdma_date: string;
+	end_jdma_date: string;
 };
 
 export const grist = router({
@@ -25,7 +27,9 @@ export const grist = router({
 				id: edition['id'],
 				name: edition['Nom_Edition'],
 				start_date: edition['Date_Debut_Edition'] * 1000,
-				end_date: edition['Date_Fin_Edition'] * 1000
+				end_date: edition['Date_Fin_Edition'] * 1000,
+				start_jdma_date: edition['Dashlord_JDMA_a_partir_de'] * 1000,
+				end_jdma_date: edition['Dashlord_JDMA_jusqu_a'] * 1000
 			}));
 
 		return { data: editions };
