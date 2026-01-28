@@ -5,7 +5,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "only-include-used-icons && next dev",
-		"build": "next build",
+		"build": "node --stack-size=4096 ./node_modules/.bin/next build",
 		"start": "next start",
 		"lint": "prettier --check .",
 		"payload": "PAYLOAD_CONFIG_PATH=./src/payload/payload.config.ts payload",
