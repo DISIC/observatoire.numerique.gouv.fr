@@ -229,7 +229,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -248,7 +249,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -298,7 +300,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -348,7 +351,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -398,7 +402,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -417,7 +422,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -467,7 +473,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -486,7 +493,8 @@ export const goalsWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -643,7 +651,8 @@ export const criteriasWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -662,7 +671,8 @@ export const criteriasWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -731,7 +741,8 @@ export const criteriasWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -750,7 +761,8 @@ export const criteriasWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
@@ -769,7 +781,8 @@ export const criteriasWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -919,7 +932,8 @@ export const onlineIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -938,7 +952,8 @@ export const onlineIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
@@ -957,7 +972,8 @@ export const onlineIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -1086,44 +1102,44 @@ export const helpReachableWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Indique le taux d'usagers ayant réussi à joindre l'administration (téléphone, guichet, tchat, etc.) au regard du nombre total de répondants.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "",
+				direction: 'ltr',
+				format: '',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h4"
+				tag: 'h4'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Ce taux est calculé sur la base d'avis usagers collectés via le questionnaire de satisfaction « Je donne mon avis », situé en fin de démarche. ",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			}
 		],
-		direction: "ltr",
-		format: "",
+		direction: 'ltr',
+		format: '',
 		indent: 0,
-		type: "root",
+		type: 'root',
 		version: 1
 	}
 };
@@ -1136,47 +1152,47 @@ export const helpEfficientWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Evalue le niveau de qualité de l'aide obtenue de la part de l'administration.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "",
+				direction: 'ltr',
+				format: '',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h4"
+				tag: 'h4'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Cette note est calculée sur la base d'avis usagers collectés via le questionnaire de satisfaction « Je donne mon avis », situé en fin de démarche.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			}
 		],
-		direction: "ltr",
-		format: "",
+		direction: 'ltr',
+		format: '',
 		indent: 0,
-		type: "root",
+		type: 'root',
 		version: 1
 	}
-}
+};
 
 export const authIndicatorWysiwygContent: DefaultTypedEditorState = {
 	root: {
@@ -1369,7 +1385,8 @@ export const handicapIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -1388,7 +1405,8 @@ export const handicapIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
@@ -1407,7 +1425,8 @@ export const handicapIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					},
 					{
 						children: [
@@ -1426,7 +1445,8 @@ export const handicapIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 4
+						value: 4,
+						checked: undefined
 					},
 					{
 						children: [
@@ -1445,7 +1465,8 @@ export const handicapIndicatorWysiwygContent: DefaultTypedEditorState = {
 						indent: 0,
 						type: 'listitem',
 						version: 1,
-						value: 5
+						value: 5,
+						checked: undefined
 					}
 				],
 				direction: 'ltr',
@@ -1574,370 +1595,369 @@ export const legalsMentionsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Éditeur de la plateforme",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Éditeur de la plateforme',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "La plateforme ",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'La plateforme ',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 1,
-						mode: "normal",
-						style: "",
-						text: "Vos Démarches Essentielles",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vos Démarches Essentielles',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: " est éditée par la Direction interministérielle du numérique de l'Etat (DINUM) située :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "20 avenue de Ségur",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '20 avenue de Ségur',
+						type: 'text',
 						version: 1
 					},
 					{
-						"type": "linebreak",
-						"version": 1
+						type: 'linebreak',
+						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "75007 Paris",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '75007 Paris',
+						type: 'text',
 						version: 1
 					},
 					{
-						"type": "linebreak",
-						"version": 1
+						type: 'linebreak',
+						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Tel. Accueil : 01.71.21.01.70",
-						type: "text",
-						version: 1
-					},
-
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "SIRET : 12000101100010 (secrétariat général du gouvernement)",
-						type: "text",
-						version: 1
-					},
-					{
-						"type": "linebreak",
-						"version": 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "SIREN : 120 001 011",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Tel. Accueil : 01.71.21.01.70',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Directeur de la publication",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'SIRET : 12000101100010 (secrétariat général du gouvernement)',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'SIREN : 120 001 011',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'paragraph',
 				version: 1,
-				tag: "h2"
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "La directrice de la publication est Madame Stéphanie Schaer, Directrice interministérielle du numérique.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Directeur de la publication',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'heading',
 				version: 1,
-				textFormat: 0,
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Hébergement de la plateforme",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'La directrice de la publication est Madame Stéphanie Schaer, Directrice interministérielle du numérique.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'paragraph',
 				version: 1,
-				tag: "h2"
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "La plateforme est hébergée par Clever Cloud situé :",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Hébergement de la plateforme',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'heading',
 				version: 1,
-				textFormat: 0,
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "RCS Nantes B 524 172 699",
-						type: "text",
-						version: 1
-					},
-					{
-						"type": "linebreak",
-						"version": 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Code APE : 6311Z",
-						type: "text",
-						version: 1
-					},
-					{
-						"type": "linebreak",
-						"version": 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "N°TVA : FR 87 524 172 699",
-						type: "text",
-						version: 1
-					},
-					{
-						"type": "linebreak",
-						"version": 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Siège social : 4 rue Voltaire",
-						type: "text",
-						version: 1
-					},
-					{
-						"type": "linebreak",
-						"version": 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "44000 Nantes",
-						type: "text",
-						version: 1
-					},
-					{
-						"type": "linebreak",
-						"version": 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "France",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'La plateforme est hébergée par Clever Cloud situé :',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Accessibilité",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'RCS Nantes B 524 172 699',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Code APE : 6311Z',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'N°TVA : FR 87 524 172 699',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Siège social : 4 rue Voltaire',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: '44000 Nantes',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'France',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'paragraph',
 				version: 1,
-				tag: "h2"
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
+						text: 'Accessibilité',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'heading',
+				version: 1,
+				tag: 'h2'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
 						text: "L'accessibilité de la plateforme est partiellement conforme.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "En savoir plus",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'En savoir plus',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Pour en savoir plus sur la politique d'accessibilité numérique de l'État :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -1946,185 +1966,185 @@ export const legalsMentionsWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "https://accessibilite.numerique.gouv.fr/",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'https://accessibilite.numerique.gouv.fr/',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "link",
+						type: 'link',
 						version: 3,
 						fields: {
 							doc: null,
-							linkType: "custom",
+							linkType: 'custom',
 							newTab: true,
-							url: "https://accessibilite.numerique.gouv.fr/"
+							url: 'https://accessibilite.numerique.gouv.fr/'
 						},
-						id: "67603b3d340b20d1baabd8af"
+						id: '67603b3d340b20d1baabd8af'
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Sécurité",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Sécurité',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "La plateforme est protégée par un certificat électronique, matérialisé pour la grande majorité des navigateurs par un cadenas. Cette protection participe à la confidentialité des échanges.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'La plateforme est protégée par un certificat électronique, matérialisé pour la grande majorité des navigateurs par un cadenas. Cette protection participe à la confidentialité des échanges.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "En aucun cas les services associés à la plateforme ne seront à l'origine d'envoi de courriels pour demander la saisie d'informations personnelles.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Service",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Service',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le suivi éditorial et graphique est assuré par la DINUM.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Le suivi éditorial et graphique est assuré par la DINUM.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien (y compris profond) vers les informations diffusées sur le site.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien (y compris profond) vers les informations diffusées sur le site.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Contact",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Contact',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'adresse courriel de contact est la suivante :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -2133,42 +2153,42 @@ export const legalsMentionsWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "observatoire@design.numerique.gouv.fr",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'observatoire@design.numerique.gouv.fr',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "link",
+						type: 'link',
 						version: 3,
 						fields: {
 							doc: null,
-							linkType: "custom",
+							linkType: 'custom',
 							newTab: false,
-							url: "mailto:observatoire@design.numerique.gouv.fr"
+							url: 'mailto:observatoire@design.numerique.gouv.fr'
 						},
-						id: "67603b3d340b20d1baabd8b0"
+						id: '67603b3d340b20d1baabd8b0'
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			}
 		],
-		direction: "ltr",
-		format: "",
+		direction: 'ltr',
+		format: '',
 		indent: 0,
-		type: "root",
+		type: 'root',
 		version: 1
 	}
-}
+};
 
 export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 	root: {
@@ -2178,54 +2198,54 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Qui est responsable de Vos Démarches Essentielles ?",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Qui est responsable de Vos Démarches Essentielles ?',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le site ",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Le site ',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 1,
-						mode: "normal",
-						style: "",
-						text: "Vos Démarches Essentielles",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vos Démarches Essentielles',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: " est développé au sein la Direction Interministérielle du Numérique (DINUM). Ce site propose un observatoire de la qualité des démarches et services les plus utilisés par les citoyens français.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: ' est développé au sein la Direction Interministérielle du Numérique (DINUM). Ce site propose un observatoire de la qualité des démarches et services les plus utilisés par les citoyens français.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2234,17 +2254,17 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Le responsable de l'utilisation des données est la DINUM représenté par Stéphanie Schaer, Directrice Interministérielle du Numérique (DINUM).",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2253,54 +2273,54 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Données à caractère personnel",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Données à caractère personnel',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le site ",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Le site ',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 1,
-						mode: "normal",
-						style: "",
-						text: "Vos Démarches Essentielles",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vos Démarches Essentielles',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: " ne collecte ou traite aucune donnée à caractère personnel.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: ' ne collecte ou traite aucune donnée à caractère personnel.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2309,36 +2329,36 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Cookies",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Cookies',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Un cookie est un fichier déposé sur votre terminal lors de la visite d'un site. Il a pour but de collecter des informations relatives à votre navigation et de vous adresser des services adaptés à votre terminal (ordinateur, mobile ou tablette).",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2347,17 +2367,17 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "En application de l'article 5(3) de la directive 2002/58/CE modifiée concernant le traitement des données à caractère personnel et la protection de la vie privée dans le secteur des communications électroniques, transposée à l'article 82 de la loi n°78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés, les traceurs ou cookies suivent deux régimes distincts.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2368,46 +2388,47 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
+								mode: 'normal',
+								style: '',
 								text: "Les cookies n'étant pas strictement nécessaires au service ou n'ayant pas pour finalité exclusive de faciliter la communication par voie électronique doivent être consentis par l'utilisateur.",
-								type: "text",
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Ce consentement de la personne concernée pour une ou plusieurs finalités spécifiques constitue une base légale au sens du RGPD et doit être entendu au sens de l'article 6-a du Règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016 relatif à la protection des personnes physiques à l'égard du traitement des données à caractère personnel et à la libre circulation de ces données.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2416,17 +2437,17 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "À tout moment, vous pouvez refuser l'utilisation des cookies et désactiver le dépôt sur votre ordinateur en utilisant la fonction dédiée de votre navigateur (fonction disponible notamment sur Microsoft Internet Explorer 11, Google Chrome, Mozilla Firefox, Apple Safari et Opera).",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2437,46 +2458,47 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
+								mode: 'normal',
+								style: '',
 								text: "Certains cookies sont strictement nécessaires au service ou ayant pour finalité exclusive de faciliter la communication par voie électronique et sont dispensés de consentement préalable au titre de l'article 82 de la loi n°78-17 du 6 janvier 1978.",
-								type: "text",
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Des cookies relatifs aux statistiques publiques et anonymes sont également déposés.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Des cookies relatifs aux statistiques publiques et anonymes sont également déposés.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2485,17 +2507,17 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "La plateforme utilise également la solution de mesure d'audience Matomo en l'ayant configuré en mode « exempté », conformément aux recommandations de la CNIL. Elle ne nécessite donc pas le consentement des personnes concernées.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2504,17 +2526,17 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Pour aller plus loin, vous pouvez consulter les fiches proposées par la Commission Nationale de l'Informatique et des Libertés (CNIL) :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2525,31 +2547,31 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Cookies et traceurs : que dit la loi ?",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Cookies et traceurs : que dit la loi ?',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "link",
+						type: 'link',
 						version: 3,
 						fields: {
 							doc: null,
-							linkType: "custom",
+							linkType: 'custom',
 							newTab: true,
-							url: "https://www.cnil.fr/fr/cookies-et-autres-traceurs-que-dit-la-loi"
+							url: 'https://www.cnil.fr/fr/cookies-et-autres-traceurs-que-dit-la-loi'
 						},
-						id: "67604c7477c75752f0ef5b9a"
+						id: '67604c7477c75752f0ef5b9a'
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2560,43 +2582,42 @@ export const legalsPcWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Cookies : les outils pour les maîtriser",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Cookies : les outils pour les maîtriser',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "link",
+						type: 'link',
 						version: 3,
 						fields: {
 							doc: null,
-							linkType: "custom",
+							linkType: 'custom',
 							newTab: true,
-							url: "https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser"
+							url: 'https://www.cnil.fr/fr/cookies-les-outils-pour-les-maitriser'
 						},
-						id: "67604c7477c75752f0ef5b9b"
+						id: '67604c7477c75752f0ef5b9b'
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			}
 		],
-		direction: "ltr",
-		format: "",
+		direction: 'ltr',
+		format: '',
 		indent: 0,
-		type: "root",
+		type: 'root',
 		version: 1
 	}
-}
-
+};
 
 export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 	root: {
@@ -2606,54 +2627,54 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "1. Champ d'application",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Le présent document définit les modalités d'utilisation de ",
-						type: "text",
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 1,
-						mode: "normal",
-						style: "",
-						text: "Vos Démarches Essentielles",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vos Démarches Essentielles',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: ", développé au sein la Direction Interministérielle du Numérique (DINUM).",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: ', développé au sein la Direction Interministérielle du Numérique (DINUM).',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2662,36 +2683,36 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "2. Objet de la plateforme",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '2. Objet de la plateforme',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le service permet de diffuser un observatoire de la qualité des démarches et services les plus utilisés par les citoyens français.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Le service permet de diffuser un observatoire de la qualité des démarches et services les plus utilisés par les citoyens français.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2700,26 +2721,26 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 1,
-						mode: "normal",
-						style: "",
-						text: "Vos Démarches Essentielles",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vos Démarches Essentielles',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: " est développée et opérée par la DINUM. Toute utilisation de ce service doit respecter les présentes modalités d'utilisation.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2728,19 +2749,19 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "3. Définitions",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '3. Définitions',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
@@ -2749,110 +2770,113 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
+								mode: 'normal',
+								style: '',
 								text: "Administrateur : toute personne membre de la DINUM qui administre les données des services et démarches présentes dans l'observatoire",
-								type: "text",
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Visiteur : toute personne consultant la plafeforme ",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Visiteur : toute personne consultant la plafeforme ',
+								type: 'text',
 								version: 1
 							},
 							{
 								detail: 0,
 								format: 1,
-								mode: "normal",
-								style: "",
-								text: "Vos Démarches Essentielles",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Vos Démarches Essentielles',
+								type: 'text',
 								version: 1
 							},
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: ".",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: '.',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
-			}, {
+				tag: 'ul'
+			},
+			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "4. Accès au service",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '4. Accès au service',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 1,
-						mode: "normal",
-						style: "",
-						text: "Vos Démarches Essentielles",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vos Démarches Essentielles',
+						type: 'text',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: " est mis à disposition de toute personne souhaitant consulter les données de l'observatoire des démarches et services numériques essentielles.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2861,17 +2885,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'utilisation du service est :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2882,84 +2906,86 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "libre et gratuite pour les visiteurs,",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'libre et gratuite pour les visiteurs,',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
+								mode: 'normal',
+								style: '',
 								text: "soumis à la création d'un compte utilisateur pour les administrateurs.",
-								type: "text",
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "5. Fonctionnalités",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '5. Fonctionnalités',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Les visiteurs peuvent accéder au tableau de suivi de l'observatoire et consulter les données relatives à l'ensemble des services et démarches dites essentielles.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2968,17 +2994,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Les administrateurs peuvent administrer les comptes utilisateurs des administrateurs et publier des éditions de l'observatoire.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -2987,55 +3013,55 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "6. Engagements et responsabilités des utilisateurs et utilisatrices",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '6. Engagements et responsabilités des utilisateurs et utilisatrices',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "6.1 Usages conformes",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '6.1 Usages conformes',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le service est mis à disposition pour la consultation des critères de qualité des démarches et services numériques publics.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Le service est mis à disposition pour la consultation des critères de qualité des démarches et services numériques publics.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3044,17 +3070,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'utilisateur ou l'utilisatrice est responsable des données ou contenus qu'il ou elle saisit dans les divers champs libres du formulaire. Il ou elle veille à ne saisir que des messages appropriés.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3063,17 +3089,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'utilisateur s'assure de garder son mot de passe secret. Toute divulgation du mot de passe, quelle que soit sa forme, est interdite. Il assume les risques liés à l'utilisation de son adresse e-mail et de son mot de passe.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3082,36 +3108,36 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "6.2 Usages interdits",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '6.2 Usages interdits',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'utilisateur ou l'utilisatrice s'engage à ne pas saisir dans les champs libres du site des contenus ou informations contraires aux dispositions légales et réglementaires en vigueur.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3120,17 +3146,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "En particulier, il ou elle s'engage à ne communiquer que les données strictement nécessaires à l'évaluation du service numérique public dont il est question et s'abstenir dans les champs libres de révéler des données sensibles le concernant ou concernant des tiers (ex : données de santé, opinion politique, philosophique ou religieuse), de tenir des propos injurieux, diffamatoires, obscènes et plus généralement contraire à la loi et à l'ordre public.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3139,17 +3165,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Il est rappelé que toute personne qui procède à une fausse déclaration pour elle-même ou pour autrui s'expose, notamment, aux sanctions prévues à l'article 441-1 du Code pénal, prévoyant des peines pouvant aller jusqu'à trois ans d'emprisonnement et 45 000 euros d'amende.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3158,17 +3184,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'utilisateur s'assure, en amont de la publication, que cette dernière respecte le cadre juridique en vigueur notamment le RGPD, la loi Informatique et libertés, le Code de la propriété intellectuelle et le CRPA.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3177,17 +3203,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "L'utilisateur s'engage à ne pas publier dans les espaces de discussion ou à quelque endroit que ce soit de messages racistes, sexistes, injurieux, insultants ou contraires à l'ordre public. Chaque commentaire publié emporte cession de ses droits de propriété intellectuelle de façon non exclusive, à titre gracieux, pour le monde entier et pour toute la durée de ces droits.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3196,55 +3222,55 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "7. Engagements et responsabilités de la DINUM",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '7. Engagements et responsabilités de la DINUM',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "7.1 Sécurité et accès à la Plateforme",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '7.1 Sécurité et accès à la Plateforme',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Les sources des informations diffusées sur la Plateforme sont réputées fiables mais elle ne garantit pas qu'elle soit exempte de défauts, d'erreurs ou d'omissions.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3253,17 +3279,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "La DINUM s'engage à la sécurisation de la Plateforme, notamment en prenant toutes les mesures nécessaires permettant de garantir la sécurité et la confidentialité des informations fournies.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3272,17 +3298,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "La DINUM s'engage à fournir les moyens nécessaires et raisonnables pour assurer un accès continu à la Plateforme.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3291,17 +3317,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "La DINUM se réserve le droit de faire évoluer, de modifier ou de suspendre, sans préavis, le service pour des raisons de maintenance ou pour tout autre motif jugé nécessaire.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'La DINUM se réserve le droit de faire évoluer, de modifier ou de suspendre, sans préavis, le service pour des raisons de maintenance ou pour tout autre motif jugé nécessaire.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3310,17 +3336,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "La DINUM se réserve le droit de suspendre ou supprimer un compte utilisateur ou utilisatrice du service qui aurait méconnu les présentes modalités d'utilisation, sans préjudice des éventuelles actions en responsabilité pénale et civile qui pourraient être engagées à l'encontre de l'utilisateur ou l'utilisatrice.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3329,36 +3355,36 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "7.2 Open Source et Licences",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '7.2 Open Source et Licences',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le code source de la Plateforme est libre et disponible ici :",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Le code source de la Plateforme est libre et disponible ici :',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3369,31 +3395,31 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "https://github.com/DISIC/observatoire.numerique.gouv.fr",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'https://github.com/DISIC/observatoire.numerique.gouv.fr',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "link",
+						type: 'link',
 						version: 3,
 						fields: {
 							doc: null,
-							linkType: "custom",
+							linkType: 'custom',
 							newTab: true,
-							url: "https://github.com/DISIC/observatoire.numerique.gouv.fr"
+							url: 'https://github.com/DISIC/observatoire.numerique.gouv.fr'
 						},
-						id: "67604ef57acd4b67e8d647a7"
+						id: '67604ef57acd4b67e8d647a7'
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3402,17 +3428,17 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Les contenus proposés par l'Éditeur sont sous Licence Ouverte, à l'exception des logos et des représentations iconographiques et photographiques pouvant être régis par leurs licences propres.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3421,36 +3447,36 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "8. Évolution des modalités d'utilisation",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Les termes des présentes modalités d'utilisation peuvent être modifiés ou complétés à tout moment, sans préavis, en fonction des modifications apportées au service, de l'évolution de la législation ou pour tout autre motif jugé nécessaire. Ces modifications et mises à jour s'imposent à l'utilisateur ou l'utilisatrice qui doit, en conséquence, se référer régulièrement à cette rubrique pour vérifier les conditions générales en vigueur.",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3459,36 +3485,36 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "9. Accessibilité",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '9. Accessibilité',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Si vous constatez un défaut d'accessibilité vous empêchant d'accéder à un contenu ou une fonctionnalité du service, que vous nous le signalez et que vous ne parvenez pas à obtenir une réponse rapide de notre part, vous êtes en droit de faire parvenir vos doléances ou demande de saisine au défenseur des droits par courrier gratuit, sans affranchissement à l'adresse :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3497,43 +3523,43 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Défenseur des droits",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Défenseur des droits',
+						type: 'text',
 						version: 1
 					},
 					{
-						type: "linebreak",
-						version: 1
-					},
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Libre réponse 71120",
-						type: "text",
-						version: 1
-					},
-					{
-						type: "linebreak",
+						type: 'linebreak',
 						version: 1
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "75342 Paris CEDEX 07,",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Libre réponse 71120',
+						type: 'text',
+						version: 1
+					},
+					{
+						type: 'linebreak',
+						version: 1
+					},
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: '75342 Paris CEDEX 07,',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -3542,28 +3568,28 @@ export const legalsTermsWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "par Téléphone : 09 69 39 00 00 ou via le formulaire en ligne.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'par Téléphone : 09 69 39 00 00 ou via le formulaire en ligne.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			}
 		],
-		direction: "ltr",
-		format: "",
+		direction: 'ltr',
+		format: '',
 		indent: 0,
-		type: "root",
+		type: 'root',
 		version: 1
 	}
-}
+};
 
 export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 	root: {
@@ -3573,891 +3599,36 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Déclaration d'accessibilité",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h2"
+				tag: 'h2'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "La direction interministérielle du numérique (DINUM) s’engage à rendre ses sites internet accessibles conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'La direction interministérielle du numérique (DINUM) s’engage à rendre ses sites internet accessibles conformément à l’article 47 de la loi n° 2005-102 du 11 février 2005.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "À cette fin, il met en œuvre la stratégie et les actions suivantes :",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								children: [
-									{
-										detail: 0,
-										format: 0,
-										mode: "normal",
-										style: "",
-										text: "Consulter le schéma pluriannuel d’accessibilité 2020-2022 (pdf - 1,7 Mo)",
-										type: "text",
-										version: 1
-									}
-								],
-								direction: "ltr",
-								format: "",
-								indent: 0,
-								type: "link",
-								version: 3,
-								fields: {
-									doc: null,
-									linkType: "custom",
-									newTab: true,
-									url: "https://www.numerique.gouv.fr/uploads/DINUM_SchemaPluriannuel_2020.pdf"
-								},
-								id: "6760522f98ad5c03a427a450"
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					},
-					{
-						children: [
-							{
-								children: [
-									{
-										detail: 0,
-										format: 0,
-										mode: "normal",
-										style: "",
-										text: "Consulter le plan annuel d’accessibilité 2021 (pdf - 900 Ko)",
-										type: "text",
-										version: 1
-									}
-								],
-								direction: "ltr",
-								format: "",
-								indent: 0,
-								type: "link",
-								version: 3,
-								fields: {
-									doc: null,
-									linkType: "custom",
-									newTab: true,
-									url: "https://www.numerique.gouv.fr/uploads/DINUM-plan-annuel-2021.pdf"
-								},
-								id: "6760522f98ad5c03a427a451"
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 2
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Cette déclaration d’accessibilité s’applique au service Vos démarches essentielles.",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "État de conformité",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "heading",
-				version: 1,
-				tag: "h3"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Le service Vos démarches essentielles est en conformité partielle avec le référentiel général d'amélioration de l'accessibilité (RGAA), version 4.1. Les non-conformités sont énumérées ci-dessous.",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Résultats des tests",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "heading",
-				version: 1,
-				tag: "h3"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "L’audit de conformité finalisé le 1er juillet 2021 en interne révèle que :",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "53,4 % des critères RGAA sont respectés.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Le taux moyen de conformité du service en ligne s’élève à 78,2%.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 2
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Contenus non accessibles",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "heading",
-				version: 1,
-				tag: "h3"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Les contenus listés ci-dessous ne sont pas accessibles pour les raisons suivantes :",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Images",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Des images informatives n’ont pas une alternative textuelle pertinente.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Sur les pages dédiées aux démarches, certains graphiques n’ont pas les descriptions détaillées nécessaires pour retranscrire les données chiffrées affichées.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 2
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Couleurs",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Certains boutons de formulaire et certains textes présentent des problèmes de contraste.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Scripts",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Dans la page 'Observatoire' :",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Des attributs ARIA manquent pour les sous-menus, le tableau listant les démarches et enfin les boutons affichant les détails sur une démarche.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Lorsqu'on active les boutons 'Trier par' et 'Édition avril 2021' avec la touche Espace, les sous-menus sont affichés durant un court instant seulement.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 2
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Dans la page “Conditions générales d’utilisation” :",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Lorsqu’on active le bouton “Refuser le suivi de votre navigation”, la page se recharge sans que l’utilisateur en ait été averti au préalable.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Structuration",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "La zone de contenu principal n’est pas indiquée dans le code.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "La zone de navigation principale n’est pas bien indiquée dans le code pour les lecteurs d’écran.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 2
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Certaines listes sont mal structurées, dans le menu de navigation et sur les pages de connexion ('Accès administration') et d’inscription.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 3
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Présentation de l’information",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "La prise de focus est peu ou non visible sur certains liens et boutons sur Safari.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Dans la page 'Observatoire', le tableau n’est pas adapté aux tailles d’écrans mobiles. De même, sur les pages dédiées aux démarches, certains graphiques ne sont pas adaptés.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 2
-					},
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Dans la page d’accueil, lorsque l’on zoome à 200%, certains textes débordent des cadres et ne sont plus lisibles.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 3
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Formulaires",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Les messages d’erreurs n’indiquent pas nommément les champs erronés ou ne sont pas assez précis.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Navigation",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
-				version: 1,
-				textFormat: 0,
-			},
-			{
-				children: [
-					{
-						children: [
-							{
-								detail: 0,
-								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Le site propose un seul moyen de navigation, à savoir le menu principal.",
-								type: "text",
-								version: 1
-							}
-						],
-						direction: "ltr",
-						format: "",
-						indent: 0,
-						type: "listitem",
-						version: 1,
-						value: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "list",
-				version: 1,
-				listType: "bullet",
-				start: 1,
-				tag: "ul"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Dérogations pour charge disproportionnée",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "heading",
-				version: 1,
-				tag: "h3"
-			},
-			{
-				children: [
-					{
-						detail: 0,
-						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Pas de contenu concerné",
-						type: "text",
-						version: 1
-					}
-				],
-				direction: "ltr",
-				format: "start",
-				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
 				textFormat: 0
 			},
@@ -4466,95 +3637,968 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
+						text: 'À cette fin, il met en œuvre la stratégie et les actions suivantes :',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: 'normal',
+										style: '',
+										text: 'Consulter le schéma pluriannuel d’accessibilité 2020-2022 (pdf - 1,7 Mo)',
+										type: 'text',
+										version: 1
+									}
+								],
+								direction: 'ltr',
+								format: '',
+								indent: 0,
+								type: 'link',
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: 'custom',
+									newTab: true,
+									url: 'https://www.numerique.gouv.fr/uploads/DINUM_SchemaPluriannuel_2020.pdf'
+								},
+								id: '6760522f98ad5c03a427a450'
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								children: [
+									{
+										detail: 0,
+										format: 0,
+										mode: 'normal',
+										style: '',
+										text: 'Consulter le plan annuel d’accessibilité 2021 (pdf - 900 Ko)',
+										type: 'text',
+										version: 1
+									}
+								],
+								direction: 'ltr',
+								format: '',
+								indent: 0,
+								type: 'link',
+								version: 3,
+								fields: {
+									doc: null,
+									linkType: 'custom',
+									newTab: true,
+									url: 'https://www.numerique.gouv.fr/uploads/DINUM-plan-annuel-2021.pdf'
+								},
+								id: '6760522f98ad5c03a427a451'
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 2,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Cette déclaration d’accessibilité s’applique au service Vos démarches essentielles.',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'État de conformité',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'heading',
+				version: 1,
+				tag: 'h3'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: "Le service Vos démarches essentielles est en conformité partielle avec le référentiel général d'amélioration de l'accessibilité (RGAA), version 4.1. Les non-conformités sont énumérées ci-dessous.",
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Résultats des tests',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'heading',
+				version: 1,
+				tag: 'h3'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'L’audit de conformité finalisé le 1er juillet 2021 en interne révèle que :',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: '53,4 % des critères RGAA sont respectés.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Le taux moyen de conformité du service en ligne s’élève à 78,2%.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 2,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Contenus non accessibles',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'heading',
+				version: 1,
+				tag: 'h3'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Les contenus listés ci-dessous ne sont pas accessibles pour les raisons suivantes :',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Images',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Des images informatives n’ont pas une alternative textuelle pertinente.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Sur les pages dédiées aux démarches, certains graphiques n’ont pas les descriptions détaillées nécessaires pour retranscrire les données chiffrées affichées.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 2,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Couleurs',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Certains boutons de formulaire et certains textes présentent des problèmes de contraste.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Scripts',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: "Dans la page 'Observatoire' :",
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Des attributs ARIA manquent pour les sous-menus, le tableau listant les démarches et enfin les boutons affichant les détails sur une démarche.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: "Lorsqu'on active les boutons 'Trier par' et 'Édition avril 2021' avec la touche Espace, les sous-menus sont affichés durant un court instant seulement.",
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 2,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Dans la page “Conditions générales d’utilisation” :',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Lorsqu’on active le bouton “Refuser le suivi de votre navigation”, la page se recharge sans que l’utilisateur en ait été averti au préalable.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Structuration',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'La zone de contenu principal n’est pas indiquée dans le code.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'La zone de navigation principale n’est pas bien indiquée dans le code pour les lecteurs d’écran.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 2,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: "Certaines listes sont mal structurées, dans le menu de navigation et sur les pages de connexion ('Accès administration') et d’inscription.",
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 3,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Présentation de l’information',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'La prise de focus est peu ou non visible sur certains liens et boutons sur Safari.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: "Dans la page 'Observatoire', le tableau n’est pas adapté aux tailles d’écrans mobiles. De même, sur les pages dédiées aux démarches, certains graphiques ne sont pas adaptés.",
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 2,
+						checked: undefined
+					},
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Dans la page d’accueil, lorsque l’on zoome à 200%, certains textes débordent des cadres et ne sont plus lisibles.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 3,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Formulaires',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Les messages d’erreurs n’indiquent pas nommément les champs erronés ou ne sont pas assez précis.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Navigation',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						children: [
+							{
+								detail: 0,
+								format: 0,
+								mode: 'normal',
+								style: '',
+								text: 'Le site propose un seul moyen de navigation, à savoir le menu principal.',
+								type: 'text',
+								version: 1
+							}
+						],
+						direction: 'ltr',
+						format: '',
+						indent: 0,
+						type: 'listitem',
+						version: 1,
+						value: 1,
+						checked: undefined
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'list',
+				version: 1,
+				listType: 'bullet',
+				start: 1,
+				tag: 'ul'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Dérogations pour charge disproportionnée',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'heading',
+				version: 1,
+				tag: 'h3'
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
+						text: 'Pas de contenu concerné',
+						type: 'text',
+						version: 1
+					}
+				],
+				direction: 'ltr',
+				format: 'start',
+				indent: 0,
+				type: 'paragraph',
+				version: 1,
+				textFormat: 0
+			},
+			{
+				children: [
+					{
+						detail: 0,
+						format: 0,
+						mode: 'normal',
+						style: '',
 						text: "Contenus non soumis à l'obligation d'accessibilité",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Pas de contenu concerné",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Pas de contenu concerné',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Établissement de cette déclaration d'accessibilité",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Cette déclaration a été établie le 01/07/2021.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Cette déclaration a été établie le 01/07/2021.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Technologies utilisées pour la réalisation du site web",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Technologies utilisées pour la réalisation du site web',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -4563,105 +4607,109 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "HTML5",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'HTML5',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "CSS",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'CSS',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "JavaScript",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'JavaScript',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "jQuery",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'jQuery',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 4
+						value: 4,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Les tests des pages web ont été effectués avec les combinaisons de navigateurs web et lecteurs d’écran suivants :",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Les tests des pages web ont été effectués avec les combinaisons de navigateurs web et lecteurs d’écran suivants :',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -4670,86 +4718,89 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "NVDA 2021.4 et Firefox 89.0.2",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'NVDA 2021.4 et Firefox 89.0.2',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Jaws 2021 et Firefox 89.0.2",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Jaws 2021 et Firefox 89.0.2',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "VoiceOver et Safari, OS 11.0.1",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'VoiceOver et Safari, OS 11.0.1',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Les outils suivants ont été utilisés lors de l’évaluation",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Les outils suivants ont été utilisés lors de l’évaluation',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -4758,67 +4809,69 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Barre d’outil Web Developer",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Barre d’outil Web Developer',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "Extensions : WAVE, WCAG Color contrast checker et HeadingsMaps",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'Extensions : WAVE, WCAG Color contrast checker et HeadingsMaps',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Pages du site ayant fait l’objet de la vérification de conformité",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Pages du site ayant fait l’objet de la vérification de conformité',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -4829,33 +4882,34 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
-										text: "Accueil",
-										type: "text",
+										mode: 'normal',
+										style: '',
+										text: 'Accueil',
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: false,
-									url: "https://observatoire.numerique.gouv.fr/"
+									url: 'https://observatoire.numerique.gouv.fr/'
 								},
-								id: "6760522f98ad5c03a427a452"
+								id: '6760522f98ad5c03a427a452'
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
@@ -4864,33 +4918,34 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
-										text: "Conditions générales d’utilisation",
-										type: "text",
+										mode: 'normal',
+										style: '',
+										text: 'Conditions générales d’utilisation',
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: false,
-									url: "https://observatoire.numerique.gouv.fr/cgu"
+									url: 'https://observatoire.numerique.gouv.fr/cgu'
 								},
-								id: "6760522f98ad5c03a427a453"
+								id: '6760522f98ad5c03a427a453'
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
@@ -4899,33 +4954,34 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
-										text: "Accessibilité",
-										type: "text",
+										mode: 'normal',
+										style: '',
+										text: 'Accessibilité',
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: false,
-									url: "https://observatoire.numerique.gouv.fr/accessibilite"
+									url: 'https://observatoire.numerique.gouv.fr/accessibilite'
 								},
-								id: "6760522f98ad5c03a427a454"
+								id: '6760522f98ad5c03a427a454'
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					},
 					{
 						children: [
@@ -4934,33 +4990,34 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
-										text: "L’observatoire",
-										type: "text",
+										mode: 'normal',
+										style: '',
+										text: 'L’observatoire',
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: false,
-									url: "https://observatoire.numerique.gouv.fr/observatoire"
+									url: 'https://observatoire.numerique.gouv.fr/observatoire'
 								},
-								id: "6760522f98ad5c03a427a455"
+								id: '6760522f98ad5c03a427a455'
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 4
+						value: 4,
+						checked: undefined
 					},
 					{
 						children: [
@@ -4969,219 +5026,222 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
+										mode: 'normal',
+										style: '',
 										text: "En savoir plus sur nos critères d'évaluation",
-										type: "text",
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: false,
-									url: "https://observatoire.numerique.gouv.fr/Aide/Observatoire"
+									url: 'https://observatoire.numerique.gouv.fr/Aide/Observatoire'
 								},
-								id: "6760522f98ad5c03a427a456"
+								id: '6760522f98ad5c03a427a456'
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 5
+						value: 5,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Droit à compensation",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Droit à compensation',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Dans l’attente d’une mise en conformité totale, vous pouvez obtenir une version accessible des documents ou des informations qui y seraient contenues en envoyant un courriel à ",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Dans l’attente d’une mise en conformité totale, vous pouvez obtenir une version accessible des documents ou des informations qui y seraient contenues en envoyant un courriel à ',
+						type: 'text',
 						version: 1
 					},
 					{
-						type: "autolink",
+						type: 'autolink',
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "communication.dinum@modernisation.gouv.fr",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'communication.dinum@modernisation.gouv.fr',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
+						direction: 'ltr',
 						fields: {
-							linkType: "custom",
-							url: "mailto:communication.dinum@modernisation.gouv.fr"
+							linkType: 'custom',
+							url: 'mailto:communication.dinum@modernisation.gouv.fr',
+							newTab: true
 						},
-						format: "",
+						format: '',
 						indent: 0,
 						version: 2
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: " en indiquant le nom du document concerné et/ou les informations que vous souhaiteriez obtenir. Les informations demandées vous seront transmises dans les plus bref délais.",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: ' en indiquant le nom du document concerné et/ou les informations que vous souhaiteriez obtenir. Les informations demandées vous seront transmises dans les plus bref délais.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Amélioration et contact",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Amélioration et contact',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Vous pouvez nous aider à améliorer l’accessibilité du site en nous signalant les problèmes éventuels que vous rencontrez. Pour ce faire, envoyez-nous un courriel à ",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Vous pouvez nous aider à améliorer l’accessibilité du site en nous signalant les problèmes éventuels que vous rencontrez. Pour ce faire, envoyez-nous un courriel à ',
+						type: 'text',
 						version: 1
 					},
 					{
-						type: "autolink",
+						type: 'autolink',
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "communication.dinum@modernisation.gouv.fr",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'communication.dinum@modernisation.gouv.fr',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
+						direction: 'ltr',
 						fields: {
-							linkType: "custom",
-							url: "mailto:communication.dinum@modernisation.gouv.fr"
+							linkType: 'custom',
+							url: 'mailto:communication.dinum@modernisation.gouv.fr',
+							newTab: true
 						},
-						format: "",
+						format: '',
 						indent: 0,
 						version: 2
 					},
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: ".",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: '.',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
-						text: "Défenseur des droits",
-						type: "text",
+						mode: 'normal',
+						style: '',
+						text: 'Défenseur des droits',
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "heading",
+				type: 'heading',
 				version: 1,
-				tag: "h3"
+				tag: 'h3'
 			},
 			{
 				children: [
 					{
 						detail: 0,
 						format: 0,
-						mode: "normal",
-						style: "",
+						mode: 'normal',
+						style: '',
 						text: "Si vous constatez un défaut d'accessibilité vous empêchant d'accéder à un contenu ou une fonctionnalité du site, que vous nous le signalez et que vous ne parvenez pas à obtenir une réponse rapide de notre part, vous êtes en droit de faire parvenir vos doléances ou une demande de saisine au Défenseur des droits. Plusieurs moyens sont à votre disposition :",
-						type: "text",
+						type: 'text',
 						version: 1
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "paragraph",
+				type: 'paragraph',
 				version: 1,
-				textFormat: 0,
+				textFormat: 0
 			},
 			{
 				children: [
@@ -5190,10 +5250,10 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "un ",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'un ',
+								type: 'text',
 								version: 1
 							},
 							{
@@ -5201,43 +5261,44 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
-										text: "formulaire de contact ;",
-										type: "text",
+										mode: 'normal',
+										style: '',
+										text: 'formulaire de contact ;',
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: true,
-									url: "https://www.defenseurdesdroits.fr/nous-contacter-355"
+									url: 'https://www.defenseurdesdroits.fr/nous-contacter-355'
 								},
-								id: "6760522f98ad5c03a427a457"
+								id: '6760522f98ad5c03a427a457'
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 1
+						value: 1,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "la ",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'la ',
+								type: 'text',
 								version: 1
 							},
 							{
@@ -5245,96 +5306,99 @@ export const legalsA11yWysiwygContent: DefaultTypedEditorState = {
 									{
 										detail: 0,
 										format: 0,
-										mode: "normal",
-										style: "",
-										text: "liste des délégués de votre région",
-										type: "text",
+										mode: 'normal',
+										style: '',
+										text: 'liste des délégués de votre région',
+										type: 'text',
 										version: 1
 									}
 								],
-								direction: "ltr",
-								format: "",
+								direction: 'ltr',
+								format: '',
 								indent: 0,
-								type: "link",
+								type: 'link',
 								version: 3,
 								fields: {
 									doc: null,
-									linkType: "custom",
+									linkType: 'custom',
 									newTab: true,
-									url: "https://www.defenseurdesdroits.fr/carte-des-delegues"
+									url: 'https://www.defenseurdesdroits.fr/carte-des-delegues'
 								},
-								id: "6760522f98ad5c03a427a458"
+								id: '6760522f98ad5c03a427a458'
 							},
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "avec leurs informations de contact directs ;",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'avec leurs informations de contact directs ;',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 2
+						value: 2,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
+								mode: 'normal',
+								style: '',
 								text: "un numéro de téléphone : le 09 69 39 00 00 du lundi au vendredi de 8h00 à 20h00 (coût d'un appel local)",
-								type: "text",
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 3
+						value: 3,
+						checked: undefined
 					},
 					{
 						children: [
 							{
 								detail: 0,
 								format: 0,
-								mode: "normal",
-								style: "",
-								text: "une adresse postal (envoi de courrier gratuit, ne pas mettre de timbre) : Défenseur des droits - Libre réponse 71120 - 75342 Paris CEDEX 07",
-								type: "text",
+								mode: 'normal',
+								style: '',
+								text: 'une adresse postal (envoi de courrier gratuit, ne pas mettre de timbre) : Défenseur des droits - Libre réponse 71120 - 75342 Paris CEDEX 07',
+								type: 'text',
 								version: 1
 							}
 						],
-						direction: "ltr",
-						format: "",
+						direction: 'ltr',
+						format: '',
 						indent: 0,
-						type: "listitem",
+						type: 'listitem',
 						version: 1,
-						value: 4
+						value: 4,
+						checked: undefined
 					}
 				],
-				direction: "ltr",
-				format: "start",
+				direction: 'ltr',
+				format: 'start',
 				indent: 0,
-				type: "list",
+				type: 'list',
 				version: 1,
-				listType: "bullet",
+				listType: 'bullet',
 				start: 1,
-				tag: "ul"
+				tag: 'ul'
 			}
 		],
-		direction: "ltr",
-		format: "",
+		direction: 'ltr',
+		format: '',
 		indent: 0,
-		type: "root",
+		type: 'root',
 		version: 1
 	}
-}
+};

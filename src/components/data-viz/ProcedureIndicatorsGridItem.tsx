@@ -1,0 +1,160 @@
+import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
+import { PayloadIndicator } from '@/payload/payload-types';
+import { fr } from '@codegouvfr/react-dsfr';
+import Button from '@codegouvfr/react-dsfr/Button';
+import { tss } from 'tss-react';
+import { IndicatorLabel } from '../top250/table/IndicatorLabel';
+import { useRouter } from 'next/router';
+
+type ProcedureIndicatorsGridItemProps = {
+	procedure: ProcedureWithFieldsAndEditions;
+	indicators: PayloadIndicator[];
+	showCompareButton?: boolean;
+	onClose?: () => void;
+};
+const ProcedureIndicatorsGridItem = ({
+	procedure,
+	indicators,
+	showCompareButton = true,
+	onClose
+}: ProcedureIndicatorsGridItemProps) => {
+	const { classes, cx } = useStyles();
+
+	const router = useRouter();
+	const { kind } = router.query;
+
+	return (
+		<div className={cx(classes.gridItem)}>
+			<div>
+				<div className={classes.removableTitleContainer}>
+					<h2 className={cx(classes.gridTitle, 'fr-text--lg')}>
+						{procedure.title}
+					</h2>
+					{onClose && (
+						<Button
+							priority="tertiary no outline"
+							iconId="ri-close-circle-fill"
+							onClick={onClose}
+							children={''}
+							size="large"
+							className={classes.clearButton}
+							title="Supprimer la sélection"
+							aria-label="Supprimer la sélection"
+						/>
+					)}
+				</div>
+				<p className={cx('fr-text--xs', 'fr-mb-0')}>
+					{procedure.administration}
+				</p>
+			</div>
+			<div className={cx(classes.procredureStats)}>
+				{indicators.map((indicator, index) => {
+					const field = procedure.fields.find(f => f.slug === indicator.slug);
+
+					return (
+						<div
+							key={`${procedure.id}-${indicator.id}`}
+							className={classes.indicator}
+							style={{
+								backgroundColor:
+									index % 2
+										? fr.colors.decisions.artwork.background.blueFrance.default
+										: 'transparent'
+							}}
+						>
+							<div className={classes.indicatorLabelContainer}>
+								<i className={cx(fr.cx(indicator.icon, 'fr-mr-2v'))} />
+								<span className={classes.indicatorLabel}>
+									{indicator.label}
+								</span>
+							</div>
+							<IndicatorLabel
+								label={field?.label || '-'}
+								color={field?.color || 'gray'}
+								noBackground={field?.noBackground}
+							/>
+						</div>
+					);
+				})}
+			</div>
+			<div className={cx(classes.buttonsGroup)}>
+				{showCompareButton && (
+					<Button
+						size="small"
+						linkProps={{
+							href: `/data-viz/procedure/${procedure.id}`,
+							target: kind ? '_blank' : '_self'
+						}}
+					>
+						{kind ? 'Analyser la démarche' : 'Analyser les indicateurs'}
+					</Button>
+				)}
+			</div>
+		</div>
+	);
+};
+
+const useStyles = tss.create({
+	gridItem: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		textAlign: 'center',
+		gap: fr.spacing('5v'),
+		borderRadius: fr.spacing('2v'),
+		padding: `${fr.spacing('3w')} ${fr.spacing('4v')}`,
+		border: `1px solid ${fr.colors.decisions.background.contrast.blueFrance.default}`
+	},
+	gridTitle: {
+		fontWeight: 500,
+		color: fr.colors.decisions.text.title.grey.default,
+		marginBottom: fr.spacing('1v')
+	},
+	removableTitleContainer: {
+		display: 'flex',
+		alignItems: 'center'
+	},
+	clearButton: {
+		...fr.spacing('padding', { rightLeft: '2v', topBottom: 0 }),
+		'::before': {
+			margin: '0!important'
+		}
+	},
+	procredureStats: {
+		...fr.spacing('padding', { rightLeft: '4v' }),
+		border: `1px solid ${fr.colors.decisions.background.contrast.blueFrance.default}`,
+		borderRadius: fr.spacing('2v'),
+		width: '100%',
+		marginTop: 'auto'
+	},
+	indicator: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		padding: fr.spacing('4v'),
+		borderRadius: fr.spacing('3v'),
+		width: '100%',
+		'i::before, i::after ': {
+			'--icon-size': '1.25rem',
+			color: fr.colors.decisions.text.title.blueFrance.default
+		},
+		[fr.breakpoints.down('md')]: {
+			flexDirection: 'column'
+		}
+	},
+	indicatorLabelContainer: {
+		alignItems: 'center'
+	},
+	indicatorLabel: {
+		fontWeight: 500,
+		fontSize: '0.875rem',
+		lineHeight: '1.5rem'
+	},
+	buttonsGroup: {
+		display: 'flex',
+		gap: fr.spacing('2v')
+	}
+});
+
+export default ProcedureIndicatorsGridItem;

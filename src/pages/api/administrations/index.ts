@@ -17,6 +17,7 @@ export async function getAdministrations(editionId?: string) {
 		},
 		where
 	});
+
 	return administrations.map(administration => administration.administration);
 }
 

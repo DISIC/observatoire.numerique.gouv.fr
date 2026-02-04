@@ -1,3 +1,4 @@
+import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { Top250TableSection } from '@/components/top250/TableSection';
 import { Top250Header } from '@/components/top250/Top250Header';
 import { StickyFooter } from '@/components/top250/table/StickyFooter';
@@ -33,7 +34,15 @@ export default function Observatoire() {
 
 	return (
 		<>
-			<div className={fr.cx('fr-container')}>
+			<div className={cx(classes.root, fr.cx('fr-container'))}>
+				<Breadcrumb
+					segments={[]}
+					homeLinkProps={{ href: '/' }}
+					currentPageLabel={`Éditions - Édition de ${
+						currentEdition?.name.toLowerCase() || '...'
+					}`}
+					className={cx('fr-mb-1v')}
+				/>
 				<Top250Header
 					title="Suivi trimestriel de la qualité de vos démarches essentielles"
 					subtitle={`Édition de ${currentEdition?.name.toLowerCase()}`}
@@ -72,6 +81,9 @@ export default function Observatoire() {
 }
 
 const useStyles = tss.withName(Observatoire.name).create(() => ({
+	root: {
+		marginTop: fr.spacing('10v') // fr.spacing('1w') for classic
+	},
 	tableContainer: {
 		backgroundColor: fr.colors.decisions.background.contrast.info.default,
 		['.fr-container']: {

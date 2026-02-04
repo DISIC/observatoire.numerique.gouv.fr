@@ -30,6 +30,7 @@ export const Indicators: CollectionConfig = {
 		description_html: true,
 		moreInfos: true,
 		moreInfosTitle: true,
+		threshold_max: true,
 		levels: true
 	},
 	labels: {
@@ -61,6 +62,16 @@ export const Indicators: CollectionConfig = {
 			name: 'description',
 			type: 'textarea',
 			label: 'Description succincte'
+		},
+		{
+			name: 'description_radar',
+			type: 'textarea',
+			label: 'Description de la jauge du radar'
+		},
+		{
+			name: 'description_header',
+			type: 'textarea',
+			label: 'Description de la colonne du tableau'
 		},
 		{
 			name: 'description_obj',
@@ -113,6 +124,11 @@ export const Indicators: CollectionConfig = {
 			name: 'moreInfos',
 			type: 'textarea',
 			label: 'Informations supplémentaires'
+		},
+		{
+			name: 'threshold_max',
+			type: 'number',
+			label: 'Seuil (maximum)'
 		},
 		{
 			name: 'levels',

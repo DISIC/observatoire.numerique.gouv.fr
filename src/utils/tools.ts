@@ -5,6 +5,11 @@ import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { fr as frDsfr } from '@codegouvfr/react-dsfr';
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
+import { RecordData, validIndicatorSlugs } from './data-viz-client';
 
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
@@ -16,8 +21,9 @@ export const getDisplayedVolume = (volume: number): string => {
 			const thousands = Math.round(remainder / 100000);
 			const units = remainder % 1000;
 			if (thousands === 0) {
-				return `${millions}.${Math.floor(units / 100)} million${millions > 1 ? 's' : ''
-					}`;
+				return `${millions}.${Math.floor(units / 100)} million${
+					millions > 1 ? 's' : ''
+				}`;
 			} else {
 				return `${millions}.${thousands} million${millions > 1 ? 's' : ''}`;
 			}
@@ -152,9 +158,9 @@ export const sortProcedures = (
 		) {
 			return sortConfig.direction === 'asc'
 				? SPECIAL_VALUES.indexOf(valueA as string) -
-				SPECIAL_VALUES.indexOf(valueB as string)
+						SPECIAL_VALUES.indexOf(valueB as string)
 				: SPECIAL_VALUES.indexOf(valueB as string) -
-				SPECIAL_VALUES.indexOf(valueA as string);
+						SPECIAL_VALUES.indexOf(valueA as string);
 		}
 
 		const valueToCompareA = isNaN(Number(valueA)) ? valueA : Number(valueA);
@@ -266,12 +272,214 @@ export async function verifyAuth(
 }
 
 export const slugifyText = (text: string): string => {
-	return text
-		.toLowerCase()
-		.replace(/ /g, '-')
-		.replace(/[^a-z0-9-]/g, '');
+	return text.toLowerCase().replace(/\s+/g, '-');
 };
 
 export const desufligyText = (text: string): string => {
-	return text.replace(/-/g, ' ');
+	const result = text.replace(/-/g, ' ');
+	return result.charAt(0).toUpperCase() + result.slice(1);
+};
+
+export const exportChartAsImage = async (
+	chartParent: HTMLElement,
+	title: string
+) => {
+	const chartSVG = chartParent.children[0] as HTMLElement;
+
+	if (!chartSVG) {
+		console.error('Chart SVG element not found');
+		return;
+	}
+
+	const canvas = await html2canvas(chartSVG, {
+		logging: false,
+		useCORS: true,
+		allowTaint: true
+	});
+
+	const pngBlob = await new Promise<Blob>((resolve, reject) => {
+		canvas.toBlob(blob => {
+			if (blob) {
+				resolve(blob);
+			} else {
+				reject(new Error('Failed to create PNG blob'));
+			}
+		}, 'image/png');
+	});
+
+	if (pngBlob) {
+		const filename = `export-${slugifyText(title)}-${new Date()
+			.toISOString()
+			.slice(0, 10)}.png`;
+		saveAs(pngBlob, filename);
+	}
+};
+
+export const exportChartAsPng = async (
+	chartParent: HTMLElement,
+	titleChart?: string
+) => {
+	const chartSVG = chartParent.children[0] as HTMLElement;
+
+	if (!chartSVG) {
+		console.error('Chart SVG element not found');
+		return;
+	}
+
+	const canvas = await html2canvas(chartSVG, {
+		logging: false,
+		useCORS: true,
+		allowTaint: true
+	});
+
+	const pngBlob = await new Promise<Blob>((resolve, reject) => {
+		canvas.toBlob(blob => {
+			if (blob) {
+				resolve(blob);
+			} else {
+				reject(new Error('Failed to create PNG blob'));
+			}
+		}, 'image/png');
+	});
+
+	if (pngBlob) {
+		const filename = `export-${
+			titleChart || slugifyText(chartSVG.getAttribute('title') || 'chart')
+		}-${new Date().toISOString().slice(0, 10)}.png`;
+		saveAs(pngBlob, filename);
+	}
+};
+
+export function stringToBase64Url(str: string): string {
+	const base64 = btoa(unescape(encodeURIComponent(str)));
+	return encodeURIComponent(base64);
+}
+
+export function base64UrlToString(base64Url: string): string {
+	const decoded = decodeURIComponent(base64Url);
+	return decodeURIComponent(escape(atob(decoded)));
+}
+
+export function exportTableAsCSV(tableSelector: string, title: string) {
+	const rows = document.querySelectorAll<HTMLTableRowElement>(
+		`${tableSelector} tr`
+	);
+	const csv: string[] = [];
+
+	rows.forEach(row => {
+		const cells = Array.from(row.querySelectorAll('th, td'));
+		const rowData = cells.map(cell => {
+			const cellClone = cell.cloneNode(true) as HTMLElement;
+
+			cellClone.querySelectorAll('p').forEach(p => p.remove());
+			cellClone
+				.querySelectorAll('span.fr-tooltip')
+				.forEach(span => span.remove());
+
+			const text = cellClone.textContent?.trim().replace(/"/g, '""') ?? '';
+
+			return `"${text}"`;
+		});
+
+		csv.push(rowData.join(','));
+	});
+
+	const csvBlob = new Blob([csv.join('\n')], {
+		type: 'text/csv;charset=utf-8'
+	});
+	const filename = `export-${slugifyText(title)}-${new Date()
+		.toISOString()
+		.slice(0, 10)}.csv`;
+
+	saveAs(csvBlob, filename);
+}
+
+export const getProcedureKindLabel = (
+	kind: ProcedureKind,
+	{ plural = false, uppercaseFirst = false } = {}
+): string => {
+	let label = '';
+
+	switch (kind) {
+		case 'ministere':
+			label = 'ministère';
+			break;
+		case 'administration':
+			label = 'administration';
+			break;
+		case 'administration_central':
+			label = 'domaine';
+			break;
+		default:
+			return '';
+	}
+
+	if (plural && label && !label.endsWith('s')) {
+		label = `${label}s`;
+	}
+
+	if (uppercaseFirst && label) {
+		label = label.charAt(0).toUpperCase() + label.slice(1);
+	}
+
+	return label;
+};
+
+export const getValidIndicatorLabel = (
+	kind: (typeof validIndicatorSlugs)[number]
+): string => {
+	let label = '';
+
+	switch (kind) {
+		case 'satisfaction':
+			label = 'Satisfaction usager';
+			break;
+		case 'handicap':
+			label = 'Prise en compte du handicap';
+			break;
+		case 'dlnuf':
+			label = 'Dites-le-nous une fois';
+			break;
+		case 'auth':
+			label = 'Authentification';
+			break;
+		case 'simplicity':
+			label = 'Clarté du langage';
+			break;
+		default:
+			return '';
+	}
+
+	return label;
+};
+
+export const getColorValue = (value?: string) => {
+	switch (value) {
+		case 'green':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default
+				.success.default;
+		case 'blue':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default.info
+				.default;
+		case 'yellow':
+			return frDsfr.colors.getHex({ isDark: false }).options.orangeTerreBattue
+				.main645.default;
+		case 'red':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default
+				.error.default;
+		case 'gray':
+			return frDsfr.colors.getHex({ isDark: false }).decisions.text.default.grey
+				.default;
+		default:
+			return '#000';
+	}
+};
+
+export const getTableHeadersFromData = (data: RecordData['data']) => {
+	return (
+		data.map(d => ({
+			name: d.name,
+			description: d.description_header
+		})) || []
+	);
 };

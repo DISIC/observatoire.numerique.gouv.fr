@@ -9,7 +9,8 @@ export async function getProcedures(
 	search?: string,
 	sort?: string,
 	department?: string,
-	administration?: string
+	administration?: string,
+	administration_central?: string
 ) {
 	let tmpEditionId = editionId;
 
@@ -28,7 +29,11 @@ export async function getProcedures(
 		editionId: tmpEditionId || null,
 		ministere: department && department !== 'all' ? department : undefined,
 		administration:
-			administration && administration !== 'all' ? administration : undefined
+			administration && administration !== 'all' ? administration : undefined,
+		administration_central:
+			administration_central && administration_central !== 'all'
+				? administration_central
+				: undefined
 	};
 
 	if (search)
@@ -106,8 +111,15 @@ export default async function handler(
 	}
 
 	if (req.method === 'GET') {
-		const { id, editionId, search, sort, department, administration } =
-			req.query;
+		const {
+			id,
+			editionId,
+			search,
+			sort,
+			department,
+			administration,
+			administration_central
+		} = req.query;
 		if (id) {
 			const procedure = await getProcedureById(id.toString());
 			res.status(200).json(procedure);
@@ -117,7 +129,8 @@ export default async function handler(
 				search as string,
 				sort as string,
 				department as string,
-				administration as string
+				administration as string,
+				administration_central as string
 			);
 			res.status(200).json(procedures);
 		}

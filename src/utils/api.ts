@@ -2,6 +2,13 @@ import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
 import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
 import { Edition, OldProcedure } from '@prisma/client';
+import { ProcedureKind } from '@/pages/api/indicator-scores';
+import {
+	GetIndicatorEvolutionProps,
+	IndicatorEvolutionResponse,
+	RecordDataGrouped
+} from '@/pages/api/indicator-evolution';
+import { RecordData } from './data-viz-client';
 
 type OldProceduresProps = {
 	xwiki_edition: string;
@@ -32,12 +39,13 @@ export function useOldProcedures(props: OldProceduresProps) {
 	};
 }
 
-type ProceduresProps = {
+export type ProceduresProps = {
 	editionId?: string;
 	search?: string;
 	sort?: string;
 	department?: string;
 	administration?: string;
+	administration_central?: string;
 };
 export function useProcedures(props: ProceduresProps) {
 	// REMOVE UNDEFINED TO AVOID ISSUES IN URLSEARCHPARAMS
@@ -52,6 +60,24 @@ export function useProcedures(props: ProceduresProps) {
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<ProcedureWithFieldsAndEditions[]>(
+				stringify(await res.json())
+			);
+		}
+	);
+
+	return {
+		data,
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+export function useProcedureById(id: string) {
+	const { data, error, isLoading } = useSWR(
+		id ? `/api/procedures?id=${id}` : null,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<ProcedureWithFieldsAndEditions>(
 				stringify(await res.json())
 			);
 		}
@@ -107,7 +133,8 @@ export function useDepartments(
 	editionId: string | undefined
 ) {
 	const { data, error, isLoading } = useSWR(
-		`/api/departments?kind=${kind}${editionId ? `&editionId=${editionId}` : ''
+		`/api/departments?kind=${kind}${
+			editionId ? `&editionId=${editionId}` : ''
 		}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
@@ -133,6 +160,112 @@ export function useAdministrations(editionId: string | undefined) {
 
 	return {
 		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+export function useProcedureGroupByKind({ kind }: { kind: ProcedureKind }) {
+	const { data, error, isLoading } = useSWR(
+		`/api/procedure-group?kind=${kind}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+type IndicatorScoreByProcedureKindProps = {
+	kind: ProcedureKind;
+	search?: string;
+};
+
+export function useIndicatorScoreByProcedureKind({
+	kind,
+	search
+}: IndicatorScoreByProcedureKindProps) {
+	const { data, error, isLoading } = useSWR(
+		`/api/indicator-scores?kind=${kind}${
+			search ? `&search=${encodeURIComponent(search)}` : ''
+		}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<RecordData[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+type IndicatorScoreByProcedureKindSlugProps = {
+	kind: ProcedureKind;
+	slug: string;
+};
+
+export function useIndicatorScoreByProcedureKindSlug({
+	kind,
+	slug
+}: IndicatorScoreByProcedureKindSlugProps) {
+	const { data, error, isLoading } = useSWR(
+		`/api/indicator-scores?kind=${kind}&slug=${slug}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<RecordData>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data,
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+export function useAdministrationsCentral() {
+	const { data, error, isLoading } = useSWR(
+		`/api/administrations-central`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+export function useIndicatorEvolution(props: GetIndicatorEvolutionProps) {
+	const fakeProps: { [key: string]: any } = props;
+	Object.keys(fakeProps).forEach(
+		key => fakeProps[key] === undefined && delete fakeProps[key]
+	);
+
+	const searchUrl = new URLSearchParams(fakeProps);
+	const { data, error, isLoading } = useSWR(
+		`/api/indicator-evolution?${searchUrl}`,
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<IndicatorEvolutionResponse>(
+				stringify(await res.json())
+			);
+		}
+	);
+
+	return {
+		data: data,
 		isError: error,
 		isLoading: (!error && !data) || isLoading
 	};

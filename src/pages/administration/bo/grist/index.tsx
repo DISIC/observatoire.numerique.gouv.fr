@@ -1,5 +1,4 @@
 import { Top250TableSection } from '@/components/top250/TableSection';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import Alert from '@codegouvfr/react-dsfr/Alert';
@@ -17,8 +16,9 @@ import { trpc } from '@/utils/trpc';
 export default function Grist() {
 	const { classes, cx } = useStyles();
 
-	const [selectedEdition, setSelectedEdition] =
-		useState<GristEdition | null>(null);
+	const [selectedEdition, setSelectedEdition] = useState<GristEdition | null>(
+		null
+	);
 	const [isPublishing, setIsPublishing] = useState<boolean>(false);
 	const [published, setIsPublished] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -28,7 +28,10 @@ export default function Grist() {
 	const editions = editionsQuery?.data || [];
 
 	const { data: proceduresQuery, isLoading: isLoadingProcedures } =
-		trpc.grist.getProcedures.useQuery({ edition: selectedEdition?.id || 0 }, { enabled: !!selectedEdition });
+		trpc.grist.getProcedures.useQuery(
+			{ edition: selectedEdition?.id || 0 },
+			{ enabled: !!selectedEdition }
+		);
 	const procedures = proceduresQuery?.data || [];
 
 	const isLoading = isLoadingEditions || isLoadingProcedures;
@@ -48,7 +51,7 @@ export default function Grist() {
 		if (editions.length > 0) {
 			setSelectedEdition(editions[0]);
 		}
-	}, [editions])
+	}, [editions]);
 
 	const publish = async () => {
 		const editionName = !!inputRef.current?.value
@@ -111,11 +114,11 @@ export default function Grist() {
 				<p>
 					Cet espace d&apos;administration vous permet de publier une nouvelle
 					édition du top 250 des démarches en direct depuis les données de
-					Grist. Sélectionnez l&apos;édition cible de Grist, puis
-					prévisualisez les données de celle-ci. Vous pouvez ainsi publier des
-					éditions dans l&apos;Observatoire à la volée en cliquant sur
-					&quot;Publier l&apos;édition&quot;. Les éditions créées sont
-					accessibles depuis l&apos;onglet &quot;Mes éditions&quot;.
+					Grist. Sélectionnez l&apos;édition cible de Grist, puis prévisualisez
+					les données de celle-ci. Vous pouvez ainsi publier des éditions dans
+					l&apos;Observatoire à la volée en cliquant sur &quot;Publier
+					l&apos;édition&quot;. Les éditions créées sont accessibles depuis
+					l&apos;onglet &quot;Mes éditions&quot;.
 				</p>
 			</div>
 			{isLoading || !procedures.length ? (
@@ -144,13 +147,13 @@ export default function Grist() {
 									startDateRef?.current?.setAttribute(
 										'value',
 										ISODateFormatToSimplifiedDate(
-											selectedEdition?.start_date || ''
+											selectedEdition?.start_jdma_date || ''
 										)
 									);
 									endDateRef?.current?.setAttribute(
 										'value',
 										ISODateFormatToSimplifiedDate(
-											selectedEdition?.end_date || ''
+											selectedEdition?.end_jdma_date || ''
 										)
 									);
 								}, 200);

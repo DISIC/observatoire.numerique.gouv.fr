@@ -42,15 +42,6 @@ const PublicLayout = (props: Props) => {
 		{
 			iconId: 'ri-user-star-line',
 			linkProps: {
-				href: 'https://jedonnemonavis.numerique.gouv.fr',
-				target: '_blank',
-				title: 'Je donne mon avis, nouvelle fenêtre'
-			},
-			text: 'Je donne mon avis'
-		},
-		{
-			iconId: 'ri-user-star-line',
-			linkProps: {
 				href: 'https://www.data.gouv.fr/fr/datasets/observatoire-de-la-qualite-des-demarches-en-ligne',
 				target: '_blank',
 				title: 'Nos données sur data.gouv.fr, nouvelle fenêtre'
@@ -96,31 +87,85 @@ const PublicLayout = (props: Props) => {
 						text: 'Accueil'
 					},
 					{
-						linkProps: {
-							href: '/observatoire',
-							target: '_self'
-						},
-						isActive: router.pathname === '/observatoire',
-
-						text: `Edition ${currentEdition?.name.toLowerCase() || ''}`
-					},
-					{
-						linkProps: {
-							href: '/Aide/Observatoire',
-							target: '_self'
-						},
-						isActive: router.pathname === '/Aide/Observatoire',
-						text: 'Tout comprendre sur les indicateurs'
-					},
-					{
-						linkProps: {
-							href: '/observatoire/editions',
-							target: '_self'
-						},
 						isActive:
+							router.pathname === '/observatoire' ||
 							router.pathname.startsWith('/observatoire/editions') ||
 							router.pathname.startsWith('/observatoire/old'),
-						text: 'Éditions précédentes'
+						text: 'Éditions',
+						menuLinks: [
+							{
+								linkProps: {
+									href: '/observatoire',
+									target: '_self'
+								},
+								isActive: router.pathname === '/observatoire',
+								text: `Dernière édition publiée (${
+									currentEdition?.name.toLowerCase() || ''
+								})`
+							},
+							{
+								linkProps: {
+									href: '/observatoire/editions',
+									target: '_self'
+								},
+								isActive:
+									router.pathname.startsWith('/observatoire/editions') ||
+									router.pathname.startsWith('/observatoire/old'),
+								text: 'Éditions précédentes'
+							}
+						]
+					},
+					{
+						isActive: router.pathname.startsWith('/data-viz'),
+						text: 'Graphiques',
+						menuLinks: [
+							{
+								linkProps: {
+									href: '/data-viz/administration_central',
+									target: '_self'
+								},
+								isActive: router.query.kind === 'administration_central',
+								text: 'Domaines'
+							},
+							{
+								linkProps: {
+									href: '/data-viz/ministere',
+									target: '_self'
+								},
+								isActive: router.query.kind === 'ministere',
+								text: 'Ministères'
+							},
+							{
+								linkProps: {
+									href: '/data-viz/administration',
+									target: '_self'
+								},
+								isActive: router.query.kind === 'administration',
+								text: 'Administrations'
+							},
+							{
+								linkProps: {
+									href: '/data-viz/procedure',
+									target: '_self'
+								},
+								isActive: router.pathname.startsWith('/data-viz/procedure'),
+								text: 'Démarches'
+							}
+						]
+					},
+					{
+						isActive: router.pathname === '/Aide/Observatoire',
+						text: 'Informations',
+						menuLinks: [
+							{
+								text: 'Tout comprendre sur les indicateurs',
+								isActive: router.pathname === '/Aide/Observatoire',
+								linkProps: {
+									href: '/Aide/Observatoire',
+									target: '_self'
+								}
+							}
+						]
 					}
 				]}
 				quickAccessItems={accessItems}
