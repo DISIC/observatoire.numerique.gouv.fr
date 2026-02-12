@@ -194,7 +194,8 @@ const CustomAxisTickLabel = (props: any) => {
 };
 
 const TooltipBackgroundColors: Record<string, string> = {
-	cross: fr.colors.options.orangeTerreBattue.main645.default
+	cross: fr.colors.options.orangeTerreBattue.main645.default,
+	compareScore: fr.colors.options.purpleGlycine._925_125.active
 };
 
 const CustomTooltip = ({ active, payload }: TooltipProps<any, any>) => {
