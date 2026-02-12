@@ -57,12 +57,12 @@ const ComposedChartCustom = ({
 				>
 					<b>{payload[0].payload.name}</b>
 					<p style={{ margin: 0 }}>
-						{payload[0].payload.values[0].label}:{' '}
+						{payload[0].payload.values[0].label} :{' '}
 						<b>{payload[0].payload.values[0].valueLabel}</b>
 					</p>
 					{showCrossScorePerimeter && (
 						<p style={{ margin: 0 }}>
-							Moyenne de l'observatoire:{' '}
+							Moyenne de l'observatoire :{' '}
 							<b>{payload[0].payload.values[0].crossValueLabel}</b>
 						</p>
 					)}
