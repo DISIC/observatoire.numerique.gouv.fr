@@ -25,10 +25,6 @@ export function Top250TableSection(props: Props) {
 		useState<ProcedureHeaderSort | null>(null);
 	const currentSortObjectRef = useRef<ProcedureHeaderSort | null>(null);
 
-	const [savedBaseSortProcedures, setSavedBasSortProcedures] = useState<
-		ProcedureWithFields[]
-	>([]);
-
 	const [displayedProcedures, setDisplayedProcedures] = useState<
 		ProcedureWithFields[]
 	>(procedures ? procedures.slice(0, numberPerPage) : []);
@@ -36,21 +32,11 @@ export function Top250TableSection(props: Props) {
 
 	const onSortApply = (sortObject: ProcedureHeaderSort | null) => {
 		setCurrentSortObject(sortObject);
-		if (!sortObject) {
-			setDisplayedProcedures(savedBaseSortProcedures);
-			setSavedBasSortProcedures([]);
-		} else {
-			if (!savedBaseSortProcedures.length) {
-				setSavedBasSortProcedures([...displayedProcedures]);
-			}
-
-			const currentDisplayedProcedures = displayedProceduresRef.current;
-			const sortedProcedures = sortProcedures(
-				procedures || [],
-				sortObject
-			).slice(0, currentDisplayedProcedures.length);
-			setDisplayedProcedures([...sortedProcedures]);
-		}
+		const sortedProcedures = sortProcedures(procedures || [], sortObject).slice(
+			0,
+			numberPerPage
+		);
+		setDisplayedProcedures([...sortedProcedures]);
 	};
 
 	const handleScroll = () => {
