@@ -1,9 +1,12 @@
 import { fr } from '@codegouvfr/react-dsfr';
+import React from 'react';
 import { tss } from 'tss-react';
 
 type Props = {};
 
-export function IndicatorProactive(props: Props) {
+export const IndicatorProactive = React.memo(function IndicatorProactive(
+	props: Props
+) {
 	const { classes } = useStyles();
 	return (
 		<div className={classes.root}>
@@ -14,9 +17,9 @@ export function IndicatorProactive(props: Props) {
 			</p>
 		</div>
 	);
-}
+});
 
-const useStyles = tss.withName(IndicatorProactive.name).create(() => ({
+const useStyles = tss.withName('IndicatorProactive').create(() => ({
 	root: {
 		display: 'flex',
 		textAlign: 'left',
