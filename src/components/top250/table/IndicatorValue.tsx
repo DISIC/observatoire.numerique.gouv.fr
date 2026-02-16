@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { Edition, IndicatorSlug } from '@prisma/client';
 import Link from 'next/link';
-import { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { tss } from 'tss-react';
 
 type Props = {
@@ -76,14 +76,19 @@ function IndicatorValueDisplay(props: Props): ReactNode {
 
 		let datesParam = `date-debut=2022-04-01&date-fin=2023-03-31`;
 		if (edition)
-			datesParam = `date-debut=${edition.start_date.toString().split('T')[0]
-				}&date-fin=${edition.end_date.toString().split('T')[0]}`;
+			datesParam = `date-debut=${
+				edition.start_date.toString().split('T')[0]
+			}&date-fin=${edition.end_date.toString().split('T')[0]}`;
 
 		return (
 			<Link
 				ref={linkRef}
 				title={`Voir le détail : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
-				href={gristId !== procedureId ? `https://jedonnemonavis.numerique.gouv.fr/public/product/${procedureId}/stats?view-mode=statistics&${datesParam}` : `/Demarches/${procedureId}?view-mode=statistics&${datesParam}`}
+				href={
+					gristId !== procedureId
+						? `https://jedonnemonavis.numerique.gouv.fr/public/product/${procedureId}/stats?view-mode=statistics&${datesParam}`
+						: `/Demarches/${procedureId}?view-mode=statistics&${datesParam}`
+				}
 				target="_blank"
 			>
 				Voir le détail
@@ -99,7 +104,7 @@ function IndicatorValueDisplay(props: Props): ReactNode {
 	return <></>;
 }
 
-export function IndicatorValue(props: Props) {
+export const IndicatorValue = React.memo(function IndicatorValue(props: Props) {
 	const { slug } = props;
 	const { classes, cx } = useStyles();
 
@@ -110,9 +115,9 @@ export function IndicatorValue(props: Props) {
 			<IndicatorValueDisplay {...props} />
 		</div>
 	);
-}
+});
 
-const useStyles = tss.withName(IndicatorValue.name).create(() => ({
+const useStyles = tss.withName('IndicatorValue').create(() => ({
 	root: {
 		fontSize: fr.typography[17].style.fontSize,
 		marginTop: fr.spacing('4v'),

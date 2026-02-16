@@ -108,9 +108,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
-  user: PayloadAdmin & {
-    collection: 'payload-admins';
-  };
+  user: PayloadAdmin;
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -158,6 +156,7 @@ export interface PayloadAdmin {
       }[]
     | null;
   password?: string | null;
+  collection: 'payload-admins';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
