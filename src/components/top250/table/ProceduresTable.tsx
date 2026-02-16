@@ -1,20 +1,19 @@
-import { SkipLinks } from '@/components/generic/SkipLinks';
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { useWindowResize } from '@/utils/hooks';
-import { getDisplayedVolume } from '@/utils/tools';
 import { trpc } from '@/utils/trpc';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
 import { Edition, IndicatorSlug } from '@prisma/client';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState
+} from 'react';
 import { tss } from 'tss-react';
 import { ColumnHeaderDefinition } from './ColumnHeaderDefinition';
 import { IndicatorContent } from './IndicatorContent';
-import { IndicatorLabel } from './IndicatorLabel';
-import { IndicatorProactive } from './IndicatorProactive';
-import { IndicatorValue } from './IndicatorValue';
-
-const MIDDLE_ELEMENT_INDEX = 7;
+import { ProcedureRow } from './ProcedureRow';
 
 type Props = {
 	procedures: ProcedureWithFields[];
@@ -28,7 +27,6 @@ export type ProcedureHeaderSort = {
 };
 
 export function ProceduresTable(props: Props) {
-	useWindowResize();
 	const { procedures, edition, onSortApply } = props;
 	const { classes, cx } = useStyles();
 
@@ -40,27 +38,27 @@ export function ProceduresTable(props: Props) {
 	const stickyHeaderRef = useRef<HTMLTableRowElement | null>(null);
 	const tableRef = useRef<HTMLTableElement | null>(null);
 	const scrollRef = useRef<HTMLDivElement | null>(null);
-	const firstColRef = useRef<HTMLTableHeaderCellElement | null>(null);
-
-	function contentScrollHeader() {
-		if (stickyHeaderRef.current && scrollRef.current)
-			stickyHeaderRef.current.scrollLeft = scrollRef.current.scrollLeft;
-	}
-
-	function headerScrollContent() {
-		if (scrollRef.current && stickyHeaderRef.current)
-			scrollRef.current.scrollLeft = stickyHeaderRef.current.scrollLeft;
-	}
+	const firstColRef = useRef<HTMLTableCellElement | null>(null);
 
 	useEffect(() => {
-		if (scrollRef.current) {
-			scrollRef.current.addEventListener('scroll', contentScrollHeader);
-		}
+		const scrollEl = scrollRef.current;
+		const headerEl = stickyHeaderRef.current;
 
-		if (stickyHeaderRef.current) {
-			stickyHeaderRef.current.addEventListener('scroll', headerScrollContent);
-		}
-	}, [stickyHeaderRef.current, scrollRef.current]);
+		const contentScrollHeader = () => {
+			if (headerEl && scrollEl) headerEl.scrollLeft = scrollEl.scrollLeft;
+		};
+		const headerScrollContent = () => {
+			if (scrollEl && headerEl) scrollEl.scrollLeft = headerEl.scrollLeft;
+		};
+
+		scrollEl?.addEventListener('scroll', contentScrollHeader);
+		headerEl?.addEventListener('scroll', headerScrollContent);
+
+		return () => {
+			scrollEl?.removeEventListener('scroll', contentScrollHeader);
+			headerEl?.removeEventListener('scroll', headerScrollContent);
+		};
+	}, []);
 
 	useEffect(() => {
 		onSortApply(currentSort);
@@ -68,8 +66,8 @@ export function ProceduresTable(props: Props) {
 
 	useLayoutEffect(() => {
 		const fixedHeader = () => {
-			let fixedTop = stickyHeaderRef?.current?.getBoundingClientRect().top;
-			let tableTop = scrollRef?.current?.getBoundingClientRect().top;
+			const fixedTop = stickyHeaderRef?.current?.getBoundingClientRect().top;
+			const tableTop = scrollRef?.current?.getBoundingClientRect().top;
 			if (fixedTop !== undefined && tableTop !== undefined) {
 				const isFixed =
 					stickyHeaderRef.current?.classList.contains('sticked-row');
@@ -86,6 +84,13 @@ export function ProceduresTable(props: Props) {
 			}
 		};
 		window.addEventListener('scroll', fixedHeader);
+		return () => {
+			window.removeEventListener('scroll', fixedHeader);
+		};
+	}, []);
+
+	const onScrollReset = useCallback(() => {
+		scrollRef.current?.scrollTo({ left: 0 });
 	}, []);
 
 	const { data: procdeureHeadersRequest, isLoading: isLoadingIndicators } =
@@ -101,7 +106,6 @@ export function ProceduresTable(props: Props) {
 				<div>
 					<i className={fr.cx('ri-loader-4-line')} />
 				</div>
-
 				<p className={fr.cx('fr-pt-4v')}>Chargement du tableau...</p>
 			</div>
 		);
@@ -112,10 +116,7 @@ export function ProceduresTable(props: Props) {
 
 		const thElements = tableRef.current.querySelectorAll('thead th');
 		const thPositions = Array.from(thElements)
-			.map(th => {
-				const rect = th.getBoundingClientRect();
-				return rect.x;
-			})
+			.map(th => th.getBoundingClientRect().x)
 			.sort((a, b) => a - b);
 
 		const closest = thPositions
@@ -186,43 +187,35 @@ export function ProceduresTable(props: Props) {
 							<th ref={firstColRef} scope="col">
 								<span className={fr.cx('fr-sr-only')}>Nom de la démarche</span>
 							</th>
-							{indicators.map((indicator, index) => {
-								return (
-									<th
-										key={indicator.label}
-										scope="col"
-										aria-sort={
-											currentSort?.slug === indicator.slug
-												? `${currentSort.direction}ending`
-												: undefined
-										}
-									>
-										<div className={classes.indicatorWrapper}>
-											<ColumnHeaderDefinition
-												slug={indicator.slug as IndicatorSlug}
-												icon={
-													indicator.icon as FrIconClassName | RiIconClassName
-												}
-												text={indicator.label}
-												infos={{
-													content: (
-														<>
-															<IndicatorContent indicator={indicator} />
-														</>
-													),
-													title: indicator.label
-												}}
-												onFocus={() => {
-													if (index >= 6) handleScrollX(true, true);
-													else handleScrollX(false, true);
-												}}
-												onSort={onSort}
-												currentSort={currentSort}
-											/>
-										</div>
-									</th>
-								);
-							})}
+							{indicators.map((indicator, index) => (
+								<th
+									key={indicator.label}
+									scope="col"
+									aria-sort={
+										currentSort?.slug === indicator.slug
+											? `${currentSort.direction}ending`
+											: undefined
+									}
+								>
+									<div className={classes.indicatorWrapper}>
+										<ColumnHeaderDefinition
+											slug={indicator.slug as IndicatorSlug}
+											icon={indicator.icon as FrIconClassName | RiIconClassName}
+											text={indicator.label}
+											infos={{
+												content: <IndicatorContent indicator={indicator} />,
+												title: indicator.label
+											}}
+											onFocus={() => {
+												if (index >= 6) handleScrollX(true, true);
+												else handleScrollX(false, true);
+											}}
+											onSort={onSort}
+											currentSort={currentSort}
+										/>
+									</div>
+								</th>
+							))}
 							<th className={classes.arrowTh}>
 								<Button
 									className={cx(classes.arrow)}
@@ -251,108 +244,15 @@ export function ProceduresTable(props: Props) {
 					</thead>
 					<tbody>
 						{procedures.map((p, index) => (
-							<>
-								<tr key={p.id} id={`procedure-table-row-${index}`}>
-									<th scope="row">
-										<div>
-											<span>{p.title}</span>
-											<br />
-											<div
-												className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}
-											>
-												{p.ministere}
-											</div>
-											<span className={fr.cx('fr-text--sm')}>
-												{p.administration}
-											</span>
-											<div
-												className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}
-											>
-												Volumétrie en ligne :{' '}
-												{p.volume
-													? getDisplayedVolume(p.volume)
-													: 'non communiquée'}
-											</div>
-										</div>
-									</th>
-									{indicators.map((indicator, index) => {
-										const isProactive = p.fields.some(
-											f =>
-												f.slug === 'online' && f.label === 'Démarche proactive'
-										);
-										const isToCome = p.fields.some(
-											f => f.slug === 'online' && f.label === 'À venir'
-										);
-										const isNotOnline = p.fields.some(
-											f => f.slug === 'online' && f.label === 'Non'
-										);
-										const field = p.fields.find(f => f.slug === indicator.slug);
-
-										if (!field) return <td>-</td>;
-
-										if (isProactive && (index === 1 || index === 5))
-											return (
-												<td
-													colSpan={index === 1 ? 4 : 6}
-													key={`${p.title} ${indicator.label}`}
-												>
-													<IndicatorProactive />
-												</td>
-											);
-										else if (isProactive && field.slug !== 'online') return;
-
-										if (isToCome && field.slug !== 'online')
-											return (
-												<td key={`${p.title} ${indicator.label}`}>
-													<IndicatorLabel color="gray" label="À venir" />
-												</td>
-											);
-
-										if (isNotOnline && field.slug !== 'online')
-											return (
-												<td key={`${p.title} ${indicator.label}`}>
-													<IndicatorLabel color="gray" label="-" noBackground />
-												</td>
-											);
-
-										return (
-											<td key={`${p.title} ${indicator.label}`}>
-												<IndicatorLabel {...field} />
-												{!!field.value && !isNotOnline && (
-													<IndicatorValue
-														slug={field.slug}
-														value={field.value}
-														label={field.label}
-														noJdma={p.noJdma}
-														procedureId={p.jdma_identifier}
-														gristId={p.grist_identifier}
-														procedureTitle={p.title}
-														edition={edition}
-														onLinkFocus={() => {
-															scrollRef.current?.scrollTo({ left: 0 });
-														}}
-													/>
-												)}
-											</td>
-										);
-									})}
-									<td>
-										<span></span>
-									</td>
-								</tr>
-								<tr key={`${p.id}-skiplinks`}>
-									<td className={cx(classes.skipLinksTd, fr.cx('fr-pl-1-5v'))}>
-										<SkipLinks
-											links={[
-												{
-													text: 'Revenir au dessus du tableau',
-													href: '#procedures-section'
-												}
-											]}
-										/>
-									</td>
-								</tr>
-							</>
+							<ProcedureRow
+								key={p.id}
+								procedure={p}
+								indicators={indicators}
+								edition={edition}
+								index={index}
+								onScrollReset={onScrollReset}
+								skipLinksTdClassName={classes.skipLinksTd}
+							/>
 						))}
 					</tbody>
 				</table>
@@ -361,7 +261,7 @@ export function ProceduresTable(props: Props) {
 	);
 }
 
-const useStyles = tss.withName(ProceduresTable.name).create(() => {
+const useStyles = tss.withName('ProceduresTable').create(() => {
 	const _arrowSlideSize = 40;
 	const _userViewportAvailable = window.innerWidth - _arrowSlideSize;
 	const _containerWidth =
@@ -410,7 +310,6 @@ const useStyles = tss.withName(ProceduresTable.name).create(() => {
 						['&:nth-of-type(2)']: {
 							borderTopLeftRadius: _thRadius
 						},
-
 						['&:last-child']: {
 							position: 'sticky',
 							right: 0,

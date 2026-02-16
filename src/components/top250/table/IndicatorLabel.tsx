@@ -1,5 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { IndicatorColor } from '@prisma/client';
+import React from 'react';
 import { tss } from 'tss-react';
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 	old?: boolean;
 };
 
-export function IndicatorLabel(props: Props) {
+export const IndicatorLabel = React.memo(function IndicatorLabel(props: Props) {
 	const { label, color, noBackground, old } = props;
 	const { classes, cx } = useStyles();
 
@@ -36,9 +37,9 @@ export function IndicatorLabel(props: Props) {
 			{label}
 		</p>
 	);
-}
+});
 
-const useStyles = tss.withName(IndicatorLabel.name).create(() => ({
+const useStyles = tss.withName('IndicatorLabel').create(() => ({
 	root: {
 		textAlign: 'center',
 		fontWeight: 'bold',
