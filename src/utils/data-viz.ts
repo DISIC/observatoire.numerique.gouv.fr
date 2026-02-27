@@ -52,7 +52,7 @@ async function getIndicatorScores(props: {
 	});
 
 	const fields = await prisma.field.groupBy({
-		by: ['slug', 'goalReached'],
+		by: ['slug', 'goalReached', 'color'],
 		where: {
 			slug: {
 				in: [...validIndicatorSlugs]
@@ -118,7 +118,7 @@ async function getIndicatorScores(props: {
 	}) as RecordData['data'];
 
 	for (const field of validIndicatorSlugs) {
-		const fieldData = fields.filter(fieldData => fieldData.slug === field);
+		const fieldData = fields.filter(fieldData => fieldData.slug === field && fieldData.color !== 'gray');
 
 		let countReached = 0;
 		let countNotReached = 0;
@@ -213,7 +213,7 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 	}[] = await Promise.all(
 		procedures.map(async procedure => {
 			const fields = await prisma.field.groupBy({
-				by: ['slug', 'goalReached'],
+				by: ['slug', 'goalReached', 'color'],
 				where: {
 					slug: {
 						in: [...validIndicatorSlugs]
@@ -235,7 +235,7 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 			}));
 
 			for (const slug of validIndicatorSlugs) {
-				const fieldData = fields.filter(fieldData => fieldData.slug === slug);
+				const fieldData = fields.filter(fieldData => fieldData.slug === slug && fieldData.color !== 'gray');
 				let countReached = 0;
 				let countNotReached = 0;
 
