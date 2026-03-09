@@ -117,18 +117,24 @@ async function getIndicatorScores(props: {
 		};
 	}) as RecordData['data'];
 
-	for (const field of validIndicatorSlugs) {
-		const fieldData = fields.filter(fieldData => fieldData.slug === field && fieldData.color !== 'gray');
+	for (const slug of validIndicatorSlugs) {
+		const fieldData = fields.filter(
+			fieldData => fieldData.slug === slug && fieldData.color !== 'gray'
+		);
 
 		let countReached = 0;
 		let countNotReached = 0;
 
 		if (fieldData.length > 0) {
-			const reachedData = fieldData.find(f => f.goalReached === true);
-			const notReachedData = fieldData.find(f => f.goalReached === false);
+			const reachedData = fieldData.filter(f => f.goalReached);
+			const notReachedData = fieldData.filter(f => !f.goalReached);
 
-			countReached = reachedData ? reachedData._count : 0;
-			countNotReached = notReachedData ? notReachedData._count : 0;
+			countReached = reachedData
+				? reachedData.reduce((sum, f) => sum + f._count, 0)
+				: 0;
+			countNotReached = notReachedData
+				? notReachedData.reduce((sum, f) => sum + f._count, 0)
+				: 0;
 		}
 
 		const totalCount = countReached + countNotReached;
@@ -137,7 +143,7 @@ async function getIndicatorScores(props: {
 			totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
 
 		indicators[
-			indicators.findIndex(indicator => indicator.slug === field)
+			indicators.findIndex(indicator => indicator.slug === slug)
 		].score = score;
 	}
 
@@ -235,16 +241,22 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 			}));
 
 			for (const slug of validIndicatorSlugs) {
-				const fieldData = fields.filter(fieldData => fieldData.slug === slug && fieldData.color !== 'gray');
+				const fieldData = fields.filter(
+					fieldData => fieldData.slug === slug && fieldData.color !== 'gray'
+				);
 				let countReached = 0;
 				let countNotReached = 0;
 
 				if (fieldData.length > 0) {
-					const reachedData = fieldData.find(f => f.goalReached);
-					const notReachedData = fieldData.find(f => !f.goalReached);
+					const reachedData = fieldData.filter(f => f.goalReached);
+					const notReachedData = fieldData.filter(f => !f.goalReached);
 
-					countReached = reachedData ? reachedData._count : 0;
-					countNotReached = notReachedData ? notReachedData._count : 0;
+					countReached = reachedData
+						? reachedData.reduce((sum, f) => sum + f._count, 0)
+						: 0;
+					countNotReached = notReachedData
+						? notReachedData.reduce((sum, f) => sum + f._count, 0)
+						: 0;
 
 					const totalCount = countReached + countNotReached;
 
