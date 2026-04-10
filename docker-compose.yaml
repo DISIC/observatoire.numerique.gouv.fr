@@ -1,18 +1,16 @@
-version: "3.4"
+version: '3.4'
 
 services:
-  mongo:
-    build: ./mongodb_replica
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: user
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_REPLICA_HOST: localhost
-      MONGO_REPLICA_PORT: 27018
+  mongodb:
+    image: mongo:4.0.3
+    volumes:
+      - ./scripts/docker-mongo-init.sh:/docker-mongo-init.sh:ro
+    entrypoint: ['/bin/bash', '/docker-mongo-init.sh']
     ports:
-      - "27018:27018"
+      - '27018:27018'
 
   maildev:
     image: maildev/maildev
     ports:
-      - "1080:1080"
-      - "1025:1025"
+      - '1080:1080'
+      - '1025:1025'
