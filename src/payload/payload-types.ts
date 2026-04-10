@@ -76,11 +76,7 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    'payload-indicators': {
-      levels: 'payload-indicator-levels';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     'payload-admins': PayloadAdminsSelect<false> | PayloadAdminsSelect<true>;
     'payload-media': PayloadMediaSelect<false> | PayloadMediaSelect<true>;
@@ -108,6 +104,9 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
+  widgets: {
+    collections: CollectionsWidget;
+  };
   user: PayloadAdmin;
   jobs: {
     tasks: unknown;
@@ -236,11 +235,6 @@ export interface PayloadIndicator {
   moreInfosTitle?: string | null;
   moreInfos?: string | null;
   threshold_max?: number | null;
-  levels?: {
-    docs?: (string | PayloadIndicatorLevel)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -402,7 +396,6 @@ export interface PayloadIndicatorsSelect<T extends boolean = true> {
   moreInfosTitle?: T;
   moreInfos?: T;
   threshold_max?: T;
-  levels?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -842,6 +835,16 @@ export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

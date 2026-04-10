@@ -16,8 +16,7 @@ async function updateGoalReachedProperty() {
 			collection: 'payload-indicators',
 			select: {
 				id: true,
-				slug: true,
-				levels: true
+				slug: true
 			},
 			limit: 100
 		});

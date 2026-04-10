@@ -3,7 +3,20 @@ import {
 	lexicalEditor,
 	lexicalHTML
 } from '@payloadcms/richtext-lexical';
-import type { CollectionConfig } from 'payload';
+import type { CollectionAfterReadHook, CollectionConfig } from 'payload';
+
+const populateLevels: CollectionAfterReadHook = async ({ doc, req }) => {
+	const levels = await req.payload.find({
+		collection: 'payload-indicator-levels',
+		where: {
+			indicator: { equals: doc.id }
+		},
+		limit: 100,
+		depth: 0,
+		sort: 'position'
+	});
+	return { ...doc, levels };
+};
 
 enum IndicatorSlug {
 	online = 'online',
@@ -30,8 +43,10 @@ export const Indicators: CollectionConfig = {
 		description_html: true,
 		moreInfos: true,
 		moreInfosTitle: true,
-		threshold_max: true,
-		levels: true
+		threshold_max: true
+	},
+	hooks: {
+		afterRead: [populateLevels]
 	},
 	labels: {
 		singular: 'Indicateur',
@@ -130,15 +145,6 @@ export const Indicators: CollectionConfig = {
 			type: 'number',
 			label: 'Seuil (maximum)'
 		},
-		{
-			name: 'levels',
-			label: 'Légende',
-			type: 'join',
-			collection: 'payload-indicator-levels',
-			on: 'indicator',
-			hasMany: true,
-			maxDepth: 2
-		}
 	],
 	timestamps: true
 };
