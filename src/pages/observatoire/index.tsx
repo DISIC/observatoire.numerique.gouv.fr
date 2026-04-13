@@ -11,6 +11,8 @@ export default function Observatoire() {
 	const { classes, cx } = useStyles();
 
 	const [search, setSearch] = useState<string>();
+	const [selectedAdministrationCentral, setSelectedAdministrationCentral] =
+		useState<string>('all');
 	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
 	const [selectedAdministration, setSelectedAdministration] =
 		useState<string>('all');
@@ -21,6 +23,7 @@ export default function Observatoire() {
 		isLoading
 	} = useProcedures({
 		search,
+		administration_central: selectedAdministrationCentral,
 		department: selectedDepartment,
 		administration: selectedAdministration
 	});
@@ -48,6 +51,7 @@ export default function Observatoire() {
 					subtitle={`Édition de ${currentEdition?.name.toLowerCase()}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
+					setSelectedAdministrationCentral={setSelectedAdministrationCentral}
 					setSelectedDepartment={setSelectedDepartment}
 					setSelectedAdministration={setSelectedAdministration}
 					nbResults={procedures ? procedures.length : null}

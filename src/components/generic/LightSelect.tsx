@@ -22,6 +22,7 @@ type Props = {
 	className?: string;
 	size?: 'small' | 'medium';
 	optgroup?: boolean;
+	disabled?: boolean;
 };
 
 export function LightSelect(props: Props) {
@@ -36,7 +37,8 @@ export function LightSelect(props: Props) {
 		size = 'medium',
 		optgroup,
 		label,
-		id
+		id,
+		disabled
 	} = props;
 
 	const { classes, cx } = useStyles();
@@ -71,6 +73,7 @@ export function LightSelect(props: Props) {
 				size === 'small' ? classes.rootSmall : {},
 				className
 			)}
+			disabled={disabled}
 			nativeSelectProps={{
 				id,
 				onChange: event => setValue(event.target.value),
