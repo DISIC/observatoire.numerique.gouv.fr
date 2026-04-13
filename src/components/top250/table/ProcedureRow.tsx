@@ -1,5 +1,5 @@
 import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { getDisplayedVolume } from '@/utils/tools';
+import { getDisplayedVolume, stringToBase64Url } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Edition, IndicatorSlug } from '@prisma/client';
 import React, { useMemo } from 'react';
@@ -53,12 +53,19 @@ function ProcedureRowInner(props: Props) {
 			<tr id={`procedure-table-row-${index}`}>
 				<th scope="row">
 					<div>
-						<span>{p.title}</span>
+						<a className={fr.cx('fr-link')} target="_blank" rel="noopener noreferrer" href={`/data-viz/procedure/${p.id}`} title={`${p.title}, nouvelle fenêtre`}>{p.title}</a>
 						<br />
-						<div className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}>
-							{p.ministere}
+						{p.administration_central && (
+							<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>
+								<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration_central/${stringToBase64Url(p.administration_central)}`} title={`${p.administration_central}, nouvelle fenêtre`}>{p.administration_central}</a>
+							</div>
+							)}
+						<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>
+								<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/ministere/${stringToBase64Url(p.ministere)}`} title={`${p.ministere}, nouvelle fenêtre`}>{p.ministere}</a>
 						</div>
-						<span className={fr.cx('fr-text--sm')}>{p.administration}</span>
+						<div className={fr.cx('fr-text--sm')}>
+								<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration/${stringToBase64Url(p.administration)}`} title={`${p.administration}, nouvelle fenêtre`}>{p.administration}</a>
+						</div>
 						<div className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}>
 							Volumétrie en ligne :{' '}
 							{p.volume ? getDisplayedVolume(p.volume) : 'non communiquée'}
