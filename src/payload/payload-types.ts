@@ -71,6 +71,7 @@ export interface Config {
     'payload-media': PayloadMedia;
     'payload-indicators': PayloadIndicator;
     'payload-indicator-levels': PayloadIndicatorLevel;
+    'payload-versions': PayloadVersion;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     'payload-media': PayloadMediaSelect<false> | PayloadMediaSelect<true>;
     'payload-indicators': PayloadIndicatorsSelect<false> | PayloadIndicatorsSelect<true>;
     'payload-indicator-levels': PayloadIndicatorLevelsSelect<false> | PayloadIndicatorLevelsSelect<true>;
+    'payload-versions': PayloadVersionsSelect<false> | PayloadVersionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -232,6 +234,7 @@ export interface PayloadIndicator {
     | 'ri-user-line'
     | 'ri-signal-tower-line'
     | 'ri-lock-unlock-line';
+  versions: (string | PayloadVersion)[];
   position: number;
   moreInfosTitle?: string | null;
   moreInfos?: string | null;
@@ -241,6 +244,18 @@ export interface PayloadIndicator {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-versions".
+ */
+export interface PayloadVersion {
+  id: string;
+  name: string;
+  number: number;
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -301,6 +316,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'payload-indicator-levels';
         value: string | PayloadIndicatorLevel;
+      } | null)
+    | ({
+        relationTo: 'payload-versions';
+        value: string | PayloadVersion;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -398,6 +417,7 @@ export interface PayloadIndicatorsSelect<T extends boolean = true> {
   description_obj?: T;
   description_html?: T;
   icon?: T;
+  versions?: T;
   position?: T;
   moreInfosTitle?: T;
   moreInfos?: T;
@@ -420,6 +440,17 @@ export interface PayloadIndicatorLevelsSelect<T extends boolean = true> {
   threshold?: T;
   noBackground?: T;
   goal_reached?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-versions_select".
+ */
+export interface PayloadVersionsSelect<T extends boolean = true> {
+  name?: T;
+  number?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }

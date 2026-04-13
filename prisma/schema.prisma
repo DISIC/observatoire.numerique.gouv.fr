@@ -76,6 +76,7 @@ model Edition {
   start_date DateTime
   end_date   DateTime
   created_at DateTime
+  version    Int         @default(2)
   Procedure  Procedure[]
 }
 
