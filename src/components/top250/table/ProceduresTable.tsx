@@ -326,22 +326,23 @@ const useStyles = tss
 							['&:nth-of-type(2)']: {
 								borderTopLeftRadius: _thRadius
 							},
-							...(hideScrollHelper && {
-								['&:last-child']: {
-									borderTopRightRadius: _thRadius
-								}
-							}),
-							...(!hideScrollHelper && {
-								['&:last-child']: {
-									position: 'sticky',
-									right: 0,
-									zIndex: 11,
-									width: `${_arrowSlideSize}px !important`,
-									['& > div']: {
+							...(hideScrollHelper
+								? {
+									['&:last-child']: {
 										borderTopRightRadius: _thRadius
 									}
 								}
-							})
+								: {
+									['&:last-child']: {
+										position: 'sticky',
+										right: 0,
+										zIndex: 11,
+										width: `${_arrowSlideSize}px !important`,
+										['& > div']: {
+											borderTopRightRadius: _thRadius
+										}
+									}
+								})
 						},
 						['&.sticked-row']: {
 							overflowX: 'scroll',
@@ -506,7 +507,7 @@ const useStyles = tss
 			skipLinksTd: {
 				border: 'none !important',
 				backgroundColor: 'transparent !important',
-				position: 'sticky !important',
+				position: 'sticky !important' as 'sticky',
 				left: 0,
 			},
 			tabsWrapper: {
