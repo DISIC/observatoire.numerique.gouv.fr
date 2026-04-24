@@ -504,7 +504,9 @@ const useStyles = tss
 				}
 			},
 			skipLinksTd: {
-				position: 'sticky',
+				border: 'none !important',
+				backgroundColor: 'transparent !important',
+				position: 'sticky !important',
 				left: 0,
 			},
 			tabsWrapper: {
