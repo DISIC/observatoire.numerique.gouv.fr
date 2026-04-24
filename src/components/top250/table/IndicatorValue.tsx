@@ -66,36 +66,6 @@ function IndicatorValueDisplay(props: Props): ReactNode {
 			</Link>
 		);
 
-	if (
-		procedureId &&
-		slug === 'satisfaction' &&
-		!isNaN(parseInt(value)) &&
-		!noJdma
-	) {
-		const valueToDisplay = value.toString().replace('.', ',');
-
-		let datesParam = `date-debut=2022-04-01&date-fin=2023-03-31`;
-		if (edition)
-			datesParam = `date-debut=${
-				edition.start_date.toString().split('T')[0]
-			}&date-fin=${edition.end_date.toString().split('T')[0]}`;
-
-		return (
-			<Link
-				ref={linkRef}
-				title={`Voir le détail : satisfaction usagers : ${valueToDisplay} sur 10, consulter les statistiques`}
-				href={
-					gristId !== procedureId
-						? `https://jedonnemonavis.numerique.gouv.fr/public/product/${procedureId}/stats?view-mode=statistics&${datesParam}`
-						: `/Demarches/${procedureId}?view-mode=statistics&${datesParam}`
-				}
-				target="_blank"
-			>
-				Voir le détail
-			</Link>
-		);
-	}
-
 	if (slug === 'uptime' && !isNaN(parseInt(value))) return <>{value}%</>;
 	if (slug === 'performance' && !isNaN(parseInt(value)))
 		return <>{parseInt(value) / 1000}s</>;

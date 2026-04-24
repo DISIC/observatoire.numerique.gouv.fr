@@ -83,6 +83,7 @@ export default function ObservatoireEdition() {
 								edition={edition}
 								procedures={procedures}
 								search={search}
+								version={edition?.version}
 							/>
 						</div>
 						<StickyFooter proceduresCount={procedures.length} />

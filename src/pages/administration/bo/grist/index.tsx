@@ -19,6 +19,7 @@ export default function Grist() {
 	const [selectedEdition, setSelectedEdition] = useState<GristEdition | null>(
 		null
 	);
+	const [selectedVersion, setSelectedVersion] = useState<number | null>(null);
 	const [isPublishing, setIsPublishing] = useState<boolean>(false);
 	const [published, setIsPublished] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -26,6 +27,9 @@ export default function Grist() {
 	const { data: editionsQuery, isLoading: isLoadingEditions } =
 		trpc.grist.getEditions.useQuery();
 	const editions = editionsQuery?.data || [];
+
+	const { data: versionsQuery } = trpc.versions.getList.useQuery();
+	const versionsList = versionsQuery?.data || [];
 
 	const { data: proceduresQuery, isLoading: isLoadingProcedures } =
 		trpc.grist.getProcedures.useQuery(
@@ -53,6 +57,12 @@ export default function Grist() {
 		}
 	}, [editions]);
 
+	useEffect(() => {
+		if (versionsList.length > 0 && selectedVersion === null) {
+			setSelectedVersion(versionsList[0].number);
+		}
+	}, [versionsList]);
+
 	const publish = async () => {
 		const editionName = !!inputRef.current?.value
 			? inputRef.current?.value
@@ -73,7 +83,8 @@ export default function Grist() {
 				name: editionName,
 				start_date: new Date(startDate),
 				end_date: new Date(endDate),
-				created_at: new Date()
+				created_at: new Date(),
+				version: selectedVersion ?? 2
 			})
 		}).then(r => r.json());
 
@@ -97,20 +108,38 @@ export default function Grist() {
 		<div className={cx(classes.root)}>
 			<div className={cx(fr.cx('fr-container', 'fr-mb-10v'))}>
 				<h2>Prévisualisation à partir de Grist</h2>
-				<LightSelect
-					label="Édition cible de Grist"
-					id="selecteur-editions"
-					options={editions.map(e => ({
-						label: e.name,
-						value: e.name
-					}))}
-					onChange={e => {
-						const matchingEdition = editions.find(
-							edition => edition.name === e
-						);
-						if (matchingEdition) setSelectedEdition(matchingEdition);
-					}}
-				/>
+				<div className={cx(classes.selectsRow)}>
+					<div>
+						<LightSelect
+							label="Édition cible de Grist"
+							id="selecteur-editions"
+							options={editions.map(e => ({
+								label: e.name,
+								value: e.name
+							}))}
+							onChange={e => {
+								const matchingEdition = editions.find(
+									edition => edition.name === e
+								);
+								if (matchingEdition) setSelectedEdition(matchingEdition);
+							}}
+						/>
+					</div>
+					<div>
+						<LightSelect
+							label="Version"
+							id="selecteur-version"
+							options={versionsList.map(v => ({
+								label: v.name,
+								value: String(v.number)
+							}))}
+							defaultValue={versionsList.length ? String(versionsList[0].number) : undefined}
+							onChange={v => {
+								setSelectedVersion(Number(v));
+							}}
+						/>
+					</div>
+				</div>
 				<p>
 					Cet espace d&apos;administration vous permet de publier une nouvelle
 					édition du top 250 des démarches en direct depuis les données de
@@ -164,7 +193,7 @@ export default function Grist() {
 					</div>
 					<div className={cx(classes.tableContainer)}>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
-							<Top250TableSection procedures={procedures} />
+							<Top250TableSection procedures={procedures} version={selectedVersion ?? undefined} />
 						</div>
 						<StickyFooter proceduresCount={procedures.length} isAdmin />
 					</div>
@@ -229,6 +258,12 @@ export default function Grist() {
 const useStyles = tss.withName(Grist.name).create(() => ({
 	root: {
 		paddingTop: fr.spacing('10v')
+	},
+	selectsRow: {
+		display: 'flex',
+		gap: fr.spacing('6v'),
+		alignItems: 'center',
+		flexWrap: 'wrap'
 	},
 	controlPanel: {
 		paddingBottom: fr.spacing('10v'),

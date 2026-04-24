@@ -74,6 +74,7 @@ export default function Observatoire() {
 								edition={currentEdition}
 								procedures={procedures}
 								search={search}
+								version={currentEdition?.version}
 							/>
 						</div>
 						<StickyFooter proceduresCount={procedures.length} />

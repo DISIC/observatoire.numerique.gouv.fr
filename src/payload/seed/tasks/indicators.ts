@@ -22,10 +22,28 @@ type IndicatorWithoutSystemFields = Omit<
 >;
 
 const indicatorsTask = async (payload: BasePayload) => {
+	// Seed versions
+	await payload.delete({
+		collection: 'payload-versions',
+		where: { id: { exists: true } }
+	});
+
+	const v2 = await payload.create({
+		collection: 'payload-versions',
+		data: { name: 'Version 2', number: 2, description: 'Version initiale' }
+	});
+	const v3 = await payload.create({
+		collection: 'payload-versions',
+		data: { name: 'Version 3', number: 3, description: 'Nouvelle version avec indicateurs réduits' }
+	});
+
+	const allVersionIds = [v2.id, v3.id];
+
 	const indicators: IndicatorWithoutSystemFields[] = [
 		{
 			slug: 'satisfaction',
 			label: 'Satisfaction Usagers',
+			versions: allVersionIds,
 			description:
 				'Evalue le niveau de satisfaction du service, par les usagers. Avis recueilli grâce au bouton “je donne mons avis“.',
 			description_obj: userSatifactionWysiwygContent as any, // TODO: Fix this type when payload update
@@ -39,6 +57,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'online',
 			label: 'Réalisable en ligne',
+			versions: allVersionIds,
 			description:
 				'Permet d’évaluer si le service est entièrement disponible et réalisable en version numérique et en ligne.',
 			description_obj: onlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
@@ -48,6 +67,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'usage',
 			label: "Taux d'utilisation de la version numérique",
+			versions: allVersionIds,
 			description:
 				'Mesure le taux d’utilisation du service numérique, par rapport à l’utilisation tout canaux confondus.',
 			description_obj: usageOnlineIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
@@ -57,6 +77,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'uptime',
 			label: 'Disponibilité du service',
+			versions: allVersionIds,
 			description: null,
 			description_obj: uptimeIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
@@ -68,6 +89,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'help_reachable',
 			label: 'Aide joignable',
+			versions: allVersionIds,
 			description: null,
 			description_obj: helpReachableWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
@@ -79,6 +101,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'help_efficient',
 			label: 'Aide efficace',
+			versions: allVersionIds,
 			description: null,
 			description_obj: helpEfficientWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
@@ -98,6 +121,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'auth',
 			label: 'Authentification',
+			versions: allVersionIds,
 			description: null,
 			description_obj: authIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			icon: 'ri-lock-unlock-line',
@@ -106,6 +130,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'performance',
 			label: 'Temps de chargement des pages',
+			versions: allVersionIds,
 			description: null,
 			description_obj: performanceIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
@@ -117,6 +142,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'dlnuf',
 			label: 'Dites-le-nous une fois',
+			versions: allVersionIds,
 			description:
 				"Simplifie les démarches des usagers, en leur évitant de fournir des informations ou des documents que l'Administration détient déjà.",
 			description_obj: dlnufWysiwygContent as any, // TODO: Fix this type when payload update
@@ -130,6 +156,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'handicap',
 			label: 'Prise en compte du handicap',
+			versions: allVersionIds,
 			description:
 				"Mesure le niveau d’accessibilité numérique d’une démarche, en se basant sur le RGAA (Référentiel Général d'Amélioration de l'Accessibilité).",
 			description_obj: handicapIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
@@ -143,6 +170,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'simplicity',
 			label: 'Clarté du langage',
+			versions: allVersionIds,
 			description: null,
 			description_obj: simplicityLanguageWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
@@ -155,6 +183,7 @@ const indicatorsTask = async (payload: BasePayload) => {
 		{
 			slug: 'help_used',
 			label: "Niveau d'autonomie",
+			versions: allVersionIds,
 			description: null,
 			description_obj: helpUsedIndicatorWysiwygContent as any, // TODO: Fix this type when payload update
 			moreInfosTitle: 'Méthode de calcul',
