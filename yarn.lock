@@ -4111,10 +4111,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:15.2.6":
-  version: 15.2.6
-  resolution: "@next/env@npm:15.2.6"
-  checksum: 10c0/2a59014d613b207a86e3425392460606bdc1b4d9d3a4718ea2d1628d1689801f3c9a7660451a373e360486bc187ff5dec29bb84e7da8774b037919c869f43ed5
+"@next/env@npm:15.2.8":
+  version: 15.2.8
+  resolution: "@next/env@npm:15.2.8"
+  checksum: 10c0/3327d93b89c6a5f276be6890d497ddb58ede589817cc4bb6ea05e19e1b91de54c6f80b54d5d92352a72a0bf3b10d31dd85b1d2b5d148562ba1d150d79f6be5c4
   languageName: node
   linkType: hard
 
@@ -4125,12 +4125,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:15.2.6":
-  version: 15.2.6
-  resolution: "@next/eslint-plugin-next@npm:15.2.6"
+"@next/eslint-plugin-next@npm:15.2.8":
+  version: 15.2.8
+  resolution: "@next/eslint-plugin-next@npm:15.2.8"
   dependencies:
     fast-glob: "npm:3.3.1"
-  checksum: 10c0/cea6fcbb46ef2c1d743b929233124d870f07a7e02a906acdece434f3ea5caa8fa05276267f12cfc64f8b7b76b5a2fa5840b0efe05e710ce91fccf7ea1e671776
+  checksum: 10c0/f0add8b849d69a8ebfc1af86546ef2cfe8f88b9105d7386fd40ad1bd8c7d8f93f483297de60b9e31cf7418f601a5af2009a3359dc6fb69b233ece2b07086fc78
   languageName: node
   linkType: hard
 
@@ -9092,11 +9092,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:15.2.6":
-  version: 15.2.6
-  resolution: "eslint-config-next@npm:15.2.6"
+"eslint-config-next@npm:15.2.8":
+  version: 15.2.8
+  resolution: "eslint-config-next@npm:15.2.8"
   dependencies:
-    "@next/eslint-plugin-next": "npm:15.2.6"
+    "@next/eslint-plugin-next": "npm:15.2.8"
     "@rushstack/eslint-patch": "npm:^1.10.3"
     "@typescript-eslint/eslint-plugin": "npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
     "@typescript-eslint/parser": "npm:^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0"
@@ -9112,7 +9112,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10c0/895d4894657bcb7c67fd43120a70f3d793447f7b3413c5e376cf7cc6da741d0176c669939ae117010f07156c7eb9e9658e4beba8d644f5c353db992534597ffa
+  checksum: 10c0/897f86276ff06fb94f5fcdf012cd939af4d1fd602a8b7e3e61943bce7085a108a0935b6aa1d14b4e930db224885887535c2573f91459fe2a05ec6c0f43adc84b
   languageName: node
   linkType: hard
 
@@ -14174,11 +14174,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:15.2.6":
-  version: 15.2.6
-  resolution: "next@npm:15.2.6"
+"next@npm:15.2.8":
+  version: 15.2.8
+  resolution: "next@npm:15.2.8"
   dependencies:
-    "@next/env": "npm:15.2.6"
+    "@next/env": "npm:15.2.8"
     "@next/swc-darwin-arm64": "npm:15.2.5"
     "@next/swc-darwin-x64": "npm:15.2.5"
     "@next/swc-linux-arm64-gnu": "npm:15.2.5"
@@ -14231,7 +14231,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: 10c0/b7f20016c81d310e44c02e433103bea894438bee72d2692cb489a84f29ce6a2e285e101037659e21279b7b65a539e74c50024f553bd4f53dbecf828447f39f81
+  checksum: 10c0/93fd226e6c8b56271b3e35fb53042424a5f174833d4b0a89e1f9305dabba87b427147fd04de98882c29520daf60f0afcb8358687decb17483d051294bca61344
   languageName: node
   linkType: hard
 
@@ -14577,7 +14577,7 @@ __metadata:
     date-fns: "npm:^4.1.0"
     dotenv: "npm:^16.4.5"
     eslint: "npm:8.33.0"
-    eslint-config-next: "npm:15.2.6"
+    eslint-config-next: "npm:15.2.8"
     eslint-config-prettier: "npm:^8.7.0"
     eslint-plugin-prettier: "npm:^4.2.1"
     file-saver: "npm:^2.0.5"
@@ -14593,7 +14593,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.5.0"
     jsonwebtoken: "npm:^9.0.2"
     jwt-decode: "npm:^4.0.0"
-    next: "npm:15.2.6"
+    next: "npm:15.2.8"
     otpauth: "npm:^9.3.6"
     pako: "npm:^2.1.0"
     payload: "npm:^3.3.0"
