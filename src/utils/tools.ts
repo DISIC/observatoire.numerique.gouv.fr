@@ -11,6 +11,46 @@ import html2canvas from 'html2canvas';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import { RecordData, validIndicatorSlugs } from './data-viz-client';
 
+export const isValidObjectId = (value: unknown): value is string =>
+	typeof value === 'string' && /^[a-f0-9]{24}$/i.test(value);
+
+export const PROCEDURE_KINDS = [
+	'administration',
+	'administration_central',
+	'ministere'
+] as const;
+
+export const isProcedureKind = (value: unknown): value is ProcedureKind =>
+	typeof value === 'string' &&
+	(PROCEDURE_KINDS as readonly string[]).includes(value);
+
+export const PROCEDURE_SORT_FIELDS = [
+	'title',
+	'title_normalized',
+	'ministere',
+	'administration',
+	'administration_central',
+	'sousorg',
+	'volume'
+] as const;
+
+export const parseProcedureSort = (
+	value: unknown
+): { field: (typeof PROCEDURE_SORT_FIELDS)[number]; direction: 'asc' | 'desc' } | null => {
+	if (typeof value !== 'string') return null;
+	const [field, direction] = value.split(':');
+	if (
+		!(PROCEDURE_SORT_FIELDS as readonly string[]).includes(field) ||
+		(direction !== 'asc' && direction !== 'desc')
+	) {
+		return null;
+	}
+	return {
+		field: field as (typeof PROCEDURE_SORT_FIELDS)[number],
+		direction
+	};
+};
+
 export const getDisplayedVolume = (volume: number): string => {
 	if (volume >= 1000000) {
 		const millions = Math.floor(volume / 1000000);

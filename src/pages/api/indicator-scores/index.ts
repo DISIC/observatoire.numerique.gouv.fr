@@ -4,6 +4,7 @@ import {
 	getIndicatorScoresByProcedureKindSlug
 } from '@/utils/data-viz';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
+import { isProcedureKind } from '@/utils/tools';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -80,25 +81,30 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.method === 'GET') {
-		if (req.query.kind) {
-			const { kind, slug } = req.query;
-			if (!slug || typeof slug !== 'string') {
-				const indicatorScores = await getIndicatorScores(
-					kind as ProcedureKind,
-					req.query.search as string | undefined
-				);
-				res.status(200).json(indicatorScores);
-			} else {
-				let indicatorScore = await getIndicatorScoresByProcedureKindSlug({
-					kind: kind as ProcedureKind,
-					slug: slug as string
-				});
+	if (req.method !== 'GET') {
+		return res.status(400).json({ message: 'Unsupported method' });
+	}
 
-				res.status(200).json(indicatorScore);
-			}
+	const { kind, slug, search } = req.query;
+	if (!isProcedureKind(kind)) {
+		return res.status(400).json({ message: 'Invalid kind' });
+	}
+
+	try {
+		if (typeof slug === 'string') {
+			const indicatorScore = await getIndicatorScoresByProcedureKindSlug({
+				kind,
+				slug
+			});
+			return res.status(200).json(indicatorScore);
 		}
-	} else {
-		res.status(400).json({ message: 'Unsupported method' });
+		const indicatorScores = await getIndicatorScores(
+			kind,
+			typeof search === 'string' ? search : undefined
+		);
+		return res.status(200).json(indicatorScores);
+	} catch (err) {
+		console.error('GET /api/indicator-scores failed:', err);
+		return res.status(500).json({ message: 'Internal error' });
 	}
 }
