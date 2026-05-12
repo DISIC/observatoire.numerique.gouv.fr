@@ -157,7 +157,7 @@ export function Top250Header(props: Props) {
 				<Button
 					iconId="fr-icon-checkbox-circle-line"
 					type="submit"
-					title="Filter apply button"
+					title="Appliquer les filtres"
 				>
 					Appliquer les filtres
 				</Button>
