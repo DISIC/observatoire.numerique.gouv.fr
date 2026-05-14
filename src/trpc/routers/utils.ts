@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import {
 	PayloadIndicator,
 	PayloadIndicatorLevel

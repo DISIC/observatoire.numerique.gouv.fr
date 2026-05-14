@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { getDisplayedVolume, stringToBase64Url } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Edition, IndicatorSlug } from '@prisma/client';

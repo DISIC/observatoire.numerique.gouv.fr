@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { trpc } from '@/utils/trpc';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';

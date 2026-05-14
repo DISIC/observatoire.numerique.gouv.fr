@@ -1,4 +1,4 @@
-import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
+import { ProcedureWithFieldsAndEditions } from '@/types/procedure';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';

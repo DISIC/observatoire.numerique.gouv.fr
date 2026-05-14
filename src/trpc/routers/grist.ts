@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { api } from '@/utils/grist';
 import { z } from 'zod';
 import { protectedProcedure, router } from '../trpc';

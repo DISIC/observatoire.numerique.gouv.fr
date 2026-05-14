@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { getDisplayedVolume, stringToBase64Url } from '@/utils/tools';
 import { FrIconClassName, RiIconClassName, fr } from '@codegouvfr/react-dsfr';

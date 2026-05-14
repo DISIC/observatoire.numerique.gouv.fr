@@ -12,7 +12,7 @@ import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import { exportChartAsImage, exportTableAsCSV } from '@/utils/tools';
 import TableView from '../TableView';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 
 const indicatorLegends = [
