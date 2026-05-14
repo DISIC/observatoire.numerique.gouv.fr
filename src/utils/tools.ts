@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import { NextApiRequest } from 'next';
 import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { format, isSameMonth, isSameYear } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { fr as frDsfr } from '@codegouvfr/react-dsfr';

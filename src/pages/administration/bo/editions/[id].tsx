@@ -84,7 +84,7 @@ export default function Editions(props: Props) {
 			</div>
 			<div className={cx(classes.tableContainer)}>
 				<div className={fr.cx('fr-container', 'fr-px-5v')}>
-					<Top250TableSection procedures={procedures} isAdmin />
+					<Top250TableSection procedures={procedures} isAdmin version={edition?.version} />
 				</div>
 			</div>
 		</div>

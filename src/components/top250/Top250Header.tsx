@@ -6,13 +6,14 @@ import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
 import assert from 'assert';
 import { tss } from 'tss-react';
-import { useAdministrations, useDepartments } from '@/utils/api';
+import { useAdministrations, useAdministrationsCentral, useDepartments } from '@/utils/api';
 
 type Props = {
 	title: string;
 	subtitle: string;
 	searchLabel: string;
 	onSearch: (value: string) => void;
+	setSelectedAdministrationCentral: Dispatch<SetStateAction<string>>;
 	setSelectedDepartment: Dispatch<SetStateAction<string>>;
 	setSelectedAdministration: Dispatch<SetStateAction<string>>;
 	nbResults: number | null;
@@ -26,6 +27,7 @@ export function Top250Header(props: Props) {
 		subtitle,
 		searchLabel,
 		onSearch,
+		setSelectedAdministrationCentral,
 		setSelectedDepartment,
 		setSelectedAdministration,
 		nbResults,
@@ -38,6 +40,7 @@ export function Top250Header(props: Props) {
 		slug: string;
 	};
 
+	const { data: administrationsCentral } = useAdministrationsCentral();
 	const { data: departments } = useDepartments(old ? 'old' : 'base', editionId);
 	const { data: administrations } = useAdministrations(editionId);
 
@@ -48,6 +51,14 @@ export function Top250Header(props: Props) {
 	const [inputElement, setInputElement] = useState<HTMLInputElement | null>(
 		null
 	);
+
+	const administrationCentralOptions = [
+		{ label: 'Tous les domaines', value: 'all' },
+		...administrationsCentral?.map(ac => ({
+			label: ac,
+			value: ac
+		}))
+	];
 
 	const departmentOptions = [
 		{ label: 'Tous les ministères', value: 'all' },
@@ -65,9 +76,14 @@ export function Top250Header(props: Props) {
 		}))
 	];
 
+	const [administrationCentral, setAdministrationCentral] = useState<string>('');
 	const [department, setDepartment] = useState<string>('');
 	const [administration, setAdministration] = useState<string>('');
 	const [search, setSearch] = useState<string>('');
+
+	const hasAdministrationCentral = !!administrationCentral && administrationCentral !== 'all';
+	const hasDepartment = !!department && department !== 'all';
+	const hasAdministration = !!administration && administration !== 'all';
 
 	return (
 		<div className={cx(classes.root)}>
@@ -78,10 +94,20 @@ export function Top250Header(props: Props) {
 				onSubmit={e => {
 					e.preventDefault();
 					onSearch(search);
+					setSelectedAdministrationCentral(administrationCentral);
 					setSelectedDepartment(department);
 					setSelectedAdministration(administration);
 				}}
 			>
+				<LightSelect
+					label="Domaine"
+					id="select-domaine"
+					options={administrationCentralOptions}
+					size="small"
+					onChange={value => setAdministrationCentral(value as string)}
+					className={cx(classes.filterItem, classes.filterSelect)}
+					disabled={hasDepartment || hasAdministration}
+				/>
 				<LightSelect
 					label="Ministère"
 					id="select-ministere"
@@ -89,6 +115,7 @@ export function Top250Header(props: Props) {
 					size="small"
 					onChange={value => setDepartment(value as string)}
 					className={cx(classes.filterItem, classes.filterSelect)}
+					disabled={hasAdministrationCentral || hasAdministration}
 				/>
 				{!old && (
 					<LightSelect
@@ -98,6 +125,7 @@ export function Top250Header(props: Props) {
 						size="small"
 						onChange={value => setAdministration(value as string)}
 						className={cx(classes.filterItem, classes.filterSelect)}
+						disabled={hasAdministrationCentral || hasDepartment}
 					/>
 				)}
 				<div className={cx(classes.filterItem, classes.search)}>
@@ -129,7 +157,7 @@ export function Top250Header(props: Props) {
 				<Button
 					iconId="fr-icon-checkbox-circle-line"
 					type="submit"
-					title="Filter apply button"
+					title="Appliquer les filtres"
 				>
 					Appliquer les filtres
 				</Button>

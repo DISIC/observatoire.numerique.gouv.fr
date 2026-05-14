@@ -45,3 +45,6 @@ db.sql
 
 #.yarn
 .yarn/install-state.gz
+
+# scripts
+/scripts

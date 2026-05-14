@@ -15,6 +15,7 @@ import { CMSHelp } from './globals/cms/Help';
 import { CMSLegals } from './globals/cms/Legals';
 import { CMSFooter } from './globals/cms/Footer';
 import IndicatorLevels from './collections/IndicatorLevels';
+import { Versions } from './collections/Versions';
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
 
 const filename = fileURLToPath(import.meta.url);
@@ -27,7 +28,7 @@ export default buildConfig({
 			baseDir: path.resolve(dirname)
 		}
 	},
-	collections: [Admins, Media, Indicators, IndicatorLevels],
+	collections: [Admins, Media, Indicators, IndicatorLevels, Versions],
 	globals: [CMSHome, CMSHelp, CMSLegals, CMSFooter],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',

@@ -14,6 +14,8 @@ export default function ObservatoireEdition() {
 	const { slug: edition_slug } = router.query;
 
 	const [search, setSearch] = useState<string>();
+	const [selectedAdministrationCentral, setSelectedAdministrationCentral] =
+		useState<string>('all');
 	const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
 	const [selectedAdministration, setSelectedAdministration] =
 		useState<string>('all');
@@ -30,6 +32,7 @@ export default function ObservatoireEdition() {
 	} = useProcedures({
 		search,
 		editionId: edition?.id as string,
+		administration_central: selectedAdministrationCentral,
 		department: selectedDepartment,
 		administration: selectedAdministration
 	});
@@ -57,6 +60,7 @@ export default function ObservatoireEdition() {
 					subtitle={`Édition de ${edition?.name.toLowerCase()}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
+					setSelectedAdministrationCentral={setSelectedAdministrationCentral}
 					setSelectedDepartment={setSelectedDepartment}
 					setSelectedAdministration={setSelectedAdministration}
 					nbResults={procedures ? procedures.length : null}
@@ -79,6 +83,7 @@ export default function ObservatoireEdition() {
 								edition={edition}
 								procedures={procedures}
 								search={search}
+								version={edition?.version}
 							/>
 						</div>
 						<StickyFooter proceduresCount={procedures.length} />

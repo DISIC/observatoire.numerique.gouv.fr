@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Edition } from '@prisma/client';
@@ -8,10 +8,11 @@ import { tss } from 'tss-react';
 type Props = {
 	procedures: ProcedureWithFields[];
 	edition?: Edition;
+	version?: number;
 };
 
 export function ProceduresTableMobile(props: Props) {
-	const { procedures, edition } = props;
+	const { procedures, edition, version } = props;
 	const { classes, cx } = useStyles();
 
 	const {
@@ -22,7 +23,14 @@ export function ProceduresTableMobile(props: Props) {
 		page: 1,
 		perPage: 100
 	});
-	const indicators = procdeureHeadersRequest?.data || [];
+	const allIndicators = procdeureHeadersRequest?.data || [];
+	const indicators = version
+		? allIndicators.filter(i =>
+				i.versions?.some(v =>
+					typeof v === 'string' ? false : v.number === version
+				)
+		  )
+		: allIndicators;
 	if (indicatorsError) return <div>Une erreur est survenue.</div>;
 	if (isLoadingIndicators) return <div>...</div>;
 	if (!indicators) return <div>Aucune colonne de démarche</div>;

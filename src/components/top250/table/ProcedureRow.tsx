@@ -1,5 +1,5 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
-import { getDisplayedVolume } from '@/utils/tools';
+import { ProcedureWithFields } from '@/types/procedure';
+import { getDisplayedVolume, stringToBase64Url } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Edition, IndicatorSlug } from '@prisma/client';
 import React, { useMemo } from 'react';
@@ -16,6 +16,7 @@ type Props = {
 	index: number;
 	onScrollReset: () => void;
 	skipLinksTdClassName: string;
+	hideScrollHelper?: boolean;
 };
 
 const skipLinks = [
@@ -29,7 +30,8 @@ function ProcedureRowInner(props: Props) {
 		edition,
 		index,
 		onScrollReset,
-		skipLinksTdClassName
+		skipLinksTdClassName,
+		hideScrollHelper
 	} = props;
 
 	const isProactive = useMemo(
@@ -53,15 +55,15 @@ function ProcedureRowInner(props: Props) {
 			<tr id={`procedure-table-row-${index}`}>
 				<th scope="row">
 					<div>
-						<span>{p.title}</span>
-						<br />
-						<div className={fr.cx('fr-text--sm', 'fr-mt-1v', 'fr-mb-0')}>
-							{p.ministere}
-						</div>
-						<span className={fr.cx('fr-text--sm')}>{p.administration}</span>
-						<div className={fr.cx('fr-text--xs', 'fr-mt-2v', 'fr-mb-0')}>
-							Volumétrie en ligne :{' '}
-							{p.volume ? getDisplayedVolume(p.volume) : 'non communiquée'}
+						<a className={fr.cx('fr-link')} target="_blank" rel="noopener noreferrer" href={`/data-viz/procedure/${p.id}`} title={`${p.title}, nouvelle fenêtre`}>{p.title}</a>
+						<br /><br />
+						{p.administration_central && (
+							<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>Domaine :{' '}
+								<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration_central/${stringToBase64Url(p.administration_central)}`} title={`${p.administration_central}, nouvelle fenêtre`}>{p.administration_central}</a>
+							</div>
+						)}
+						<div className={fr.cx('fr-text--sm', "fr-mb-0")}>
+							Administration :{' '}<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration/${stringToBase64Url(p.administration)}`} title={`${p.administration}, nouvelle fenêtre`}>{p.administration}</a>
 						</div>
 					</div>
 				</th>
@@ -111,9 +113,11 @@ function ProcedureRowInner(props: Props) {
 						</td>
 					);
 				})}
-				<td>
-					<span></span>
-				</td>
+				{!hideScrollHelper && (
+					<td>
+						<span></span>
+					</td>
+				)}
 			</tr>
 			<tr>
 				<td className={`${skipLinksTdClassName} ${fr.cx('fr-pl-1-5v')}`}>

@@ -26,6 +26,7 @@ export const Indicators: CollectionConfig = {
 		icon: true,
 		label: true,
 		slug: true,
+		versions: true,
 		description_obj: true,
 		description_html: true,
 		moreInfos: true,
@@ -106,6 +107,14 @@ export const Indicators: CollectionConfig = {
 				{ label: 'Signal Tower', value: 'ri-signal-tower-line' },
 				{ label: 'Lock Unlock', value: 'ri-lock-unlock-line' }
 			]
+		},
+		{
+			name: 'versions',
+			type: 'relationship',
+			relationTo: 'payload-versions',
+			hasMany: true,
+			required: true,
+			label: 'Versions'
 		},
 		{
 			name: 'position',

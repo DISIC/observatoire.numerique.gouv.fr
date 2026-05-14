@@ -5,13 +5,14 @@ import { tss } from 'tss-react';
 import IndicatorTabContent from '../IndicatorTabContent';
 import { EvolutionViewType } from '@/pages/api/indicator-evolution';
 import Button from '@codegouvfr/react-dsfr/Button';
+import Alert from '@codegouvfr/react-dsfr/Alert';
 import Checkbox from '@codegouvfr/react-dsfr/Checkbox';
 import { useRef, useState } from 'react';
 import { useIndicatorEvolution } from '@/utils/api';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import { exportChartAsImage, exportTableAsCSV } from '@/utils/tools';
 import TableView from '../TableView';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { SegmentedControl } from '@codegouvfr/react-dsfr/SegmentedControl';
 
 const indicatorLegends = [
@@ -66,8 +67,18 @@ const DataVizIndicatorEvolution = ({
 		singleValue: true
 	});
 
+	const allValuesInvalid =
+		indicatorSlug !== 'auth' &&
+		(indicatorData?.groupedData?.every(item => {
+			const val = item.values[0]?.value;
+			return typeof val !== 'number' || isNaN(val);
+		}) ??
+			false);
+
+	const effectiveKind = allValuesInvalid ? 'table' : dataVisualitionKind;
+
 	const exportChart = (indicatorLabel: string) => {
-		if (dataVisualitionKind === 'table') {
+		if (effectiveKind === 'table') {
 			exportTableAsCSV(
 				'table',
 				indicatorLabel + '-' + procedure?.title_normalized || ''
@@ -99,46 +110,47 @@ const DataVizIndicatorEvolution = ({
 								</p>
 							</div>
 							<div className={classes.tabsActions}>
-								<SegmentedControl
-									hideLegend
-									legend="Sélection du mode de visualisation des données"
-									small
-									segments={[
-										{
-											label: 'Courbe',
-											nativeInputProps: {
-												checked: dataVisualitionKind === 'line',
-												onClick: () => setDataVisualitionKind('line')
+								{!allValuesInvalid && (
+									<SegmentedControl
+										hideLegend
+										legend="Sélection du mode de visualisation des données"
+										small
+										segments={[
+											{
+												label: 'Courbe',
+												nativeInputProps: {
+													checked: dataVisualitionKind === 'line',
+													onClick: () => setDataVisualitionKind('line')
+												},
+												iconId: 'ri-line-chart-line'
 											},
-											iconId: 'ri-line-chart-line'
-										},
-										{
-											label: 'Tableaux',
-											nativeInputProps: {
-												checked: dataVisualitionKind === 'table',
-												onClick: () => setDataVisualitionKind('table')
-											},
-											iconId: 'ri-table-line'
-										}
-									]}
-								/>
+											{
+												label: 'Tableaux',
+												nativeInputProps: {
+													checked: dataVisualitionKind === 'table',
+													onClick: () => setDataVisualitionKind('table')
+												},
+												iconId: 'ri-table-line'
+											}
+										]}
+									/>
+								)}
 								<Button
 									iconId="ri-download-line"
 									priority={'secondary'}
-									title={`Exporter en ${
-										dataVisualitionKind === 'table' ? 'CSV' : 'PNG'
-									}`}
+									title={`Exporter en ${effectiveKind === 'table' ? 'CSV' : 'PNG'
+										}`}
 									size="small"
 									className={classes.buttonExport}
 									onClick={() =>
 										exportChart(indicatorData.indicator?.label || '')
 									}
 								>
-									Exporter en {dataVisualitionKind === 'table' ? 'CSV' : 'PNG'}
+									Exporter en {effectiveKind === 'table' ? 'CSV' : 'PNG'}
 								</Button>
 							</div>
 						</div>
-						{dataVisualitionKind === 'line' && indicatorSlug !== 'auth' && (
+						{effectiveKind === 'line' && indicatorSlug !== 'auth' && (
 							<Checkbox
 								options={[
 									{
@@ -157,7 +169,15 @@ const DataVizIndicatorEvolution = ({
 							/>
 						)}
 					</div>
-					{dataVisualitionKind === 'table' ? (
+					{allValuesInvalid && (
+						<Alert
+							severity="info"
+							small
+							description="Les valeurs de cet indicateur pour cette démarche ne permettent pas d'afficher un graphique"
+							className={fr.cx('fr-mb-3w')}
+						/>
+					)}
+					{effectiveKind === 'table' ? (
 						<TableView
 							title={`Tableau de l'évolution de l’indicateur ${indicatorData.indicator?.label} pour la démarche ${procedure?.title}`}
 							headers={[

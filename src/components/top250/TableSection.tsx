@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { ProcedureHeaderSort, ProceduresTable } from './table/ProceduresTable';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SkipLinks } from '../generic/SkipLinks';
 import { push } from '@socialgouv/matomo-next';
@@ -14,10 +14,11 @@ type Props = {
 	edition?: Edition;
 	search?: string;
 	isAdmin?: boolean;
+	version?: number;
 };
 
 export function Top250TableSection(props: Props) {
-	const { procedures, edition, isAdmin, search } = props;
+	const { procedures, edition, isAdmin, search, version } = props;
 	const { classes, cx } = useStyles();
 	const numberPerPage = isAdmin ? 300 : 20;
 
@@ -113,18 +114,20 @@ export function Top250TableSection(props: Props) {
 						edition={edition}
 						procedures={displayedProcedures}
 						onSortApply={onSortApply}
+						version={version}
 					/>
 				</div>
 				<div className={classes.tableMobile}>
 					<ProceduresTableMobile
 						edition={edition}
 						procedures={displayedProcedures}
+						version={version}
 					/>
 				</div>
 				<div id="table-footer" />
 			</>
 		);
-	}, [procedures, displayedProcedures, isAdmin, search, classes.noProcedure]);
+	}, [procedures, displayedProcedures, isAdmin, search, version, classes.noProcedure]);
 
 	return <div className={cx(classes.root)}>{table}</div>;
 }

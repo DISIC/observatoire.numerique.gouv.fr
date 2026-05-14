@@ -33,12 +33,18 @@ const ComposedChartCustom = ({
 		const values = item.values.map(value => ({
 			...value,
 			score: value.value,
-			cross: value.cross ?? 0
+			cross: value.cross
 		}));
+
+		const rawScore = values[0]?.score;
+		const rawCross = values[0]?.cross;
+
 		return {
 			name: item.name,
-			score: values[0]?.score ?? 0,
-			cross: values[0]?.cross ?? 0,
+			score:
+				typeof rawScore === 'number' && !isNaN(rawScore) ? rawScore : null,
+			cross:
+				typeof rawCross === 'number' && !isNaN(rawCross) ? rawCross : null,
 			values
 		};
 	});
@@ -120,6 +126,17 @@ const ComposedChartCustom = ({
 				<Line
 					type="linear"
 					activeDot={false}
+					dot={false}
+					dataKey="score"
+					strokeWidth={1.5}
+					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
+					strokeDasharray="6 6"
+					connectNulls
+					legendType="none"
+				/>
+				<Line
+					type="linear"
+					activeDot={false}
 					dot={{
 						r: 4,
 						strokeWidth: 0,
@@ -167,6 +184,7 @@ const ComposedChartCustom = ({
 						stroke={'black'}
 						strokeDasharray="6 6"
 						strokeLinecap="round"
+						connectNulls
 					/>
 				)}
 			</ComposedChart>

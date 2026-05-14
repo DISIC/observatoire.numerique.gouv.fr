@@ -50,6 +50,7 @@ export default function ObservatoireEdition() {
 					subtitle={`Édition de ${slug}`}
 					searchLabel="Rechercher par mots clés..."
 					onSearch={value => setSearch(value)}
+					setSelectedAdministrationCentral={() => {}}
 					setSelectedDepartment={setSelectedDepartment}
 					setSelectedAdministration={() => {}}
 					nbResults={procedures ? procedures.length : null}
