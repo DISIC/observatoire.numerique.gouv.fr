@@ -1,4 +1,4 @@
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { trpc } from '@/utils/trpc';
 import { fr } from '@codegouvfr/react-dsfr';
 import { Edition } from '@prisma/client';

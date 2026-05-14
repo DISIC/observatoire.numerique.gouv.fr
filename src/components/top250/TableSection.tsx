@@ -1,7 +1,7 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { ProcedureHeaderSort, ProceduresTable } from './table/ProceduresTable';
 import { ProceduresTableMobile } from './table/ProceduresTableMobile';
-import { ProcedureWithFields } from '@/pages/api/procedures/types';
+import { ProcedureWithFields } from '@/types/procedure';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SkipLinks } from '../generic/SkipLinks';
 import { push } from '@socialgouv/matomo-next';

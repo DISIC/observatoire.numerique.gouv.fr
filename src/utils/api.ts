@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
-import { ProcedureWithFieldsAndEditions } from '@/pages/api/procedures/types';
+import { ProcedureWithFieldsAndEditions } from '@/types/procedure';
 import { Edition, OldProcedure } from '@prisma/client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import {
