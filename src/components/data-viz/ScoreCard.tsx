@@ -45,7 +45,7 @@ const ScoreCard = ({
 										trend === 'up' ? 'fr-badge--success' : 'fr-badge--error'
 									)}
 								>
-									<span aria-hidden="true">
+									<span aria-hidden="true" className={fr.cx('fr-mr-1v')}>
 										{trend === 'up' ? '↗ ' : '↘ '}
 									</span>
 									{Math.abs(delta)} pts
