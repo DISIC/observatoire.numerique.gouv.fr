@@ -278,3 +278,32 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 
 	return results;
 }
+
+export type IndicatorThresholdScore = {
+	slug: (typeof validIndicatorSlugs)[number];
+	reached: number;
+	total: number;
+	percentage: number;
+};
+
+export async function getIndicatorThresholdScores(
+	editionId: string,
+	slugs: (typeof validIndicatorSlugs)[number][]
+): Promise<IndicatorThresholdScore[]> {
+	const allProceduresRecords = await getAllProceduresIndicatorScores(editionId);
+
+	return slugs.map(slug => {
+		const total = allProceduresRecords.filter(item =>
+			item.data.find(data => data.slug === slug && data.goalReached !== null)
+		).length;
+		const reached = allProceduresRecords.filter(item =>
+			item.data.find(data => data.slug === slug && data.goalReached)
+		).length;
+		return {
+			slug,
+			reached,
+			total,
+			percentage: total > 0 ? Math.round((reached / total) * 100) : 0
+		};
+	});
+}

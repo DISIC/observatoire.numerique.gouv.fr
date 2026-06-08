@@ -8,6 +8,7 @@ import {
 	IndicatorEvolutionResponse,
 	RecordDataGrouped
 } from '@/pages/api/indicator-evolution';
+import { InterministerielScoresResponse } from '@/pages/api/interministeriel-scores';
 import { RecordData } from './data-viz-client';
 
 type OldProceduresProps = {
@@ -237,6 +238,24 @@ export function useAdministrationsCentral() {
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<string[]>(stringify(await res.json()));
+		}
+	);
+
+	return {
+		data: data || [],
+		isError: error,
+		isLoading: (!error && !data) || isLoading
+	};
+}
+
+export function useInterministerielScores() {
+	const { data, error, isLoading } = useSWR(
+		'/api/interministeriel-scores',
+		async function (input: RequestInfo, init?: RequestInit) {
+			const res = await fetch(input, init);
+			return superJSONParse<InterministerielScoresResponse>(
+				stringify(await res.json())
+			);
 		}
 	);
 

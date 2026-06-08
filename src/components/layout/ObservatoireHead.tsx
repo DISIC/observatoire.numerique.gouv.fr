@@ -39,6 +39,9 @@ export function ObservatoireHead() {
 		case '/demande':
 			pageTitle = 'Soumettre une démarche - Vos démarches essentielles';
 			break;
+		case '/data-viz/interministeriel':
+			pageTitle = 'Graphiques - Interministériel - Vos démarches essentielles';
+			break;
 		case '/data-viz/[kind]':
 		case '/data-viz/procedure':
 			const { kind } = router.query;
