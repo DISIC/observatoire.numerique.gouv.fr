@@ -55,7 +55,9 @@ const ScoreCard = ({
 				<p className={cx(fr.cx('fr-display--xs', 'fr-mb-0'), classes.figure)}>
 					{percentage}%
 				</p>
-				<p className={fr.cx('fr-text--xs', 'fr-mb-0')}>{subtitle}</p>
+				<p className={fr.cx('fr-text--xs', 'fr-mb-0', 'fr-mt-2v')}>
+					{subtitle}
+				</p>
 			</div>
 		</div>
 	);

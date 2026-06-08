@@ -26,9 +26,9 @@ const getScoreCardSubtitle = (
 ): string => {
 	switch (slug) {
 		case 'satisfaction':
-			return `${reached}/${total} démarches atteignant le seuil de 100 avis présentent une note ≥ 8/10`;
+			return `démarches atteignant le seuil de 100 avis présentent une note ≥ 8/10`;
 		case 'handicap':
-			return `${reached}/${total} démarches totalement conformes au RGAA`;
+			return `démarches totalement conformes au RGAA`;
 		default:
 			return `${reached}/${total}`;
 	}
@@ -76,8 +76,8 @@ const Interministeriel = () => {
 					a donné la direction souhaitée par le gouvernement concernant
 					l’amélioration de la lisibilité des sites internet de l’État et de la
 					qualité des démarches numériques. Par la suite, des seuils ont été
-					fixés : 8/10 pour la Satisfaction usagers et 100% de conformité pour la
-					Prise en compte du handicap.
+					fixés : 8/10 pour la Satisfaction usagers et 100% de conformité pour
+					la Prise en compte du handicap.
 				</CallOut>
 				{isLoading ? (
 					<div className={fr.cx('fr-py-10v')}>
