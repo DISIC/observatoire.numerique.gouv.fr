@@ -28,7 +28,7 @@ const ScoreCard = ({
 		trend === 'up' ? 'En hausse' : trend === 'down' ? 'En baisse' : 'Stable';
 
 	return (
-		<div className={cx(fr.cx('fr-card', 'fr-card--shadow'), classes.root)}>
+		<div className={cx(fr.cx('fr-card'), classes.root)}>
 			<div className={classes.body}>
 				<div className={classes.header}>
 					<TitleTag className={fr.cx('fr-mb-0', 'fr-h6')}>{title}</TitleTag>
@@ -67,7 +67,8 @@ const ScoreCard = ({
 
 const useStyles = tss.withName(ScoreCard.name).create(() => ({
 	root: {
-		height: '100%'
+		height: '100%',
+		borderRadius: fr.spacing('2v')
 	},
 	body: {
 		padding: fr.spacing('4v'),
