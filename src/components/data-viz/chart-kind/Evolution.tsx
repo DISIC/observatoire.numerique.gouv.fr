@@ -20,8 +20,6 @@ import { tss } from 'tss-react';
 
 type EvolutionProps = {
 	kind: ProcedureKind;
-	// Column value to filter on. When omitted, the chart covers the whole
-	// perimeter (interministériel) without filtering on a specific value.
 	slug?: string;
 	indicator: (typeof validIndicatorSlugs)[number];
 	legend: string;

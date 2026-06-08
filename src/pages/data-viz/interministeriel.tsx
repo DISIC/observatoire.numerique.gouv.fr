@@ -68,7 +68,7 @@ const Interministeriel = () => {
 				{scores.length > 0 && (
 					<>
 						<h2 className={cx(fr.cx('fr-h3'), classes.subtitle)}>
-							Données basée sur la dernière édition (
+							Données basées sur la dernière édition (
 							{currentEdition?.name || '...'})
 						</h2>
 						<div

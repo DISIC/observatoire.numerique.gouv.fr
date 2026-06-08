@@ -286,8 +286,6 @@ export type IndicatorThresholdScore = {
 	percentage: number;
 };
 
-// Percentage of procedures having reached the goal threshold for the given
-// indicators, on a given edition (same computation as the radar "cross" value).
 export async function getIndicatorThresholdScores(
 	editionId: string,
 	slugs: (typeof validIndicatorSlugs)[number][]

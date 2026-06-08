@@ -10,9 +10,7 @@ const prisma = new PrismaClient();
 const interministerielSlugs = ['satisfaction', 'handicap'] as const;
 
 export type InterministerielScore = IndicatorThresholdScore & {
-	// Percentage of the previous edition, null when there is no previous edition.
 	previousPercentage: number | null;
-	// Difference in points with the previous edition (current - previous).
 	delta: number | null;
 };
 
