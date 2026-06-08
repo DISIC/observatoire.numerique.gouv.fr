@@ -22,8 +22,7 @@ const ScoreCard = ({
 
 	const TitleTag = titleAs;
 
-	const trend =
-		delta === null || delta === 0 ? 'stable' : delta > 0 ? 'up' : 'down';
+	const trend = delta === 0 ? 'stable' : delta && delta > 0 ? 'up' : 'down';
 
 	const trendLabel =
 		trend === 'up' ? 'En hausse' : trend === 'down' ? 'En baisse' : 'Stable';
@@ -33,23 +32,27 @@ const ScoreCard = ({
 			<div className={classes.body}>
 				<div className={classes.header}>
 					<TitleTag className={fr.cx('fr-mb-0', 'fr-h6')}>{title}</TitleTag>
-					<p className={cx(fr.cx('fr-text--xs', 'fr-mb-0'), classes.trend)}>
-						{trendLabel}
-						{trend !== 'stable' && delta !== null && (
-							<span
-								className={fr.cx(
-									'fr-badge',
-									'fr-badge--sm',
-									'fr-badge--no-icon',
-									'fr-ml-1v',
-									trend === 'up' ? 'fr-badge--success' : 'fr-badge--error'
-								)}
-							>
-								{trend === 'up' ? '↗ ' : '↘ '}
-								{Math.abs(delta)} pts
-							</span>
-						)}
-					</p>
+					{delta !== null && (
+						<p className={cx(fr.cx('fr-text--xs', 'fr-mb-0'), classes.trend)}>
+							{trendLabel}
+							{trend !== 'stable' && (
+								<span
+									className={fr.cx(
+										'fr-badge',
+										'fr-badge--sm',
+										'fr-badge--no-icon',
+										'fr-ml-1v',
+										trend === 'up' ? 'fr-badge--success' : 'fr-badge--error'
+									)}
+								>
+									<span aria-hidden="true">
+										{trend === 'up' ? '↗ ' : '↘ '}
+									</span>
+									{Math.abs(delta)} pts
+								</span>
+							)}
+						</p>
+					)}
 				</div>
 				<p className={cx(fr.cx('fr-display--xs', 'fr-mb-0'), classes.figure)}>
 					{percentage}%

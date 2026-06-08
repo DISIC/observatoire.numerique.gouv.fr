@@ -4,6 +4,7 @@ import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
 import { CallOut } from '@codegouvfr/react-dsfr/CallOut';
 import DataVizEvolution from '@/components/data-viz/chart-kind/Evolution';
 import ScoreCard from '@/components/data-viz/ScoreCard';
+import { Loader } from '@/components/generic/Loader';
 import { useEdition, useInterministerielScores } from '@/utils/api';
 import { getValidIndicatorLabel } from '@/utils/tools';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
@@ -36,7 +37,7 @@ const interministerielIndicators: InterministerielIndicator[] = [
 const Interministeriel = () => {
 	const { classes, cx } = useStyles();
 
-	const { data: scores } = useInterministerielScores();
+	const { data: scores, isLoading } = useInterministerielScores();
 
 	const { data: currentEdition } = useEdition({ id: 'current', kind: 'id' });
 
@@ -65,7 +66,11 @@ const Interministeriel = () => {
 					100% ont été fixés pour les critères Satisfaction usager et Prise en
 					compte du handicap respectivement.
 				</CallOut>
-				{scores.length > 0 && (
+				{isLoading ? (
+					<div className={fr.cx('fr-py-10v')}>
+						<Loader />
+					</div>
+				) : scores.length > 0 ? (
 					<>
 						<h2 className={cx(fr.cx('fr-h3'), classes.subtitle)}>
 							Données basées sur la dernière édition (
@@ -95,7 +100,7 @@ const Interministeriel = () => {
 							))}
 						</div>
 					</>
-				)}
+				) : null}
 				<h2 className={cx(fr.cx('fr-h3'), classes.subtitle)}>
 					Évolution des critères dans le temps
 				</h2>

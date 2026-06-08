@@ -41,7 +41,8 @@ export async function getInterministerielScores(): Promise<InterministerielScore
 
 	return currentScores.map(score => {
 		const previous = previousScores.find(p => p.slug === score.slug);
-		const previousPercentage = previous ? previous.percentage : null;
+		const previousPercentage =
+			previous && previous.total > 0 ? previous.percentage : null;
 		return {
 			...score,
 			previousPercentage,
