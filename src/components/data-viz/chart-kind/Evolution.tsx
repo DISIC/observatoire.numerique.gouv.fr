@@ -20,12 +20,22 @@ import { tss } from 'tss-react';
 
 type EvolutionProps = {
 	kind: ProcedureKind;
-	slug: string;
+	// Column value to filter on. When omitted, the chart covers the whole
+	// perimeter (interministériel) without filtering on a specific value.
+	slug?: string;
 	indicator: (typeof validIndicatorSlugs)[number];
 	legend: string;
+	titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 };
 
-function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
+function DataVizEvolution({
+	kind,
+	slug,
+	indicator,
+	legend,
+	titleAs = 'h2'
+}: EvolutionProps) {
+	const TitleTag = titleAs;
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'line' | 'table'
 	>('line');
@@ -40,15 +50,15 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 		view: viewType || 'edition',
 		slug: indicator,
 		columnKey: kind,
-		columnValue: slug
+		columnValue: slug || undefined
 	});
 
 	const exportChart = () => {
 		if (dataVisualitionKind === 'table') {
-			exportTableAsCSV('table', slug);
-		} else if (chartRef.current && slug) {
-			const matches = slug.match(/\b([A-Z])/g) ?? [];
-			const titleChart = matches.join('');
+			exportTableAsCSV('table', slug || 'interministeriel');
+		} else if (chartRef.current) {
+			const matches = slug?.match(/\b([A-Z])/g) ?? [];
+			const titleChart = matches.length ? matches.join('') : 'interministeriel';
 			exportChartAsImage(chartRef.current, `${titleChart}-${indicator}`);
 		}
 	};
@@ -88,10 +98,10 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 					<div className={classes.indicatorTabContent}>
 						<div className={classes.headerWrapper}>
 							<div className={classes.headingWrapper}>
-								<h2 className={fr.cx('fr-h3', 'fr-mb-0')}>
+								<TitleTag className={fr.cx('fr-h3', 'fr-mb-0')}>
 									<i className={fr.cx(apiData.indicator.icon, 'fr-mr-2v')} />
 									{getValidIndicatorLabel(indicator)}
-								</h2>
+								</TitleTag>
 								<p className={classes.chartLegend}>{legend}</p>
 							</div>
 							<div className={classes.tabsActions}>
@@ -136,7 +146,11 @@ function DataVizEvolution({ kind, slug, indicator, legend }: EvolutionProps) {
 							<TableView
 								title={`Tableau de l'évolution de l’indicateur ${getValidIndicatorLabel(
 									indicator
-								)} pour l'${getProcedureKindLabel(kind)} "${slug}"`}
+								)} ${
+									slug
+										? `pour l'${getProcedureKindLabel(kind)} "${slug}"`
+										: 'au niveau interministériel'
+								}`}
 								headers={[
 									{ name: "Nom du niveau de l'indicateur", description: '' },
 									...(apiData?.groupedData.map(d => ({
