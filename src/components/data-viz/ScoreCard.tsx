@@ -3,20 +3,18 @@ import { tss } from 'tss-react';
 
 type ScoreCardProps = {
 	title: string;
+	subtitle: string;
 	titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 	percentage: number;
 	delta: number | null;
-	reached: number;
-	total: number;
 };
 
 const ScoreCard = ({
 	title,
+	subtitle,
 	titleAs = 'h3',
 	percentage,
-	delta,
-	reached,
-	total
+	delta
 }: ScoreCardProps) => {
 	const { classes, cx } = useStyles();
 
@@ -57,9 +55,7 @@ const ScoreCard = ({
 				<p className={cx(fr.cx('fr-display--xs', 'fr-mb-0'), classes.figure)}>
 					{percentage}%
 				</p>
-				<p className={fr.cx('fr-text--xs', 'fr-mb-0')}>
-					{reached}/{total} = {percentage}%
-				</p>
+				<p className={fr.cx('fr-text--xs', 'fr-mb-0')}>{subtitle}</p>
 			</div>
 		</div>
 	);

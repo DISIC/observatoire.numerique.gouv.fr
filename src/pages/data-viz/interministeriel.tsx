@@ -15,10 +15,23 @@ type InterministerielIndicator = {
 };
 
 const scoreCardTitles: Record<string, string> = {
-	satisfaction:
-		'Satisfaction usager, démarches ayant un score de satisfaction supérieur à 8/10',
-	handicap:
-		'Prise en compte du handicap, démarches totalement conformes au RGAA'
+	satisfaction: 'Satisfaction usager',
+	handicap: 'Prise en compte du handicap'
+};
+
+const getScoreCardSubtitle = (
+	slug: string,
+	reached: number,
+	total: number
+): string => {
+	switch (slug) {
+		case 'satisfaction':
+			return `${reached}/${total} démarches atteignant le seuil de 100 avis présentent une note ≥ 8/10`;
+		case 'handicap':
+			return `${reached}/${total} démarches totalement conformes au RGAA`;
+		default:
+			return `${reached}/${total}`;
+	}
 };
 
 const interministerielIndicators: InterministerielIndicator[] = [
@@ -61,10 +74,10 @@ const Interministeriel = () => {
 						La circulaire Premier Ministre datant du 7 juillet 2023
 					</a>{' '}
 					a donné la direction souhaitée par le gouvernement concernant
-					l’amélioration de la lisibilité des sites internet de l’Etat et de la
-					qualité des démarches numériques. Par la suite, les seuils de 8/10 et
-					100% ont été fixés pour les critères Satisfaction usager et Prise en
-					compte du handicap respectivement.
+					l’amélioration de la lisibilité des sites internet de l’État et de la
+					qualité des démarches numériques. Par la suite, des seuils ont été
+					fixés : 8/10 pour la Satisfaction usagers et 100% de conformité pour la
+					Prise en compte du handicap.
 				</CallOut>
 				{isLoading ? (
 					<div className={fr.cx('fr-py-10v')}>
@@ -91,10 +104,13 @@ const Interministeriel = () => {
 											scoreCardTitles[score.slug] ||
 											getValidIndicatorLabel(score.slug)
 										}
+										subtitle={getScoreCardSubtitle(
+											score.slug,
+											score.reached,
+											score.total
+										)}
 										percentage={score.percentage}
 										delta={score.delta}
-										reached={score.reached}
-										total={score.total}
 									/>
 								</div>
 							))}
