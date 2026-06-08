@@ -68,7 +68,8 @@ const ScoreCard = ({
 const useStyles = tss.withName(ScoreCard.name).create(() => ({
 	root: {
 		height: '100%',
-		borderRadius: fr.spacing('2v')
+		borderRadius: fr.spacing('2v'),
+		backgroundImage: 'none'
 	},
 	body: {
 		padding: fr.spacing('4v'),
