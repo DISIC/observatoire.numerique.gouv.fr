@@ -26,7 +26,7 @@ const getScoreCardSubtitle = (
 ): string => {
 	switch (slug) {
 		case 'satisfaction':
-			return `Démarches atteignant le seuil de 100 avis présentent une note ≥ 8/10`;
+			return `Démarches atteignant le seuil de 100 avis et présentant une note ≥ 8/10`;
 		case 'handicap':
 			return `Démarches totalement conformes au RGAA`;
 		default:
