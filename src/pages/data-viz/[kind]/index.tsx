@@ -176,7 +176,7 @@ const DataViz = ({ kind }: { kind: ProcedureKind }) => {
 				<Breadcrumb
 					segments={[]}
 					homeLinkProps={{ href: '/' }}
-					currentPageLabel={`Graphiques - ${kindLabel}`}
+					currentPageLabel={`Synthèse - ${kindLabel}`}
 					className={fr.cx('fr-mb-1v')}
 				/>
 				<h1 className={cx(classes.title)}>{kindLabel}</h1>

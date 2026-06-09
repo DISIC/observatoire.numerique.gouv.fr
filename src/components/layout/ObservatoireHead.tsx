@@ -40,7 +40,7 @@ export function ObservatoireHead() {
 			pageTitle = 'Soumettre une démarche - Vos démarches essentielles';
 			break;
 		case '/data-viz/interministeriel':
-			pageTitle = 'Graphiques - Interministériel - Vos démarches essentielles';
+			pageTitle = 'Synthèse - Interministériel - Vos démarches essentielles';
 			break;
 		case '/data-viz/[kind]':
 		case '/data-viz/procedure':
@@ -50,7 +50,7 @@ export function ObservatoireHead() {
 					plural: true,
 					uppercaseFirst: true
 				}) || 'Démarches';
-			pageTitle = `Graphiques - ${slugTitle} - Vos démarches essentielles`;
+			pageTitle = `Synthèse - ${slugTitle} - Vos démarches essentielles`;
 			break;
 		case '/data-viz/[kind]/[slug]':
 			const { kind: kindDetail, slug } = router.query;
@@ -62,7 +62,7 @@ export function ObservatoireHead() {
 					plural: true,
 					uppercaseFirst: true
 				}) || 'Démarche';
-			pageTitle = `Graphiques - ${procedureTitle} (${kindLabel}) - Vos démarches essentielles`;
+			pageTitle = `Synthèse - ${procedureTitle} (${kindLabel}) - Vos démarches essentielles`;
 			break;
 	}
 

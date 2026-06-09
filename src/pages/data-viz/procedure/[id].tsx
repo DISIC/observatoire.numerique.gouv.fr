@@ -31,14 +31,14 @@ const DataViz = ({ id }: { id: string }) => {
 	return (
 		<>
 			<Head>
-				<title>Graphiques - {procedure?.title} - Vos démarches essentielles</title>
+				<title>Synthèse - {procedure?.title} - Vos démarches essentielles</title>
 			</Head>
 			<div className={cx(classes.root)}>
 				<div className={fr.cx('fr-container', 'fr-pt-6v')}>
 					<Breadcrumb
 						segments={[
 							{
-								label: 'Graphiques - Démarches',
+								label: 'Synthèse - Démarches',
 								linkProps: { href: '/data-viz/procedure' }
 							}
 						]}

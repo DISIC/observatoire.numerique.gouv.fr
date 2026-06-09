@@ -100,7 +100,7 @@ const DataViz = ({ kind, slug }: { kind: ProcedureKind; slug: string }) => {
 				<Breadcrumb
 					segments={[
 						{
-							label: `Graphiques - ${getProcedureKindLabel(kind, {
+							label: `Synthèse - ${getProcedureKindLabel(kind, {
 								plural: true,
 								uppercaseFirst: true
 							})}`,
