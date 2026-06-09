@@ -432,12 +432,7 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (req.method === 'GET') {
-		if (
-			!req.query.view ||
-			!req.query.slug ||
-			!req.query.columnKey ||
-			!req.query.columnValue
-		) {
+		if (!req.query.view || !req.query.slug || !req.query.columnKey) {
 			return res.status(400).json({
 				message: 'Missing view or slug query parameter.'
 			});

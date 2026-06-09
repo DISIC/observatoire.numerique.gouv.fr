@@ -121,6 +121,14 @@ const PublicLayout = (props: Props) => {
 						menuLinks: [
 							{
 								linkProps: {
+									href: '/data-viz/interministeriel',
+									target: '_self'
+								},
+								isActive: router.pathname === '/data-viz/interministeriel',
+								text: 'Interministériel'
+							},
+							{
+								linkProps: {
 									href: '/data-viz/administration_central',
 									target: '_self'
 								},
