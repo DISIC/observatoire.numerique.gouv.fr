@@ -12,7 +12,7 @@ const DataVizProcedures = () => {
 				<Breadcrumb
 					segments={[]}
 					homeLinkProps={{ href: '/' }}
-					currentPageLabel={`Graphiques - Démarches`}
+					currentPageLabel={`Synthèse - Démarches`}
 					className={fr.cx('fr-mb-1v')}
 				/>
 				<h1>Démarches</h1>

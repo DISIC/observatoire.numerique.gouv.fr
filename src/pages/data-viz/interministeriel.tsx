@@ -60,7 +60,7 @@ const Interministeriel = () => {
 				<Breadcrumb
 					segments={[]}
 					homeLinkProps={{ href: '/' }}
-					currentPageLabel="Graphiques - Interministériel"
+					currentPageLabel="Synthèse - Interministériel"
 					className={fr.cx('fr-mb-1v')}
 				/>
 				<h1>Interministériel</h1>

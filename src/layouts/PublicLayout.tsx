@@ -117,7 +117,7 @@ const PublicLayout = (props: Props) => {
 					},
 					{
 						isActive: router.pathname.startsWith('/data-viz'),
-						text: 'Graphiques',
+						text: 'Synthèse',
 						menuLinks: [
 							{
 								linkProps: {
