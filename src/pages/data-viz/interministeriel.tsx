@@ -38,12 +38,12 @@ const interministerielIndicators: InterministerielIndicator[] = [
 	{
 		slug: 'satisfaction',
 		legend:
-			'Cet histogramme représente la répartition en pourcentage des niveaux de satisfactions des démarches au niveau interministériel.'
+			'Répartition en pourcentage des niveaux de satisfaction des démarches.'
 	},
 	{
 		slug: 'handicap',
 		legend:
-			'Cet histogramme représente la répartition en pourcentage du niveau d’accessibilité numérique des démarches au niveau interministériel.'
+			'Répartition en pourcentage du niveau d’accessibilité numérique des démarches.'
 	}
 ];
 
@@ -66,7 +66,7 @@ const Interministeriel = () => {
 				<h1>Interministériel</h1>
 				<CallOut className={fr.cx('fr-mb-6v')}>
 					<a
-						className={fr.cx('fr-link')}
+						className={fr.cx('fr-link', 'fr-text--lg')}
 						href="https://www.systeme-de-design.gouv.fr/static/file/Circulaire_n_6411_SG_sites_Internet_de_l_Etat_et_demarches_numeriques_07_07_2023.pdf"
 						target="_blank"
 						rel="noopener noreferrer"
