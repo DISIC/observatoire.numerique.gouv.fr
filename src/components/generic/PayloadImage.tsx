@@ -14,13 +14,10 @@ const PayloadImage = (props: PayloadImageProps) => {
 
 	return (
 		typeof image === 'object' && (
-			/* @ts-ignore -- Intentionally leaving alt undefined (for decorative image) */
 			<Image
 				className={fr.cx('fr-responsive-img')}
 				src={image.url || ''}
-				{...(!isDecorative && { alt: image.alt || '' })}
-				{...(isDecorative && { role: 'presentation' })}
-				aria-hidden={isDecorative}
+				alt={isDecorative ? '' : image.alt || ''}
 				width={width || image.width || 0}
 				height={height || image.height || 0}
 			/>
