@@ -19,6 +19,7 @@ const PayloadImage = (props: PayloadImageProps) => {
 				className={fr.cx('fr-responsive-img')}
 				src={image.url || ''}
 				{...(!isDecorative && { alt: image.alt || '' })}
+				{...(isDecorative && { role: 'presentation' })}
 				aria-hidden={isDecorative}
 				width={width || image.width || 0}
 				height={height || image.height || 0}
