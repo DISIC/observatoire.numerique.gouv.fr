@@ -97,6 +97,10 @@ model Procedure {
   editionId              String?  @db.ObjectId
 
   @@index([editionId])
+  @@index([editionId, title_normalized])
+  @@index([editionId, administration])
+  @@index([editionId, administration_central])
+  @@index([editionId, ministere])
 }
 
 model Field {
@@ -110,5 +114,5 @@ model Field {
   procedure    Procedure      @relation(fields: [procedureId], references: [id])
   procedureId  String         @db.ObjectId
 
-  @@index([procedureId, slug])
+  @@index([procedureId, slug, goalReached, color])
 }
