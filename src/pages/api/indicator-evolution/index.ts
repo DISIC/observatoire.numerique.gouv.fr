@@ -152,7 +152,7 @@ export async function getIndicatorEvolution({
 						[columnKey]: columnValue
 					},
 					include: {
-						fields: true
+						fields: { where: { slug } }
 					}
 				});
 
@@ -166,7 +166,7 @@ export async function getIndicatorEvolution({
 							: {})
 					},
 					include: {
-						fields: true
+						fields: { where: { slug } }
 					}
 				});
 
@@ -195,7 +195,7 @@ export async function getIndicatorEvolution({
 				crossValueLabel = getCrossValueLabel(cross);
 
 				if (singleValue) {
-					if (!procedures[0] || procedures[0].fields.length === 0) return;
+					if (!procedures[0]) return;
 
 					const totalValue = procedures.reduce((sum, procedure) => {
 						const field = procedure.fields.find(
@@ -236,7 +236,6 @@ export async function getIndicatorEvolution({
 				const levelCounts = indicatorLevels
 					.map(level => {
 						if (typeof level === 'string' || !level.label_stats) return null;
-						console.log(fields[0]);
 						const count = new Set(
 							fields
 								.filter(
@@ -299,7 +298,7 @@ export async function getIndicatorEvolution({
 					[columnKey]: columnValue
 				},
 				include: {
-					fields: true
+					fields: { where: { slug } }
 				}
 			});
 
@@ -311,7 +310,7 @@ export async function getIndicatorEvolution({
 						: {})
 				},
 				include: {
-					fields: true
+					fields: { where: { slug } }
 				}
 			});
 
@@ -339,7 +338,7 @@ export async function getIndicatorEvolution({
 			crossValueLabel = getCrossValueLabel(cross);
 
 			if (singleValue) {
-				if (!procedures[0] || procedures[0].fields.length === 0) return;
+				if (!procedures[0]) return;
 				return {
 					edition: edition.name,
 					levels: [
