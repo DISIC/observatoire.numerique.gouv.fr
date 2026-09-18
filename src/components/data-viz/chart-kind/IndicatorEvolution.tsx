@@ -98,7 +98,9 @@ const DataVizIndicatorEvolution = ({
 						<div className={classes.tabsHeaderActionsWrapper}>
 							<div className={classes.headingWrapper}>
 								<h3 className={fr.cx('fr-mb-0')}>
-									<i className={fr.cx(indicatorData.indicator?.icon, 'fr-mr-2v')} />
+									<i
+										className={fr.cx(indicatorData.indicator?.icon, 'fr-mr-2v')}
+									/>
 									{indicatorData.indicator?.label}
 								</h3>
 								<p className={classes.chartLegend}>
@@ -138,8 +140,9 @@ const DataVizIndicatorEvolution = ({
 								<Button
 									iconId="ri-download-line"
 									priority={'secondary'}
-									title={`Exporter en ${effectiveKind === 'table' ? 'CSV' : 'PNG'
-										}`}
+									title={`Exporter en ${
+										effectiveKind === 'table' ? 'CSV' : 'PNG'
+									}`}
 									size="small"
 									className={classes.buttonExport}
 									onClick={() =>

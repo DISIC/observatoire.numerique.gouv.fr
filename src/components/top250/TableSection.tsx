@@ -127,7 +127,14 @@ export function Top250TableSection(props: Props) {
 				<div id="table-footer" />
 			</>
 		);
-	}, [procedures, displayedProcedures, isAdmin, search, version, classes.noProcedure]);
+	}, [
+		procedures,
+		displayedProcedures,
+		isAdmin,
+		search,
+		version,
+		classes.noProcedure
+	]);
 
 	return <div className={cx(classes.root)}>{table}</div>;
 }

@@ -27,7 +27,8 @@ async function updateGoalReachedProperty() {
 				indicator.levels?.docs?.some(
 					level =>
 						typeof level != 'string' &&
-						(level.goal_reached !== undefined && level.goal_reached !== null)
+						level.goal_reached !== undefined &&
+						level.goal_reached !== null
 				) || false
 			);
 		});

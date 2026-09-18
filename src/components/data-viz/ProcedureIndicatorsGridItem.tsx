@@ -35,12 +35,13 @@ const ProcedureIndicatorsGridItem = ({
 							priority="tertiary no outline"
 							iconId="ri-close-circle-fill"
 							onClick={onClose}
-							children={''}
 							size="large"
 							className={classes.clearButton}
 							title="Supprimer la sélection"
 							aria-label="Supprimer la sélection"
-						/>
+						>
+							{''}
+						</Button>
 					)}
 				</div>
 				<p className={cx('fr-text--xs', 'fr-mb-0')}>

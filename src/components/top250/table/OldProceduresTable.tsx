@@ -145,8 +145,9 @@ export const OldProceduresTable = ({ procedures, sort, setSort }: Props) => {
 
 								const procedureJdmaLink = `https://observatoire.numerique.gouv.fr/${procedure.xwiki_id
 									.split('.')
-									.join('/')}?view-mode=statistics&date-debut=${procedure.jdma_start_date
-									}&date-fin=${procedure.jdma_end_date}`;
+									.join('/')}?view-mode=statistics&date-debut=${
+									procedure.jdma_start_date
+								}&date-fin=${procedure.jdma_end_date}`;
 								const hasLink =
 									attr === 'satisfactionIndex_display' &&
 									(procedure.satisfactionIndex_value || -1) >= 0;

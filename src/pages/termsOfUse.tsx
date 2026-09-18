@@ -10,9 +10,7 @@ const TermsOfUse = () => {
 		trpc.cms.legals.useQuery();
 	const legalsTexts = legalsCMS?.data;
 
-	if (
-		isLoadingLegalsCMS
-	) {
+	if (isLoadingLegalsCMS) {
 		return (
 			<EmptyScreenZone>
 				<Loader loadingMessage="Chargement du contenu en cours..." />
@@ -52,7 +50,9 @@ const TermsOfUse = () => {
 							{legalsTexts?.['legal-terms'].title}
 						</h1>
 						{legalsTexts?.['legal-terms'].wysiwyg_html && (
-							<WysiwygInterpretor wysiwyg_html={legalsTexts?.['legal-terms'].wysiwyg_html} />
+							<WysiwygInterpretor
+								wysiwyg_html={legalsTexts?.['legal-terms'].wysiwyg_html}
+							/>
 						)}
 					</div>
 				</div>

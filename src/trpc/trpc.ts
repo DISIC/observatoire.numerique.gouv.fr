@@ -22,7 +22,8 @@ const createInnerContext = async (opts: CreateContextOptions) => {
 export const createContext = async (opts: CreateNextContextOptions) => {
 	const payloadClient = await getPayload({ config });
 
-	const jwtCookie = opts.req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
+	const jwtCookie =
+		opts.req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
 
 	if (!jwtCookie) {
 		return await createInnerContext({
@@ -39,7 +40,7 @@ export const createContext = async (opts: CreateNextContextOptions) => {
 
 		const derivedSecret = getPayloadJWTSecret(secret);
 		const decoded = jwt.verify(jwtCookie, derivedSecret, {
-			algorithms: ["HS256"],
+			algorithms: ['HS256']
 		});
 
 		if (typeof decoded === 'object' && decoded !== null && 'id' in decoded) {
@@ -87,14 +88,14 @@ const isAuthed = middleware(({ ctx, next }) => {
 	if (!ctx.user) {
 		throw new TRPCError({
 			code: 'UNAUTHORIZED',
-			message: 'You must be logged in to access this resource',
+			message: 'You must be logged in to access this resource'
 		});
 	}
 
 	return next({
 		ctx: {
-			user: ctx.user,
-		},
+			user: ctx.user
+		}
 	});
 });
 

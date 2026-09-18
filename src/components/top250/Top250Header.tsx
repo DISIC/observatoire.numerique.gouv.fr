@@ -6,7 +6,11 @@ import { LightSelect } from '../generic/LightSelect';
 import Button from '@codegouvfr/react-dsfr/Button';
 import assert from 'assert';
 import { tss } from 'tss-react';
-import { useAdministrations, useAdministrationsCentral, useDepartments } from '@/utils/api';
+import {
+	useAdministrations,
+	useAdministrationsCentral,
+	useDepartments
+} from '@/utils/api';
 
 type Props = {
 	title: string;
@@ -76,12 +80,14 @@ export function Top250Header(props: Props) {
 		}))
 	];
 
-	const [administrationCentral, setAdministrationCentral] = useState<string>('');
+	const [administrationCentral, setAdministrationCentral] =
+		useState<string>('');
 	const [department, setDepartment] = useState<string>('');
 	const [administration, setAdministration] = useState<string>('');
 	const [search, setSearch] = useState<string>('');
 
-	const hasAdministrationCentral = !!administrationCentral && administrationCentral !== 'all';
+	const hasAdministrationCentral =
+		!!administrationCentral && administrationCentral !== 'all';
 	const hasDepartment = !!department && department !== 'all';
 	const hasAdministration = !!administration && administration !== 'all';
 

@@ -38,10 +38,10 @@ export function ProceduresTable(props: Props) {
 	const allIndicators = procdeureHeadersRequest?.data || [];
 	const indicators = version
 		? allIndicators.filter(i =>
-			i.versions?.some(v =>
-				typeof v === 'string' ? false : v.number === version
-			)
-		)
+				i.versions?.some(v =>
+					typeof v === 'string' ? false : v.number === version
+				)
+		  )
 		: allIndicators;
 
 	const hideScrollHelper = indicators.length <= 6;
@@ -150,13 +150,13 @@ export function ProceduresTable(props: Props) {
 		const scrollLeftPosition =
 			_userViewportAvailable < 1400
 				? getClosestColScrollPosition(_containerWidth - _arrowSlideSize) +
-				scrollRef.current.scrollLeft -
-				_firstColSize -
-				20
+				  scrollRef.current.scrollLeft -
+				  _firstColSize -
+				  20
 				: _containerWidth -
-				_firstColSize -
-				_arrowSlideSize +
-				scrollRef.current.scrollLeft;
+				  _firstColSize -
+				  _arrowSlideSize +
+				  scrollRef.current.scrollLeft;
 
 		const scrollLeft = tmpIsRight ? scrollLeftPosition : 0;
 
@@ -328,21 +328,21 @@ const useStyles = tss
 							},
 							...(hideScrollHelper
 								? {
-									['&:last-child']: {
-										borderTopRightRadius: _thRadius
-									}
-								}
-								: {
-									['&:last-child']: {
-										position: 'sticky',
-										right: 0,
-										zIndex: 11,
-										width: `${_arrowSlideSize}px !important`,
-										['& > div']: {
+										['&:last-child']: {
 											borderTopRightRadius: _thRadius
 										}
-									}
-								})
+								  }
+								: {
+										['&:last-child']: {
+											position: 'sticky',
+											right: 0,
+											zIndex: 11,
+											width: `${_arrowSlideSize}px !important`,
+											['& > div']: {
+												borderTopRightRadius: _thRadius
+											}
+										}
+								  })
 						},
 						['&.sticked-row']: {
 							overflowX: 'scroll',
@@ -363,7 +363,8 @@ const useStyles = tss
 								borderTopLeftRadius: 0
 							},
 							['th:nth-of-type(n + 2)']: {
-								minWidth: (_containerWidth - _firstColSize - _arrowSlideSize) / 6
+								minWidth:
+									(_containerWidth - _firstColSize - _arrowSlideSize) / 6
 							},
 							['th:last-child']: {
 								minWidth: _arrowSlideSize
@@ -413,7 +414,8 @@ const useStyles = tss
 						zIndex: 9,
 						left: 0,
 						width: _firstColSize,
-						backgroundColor: fr.colors.decisions.background.contrast.info.default,
+						backgroundColor:
+							fr.colors.decisions.background.contrast.info.default,
 						padding: 0,
 						border: 'none',
 						borderRight: `2px solid ${fr.colors.decisions.background.contrast.info.default}`,
@@ -435,7 +437,8 @@ const useStyles = tss
 						}
 					},
 					td: {
-						backgroundColor: fr.colors.decisions.background.default.grey.default,
+						backgroundColor:
+							fr.colors.decisions.background.default.grey.default,
 						border: '1px solid transparent',
 						position: 'relative',
 						textAlign: 'center',
@@ -508,7 +511,7 @@ const useStyles = tss
 				border: 'none !important',
 				backgroundColor: 'transparent !important',
 				position: 'sticky !important' as 'sticky',
-				left: 0,
+				left: 0
 			},
 			tabsWrapper: {
 				marginLeft: _firstColSize,

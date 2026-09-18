@@ -17,12 +17,13 @@ export async function login(_: any, formData: FormData) {
 				email: formData.get('email') as string,
 				password: formData.get('password') as string
 			},
-			context: process.env.NODE_ENV === 'development'
-				? {}
-				: {
-					totp: formData.get('totp'),
-					totpSecret: formData.get('totpSecret')
-				}
+			context:
+				process.env.NODE_ENV === 'development'
+					? {}
+					: {
+							totp: formData.get('totp'),
+							totpSecret: formData.get('totpSecret')
+					  }
 		};
 
 		const user = await payload.login(loginData);

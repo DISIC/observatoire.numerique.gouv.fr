@@ -22,7 +22,7 @@ const helpTask = async (payload: BasePayload) => {
 			},
 			criterias: {
 				title: "Critères d'entrée des services",
-				wysiwyg: criteriasWysiwygContent as any, // TODO: Fix this type when payload update
+				wysiwyg: criteriasWysiwygContent as any // TODO: Fix this type when payload update
 			},
 			indicators: {
 				title: 'Indicateurs de qualité',

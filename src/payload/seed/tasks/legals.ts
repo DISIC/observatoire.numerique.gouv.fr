@@ -10,26 +10,27 @@ const legalsTask = async (payload: BasePayload) => {
 	await payload.updateGlobal({
 		slug: 'legals',
 		data: {
-			"legal-a11y": {
-				title: "Accessibilité",
-				wysiwyg: legalsA11yWysiwygContent as any,
+			'legal-a11y': {
+				title: 'Accessibilité',
+				wysiwyg: legalsA11yWysiwygContent as any
 			},
-			"legal-mentions": {
+			'legal-mentions': {
 				title: 'Mentions légales de Vos Démarches Essentielles',
-				wysiwyg: legalsMentionsWysiwygContent as any,
+				wysiwyg: legalsMentionsWysiwygContent as any
 			},
-			"legal-pc": {
+			'legal-pc': {
 				title: 'Politique de confidentialité de Vos Démarches Essentielles',
-				wysiwyg: legalsPcWysiwygContent as any,
+				wysiwyg: legalsPcWysiwygContent as any
 			},
-			"legal-terms": {
+			'legal-terms': {
 				title: "Modalités d'utilisation de Vos Démarches Essentielles",
-				wysiwyg: legalsTermsWysiwygContent as any,
+				wysiwyg: legalsTermsWysiwygContent as any
 			},
-			"legal-contact": {
-				title: "Nous contacter",
-				description: "Vous pouvez nous contacter à l'adresse e-mail suivante : observatoire@design.numerique.gouv.fr"
-			},
+			'legal-contact': {
+				title: 'Nous contacter',
+				description:
+					"Vous pouvez nous contacter à l'adresse e-mail suivante : observatoire@design.numerique.gouv.fr"
+			}
 		}
 	});
 

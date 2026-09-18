@@ -27,7 +27,9 @@ export default async function handler(
 ) {
 	if (req.method === 'GET') {
 		const { editionId } = req.query;
-		const administrations = await getAdministrations(editionId as string | undefined);
+		const administrations = await getAdministrations(
+			editionId as string | undefined
+		);
 		res.status(200).json(administrations);
 	} else {
 		res.status(400).json({ message: 'Unsupported method' });
