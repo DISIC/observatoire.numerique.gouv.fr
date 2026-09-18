@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, Edition } from '@prisma/client';
-import { desufligyText, verifyAuth } from '@/utils/tools';
+import { desufligyText, isValidObjectId, verifyAuth } from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -82,20 +82,30 @@ export default async function handler(
 
 	if (req.method === 'GET') {
 		const { id, kind } = req.query;
-		if (id) {
-			if (id === 'current') {
-				const edition = await getCurrentEdition();
+		try {
+			if (id !== undefined) {
+				if (typeof id !== 'string') {
+					return res.status(400).json({ message: 'Invalid id' });
+				}
+				if (id === 'current') {
+					const edition = await getCurrentEdition();
+					return res.status(200).json(edition);
+				}
+				if (kind === 'id') {
+					if (!isValidObjectId(id)) {
+						return res.status(400).json({ message: 'Invalid id' });
+					}
+					const edition = await getEditionById(id);
+					return res.status(200).json(edition);
+				}
+				const edition = await getEditionBySlug(id);
 				return res.status(200).json(edition);
-			} else if (kind === 'id') {
-				const edition = await getEditionById(id.toString());
-				res.status(200).json(edition);
-			} else {
-				const edition = await getEditionBySlug(id.toString());
-				res.status(200).json(edition);
 			}
-		} else {
 			const editions = await getEditions();
-			res.status(200).json(editions);
+			return res.status(200).json(editions);
+		} catch (err) {
+			console.error('GET /api/editions failed:', err);
+			return res.status(500).json({ message: 'Internal error' });
 		}
 	} else if (req.method === 'POST') {
 		const data = JSON.parse(req.body);

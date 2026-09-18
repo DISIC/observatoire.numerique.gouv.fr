@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { isValidObjectId } from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -25,13 +26,22 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.method === 'GET') {
-		const { editionId } = req.query;
+	if (req.method !== 'GET') {
+		return res.status(400).json({ message: 'Unsupported method' });
+	}
+
+	const { editionId } = req.query;
+	if (editionId !== undefined && !isValidObjectId(editionId)) {
+		return res.status(400).json({ message: 'Invalid editionId' });
+	}
+
+	try {
 		const administrations = await getAdministrations(
-			editionId as string | undefined
+			typeof editionId === 'string' ? editionId : undefined
 		);
-		res.status(200).json(administrations);
-	} else {
-		res.status(400).json({ message: 'Unsupported method' });
+		return res.status(200).json(administrations);
+	} catch (err) {
+		console.error('GET /api/administrations failed:', err);
+		return res.status(500).json({ message: 'Internal error' });
 	}
 }

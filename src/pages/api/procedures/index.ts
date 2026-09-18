@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
-import { verifyAuth } from '@/utils/tools';
+import { isValidObjectId, parseProcedureSort, verifyAuth } from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -45,16 +45,14 @@ export async function getProcedures(
 			{ administration: { contains: search, mode: 'insensitive' } }
 		];
 
-	let orderBy: any = [{ volume: 'desc' }];
+	let orderBy: Prisma.ProcedureOrderByWithRelationInput[] = [
+		{ volume: 'desc' }
+	];
 
 	if (sort) {
-		const values = sort.split(':');
-		if (values.length === 2) {
-			orderBy = [
-				{
-					[values[0]]: values[1]
-				}
-			];
+		const parsed = parseProcedureSort(sort);
+		if (parsed) {
+			orderBy = [{ [parsed.field]: parsed.direction }];
 		}
 	}
 
@@ -120,19 +118,31 @@ export default async function handler(
 			administration,
 			administration_central
 		} = req.query;
-		if (id) {
-			const procedure = await getProcedureById(id.toString());
-			res.status(200).json(procedure);
-		} else {
+		try {
+			if (id !== undefined) {
+				if (!isValidObjectId(id)) {
+					return res.status(400).json({ message: 'Invalid id' });
+				}
+				const procedure = await getProcedureById(id);
+				return res.status(200).json(procedure);
+			}
+			if (editionId !== undefined && !isValidObjectId(editionId)) {
+				return res.status(400).json({ message: 'Invalid editionId' });
+			}
 			const procedures = await getProcedures(
-				editionId as string,
-				search as string,
-				sort as string,
-				department as string,
-				administration as string,
-				administration_central as string
+				editionId as string | undefined,
+				typeof search === 'string' ? search : undefined,
+				typeof sort === 'string' ? sort : undefined,
+				typeof department === 'string' ? department : undefined,
+				typeof administration === 'string' ? administration : undefined,
+				typeof administration_central === 'string'
+					? administration_central
+					: undefined
 			);
-			res.status(200).json(procedures);
+			return res.status(200).json(procedures);
+		} catch (err) {
+			console.error('GET /api/procedures failed:', err);
+			return res.status(500).json({ message: 'Internal error' });
 		}
 	} else if (req.method === 'POST') {
 		const { fields, id, ...rest } = JSON.parse(req.body);
