@@ -71,13 +71,48 @@ export function ProcedureMobileCard(props: Props) {
 			}}
 		>
 			<div className={cx(classes.mainInfos)}>
-				<h3 className={fr.cx('fr-text--sm', 'fr-mb-0')}><a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/procedure/${procedure.id}`} title={`${procedure.title}, nouvelle fenêtre`}>{procedure.title}</a></h3>
+				<h3 className={fr.cx('fr-text--sm', 'fr-mb-0')}>
+					<a
+						className={fr.cx('fr-link', 'fr-text--sm')}
+						target="_blank"
+						rel="noopener noreferrer"
+						href={`/data-viz/procedure/${procedure.id}`}
+						title={`${procedure.title}, nouvelle fenêtre`}
+					>
+						{procedure.title}
+					</a>
+				</h3>
 				<div className={fr.cx('fr-text--xs', 'fr-mb-0')}>
 					{procedure.administration_central && (
-						<div>Domaine :{' '}<a className={fr.cx('fr-link', 'fr-text--xs')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration_central/${stringToBase64Url(procedure.administration_central)}`} title={`${procedure.administration_central}, nouvelle fenêtre`}>{procedure.administration_central}</a></div>
+						<div>
+							Domaine :{' '}
+							<a
+								className={fr.cx('fr-link', 'fr-text--xs')}
+								target="_blank"
+								rel="noopener noreferrer"
+								href={`/data-viz/administration_central/${stringToBase64Url(
+									procedure.administration_central
+								)}`}
+								title={`${procedure.administration_central}, nouvelle fenêtre`}
+							>
+								{procedure.administration_central}
+							</a>
+						</div>
 					)}
-					<div>Administration :{' '}<a className={fr.cx('fr-link', 'fr-text--xs')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration/${stringToBase64Url(procedure.administration)}`} title={`${procedure.administration}, nouvelle fenêtre`}>{procedure.administration}</a></div>
-
+					<div>
+						Administration :{' '}
+						<a
+							className={fr.cx('fr-link', 'fr-text--xs')}
+							target="_blank"
+							rel="noopener noreferrer"
+							href={`/data-viz/administration/${stringToBase64Url(
+								procedure.administration
+							)}`}
+							title={`${procedure.administration}, nouvelle fenêtre`}
+						>
+							{procedure.administration}
+						</a>
+					</div>
 				</div>
 			</div>
 			<hr className={fr.cx('fr-pb-1v', 'fr-mt-3v')} />

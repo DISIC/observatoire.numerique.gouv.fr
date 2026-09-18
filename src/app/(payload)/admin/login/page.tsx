@@ -2,6 +2,7 @@
 
 import { checkOTP, login } from '@/app/(payload)/admin/actions/login';
 import encodeQR from '@paulmillr/qr';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import * as OTPAuth from 'otpauth';
 import { startTransition, useActionState, useEffect, useState } from 'react';
@@ -80,9 +81,9 @@ const LoginForm = ({
 			</div>
 		</div>
 
-		<a href="/admin/forgot" className="mt-4 block">
+		<Link href="/admin/forgot" className="mt-4 block">
 			Mot de passe oublié?
-		</a>
+		</Link>
 		<div className="form-submit mt-6">
 			<button
 				type="submit"
@@ -116,7 +117,7 @@ const OTPForm = ({
 				<div className="field-type text mt-4" style={{ flex: '1 1 auto' }}>
 					<label className="field-label" style={{ textAlign: 'center' }}>
 						Première connexion, veuillez scanner le QR (par exemple via
-						l'application Google Authenticator)
+						l&apos;application Google Authenticator)
 					</label>
 					<div
 						style={{
@@ -133,7 +134,7 @@ const OTPForm = ({
 						style={{ textAlign: 'center', marginBottom: 20 }}
 					>
 						Une fois le QR code scanné, entrez le code temporaire affiché sur
-						l'application
+						l&apos;application
 					</p>
 				</div>
 			)}
@@ -195,7 +196,11 @@ const LoginPage = () => {
 		if (stateLogin.success) {
 			redirect('/admin');
 		} else if (stateLogin.error) {
-			toast.error(process.env.NODE_ENV === 'development' ? 'Identifiants invalides' : 'Mot de passe ou code temporaire invalide');
+			toast.error(
+				process.env.NODE_ENV === 'development'
+					? 'Identifiants invalides'
+					: 'Mot de passe ou code temporaire invalide'
+			);
 			setShowOTP(false);
 		}
 	}, [stateLogin]);

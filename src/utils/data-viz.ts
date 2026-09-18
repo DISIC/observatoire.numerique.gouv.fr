@@ -210,71 +210,83 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 	const procedures = await prisma.procedure.findMany({
 		where: {
 			editionId: editionId
+		},
+		select: {
+			id: true,
+			title: true
 		}
 	});
+
+	// Single aggregation across every procedure of the edition instead of one
+	// groupBy per procedure (former N+1 that saturated the Mongo CPU).
+	const groupedFields = await prisma.field.groupBy({
+		by: ['procedureId', 'slug', 'goalReached', 'color'],
+		where: {
+			slug: {
+				in: [...validIndicatorSlugs]
+			},
+			procedureId: {
+				in: procedures.map(procedure => procedure.id)
+			},
+			goalReached: {
+				not: null
+			}
+		},
+		_count: true
+	});
+
+	const fieldsByProcedure = new Map<string, typeof groupedFields>();
+	for (const field of groupedFields) {
+		const bucket = fieldsByProcedure.get(field.procedureId) ?? [];
+		bucket.push(field);
+		fieldsByProcedure.set(field.procedureId, bucket);
+	}
 
 	const results: {
 		title: string;
 		data: { slug: string; goalReached: boolean | null }[];
-	}[] = await Promise.all(
-		procedures.map(async procedure => {
-			const fields = await prisma.field.groupBy({
-				by: ['slug', 'goalReached', 'color'],
-				where: {
-					slug: {
-						in: [...validIndicatorSlugs]
-					},
-					procedureId: procedure.id,
-					goalReached: {
-						not: null
-					}
-				},
-				orderBy: {
-					slug: 'asc'
-				},
-				_count: true
-			});
+	}[] = procedures.map(procedure => {
+		const fields = fieldsByProcedure.get(procedure.id) ?? [];
 
-			const indicators = validIndicators.map(indicator => ({
-				goalReached: null as boolean | null,
-				slug: indicator.slug
-			}));
+		const indicators = validIndicators.map(indicator => ({
+			goalReached: null as boolean | null,
+			slug: indicator.slug
+		}));
 
-			for (const slug of validIndicatorSlugs) {
-				const fieldData = fields.filter(
-					fieldData => fieldData.slug === slug && fieldData.color !== 'gray'
-				);
-				let countReached = 0;
-				let countNotReached = 0;
+		for (const slug of validIndicatorSlugs) {
+			const fieldData = fields.filter(
+				fieldData => fieldData.slug === slug && fieldData.color !== 'gray'
+			);
+			let countReached = 0;
+			let countNotReached = 0;
 
-				if (fieldData.length > 0) {
-					const reachedData = fieldData.filter(f => f.goalReached);
-					const notReachedData = fieldData.filter(f => !f.goalReached);
+			if (fieldData.length > 0) {
+				const reachedData = fieldData.filter(f => f.goalReached);
+				const notReachedData = fieldData.filter(f => !f.goalReached);
 
-					countReached = reachedData
-						? reachedData.reduce((sum, f) => sum + f._count, 0)
-						: 0;
-					countNotReached = notReachedData
-						? notReachedData.reduce((sum, f) => sum + f._count, 0)
-						: 0;
+				countReached = reachedData
+					? reachedData.reduce((sum, f) => sum + f._count, 0)
+					: 0;
+				countNotReached = notReachedData
+					? notReachedData.reduce((sum, f) => sum + f._count, 0)
+					: 0;
 
-					const totalCount = countReached + countNotReached;
+				const totalCount = countReached + countNotReached;
 
-					const score =
-						totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
+				const score =
+					totalCount > 0 ? Math.round((countReached / totalCount) * 100) : 0;
 
-					indicators[
-						indicators.findIndex(indicator => indicator.slug === slug)
-					].goalReached = score >= 80;
-				}
+				indicators[
+					indicators.findIndex(indicator => indicator.slug === slug)
+				].goalReached = score >= 80;
 			}
+		}
 
-			return {
-				title: procedure.title,
-				data: indicators
-			};
-		})
-	);
+		return {
+			title: procedure.title,
+			data: indicators
+		};
+	});
 
 	return results;
 }

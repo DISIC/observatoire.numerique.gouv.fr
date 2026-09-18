@@ -55,15 +55,46 @@ function ProcedureRowInner(props: Props) {
 			<tr id={`procedure-table-row-${index}`}>
 				<th scope="row">
 					<div>
-						<a className={fr.cx('fr-link')} target="_blank" rel="noopener noreferrer" href={`/data-viz/procedure/${p.id}`} title={`${p.title}, nouvelle fenêtre`}>{p.title}</a>
-						<br /><br />
+						<a
+							className={fr.cx('fr-link')}
+							target="_blank"
+							rel="noopener noreferrer"
+							href={`/data-viz/procedure/${p.id}`}
+							title={`${p.title}, nouvelle fenêtre`}
+						>
+							{p.title}
+						</a>
+						<br />
+						<br />
 						{p.administration_central && (
-							<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>Domaine :{' '}
-								<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration_central/${stringToBase64Url(p.administration_central)}`} title={`${p.administration_central}, nouvelle fenêtre`}>{p.administration_central}</a>
+							<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>
+								Domaine :{' '}
+								<a
+									className={fr.cx('fr-link', 'fr-text--sm')}
+									target="_blank"
+									rel="noopener noreferrer"
+									href={`/data-viz/administration_central/${stringToBase64Url(
+										p.administration_central
+									)}`}
+									title={`${p.administration_central}, nouvelle fenêtre`}
+								>
+									{p.administration_central}
+								</a>
 							</div>
 						)}
-						<div className={fr.cx('fr-text--sm', "fr-mb-0")}>
-							Administration :{' '}<a className={fr.cx('fr-link', 'fr-text--sm')} target="_blank" rel="noopener noreferrer" href={`/data-viz/administration/${stringToBase64Url(p.administration)}`} title={`${p.administration}, nouvelle fenêtre`}>{p.administration}</a>
+						<div className={fr.cx('fr-text--sm', 'fr-mb-0')}>
+							Administration :{' '}
+							<a
+								className={fr.cx('fr-link', 'fr-text--sm')}
+								target="_blank"
+								rel="noopener noreferrer"
+								href={`/data-viz/administration/${stringToBase64Url(
+									p.administration
+								)}`}
+								title={`${p.administration}, nouvelle fenêtre`}
+							>
+								{p.administration}
+							</a>
 						</div>
 					</div>
 				</th>

@@ -10,9 +10,7 @@ const LegalNotice = () => {
 		trpc.cms.legals.useQuery();
 	const legalsTexts = legalsCMS?.data;
 
-	if (
-		isLoadingLegalsCMS
-	) {
+	if (isLoadingLegalsCMS) {
 		return (
 			<EmptyScreenZone>
 				<Loader loadingMessage="Chargement du contenu en cours..." />
@@ -49,7 +47,9 @@ const LegalNotice = () => {
 							{legalsTexts?.['legal-mentions'].title}
 						</h1>
 						{legalsTexts?.['legal-mentions'].wysiwyg_html && (
-							<WysiwygInterpretor wysiwyg_html={legalsTexts?.['legal-mentions'].wysiwyg_html} />
+							<WysiwygInterpretor
+								wysiwyg_html={legalsTexts?.['legal-mentions'].wysiwyg_html}
+							/>
 						)}
 					</div>
 				</div>

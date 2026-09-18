@@ -85,6 +85,10 @@ export const Tabs = memo(
 			explicitlyProvidedId: id_props
 		});
 
+		// Appelé inconditionnellement : les hooks doivent garder le même ordre à
+		// chaque rendu. Seule son utilisation est conditionnée à `id_props`.
+		const generatedId = useId();
+
 		const selectedTabIndex = useMemo(() => {
 			const index = tabs.findIndex(tab =>
 				'content' in tab ? tab.isDefault ?? false : tab.tabId === selectedTabId
@@ -133,8 +137,8 @@ export const Tabs = memo(
 			}
 		};
 
-		const { getPanelId, getTabId } = (function useClosure() {
-			const id = id_props ?? useId();
+		const { getPanelId, getTabId } = (function buildIdGetters() {
+			const id = id_props ?? generatedId;
 
 			const getPanelId = (tabIndex: number) =>
 				`tabpanel-${id}-${tabIndex}-panel`;

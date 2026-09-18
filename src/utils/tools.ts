@@ -36,7 +36,10 @@ export const PROCEDURE_SORT_FIELDS = [
 
 export const parseProcedureSort = (
 	value: unknown
-): { field: (typeof PROCEDURE_SORT_FIELDS)[number]; direction: 'asc' | 'desc' } | null => {
+): {
+	field: (typeof PROCEDURE_SORT_FIELDS)[number];
+	direction: 'asc' | 'desc';
+} | null => {
 	if (typeof value !== 'string') return null;
 	const [field, direction] = value.split(':');
 	if (

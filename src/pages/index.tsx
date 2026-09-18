@@ -42,6 +42,7 @@ export default function Home() {
 			/>
 			{homeTexts.redirections.textsWithImages.map((textWithImage, index) => (
 				<TextWithImage
+					key={index}
 					{...textWithImage}
 					blueBackground={index % 2 !== 0}
 					imageRight={index % 2 !== 0}

@@ -99,14 +99,15 @@ export function ColumnHeaderDefinition(props: Props) {
 							className: cx(
 								classes.sortButton,
 								currentSort?.slug === slug &&
-								currentSort?.direction === 'desc' &&
-								classes.sortButtonActive
+									currentSort?.direction === 'desc' &&
+									classes.sortButtonActive
 							)
 						}}
 					>
 						<i className={cx(fr.cx('ri-arrow-down-line'), classes.sortIcon)} />
 						<span className={fr.cx('fr-sr-only')}>
-							Trier les démarches par rapport à la valeur de "{text}" de manière descendante
+							Trier les démarches par rapport à la valeur de &quot;{text}&quot;
+							de manière descendante
 						</span>
 					</Button>
 					<Button
@@ -122,14 +123,15 @@ export function ColumnHeaderDefinition(props: Props) {
 							className: cx(
 								classes.sortButton,
 								currentSort?.slug === slug &&
-								currentSort?.direction === 'asc' &&
-								classes.sortButtonActive
+									currentSort?.direction === 'asc' &&
+									classes.sortButtonActive
 							)
 						}}
 					>
 						<i className={cx(fr.cx('ri-arrow-up-line'), classes.sortIcon)} />
 						<span className={fr.cx('fr-sr-only')}>
-							Trier les démarches par rapport à la valeur de "{text}" de manière ascendante
+							Trier les démarches par rapport à la valeur de &quot;{text}&quot;
+							de manière ascendante
 						</span>
 					</Button>
 				</div>

@@ -6,7 +6,6 @@ import { tss } from 'tss-react';
 import ReactMarkdown from 'react-markdown';
 import WysiwygInterpretor from '@/components/generic/WysiwygInterpretor';
 
-
 type Props = {
 	indicator: PayloadIndicator;
 	isFull?: boolean;
@@ -75,13 +74,13 @@ const useStyles = tss.withName(IndicatorContent.name).create(() => ({
 		},
 		'p, ul': {
 			fontSize: '14px'
-		},
+		}
 	},
 	description: {
 		fontSize: '14px',
 		marginBottom: fr.spacing('4v'),
 		ul: {
-			paddingLeft: fr.spacing('5v'),
+			paddingLeft: fr.spacing('5v')
 		}
 	},
 	label: {
@@ -111,7 +110,7 @@ const useStyles = tss.withName(IndicatorContent.name).create(() => ({
 		},
 		ul: {
 			marginTop: 0,
-			marginLeft: fr.spacing('2v'),
+			marginLeft: fr.spacing('2v')
 		}
 	},
 	moreInfosBlue: {
