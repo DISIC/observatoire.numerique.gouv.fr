@@ -110,7 +110,6 @@ const IndicatorTabContent = ({
 								}
 								showCrossScorePerimeter={showCrossScorePerimeter}
 								isReversed={data.indicator?.slug === 'dlnuf'}
-								title={title}
 							/>
 						)}
 					</div>

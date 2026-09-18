@@ -18,7 +18,6 @@ type ComposedChartCustomProps = {
 	ticks?: (number | string)[];
 	areas?: (DataLevel & { threshold: number })[];
 	isReversed?: boolean;
-	title?: string;
 };
 
 const ComposedChartCustom = ({
@@ -26,8 +25,7 @@ const ComposedChartCustom = ({
 	showCrossScorePerimeter,
 	ticks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 	areas,
-	isReversed,
-	title
+	isReversed
 }: ComposedChartCustomProps) => {
 	const formattedData = data.map(item => {
 		const values = item.values.map(value => ({
@@ -111,6 +109,28 @@ const ComposedChartCustom = ({
 					align="left"
 					iconType="circle"
 					wrapperStyle={{ paddingBottom: 20, left: 10 }}
+					// Les deux <Line> partagent dataKey="score" (l'une pointillée pour
+					// relier les trous, l'autre pleine pour les points). Recharts ne
+					// filtre pas legendType="none", d'où une entrée fantôme "score" en
+					// plus. On décrit donc la légende explicitement.
+					payload={[
+						{
+							value: 'Score',
+							type: 'circle' as const,
+							id: 'score',
+							color: fr.colors.decisions.artwork.minor.blueFrance.default
+						},
+						...(showCrossScorePerimeter
+							? [
+									{
+										value: "Moyenne de l'observatoire",
+										type: 'circle' as const,
+										id: 'cross',
+										color: 'black'
+									}
+							  ]
+							: [])
+					]}
 					formatter={value => (
 						<span
 							style={{
@@ -141,7 +161,7 @@ const ComposedChartCustom = ({
 						fill: fr.colors.decisions.artwork.minor.blueFrance.default
 					}}
 					dataKey="score"
-					name={title}
+					name="Score"
 					strokeWidth={1.5}
 					stroke={fr.colors.decisions.artwork.minor.blueFrance.default}
 				/>
