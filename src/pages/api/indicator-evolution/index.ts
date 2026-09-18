@@ -10,6 +10,8 @@ import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ProcedureKind } from '../indicator-scores';
 
+const prisma = new PrismaClient();
+
 export type EvolutionViewType = 'year' | 'edition';
 
 export type GetIndicatorEvolutionProps = {
@@ -55,7 +57,6 @@ export async function getIndicatorEvolution({
 }: GetIndicatorEvolutionProps): Promise<IndicatorEvolutionResponse | null> {
 	if (view !== 'year' && view !== 'edition') return null;
 
-	const prisma = new PrismaClient();
 	const payload = await getPayloadClient({ seed: false });
 
 	const validIndicator = (
