@@ -31,7 +31,9 @@ const DataViz = ({ id }: { id: string }) => {
 	return (
 		<>
 			<Head>
-				<title>Synthèse - {procedure?.title} - Vos démarches essentielles</title>
+				<title>
+					Synthèse - {procedure?.title} - Vos démarches essentielles
+				</title>
 			</Head>
 			<div className={cx(classes.root)}>
 				<div className={fr.cx('fr-container', 'fr-pt-6v')}>

@@ -76,7 +76,7 @@ const OTPForm = memo(
 				<div className="fr-my-4">
 					<p className="fr-text--sm fr-mb-2">
 						Pour votre première connexion, scannez ce QR code avec votre
-						application d'authentification puis entrez le code.
+						application d&apos;authentification puis entrez le code.
 					</p>
 					<div
 						style={{

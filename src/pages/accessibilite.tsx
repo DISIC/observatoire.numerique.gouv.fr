@@ -11,9 +11,7 @@ const Accessibility = () => {
 		trpc.cms.legals.useQuery();
 	const legalsTexts = legalsCMS?.data;
 
-	if (
-		isLoadingLegalsCMS
-	) {
+	if (isLoadingLegalsCMS) {
 		return (
 			<EmptyScreenZone>
 				<Loader loadingMessage="Chargement du contenu en cours..." />
@@ -51,7 +49,9 @@ const Accessibility = () => {
 							{legalsTexts?.['legal-a11y'].title}
 						</h1>
 						{legalsTexts?.['legal-a11y'].wysiwyg_html && (
-							<WysiwygInterpretor wysiwyg_html={legalsTexts?.['legal-a11y'].wysiwyg_html} />
+							<WysiwygInterpretor
+								wysiwyg_html={legalsTexts?.['legal-a11y'].wysiwyg_html}
+							/>
 						)}
 					</div>
 				</div>

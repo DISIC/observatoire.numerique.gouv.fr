@@ -16,7 +16,7 @@ import {
 } from 'recharts';
 import { tss } from 'tss-react';
 
-const renderLegend = (props: any) => {
+const LegendContent = (props: any) => {
 	const { payload } = props;
 
 	const { css } = useStyles();
@@ -204,7 +204,7 @@ const CustomBarChart = ({ data, dataKeys, chartRef }: BarChartProps) => {
 					fontSize="0.75rem"
 				/>
 				<Tooltip cursor={false} content={<CustomTooltip />} />
-				<Legend verticalAlign="top" align="left" content={renderLegend} />
+				<Legend verticalAlign="top" align="left" content={LegendContent} />
 				{dataKeys
 					.sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
 					.map((key, index) => {

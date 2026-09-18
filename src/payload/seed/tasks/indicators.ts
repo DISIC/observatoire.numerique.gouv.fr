@@ -34,7 +34,11 @@ const indicatorsTask = async (payload: BasePayload) => {
 	});
 	const v3 = await payload.create({
 		collection: 'payload-versions',
-		data: { name: 'Version 3', number: 3, description: 'Nouvelle version avec indicateurs réduits' }
+		data: {
+			name: 'Version 3',
+			number: 3,
+			description: 'Nouvelle version avec indicateurs réduits'
+		}
 	});
 
 	const allVersionIds = [v2.id, v3.id];

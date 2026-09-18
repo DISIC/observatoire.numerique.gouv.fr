@@ -6,3 +6,7 @@ node_modules
 next-env.d.ts
 next.config.ts
 yarn.lock
+
+# Générés par Payload (`payload generate:types` / build) — réécrits à chaque génération
+src/app/(payload)/admin/importMap.js
+src/payload/payload-types.ts

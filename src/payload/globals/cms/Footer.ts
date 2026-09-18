@@ -12,6 +12,6 @@ export const CMSFooter: GlobalConfig = {
 			label: 'Description du site',
 			type: 'text',
 			required: true
-		},
+		}
 	]
 };

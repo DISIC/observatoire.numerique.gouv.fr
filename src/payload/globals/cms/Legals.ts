@@ -49,12 +49,9 @@ export const CMSLegals: GlobalConfig = {
 					]
 				},
 				{
-					label: "Contact",
+					label: 'Contact',
 					name: 'legal-contact',
-					fields: [
-						standardFields.title,
-						standardFields.description
-					]
+					fields: [standardFields.title, standardFields.description]
 				}
 			]
 		}

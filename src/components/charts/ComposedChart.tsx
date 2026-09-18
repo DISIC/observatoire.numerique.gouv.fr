@@ -41,10 +41,8 @@ const ComposedChartCustom = ({
 
 		return {
 			name: item.name,
-			score:
-				typeof rawScore === 'number' && !isNaN(rawScore) ? rawScore : null,
-			cross:
-				typeof rawCross === 'number' && !isNaN(rawCross) ? rawCross : null,
+			score: typeof rawScore === 'number' && !isNaN(rawScore) ? rawScore : null,
+			cross: typeof rawCross === 'number' && !isNaN(rawCross) ? rawCross : null,
 			values
 		};
 	});
@@ -68,7 +66,7 @@ const ComposedChartCustom = ({
 					</p>
 					{showCrossScorePerimeter && (
 						<p style={{ margin: 0 }}>
-							Moyenne de l'observatoire :{' '}
+							Moyenne de l&apos;observatoire :{' '}
 							<b>{payload[0].payload.values[0].crossValueLabel}</b>
 						</p>
 					)}

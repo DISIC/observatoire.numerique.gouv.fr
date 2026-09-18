@@ -133,7 +133,9 @@ export default function Grist() {
 								label: v.name,
 								value: String(v.number)
 							}))}
-							defaultValue={versionsList.length ? String(versionsList[0].number) : undefined}
+							defaultValue={
+								versionsList.length ? String(versionsList[0].number) : undefined
+							}
 							onChange={v => {
 								setSelectedVersion(Number(v));
 							}}
@@ -193,7 +195,10 @@ export default function Grist() {
 					</div>
 					<div className={cx(classes.tableContainer)}>
 						<div className={fr.cx('fr-container', 'fr-px-5v')}>
-							<Top250TableSection procedures={procedures} version={selectedVersion ?? undefined} />
+							<Top250TableSection
+								procedures={procedures}
+								version={selectedVersion ?? undefined}
+							/>
 						</div>
 						<StickyFooter proceduresCount={procedures.length} isAdmin />
 					</div>
