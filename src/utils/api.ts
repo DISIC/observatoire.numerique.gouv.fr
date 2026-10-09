@@ -152,9 +152,10 @@ export function useDepartments(
 
 export function useAdministrations(editionId: string | undefined) {
 	const { data, error, isLoading } = useSWR(
-		`/api/administrations?editionId=${editionId}`,
+		editionId ? `/api/administrations?editionId=${editionId}` : null,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
+			if (!res.ok) throw new Error(`GET ${input} failed: ${res.status}`);
 			return superJSONParse<string[]>(stringify(await res.json()));
 		}
 	);

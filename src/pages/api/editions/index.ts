@@ -60,12 +60,22 @@ export async function updateEdition(id: string, data: Edition) {
 	return edition;
 }
 
+// Supprime dans l'ordre Field > Procedure > Edition pour ne pas laisser d'orphelins
 export async function deleteEdition(id: string) {
-	const edition = await prisma.edition.delete({
-		where: { id }
+	const procedures = await prisma.procedure.findMany({
+		where: { editionId: id },
+		select: { id: true }
+	});
+	const procedureIds = procedures.map(procedure => procedure.id);
+
+	await prisma.field.deleteMany({
+		where: { procedureId: { in: procedureIds } }
 	});
 	await prisma.procedure.deleteMany({
-		where: { editionId: id }
+		where: { id: { in: procedureIds } }
+	});
+	const edition = await prisma.edition.delete({
+		where: { id }
 	});
 	return edition;
 }
