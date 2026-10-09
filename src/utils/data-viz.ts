@@ -209,7 +209,13 @@ export async function getAllProceduresIndicatorScores(editionId: string) {
 
 	const procedures = await prisma.procedure.findMany({
 		where: {
-			editionId: editionId
+			editionId: editionId,
+			fields: {
+				none: {
+					slug: 'online',
+					label: 'Non'
+				}
+			}
 		},
 		select: {
 			id: true,
