@@ -6,11 +6,21 @@ import {
 	isValidProcedureKind,
 	validIndicatorSlugs
 } from '@/utils/data-viz-client';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ProcedureKind } from '../indicator-scores';
 
 const prisma = new PrismaClient();
+
+// Exclut les démarches hors ligne, comme le calcul des scores (utils/data-viz.ts)
+const onlineProcedureFilter: Prisma.ProcedureWhereInput = {
+	fields: {
+		none: {
+			slug: 'online',
+			label: 'Non'
+		}
+	}
+};
 
 export type EvolutionViewType = 'year' | 'edition';
 
@@ -147,6 +157,7 @@ export async function getIndicatorEvolution({
 			Object.entries(yearEditionIds).map(async ([year, editionIds]) => {
 				const procedures = await prisma.procedure.findMany({
 					where: {
+						...onlineProcedureFilter,
 						editionId: {
 							in: editionIds
 						},
@@ -159,6 +170,7 @@ export async function getIndicatorEvolution({
 
 				const procedureKindElements = await prisma.procedure.findMany({
 					where: {
+						...onlineProcedureFilter,
 						editionId: {
 							in: editionIds
 						},
@@ -295,6 +307,7 @@ export async function getIndicatorEvolution({
 		editions.map(async edition => {
 			const procedures = await prisma.procedure.findMany({
 				where: {
+					...onlineProcedureFilter,
 					editionId: edition.id,
 					[columnKey]: columnValue
 				},
@@ -305,6 +318,7 @@ export async function getIndicatorEvolution({
 
 			const procedureKindElements = await prisma.procedure.findMany({
 				where: {
+					...onlineProcedureFilter,
 					editionId: edition.id,
 					...(kind !== undefined && kindValue !== undefined
 						? { [kind]: kindValue }
