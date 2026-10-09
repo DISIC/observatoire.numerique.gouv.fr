@@ -1,6 +1,7 @@
 import { ProcedureWithFields } from '@/types/procedure';
 import { api } from '@/utils/grist';
 import { z } from 'zod';
+import { Payload } from 'payload';
 import { protectedProcedure, router } from '../trpc';
 import { getFieldsFromGristProcedure, grist_field_names } from './utils';
 
@@ -11,6 +12,50 @@ export type GristEdition = {
 	end_date: string;
 	start_jdma_date: string;
 	end_jdma_date: string;
+};
+
+export const fetchGristProcedures = async (
+	payload: Payload,
+	gristEditionId: number
+): Promise<ProcedureWithFields[]> => {
+	const { docs: indicators } = await payload.find({
+		collection: 'payload-indicators',
+		limit: 1000
+	});
+
+	const gristProcedures = await api.fetchTable(
+		process.env.GRIST_TABLE_PROCEDURES,
+		{ Ref_Edition: [gristEditionId] }
+	);
+
+	const procedures: ProcedureWithFields[] = gristProcedures.map(
+		(gristProcedure: any) => {
+			const title = gristProcedure[grist_field_names.title]
+				.replace(/(?:\uD83D\uDCC4|#)/g, '')
+				.trim();
+
+			return {
+				id: `preview-${gristProcedure[grist_field_names.id]}`,
+				editionId: null,
+				title,
+				title_normalized: title
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, ''),
+				administration: gristProcedure[grist_field_names.administration],
+				administration_central:
+					gristProcedure[grist_field_names.administration_central],
+				sousorg: gristProcedure[grist_field_names.sousorg],
+				ministere: gristProcedure[grist_field_names.ministere],
+				grist_identifier: gristProcedure[grist_field_names.id],
+				jdma_identifier: gristProcedure[grist_field_names.jdma_id],
+				volume: gristProcedure[grist_field_names.volume],
+				noJdma: gristProcedure[grist_field_names.noJdma] !== 'Oui',
+				fields: getFieldsFromGristProcedure(gristProcedure, indicators)
+			};
+		}
+	);
+
+	return procedures.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0));
 };
 
 export const grist = router({
@@ -37,59 +82,8 @@ export const grist = router({
 	getProcedures: protectedProcedure
 		.input(z.object({ edition: z.number() }))
 		.query(async ({ ctx, input }) => {
-			const { docs: indicators } = await ctx.payload.find({
-				collection: 'payload-indicators',
-				limit: 1000
-			});
+			const procedures = await fetchGristProcedures(ctx.payload, input.edition);
 
-			const { edition } = input;
-
-			const gristProcedures = await api.fetchTable(
-				process.env.GRIST_TABLE_PROCEDURES,
-				{ Ref_Edition: [edition] }
-			);
-
-			const gristAdministrationCentral = await api.fetchTable(
-				process.env.GRIST_TABLE_ADMINISTRATIONS_CENTRAL
-			);
-
-			const gristAdministrationCentralMap = gristAdministrationCentral.reduce(
-				(acc: Record<number, string>, administrationCentral: any) => {
-					acc[administrationCentral['id']] = administrationCentral['Perimetre'];
-					return acc;
-				},
-				{}
-			);
-
-			const procedures: ProcedureWithFields[] = gristProcedures.map(
-				(gristProcedure: any) => {
-					const title = gristProcedure[grist_field_names.title]
-						.replace(/(?:\uD83D\uDCC4|#)/g, '')
-						.trim();
-
-					return {
-						id: `preview-${gristProcedure[grist_field_names.id]}`,
-						editionId: null,
-						title,
-						title_normalized: title
-							.normalize('NFD')
-							.replace(/[\u0300-\u036f]/g, ''),
-						administration: gristProcedure[grist_field_names.administration],
-						administration_central:
-							gristProcedure[grist_field_names.administration_central],
-						sousorg: gristProcedure[grist_field_names.sousorg],
-						ministere: gristProcedure[grist_field_names.ministere],
-						grist_identifier: gristProcedure[grist_field_names.id],
-						jdma_identifier: gristProcedure[grist_field_names.jdma_id],
-						volume: gristProcedure[grist_field_names.volume],
-						noJdma: gristProcedure[grist_field_names.noJdma] !== 'Oui',
-						fields: getFieldsFromGristProcedure(gristProcedure, indicators)
-					};
-				}
-			);
-
-			return {
-				data: procedures.sort((a, b) => (b.volume ?? 0) - (a.volume ?? 0))
-			};
+			return { data: procedures };
 		})
 });
