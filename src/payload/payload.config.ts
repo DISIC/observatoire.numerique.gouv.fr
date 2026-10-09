@@ -17,6 +17,17 @@ import { CMSFooter } from './globals/cms/Footer';
 import IndicatorLevels from './collections/IndicatorLevels';
 import { Versions } from './collections/Versions';
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer';
+import type SMTPTransport from 'nodemailer/lib/smtp-transport';
+
+// Typé en options SMTP transport : depuis nodemailer 10, `auth` n'est plus dans SMTPConnection.Options
+const transportOptions: SMTPTransport.Options = {
+	host: process.env.NODEMAILER_HOST,
+	port: process.env.NODEMAILER_PORT ?? 587,
+	auth: {
+		user: process.env.NODEMAILER_USER || process.env.MAILPACE_API_KEY,
+		pass: process.env.NODEMAILER_PASSWORD || process.env.MAILPACE_API_KEY
+	}
+};
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -43,14 +54,7 @@ export default buildConfig({
 		defaultFromAddress:
 			process.env.NODEMAILER_FROM ?? 'noreply@observatoire.numerique.gouv.fr',
 		defaultFromName: 'Vos démarches ensentielles',
-		transportOptions: {
-			host: process.env.NODEMAILER_HOST,
-			port: process.env.NODEMAILER_PORT ?? 587,
-			auth: {
-				user: process.env.NODEMAILER_USER || process.env.MAILPACE_API_KEY,
-				pass: process.env.NODEMAILER_PASSWORD || process.env.MAILPACE_API_KEY
-			}
-		}
+		transportOptions
 	}),
 	plugins: [
 		s3Storage({
