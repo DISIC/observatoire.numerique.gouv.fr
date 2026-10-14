@@ -16,6 +16,13 @@ export const Admins: CollectionConfig = {
 			name: 'totpSecret',
 			type: 'text',
 			label: 'Secret TOTP',
+			// Jamais exposé ni modifiable via REST/GraphQL : seul le Local API
+			// (overrideAccess) le lit et l'écrit, dans le hook beforeLogin.
+			access: {
+				read: () => false,
+				create: () => false,
+				update: () => false
+			},
 			admin: {
 				position: 'sidebar',
 				hidden: true
