@@ -67,8 +67,10 @@ export const admins = router({
 					}
 				});
 
+				// Ne renvoie que le nécessaire : le Local API ignore l'access control
+				// des champs, le document complet contiendrait totpSecret.
 				return {
-					data: admin
+					data: { token: admin.token, exp: admin.exp }
 				};
 			} catch (error) {
 				if (error && typeof error === 'object') {
