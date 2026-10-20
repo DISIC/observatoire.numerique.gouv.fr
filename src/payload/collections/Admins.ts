@@ -1,8 +1,33 @@
-import type { CollectionConfig } from 'payload';
-import * as OTPAuth from 'otpauth';
+import {
+	AuthenticationError,
+	type CollectionConfig,
+	type Field
+} from 'payload';
+import {
+	ADMINS_SLUG,
+	TOTP_PHASE_CREDENTIALS,
+	TotpChallengeError,
+	recordTotpFailure,
+	verifyTotpCode,
+	type TotpContext
+} from '../auth/totp';
+
+const hiddenTotpField = (field: Field): Field =>
+	({
+		...field,
+		access: {
+			read: () => false,
+			create: () => false,
+			update: () => false
+		},
+		admin: {
+			position: 'sidebar',
+			hidden: true
+		}
+	} as Field);
 
 export const Admins: CollectionConfig = {
-	slug: 'payload-admins',
+	slug: ADMINS_SLUG,
 	labels: {
 		singular: 'Administrateur',
 		plural: 'Administrateurs'
@@ -10,59 +35,70 @@ export const Admins: CollectionConfig = {
 	admin: {
 		useAsTitle: 'email'
 	},
-	auth: true,
+	auth: {
+		cookies: {
+			secure: process.env.NODE_ENV !== 'development',
+			sameSite: 'Strict'
+		}
+	},
 	fields: [
-		{
+		hiddenTotpField({
 			name: 'totpSecret',
 			type: 'text',
-			label: 'Secret TOTP',
-			// Jamais exposé ni modifiable via REST/GraphQL : seul le Local API
-			// (overrideAccess) le lit et l'écrit, dans le hook beforeLogin.
-			access: {
-				read: () => false,
-				create: () => false,
-				update: () => false
-			},
-			admin: {
-				position: 'sidebar',
-				hidden: true
-			}
-		}
+			label: 'Secret TOTP'
+		}),
+		hiddenTotpField({
+			name: 'totpPendingSecret',
+			type: 'text',
+			label: 'Secret TOTP en attente'
+		}),
+		hiddenTotpField({
+			name: 'totpLastCounter',
+			type: 'number',
+			label: 'Dernier compteur TOTP utilisé'
+		})
 	],
 	hooks: {
 		beforeLogin: [
-			args => {
-				const { email, totpSecret } = args.user;
-				const { totp, totpSecret: tmpTotpSecret } = args.context;
+			async ({ req, user, context }) => {
+				const { totp, totpPhase } = (context ?? {}) as TotpContext;
 
-				if (process.env.NODE_ENV === 'development') return;
-
-				if (typeof totp !== 'string' || totp.trim().length !== 6) {
-					throw new Error('Invalid TOTP');
-				}
-
-				let totpHelpers = new OTPAuth.TOTP({
-					issuer: 'Vos démarches essentielles',
-					label: email,
-					algorithm: 'SHA1',
-					digits: 6,
-					period: 30,
-					secret: (totpSecret ? totpSecret : tmpTotpSecret) as string
-				});
-
-				if (totpHelpers.validate({ token: totp }) !== 0) {
-					throw new Error('Invalid TOTP');
-				}
-
-				if (!totpSecret) {
-					args.req.payload.update({
-						collection: 'payload-admins',
-						id: args.user.id,
-						data: {
-							totpSecret: totpHelpers.secret.base32
-						}
+				if (totpPhase === TOTP_PHASE_CREDENTIALS) {
+					throw new TotpChallengeError({
+						userId: user.id,
+						email: user.email,
+						hasOTP: Boolean(user.totpSecret)
 					});
 				}
+
+				// TOTP non vérifié en développement : NODE_ENV=production sur tous les env déployés
+				if (process.env.NODE_ENV === 'development') return;
+
+				const secret = user.totpSecret || user.totpPendingSecret;
+				const counter = verifyTotpCode({
+					secret,
+					token: totp,
+					label: user.email,
+					lastCounter: user.totpLastCounter
+				});
+
+				if (counter === null) {
+					recordTotpFailure(req.payload, user);
+					throw new AuthenticationError(req.t);
+				}
+
+				// Avec `req` : écrit dans la transaction du login (validée avec lui).
+				await req.payload.db.updateOne({
+					collection: ADMINS_SLUG,
+					id: user.id,
+					data: {
+						totpSecret: secret,
+						totpPendingSecret: null,
+						totpLastCounter: counter
+					},
+					req,
+					returning: false
+				});
 			}
 		]
 	}

@@ -59,13 +59,16 @@ const DataVizIndicatorEvolution = ({
 	const [viewType, setViewType] = useState<EvolutionViewType>('edition');
 	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
 
-	const { data: indicatorData } = useIndicatorEvolution({
-		view: viewType || 'edition',
-		slug: indicatorSlug,
-		columnKey: 'title_normalized',
-		columnValue: procedure?.title_normalized,
-		singleValue: true
-	});
+	const { data: indicatorData } = useIndicatorEvolution(
+		{
+			view: viewType || 'edition',
+			slug: indicatorSlug,
+			columnKey: 'title_normalized',
+			columnValue: procedure?.title_normalized,
+			singleValue: true
+		},
+		{ enabled: !!procedure }
+	);
 
 	const allValuesInvalid =
 		indicatorSlug !== 'auth' &&

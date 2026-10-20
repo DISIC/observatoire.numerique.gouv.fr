@@ -1,4 +1,4 @@
-import { ProcedureWithFieldsAndEditions } from '@/types/procedure';
+import { ProcedureWithFields } from '@/types/procedure';
 import { PayloadIndicator } from '@/payload/payload-types';
 import { fr } from '@codegouvfr/react-dsfr';
 import Button from '@codegouvfr/react-dsfr/Button';
@@ -7,7 +7,7 @@ import { IndicatorLabel } from '../top250/table/IndicatorLabel';
 import { useRouter } from 'next/router';
 
 type ProcedureIndicatorsGridItemProps = {
-	procedure: ProcedureWithFieldsAndEditions;
+	procedure: ProcedureWithFields;
 	indicators: PayloadIndicator[];
 	showCompareButton?: boolean;
 	onClose?: () => void;

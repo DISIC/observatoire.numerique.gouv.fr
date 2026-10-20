@@ -3,6 +3,7 @@ import {
 	lexicalEditor
 } from '@payloadcms/richtext-lexical';
 import { Field } from 'payload';
+import { safeHTMLConverters } from './safeLinkConverters';
 
 export const standardFields: { [key: string]: Field } = {
 	title: {
@@ -24,7 +25,7 @@ export const standardFields: { [key: string]: Field } = {
 		editor: lexicalEditor({
 			features: ({ defaultFeatures }) => [
 				...defaultFeatures,
-				HTMLConverterFeature({})
+				HTMLConverterFeature({ converters: safeHTMLConverters })
 			]
 		})
 	},

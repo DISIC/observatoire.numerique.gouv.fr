@@ -114,7 +114,7 @@ export const getFieldsFromGristProcedure = (
 			const indicatorLevel = indicatorLevels.find(
 				(level: PayloadIndicatorLevel) => level.label === value
 			);
-			if (indicatorLevel && typeof indicatorLevel !== 'string') {
+			if (indicatorLevel && typeof indicatorLevel !== 'number') {
 				return {
 					id: `preview-${indicator.id}`,
 					slug: indicator.slug,
@@ -202,7 +202,7 @@ export const getFieldsFromProcedure = (
 				}
 			}
 
-			if (indicatorLevel && typeof indicatorLevel !== 'string') {
+			if (indicatorLevel && typeof indicatorLevel !== 'number') {
 				return {
 					id: currentField.id,
 					slug: indicator.slug,

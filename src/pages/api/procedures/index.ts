@@ -1,8 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
+import {
+	setNoStoreHeaders,
+	setPublicCacheHeaders
+} from '@/utils/cache-headers';
+import { Field, Prisma, Procedure } from '@prisma/client';
 import { isValidObjectId, parseProcedureSort, verifyAuth } from '@/utils/tools';
-
-const prisma = new PrismaClient();
+import { orderByNullsLikeMongo } from '@/utils/prisma-order';
+import { prisma } from '@/utils/prisma';
+import { getLastEdition } from '@/utils/editions-server';
+import { invalidateServerCache } from '@/utils/server-cache';
 
 export async function getProcedures(
 	editionId?: string,
@@ -15,14 +21,7 @@ export async function getProcedures(
 	let tmpEditionId = editionId;
 
 	if (!tmpEditionId) {
-		const editions = await prisma.edition.findMany({
-			orderBy: [
-				{
-					created_at: 'desc'
-				}
-			]
-		});
-		tmpEditionId = editions[0]?.id;
+		tmpEditionId = (await getLastEdition())?.id;
 	}
 
 	let whereRequest: Prisma.ProcedureWhereInput = {
@@ -45,21 +44,26 @@ export async function getProcedures(
 			{ administration: { contains: search, mode: 'insensitive' } }
 		];
 
+	// id en dernier : ordre stable entre ex æquo
 	let orderBy: Prisma.ProcedureOrderByWithRelationInput[] = [
-		{ volume: 'desc' }
+		orderByNullsLikeMongo('Procedure', 'volume', 'desc'),
+		{ id: 'asc' }
 	];
 
 	if (sort) {
 		const parsed = parseProcedureSort(sort);
 		if (parsed) {
-			orderBy = [{ [parsed.field]: parsed.direction }];
+			orderBy = [
+				orderByNullsLikeMongo('Procedure', parsed.field, parsed.direction),
+				{ id: 'asc' }
+			];
 		}
 	}
 
 	const procedures = await prisma.procedure.findMany({
 		orderBy,
 		where: whereRequest,
-		include: { fields: true, edition: true }
+		include: { fields: { orderBy: { id: 'asc' } } }
 	});
 
 	return procedures;
@@ -68,7 +72,7 @@ export async function getProcedures(
 export async function getProcedureById(id: string) {
 	const procedure = await prisma.procedure.findUnique({
 		where: { id },
-		include: { fields: true }
+		include: { fields: { orderBy: { id: 'asc' } } }
 	});
 	return procedure;
 }
@@ -80,7 +84,7 @@ export async function createProcedure(data: Omit<Procedure, 'id'>) {
 			...rest,
 			edition: { connect: { id: editionId as string } }
 		},
-		include: { fields: true }
+		include: { fields: { orderBy: { id: 'asc' } } }
 	});
 	return procedure;
 }
@@ -93,7 +97,7 @@ export async function updateProcedure(id: string, data: Procedure) {
 			...rest,
 			edition: { connect: { id: editionId as string } }
 		},
-		include: { fields: true, edition: true }
+		include: { fields: { orderBy: { id: 'asc' } }, edition: true }
 	});
 	return procedure;
 }
@@ -102,6 +106,7 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	setNoStoreHeaders(res);
 	const protectedMethods = ['POST', 'PUT', 'DELETE']; // You can customize this per route
 	const isAuthorized = await verifyAuth(req, { protectedMethods });
 	if (!isAuthorized && protectedMethods.includes(req.method || '')) {
@@ -124,6 +129,7 @@ export default async function handler(
 					return res.status(400).json({ message: 'Invalid id' });
 				}
 				const procedure = await getProcedureById(id);
+				setPublicCacheHeaders(res);
 				return res.status(200).json(procedure);
 			}
 			if (editionId !== undefined && !isValidObjectId(editionId)) {
@@ -139,6 +145,7 @@ export default async function handler(
 					? administration_central
 					: undefined
 			);
+			setPublicCacheHeaders(res);
 			return res.status(200).json(procedures);
 		} catch (err) {
 			console.error('GET /api/procedures failed:', err);
@@ -154,6 +161,8 @@ export default async function handler(
 			...rest,
 			fields: { create: createFields }
 		});
+		// Import Grist : les agrégats sont à recalculer
+		invalidateServerCache();
 		res.status(201).json(procedure);
 	} else if (req.method === 'PUT') {
 		const { id } = req.query;
@@ -163,6 +172,7 @@ export default async function handler(
 			...rest,
 			fields: { create: fields }
 		});
+		invalidateServerCache();
 		res.status(200).json(procedure);
 	} else {
 		res.status(400).json({ message: 'Unsupported method' });

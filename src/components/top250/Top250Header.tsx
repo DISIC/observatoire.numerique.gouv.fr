@@ -44,7 +44,7 @@ export function Top250Header(props: Props) {
 		slug: string;
 	};
 
-	const { data: administrationsCentral } = useAdministrationsCentral();
+	const { data: administrationsCentral } = useAdministrationsCentral(editionId);
 	const { data: departments } = useDepartments(old ? 'old' : 'base', editionId);
 	const { data: administrations } = useAdministrations(editionId);
 

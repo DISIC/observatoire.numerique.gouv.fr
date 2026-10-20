@@ -1,7 +1,20 @@
 version: '3.4'
 
 services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: observatoire
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql
+
+  # Ancienne base, uniquement pour tester la migration des données : docker compose --profile migration up
   mongo:
+    profiles: ['migration']
     build: ./mongodb_replica
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
@@ -20,4 +33,5 @@ services:
       - '1025:1025'
 
 volumes:
+  postgres-data:
   mongo-data:

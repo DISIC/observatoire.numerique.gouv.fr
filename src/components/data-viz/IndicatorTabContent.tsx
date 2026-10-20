@@ -87,7 +87,7 @@ const IndicatorTabContent = ({
 									data.indicator?.levels?.docs
 										?.map(level => {
 											if (
-												typeof level === 'string' ||
+												typeof level === 'number' ||
 												!level.label_stats ||
 												level.threshold === undefined ||
 												level.threshold === null

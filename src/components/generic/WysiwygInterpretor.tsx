@@ -1,5 +1,6 @@
 import { fr } from '@codegouvfr/react-dsfr';
 import { tss } from 'tss-react';
+import { sanitizeHtmlLinks } from '@/utils/safe-url';
 
 type WysiwygInterpretorProps = {
 	wysiwyg_html: string;
@@ -12,7 +13,8 @@ const WysiwygInterpretor = (props: WysiwygInterpretorProps) => {
 
 	const regexForExternalLink =
 		/<a href="([^"]+)"(?=[^>]*\btarget="_blank")(?=[^>]*\brel="noopener noreferrer")[^>]*>([^<]*)/g;
-	const newHtml = wysiwyg_html.replace(regexForExternalLink, (_, url, text) => {
+	const safeHtml = sanitizeHtmlLinks(wysiwyg_html);
+	const newHtml = safeHtml.replace(regexForExternalLink, (_, url, text) => {
 		const isSameAsUrl = text === url;
 		if (isSameAsUrl) {
 			return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}<span class="fr-sr-only">nouvelle fenêtre</span>`;

@@ -3,7 +3,13 @@
 import payloadConfig from '@payload-config';
 import { getPayload } from 'payload';
 import { cookies } from 'next/headers';
-import { Options } from 'node_modules/payload/dist/auth/operations/local/login';
+import { checkAdminCredentials, loginAdmin } from '@/payload/auth/adminLogin';
+import { getAuthCookieMaxAge, getAuthCookieOptions } from '@/utils/auth-cookie';
+
+const getField = (formData: FormData, name: string) => {
+	const value = formData.get(name);
+	return typeof value === 'string' ? value : '';
+};
 
 export async function login(_: any, formData: FormData) {
 	const payload = await getPayload({
@@ -11,24 +17,20 @@ export async function login(_: any, formData: FormData) {
 	});
 
 	try {
-		const loginData: Options<'payload-admins'> = {
-			collection: 'payload-admins',
-			data: {
-				email: formData.get('email') as string,
-				password: formData.get('password') as string
-			},
-			context:
-				process.env.NODE_ENV === 'development'
-					? {}
-					: {
-							totp: formData.get('totp'),
-							totpSecret: formData.get('totpSecret')
-					  }
-		};
+		const user = await loginAdmin(payload, {
+			email: getField(formData, 'email'),
+			password: getField(formData, 'password'),
+			totp: getField(formData, 'totp')
+		});
 
-		const user = await payload.login(loginData);
+		if (!user.token) throw new Error('Missing token');
+
 		const cookiesHelpers = await cookies();
-		cookiesHelpers.set('payload-token', user.token!);
+		cookiesHelpers.set(
+			`${payload.config.cookiePrefix}-token`,
+			user.token,
+			getAuthCookieOptions(getAuthCookieMaxAge(user.exp))
+		);
 
 		return {
 			success: true,
@@ -42,32 +44,45 @@ export async function login(_: any, formData: FormData) {
 	}
 }
 
-export async function checkOTP(_: any, formData: FormData) {
+type CheckOTPState = {
+	success: boolean;
+	error: boolean;
+	hasOTP: boolean;
+	otpauthUri?: string;
+	message: string;
+};
+
+const INVALID_CREDENTIALS: CheckOTPState = {
+	success: false,
+	error: true,
+	hasOTP: false,
+	message: 'Identifiants incorrects'
+};
+
+export async function checkOTP(
+	_: any,
+	formData: FormData
+): Promise<CheckOTPState> {
 	const payload = await getPayload({
 		config: payloadConfig
 	});
 
 	try {
-		const users = await payload.find({
-			collection: 'payload-admins',
-			where: {
-				email: { equals: formData.get('email') as string }
-			}
+		const result = await checkAdminCredentials(payload, {
+			email: getField(formData, 'email'),
+			password: getField(formData, 'password')
 		});
-		const user = users.docs[0];
+
+		if (!result.ok) return INVALID_CREDENTIALS;
 
 		return {
 			success: true,
 			error: false,
-			hasOTP: !!user.totpSecret,
+			hasOTP: result.hasOTP,
+			...(result.hasOTP ? {} : { otpauthUri: result.otpauthUri }),
 			message: 'ok'
 		};
 	} catch (e) {
-		return {
-			success: false,
-			error: true,
-			hasOTP: false,
-			message: 'Identifiants incorrects'
-		};
+		return INVALID_CREDENTIALS;
 	}
 }

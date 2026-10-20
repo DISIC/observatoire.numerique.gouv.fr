@@ -4,67 +4,32 @@ import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
 import { getPayload } from 'payload';
 import config from '@payload-config';
 import { ZodError } from 'zod';
-import jwt from 'jsonwebtoken';
-import { getPayloadJWTSecret } from '@/utils/tools';
+import { getAdminFromRequest } from '@/utils/admin-auth';
 
 type CreateContextOptions = {
 	payloadClient: Awaited<ReturnType<typeof getPayload>>;
-	user: any | null;
+	user: Awaited<ReturnType<typeof getAdminFromRequest>>;
+	res: CreateNextContextOptions['res'];
 };
 
 const createInnerContext = async (opts: CreateContextOptions) => {
 	return {
 		payload: opts.payloadClient,
-		user: opts.user
+		user: opts.user,
+		res: opts.res
 	};
 };
 
 export const createContext = async (opts: CreateNextContextOptions) => {
 	const payloadClient = await getPayload({ config });
 
-	const jwtCookie =
-		opts.req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
+	const user = await getAdminFromRequest(opts.req, payloadClient);
 
-	if (!jwtCookie) {
-		return await createInnerContext({
-			payloadClient,
-			user: null
-		});
-	}
-
-	try {
-		const secret = process.env.PAYLOAD_SECRET;
-		if (!secret) {
-			throw new Error('PAYLOAD_SECRET is not defined');
-		}
-
-		const derivedSecret = getPayloadJWTSecret(secret);
-		const decoded = jwt.verify(jwtCookie, derivedSecret, {
-			algorithms: ['HS256']
-		});
-
-		if (typeof decoded === 'object' && decoded !== null && 'id' in decoded) {
-			const user = await payloadClient.findByID({
-				collection: 'payload-admins',
-				id: decoded.id as string
-			});
-
-			return await createInnerContext({
-				payloadClient,
-				user
-			});
-		}
-
-		return await createInnerContext({
-			payloadClient,
-			user: null
-		});
-	} catch (error) {
-		return await createInnerContext({
-			payloadClient,
-			user: null
-		});
-	}
+	return await createInnerContext({
+		payloadClient,
+		user,
+		res: opts.res
+	});
 };
 
 const t = initTRPC.context<typeof createContext>().create({

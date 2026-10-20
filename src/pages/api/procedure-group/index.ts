@@ -1,17 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import {
+	setNoStoreHeaders,
+	setPublicCacheHeaders
+} from '@/utils/cache-headers';
 import { ProcedureKind } from '../indicator-scores';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/utils/prisma';
+import { isProcedureKind } from '@/utils/tools';
+import { getLastEdition } from '@/utils/editions-server';
 
 export async function getProcedureGroupByKind(kind: ProcedureKind) {
+	const lastEdition = await getLastEdition();
+	if (!lastEdition) return [];
+
 	const group = await prisma.procedure.groupBy({
-		by: [kind]
+		by: [kind],
+		where: { editionId: lastEdition.id }
 	});
 
 	return group
 		.map(group => group[kind])
-		.filter(value => value !== null)
+		.filter((value): value is string => value !== null)
 		.sort((a, b) => a.localeCompare(b));
 }
 
@@ -19,14 +27,22 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.method === 'GET') {
-		if (req.query.kind) {
-			const groupByProcedureKind = await getProcedureGroupByKind(
-				req.query.kind as ProcedureKind
-			);
-			res.status(200).json(groupByProcedureKind);
-		}
-	} else {
-		res.status(400).json({ message: 'Unsupported method' });
+	setNoStoreHeaders(res);
+	if (req.method !== 'GET') {
+		return res.status(400).json({ message: 'Unsupported method' });
+	}
+
+	const { kind } = req.query;
+	if (!isProcedureKind(kind)) {
+		return res.status(400).json({ message: 'Invalid kind' });
+	}
+
+	try {
+		const groupByProcedureKind = await getProcedureGroupByKind(kind);
+		setPublicCacheHeaders(res);
+		return res.status(200).json(groupByProcedureKind);
+	} catch (err) {
+		console.error('GET /api/procedure-group failed:', err);
+		return res.status(500).json({ message: 'Internal error' });
 	}
 }

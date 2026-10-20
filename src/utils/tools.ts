@@ -1,5 +1,3 @@
-import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 import { NextApiRequest } from 'next';
 import { ProcedureHeaderSort } from '@/components/top250/table/ProceduresTable';
 import { ProcedureWithFields } from '@/types/procedure';
@@ -266,14 +264,6 @@ export const formatDateRangeFR = (startDate: Date, endDate: Date) => {
 	return `De ${startMonth} ${startYear} à ${endMonth} ${endYear}`;
 };
 
-export function getPayloadJWTSecret(payloadSecret: string): string {
-	return crypto
-		.createHash('sha256')
-		.update(payloadSecret)
-		.digest('hex')
-		.slice(0, 32);
-}
-
 interface AuthOptions {
 	protectedMethods?: string[];
 }
@@ -291,27 +281,13 @@ export async function verifyAuth(
 		return true;
 	}
 
-	const jwtCookie =
-		req.cookies[process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'];
-
-	if (!jwtCookie) {
-		return false;
+	// Fichier aussi importé côté client : Next remplace le test sur window à la compilation
+	if (typeof window === 'undefined') {
+		const { getAdminFromRequest } = await import('./admin-auth');
+		return (await getAdminFromRequest(req)) !== null;
 	}
 
-	try {
-		const secret = process.env.PAYLOAD_SECRET;
-		if (!secret) {
-			throw new Error('PAYLOAD_SECRET is not defined');
-		}
-
-		const derivedSecret = getPayloadJWTSecret(secret);
-		const decoded = jwt.verify(jwtCookie, derivedSecret, {
-			algorithms: ['HS256']
-		});
-		return typeof decoded === 'object' && decoded !== null;
-	} catch (error) {
-		return false;
-	}
+	return false;
 }
 
 export const slugifyText = (text: string): string => {

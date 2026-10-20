@@ -10,7 +10,7 @@ type Props = {
 	description: string;
 	buttonText: string;
 	buttonLink: string;
-	image: string | PayloadMedia;
+	image: number | PayloadMedia;
 	imageRight?: boolean;
 	blueBackground?: boolean;
 };
