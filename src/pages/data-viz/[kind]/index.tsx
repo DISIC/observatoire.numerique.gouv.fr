@@ -7,9 +7,8 @@ import { useEdition, useIndicatorScoreByProcedureKind } from '@/utils/api';
 import { getProcedureKindLabel, getTableHeadersFromData } from '@/utils/tools';
 import { fr } from '@codegouvfr/react-dsfr';
 import Breadcrumb from '@codegouvfr/react-dsfr/Breadcrumb';
-import { useDebounce } from '@uidotdev/usehooks';
 import { GetServerSidePropsContext } from 'next';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { tss } from 'tss-react';
 
 export type DataVizKind = 'radar' | 'table';
@@ -24,13 +23,16 @@ const TabContent = ({
 	const { classes, cx } = useStyles();
 
 	const [searchTerm, setSearchTerm] = useState<string>();
-	const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-	const { data, isLoading: isLoadingIndicatorScores } =
-		useIndicatorScoreByProcedureKind({
-			kind,
-			search: debouncedSearchTerm
-		});
+	const { data: allData, isLoading } = useIndicatorScoreByProcedureKind({
+		kind
+	});
+
+	const data = useMemo(() => {
+		const term = searchTerm?.trim().toLowerCase();
+		if (!term) return allData;
+		return allData.filter(item => item.text.toLowerCase().includes(term));
+	}, [allData, searchTerm]);
 
 	const [showGoalRadar, setShowGoalRadar] = useState(false);
 	const [showCrossScorePerimeter, setShowCrossScorePerimeter] = useState(false);
@@ -38,9 +40,6 @@ const TabContent = ({
 	const [dataVisualitionKind, setDataVisualitionKind] = useState<
 		'radar' | 'table'
 	>('radar');
-
-	const isLoading =
-		isLoadingIndicatorScores || debouncedSearchTerm !== searchTerm;
 
 	const headers = [
 		{ name: `Nom ${getProcedureKindLabel(kind)}`, description: '' },

@@ -26,7 +26,7 @@ async function updateGoalReachedProperty() {
 			return (
 				indicator.levels?.docs?.some(
 					level =>
-						typeof level != 'string' &&
+						typeof level != 'number' &&
 						level.goal_reached !== undefined &&
 						level.goal_reached !== null
 				) || false

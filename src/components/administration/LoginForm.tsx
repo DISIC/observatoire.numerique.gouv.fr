@@ -7,7 +7,6 @@ import { Input } from '@codegouvfr/react-dsfr/Input';
 import { tss } from 'tss-react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState, memo } from 'react';
-import * as OTPAuth from 'otpauth';
 import encodeQR from '@paulmillr/qr';
 
 const LoginCredentials = memo(
@@ -126,34 +125,14 @@ export function LoginForm() {
 	const [showOTP, setShowOTP] = useState(false);
 	const [isOTPDefined, setIsOTPDefined] = useState(false);
 	const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-	const [totpSecret, setTotpSecret] = useState<string>('');
-
-	const storeUserCookie = async (token?: string, exp?: number) => {
-		await fetch(`/api/auth/setCookie?token=${token}&exp=${exp}`, {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-		router.push('/administration/bo/grist');
-	};
 
 	const { mutate: verifyCredentials } =
 		trpc.admins.verifyCredentials.useMutation({
-			onSuccess: ({ hasOTP }) => {
-				setIsOTPDefined(hasOTP);
+			onSuccess: result => {
+				setIsOTPDefined(result.hasOTP);
 				setShowOTP(true);
 
-				if (!hasOTP) {
-					const totp = new OTPAuth.TOTP({
-						issuer: 'Vos démarches essentielles',
-						label: formState.email,
-						algorithm: 'SHA1',
-						digits: 6,
-						period: 30
-					});
-					setTotpSecret(totp.secret.base32);
-					setQrCodeSvg(encodeQR(totp.toString(), 'svg'));
-				}
+				setQrCodeSvg(result.hasOTP ? '' : encodeQR(result.otpauthUri, 'svg'));
 			},
 			onError: e => {
 				setErrorStatus(e.data?.httpStatus || null);
@@ -161,8 +140,8 @@ export function LoginForm() {
 		});
 
 	const { mutate: login } = trpc.admins.login.useMutation({
-		onSuccess: ({ data }) => {
-			storeUserCookie(data.token, data.exp);
+		onSuccess: () => {
+			router.push('/administration/bo/grist');
 		},
 		onError: e => {
 			setShowOTP(false);
@@ -173,7 +152,8 @@ export function LoginForm() {
 	const handleInitialSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		verifyCredentials({
-			email: formState.email
+			email: formState.email,
+			password: formState.password
 		});
 	};
 
@@ -182,8 +162,7 @@ export function LoginForm() {
 		login({
 			email: formState.email,
 			password: formState.password,
-			totp: formState.otpCode,
-			...(!isOTPDefined && totpSecret ? { totpSecret } : {})
+			totp: formState.otpCode
 		});
 	};
 

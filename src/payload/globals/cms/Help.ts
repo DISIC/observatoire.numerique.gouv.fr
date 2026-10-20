@@ -1,9 +1,11 @@
 import { standardFields } from '@/payload/fields/standards';
 import { lexicalHTML } from '@payloadcms/richtext-lexical';
 import { GlobalConfig } from 'payload';
+import { globalCacheInvalidationHooks } from '../../hooks/invalidate-server-cache';
 
 export const CMSHelp: GlobalConfig = {
 	slug: 'help',
+	hooks: globalCacheInvalidationHooks(),
 	label: 'CMS - Aide Observatoire',
 	fields: [
 		{
@@ -56,6 +58,8 @@ export const CMSHelp: GlobalConfig = {
 								{
 									type: 'array',
 									name: 'keyIndicatorsList',
+									// Nom de table PostgreSQL limité à 63 caractères
+									dbName: 'help_key_indicators_list',
 									label: 'Liste des indicateurs clés',
 									labels: {
 										singular: 'Indicateur',
@@ -87,6 +91,7 @@ export const CMSHelp: GlobalConfig = {
 									required: true
 								},
 								{
+									// Colonne tronquée à 63 caractères par PostgreSQL (sans collision), dbName non supporté ici
 									name: 'additionnalIndicatorsDescription',
 									label: 'Description des indicateurs complémentaires',
 									type: 'textarea'
@@ -94,6 +99,7 @@ export const CMSHelp: GlobalConfig = {
 								{
 									type: 'array',
 									name: 'additionnalIndicatorsList',
+									dbName: 'help_additionnal_indicators_list',
 									label: 'Liste des indicateurs complémentaires',
 									labels: {
 										singular: 'Indicateur',

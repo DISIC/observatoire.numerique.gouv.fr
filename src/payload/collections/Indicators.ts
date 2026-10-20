@@ -4,6 +4,8 @@ import {
 	lexicalHTML
 } from '@payloadcms/richtext-lexical';
 import type { CollectionConfig } from 'payload';
+import { safeHTMLConverters } from '../fields/safeLinkConverters';
+import { collectionCacheInvalidationHooks } from '../hooks/invalidate-server-cache';
 
 enum IndicatorSlug {
 	online = 'online',
@@ -22,6 +24,7 @@ enum IndicatorSlug {
 
 export const Indicators: CollectionConfig = {
 	slug: 'payload-indicators',
+	hooks: collectionCacheInvalidationHooks(),
 	defaultPopulate: {
 		icon: true,
 		label: true,
@@ -81,7 +84,7 @@ export const Indicators: CollectionConfig = {
 			editor: lexicalEditor({
 				features: ({ defaultFeatures }) => [
 					...defaultFeatures,
-					HTMLConverterFeature({})
+					HTMLConverterFeature({ converters: safeHTMLConverters })
 				]
 			})
 		},

@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload';
+import { collectionCacheInvalidationHooks } from '../hooks/invalidate-server-cache';
 
 export const Media: CollectionConfig = {
 	slug: 'payload-media',
+	hooks: collectionCacheInvalidationHooks(),
 	defaultPopulate: {
 		url: true,
 		filename: true,

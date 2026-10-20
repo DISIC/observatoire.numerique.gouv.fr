@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload';
+import { collectionCacheInvalidationHooks } from '../hooks/invalidate-server-cache';
 
 export const IndicatorLevels: CollectionConfig = {
 	slug: 'payload-indicator-levels',
+	hooks: collectionCacheInvalidationHooks(),
 	defaultPopulate: {
 		label: true,
 		label_stats: true,
