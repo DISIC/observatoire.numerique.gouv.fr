@@ -314,6 +314,13 @@ export async function verifyAuth(
 	}
 }
 
+// Un corps JSON impose un preflight CORS : refuser le reste ferme le CSRF par formulaire.
+export function isJsonRequest(req: NextApiRequest): boolean {
+	return !!req.headers['content-type']
+		?.toLowerCase()
+		.startsWith('application/json');
+}
+
 export const slugifyText = (text: string): string => {
 	return text.toLowerCase().replace(/\s+/g, '-');
 };

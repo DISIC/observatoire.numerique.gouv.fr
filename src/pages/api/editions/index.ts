@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient, Edition } from '@prisma/client';
-import { desufligyText, isValidObjectId, verifyAuth } from '@/utils/tools';
+import {
+	desufligyText,
+	isJsonRequest,
+	isValidObjectId,
+	verifyAuth
+} from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -90,6 +95,10 @@ export default async function handler(
 		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
+	if (['POST', 'PUT'].includes(req.method || '') && !isJsonRequest(req)) {
+		return res.status(415).json({ message: 'Unsupported Media Type' });
+	}
+
 	if (req.method === 'GET') {
 		const { id, kind } = req.query;
 		try {
@@ -118,7 +127,7 @@ export default async function handler(
 			return res.status(500).json({ message: 'Internal error' });
 		}
 	} else if (req.method === 'POST') {
-		const data = JSON.parse(req.body);
+		const data = req.body;
 		const edition = await createEdition(data);
 		res.status(201).json(edition);
 	} else if (req.method === 'PUT') {

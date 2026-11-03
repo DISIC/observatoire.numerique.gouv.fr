@@ -79,6 +79,7 @@ export default function Grist() {
 		// CREATE EDITION
 		const editionResponse = await fetch('/api/editions', {
 			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				name: editionName,
 				start_date: new Date(startDate),
@@ -92,6 +93,7 @@ export default function Grist() {
 		const responses = procedures.map(procedure => {
 			return fetch('/api/procedures', {
 				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ ...procedure, editionId: editionResponse.id })
 			});
 		});
