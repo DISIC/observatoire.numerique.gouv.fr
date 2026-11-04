@@ -29,10 +29,20 @@ const transportOptions: SMTPTransport.Options = {
 	}
 };
 
+const serverURL = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '');
+const csrf = [
+	serverURL,
+	...(process.env.NODE_ENV === 'development'
+		? [`http://localhost:${process.env.PORT ?? 3000}`]
+		: [])
+].filter((origin): origin is string => !!origin);
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
+	...(serverURL ? { serverURL } : {}),
+	csrf,
 	admin: {
 		user: Admins.slug,
 		importMap: {

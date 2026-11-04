@@ -1,6 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Field, Prisma, PrismaClient, Procedure } from '@prisma/client';
-import { isValidObjectId, parseProcedureSort, verifyAuth } from '@/utils/tools';
+import {
+	isJsonRequest,
+	isValidObjectId,
+	parseProcedureSort,
+	verifyAuth
+} from '@/utils/tools';
 
 const prisma = new PrismaClient();
 
@@ -108,6 +113,10 @@ export default async function handler(
 		return res.status(401).json({ message: 'Unauthorized' });
 	}
 
+	if (['POST', 'PUT'].includes(req.method || '') && !isJsonRequest(req)) {
+		return res.status(415).json({ message: 'Unsupported Media Type' });
+	}
+
 	if (req.method === 'GET') {
 		const {
 			id,
@@ -145,7 +154,7 @@ export default async function handler(
 			return res.status(500).json({ message: 'Internal error' });
 		}
 	} else if (req.method === 'POST') {
-		const { fields, id, ...rest } = JSON.parse(req.body);
+		const { fields, id, ...rest } = req.body;
 		const createFields = fields.map((f: Field) => {
 			const { id, procedureId, ...rest } = f;
 			return rest;

@@ -28,7 +28,13 @@ export async function login(_: any, formData: FormData) {
 
 		const user = await payload.login(loginData);
 		const cookiesHelpers = await cookies();
-		cookiesHelpers.set('payload-token', user.token!);
+		cookiesHelpers.set('payload-token', user.token!, {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'lax',
+			path: '/',
+			...(user.exp ? { expires: new Date(user.exp * 1000) } : {})
+		});
 
 		return {
 			success: true,
