@@ -351,8 +351,25 @@ const migratePayload = async (payload: Payload, mongo: Db) => {
 	let fakeId = 0;
 
 	if (RESET && !DRY_RUN) {
-		for (const slug of [...PAYLOAD_COLLECTIONS].reverse()) {
-			await payload.db.deleteMany({ collection: slug, where: {} });
+		// Les globals référencent les collections : tout le schéma est vidé d'un coup
+		const { pool, schemaName = 'public' } = payload.db as unknown as {
+			pool: {
+				query: (
+					text: string,
+					values?: unknown[]
+				) => Promise<{ rows: { tablename: string }[] }>;
+			};
+			schemaName?: string;
+		};
+		const { rows } = await pool.query(
+			"SELECT tablename FROM pg_tables WHERE schemaname = $1 AND tablename <> 'payload_migrations'",
+			[schemaName]
+		);
+		if (rows.length) {
+			const tables = rows
+				.map(({ tablename }) => `"${schemaName}"."${tablename}"`)
+				.join(', ');
+			await pool.query(`TRUNCATE ${tables} RESTART IDENTITY CASCADE`);
 		}
 	}
 
@@ -409,11 +426,6 @@ const migratePayload = async (payload: Payload, mongo: Db) => {
 			doc
 		);
 		if (!DRY_RUN) {
-			if (RESET) {
-				await payload.db
-					.updateGlobal({ slug: global.slug, data })
-					.catch(() => null);
-			}
 			const existing = await payload.db.findGlobal({
 				slug: global.slug,
 				where: {}
