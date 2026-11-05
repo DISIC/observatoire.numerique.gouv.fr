@@ -1,7 +1,9 @@
 import type { CollectionConfig } from 'payload';
+import { collectionCacheInvalidationHooks } from '../hooks/invalidate-server-cache';
 
 export const Versions: CollectionConfig = {
 	slug: 'payload-versions',
+	hooks: collectionCacheInvalidationHooks(),
 	labels: {
 		singular: 'Version',
 		plural: 'Versions'

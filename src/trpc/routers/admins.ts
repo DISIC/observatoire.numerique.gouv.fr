@@ -1,96 +1,68 @@
 import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 import { TRPCError } from '@trpc/server';
+import { checkAdminCredentials, loginAdmin } from '@/payload/auth/adminLogin';
+import { serializeAuthCookie } from '@/utils/auth-cookie';
+
+const credentialsInput = z.object({
+	email: z.string().max(320),
+	password: z.string().max(1024)
+});
+
+const unauthorized = (cause?: unknown) =>
+	new TRPCError({
+		code: 'UNAUTHORIZED',
+		message: 'Invalid email or password',
+		cause
+	});
 
 export const admins = router({
 	verifyCredentials: publicProcedure
-		.input(
-			z.object({
-				email: z.string()
-			})
-		)
+		.input(credentialsInput)
 		.mutation(async ({ ctx, input }) => {
-			const { email } = input;
+			const result = await checkAdminCredentials(ctx.payload, input);
 
-			try {
-				const admins = await ctx.payload.find({
-					collection: 'payload-admins',
-					where: { email: { equals: email } }
-				});
-				const admin = admins.docs[0];
+			if (!result.ok) throw unauthorized();
 
-				if (!admin) {
-					throw new TRPCError({
-						code: 'UNAUTHORIZED',
-						message: 'Invalid email or password'
-					});
-				}
-
-				const hasOTP = Boolean(admin.totpSecret);
-
-				return {
-					hasOTP
-				};
-			} catch (error) {
-				if (error instanceof TRPCError) throw error;
-
-				throw new TRPCError({
-					code: 'BAD_REQUEST',
-					message: 'Unknown error',
-					cause: error
-				});
-			}
+			return result.hasOTP
+				? { hasOTP: true as const }
+				: { hasOTP: false as const, otpauthUri: result.otpauthUri };
 		}),
 
 	login: publicProcedure
 		.input(
-			z.object({
-				email: z.string(),
-				password: z.string(),
-				totpSecret: z.string().optional(),
-				totp: z.string()
+			credentialsInput.extend({
+				totp: z.string().max(16)
 			})
 		)
 		.mutation(async ({ ctx, input }) => {
-			const { email, password, totpSecret, totp } = input;
-
+			let admin: Awaited<ReturnType<typeof loginAdmin>>;
 			try {
-				const admin = await ctx.payload.login({
-					collection: 'payload-admins',
-					data: {
-						email,
-						password
-					},
-					context: {
-						totp,
-						totpSecret
-					}
-				});
-
-				// Ne renvoie que le nécessaire : le Local API ignore l'access control
-				// des champs, le document complet contiendrait totpSecret.
-				return {
-					data: { token: admin.token, exp: admin.exp }
-				};
+				admin = await loginAdmin(ctx.payload, input);
 			} catch (error) {
-				if (error && typeof error === 'object') {
-					if (
-						('status' in error && error.status === 401) ||
-						('message' in error && error.message === 'Invalid TOTP')
-					) {
-						throw new TRPCError({
-							code: 'UNAUTHORIZED',
-							message: 'Invalid email or password',
-							cause: error
-						});
-					}
-				}
+				const status =
+					error && typeof error === 'object' && 'status' in error
+						? error.status
+						: undefined;
+				const isAuthError =
+					typeof status === 'number' && status >= 400 && status < 500;
+
+				if (isAuthError) throw unauthorized(error);
 
 				throw new TRPCError({
-					code: 'BAD_REQUEST',
+					code: 'INTERNAL_SERVER_ERROR',
 					message: 'Unknown error',
 					cause: error
 				});
 			}
+
+			if (!admin.token) throw unauthorized();
+
+			ctx.res.setHeader(
+				'Set-Cookie',
+				serializeAuthCookie(admin.token, admin.exp)
+			);
+
+			return { success: true };
 		})
 });

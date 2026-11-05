@@ -2,7 +2,6 @@
 // This file contains only client-side safe code without any Node.js dependencies
 
 import { ProcedureKind } from '@/pages/api/indicator-scores';
-import { Prisma, Procedure } from '@prisma/client';
 
 export const validIndicatorSlugs = [
 	'satisfaction',
@@ -28,12 +27,6 @@ export const validProcedureKinds: ProcedureKind[] = [
 
 export function isValidProcedureKind(kind: string): kind is ProcedureKind {
 	return validProcedureKinds.includes(kind as ProcedureKind);
-}
-
-export function isValidProcedureColumnKey(
-	columnKey: string
-): columnKey is keyof Procedure {
-	return columnKey in Prisma.ProcedureScalarFieldEnum;
 }
 
 export type RecordData = {

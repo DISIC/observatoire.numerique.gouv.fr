@@ -1,12 +1,11 @@
 // middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { AUTH_COOKIE_NAME } from '@/utils/auth-cookie';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-	const jwtCookie = request.cookies.get(
-		process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'
-	);
+	const jwtCookie = request.cookies.get(AUTH_COOKIE_NAME);
 
 	if (
 		request.nextUrl.pathname.startsWith('/administration/login') &&

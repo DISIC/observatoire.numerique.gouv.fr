@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { parse as superJSONParse, stringify } from 'superjson';
-import { ProcedureWithFieldsAndEditions } from '@/types/procedure';
+import { ProcedureWithFields } from '@/types/procedure';
 import { Edition, OldProcedure } from '@prisma/client';
 import { ProcedureKind } from '@/pages/api/indicator-scores';
 import {
@@ -60,9 +60,7 @@ export function useProcedures(props: ProceduresProps) {
 		`/api/procedures?${searchUrl}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<ProcedureWithFieldsAndEditions[]>(
-				stringify(await res.json())
-			);
+			return superJSONParse<ProcedureWithFields[]>(stringify(await res.json()));
 		}
 	);
 
@@ -78,9 +76,7 @@ export function useProcedureById(id: string) {
 		id ? `/api/procedures?id=${id}` : null,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
-			return superJSONParse<ProcedureWithFieldsAndEditions>(
-				stringify(await res.json())
-			);
+			return superJSONParse<ProcedureWithFields>(stringify(await res.json()));
 		}
 	);
 
@@ -185,17 +181,13 @@ export function useProcedureGroupByKind({ kind }: { kind: ProcedureKind }) {
 
 type IndicatorScoreByProcedureKindProps = {
 	kind: ProcedureKind;
-	search?: string;
 };
 
 export function useIndicatorScoreByProcedureKind({
-	kind,
-	search
+	kind
 }: IndicatorScoreByProcedureKindProps) {
 	const { data, error, isLoading } = useSWR(
-		`/api/indicator-scores?kind=${kind}${
-			search ? `&search=${encodeURIComponent(search)}` : ''
-		}`,
+		`/api/indicator-scores?kind=${kind}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<RecordData[]>(stringify(await res.json()));
@@ -233,9 +225,9 @@ export function useIndicatorScoreByProcedureKindSlug({
 	};
 }
 
-export function useAdministrationsCentral() {
+export function useAdministrationsCentral(editionId?: string) {
 	const { data, error, isLoading } = useSWR(
-		`/api/administrations-central`,
+		`/api/administrations-central${editionId ? `?editionId=${editionId}` : ''}`,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<string[]>(stringify(await res.json()));
@@ -267,7 +259,11 @@ export function useInterministerielScores() {
 	};
 }
 
-export function useIndicatorEvolution(props: GetIndicatorEvolutionProps) {
+export function useIndicatorEvolution(
+	props: GetIndicatorEvolutionProps,
+	options: { enabled?: boolean } = {}
+) {
+	const { enabled = true } = options;
 	const fakeProps: { [key: string]: any } = props;
 	Object.keys(fakeProps).forEach(
 		key => fakeProps[key] === undefined && delete fakeProps[key]
@@ -275,7 +271,7 @@ export function useIndicatorEvolution(props: GetIndicatorEvolutionProps) {
 
 	const searchUrl = new URLSearchParams(fakeProps);
 	const { data, error, isLoading } = useSWR(
-		`/api/indicator-evolution?${searchUrl}`,
+		enabled ? `/api/indicator-evolution?${searchUrl}` : null,
 		async function (input: RequestInfo, init?: RequestInit) {
 			const res = await fetch(input, init);
 			return superJSONParse<IndicatorEvolutionResponse>(

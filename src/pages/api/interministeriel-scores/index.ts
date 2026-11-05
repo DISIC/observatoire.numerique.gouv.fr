@@ -2,10 +2,13 @@ import {
 	getIndicatorThresholdScores,
 	IndicatorThresholdScore
 } from '@/utils/data-viz';
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-
-const prisma = new PrismaClient();
+import {
+	setNoStoreHeaders,
+	setPublicCacheHeaders
+} from '@/utils/cache-headers';
+import { prisma } from '@/utils/prisma';
+import { cachedData } from '@/utils/data-cache';
 
 const interministerielSlugs = ['satisfaction', 'handicap'] as const;
 
@@ -17,6 +20,10 @@ export type InterministerielScore = IndicatorThresholdScore & {
 export type InterministerielScoresResponse = InterministerielScore[];
 
 export async function getInterministerielScores(): Promise<InterministerielScoresResponse> {
+	return cachedData('interministeriel-scores', loadInterministerielScores);
+}
+
+async function loadInterministerielScores(): Promise<InterministerielScoresResponse> {
 	const editions = await prisma.edition.findMany({
 		orderBy: {
 			created_at: 'desc'
@@ -58,10 +65,17 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.method === 'GET') {
+	setNoStoreHeaders(res);
+	if (req.method !== 'GET') {
+		return res.status(400).json({ message: 'Unsupported method' });
+	}
+
+	try {
 		const scores = await getInterministerielScores();
-		res.status(200).json(scores);
-	} else {
-		res.status(400).json({ message: 'Unsupported method' });
+		setPublicCacheHeaders(res);
+		return res.status(200).json(scores);
+	} catch (err) {
+		console.error('GET /api/interministeriel-scores failed:', err);
+		return res.status(500).json({ message: 'Internal error' });
 	}
 }

@@ -37,12 +37,12 @@ export const IndicatorContent = (props: Props) => {
 				{indicator.levels?.docs &&
 					indicator.levels.docs
 						.sort((a, b) =>
-							typeof a === 'string' || typeof b === 'string'
+							typeof a === 'number' || typeof b === 'number'
 								? 0
 								: a.position - b.position
 						)
 						.map((level, index) => {
-							if (typeof level === 'string') return;
+							if (typeof level === 'number') return;
 							return (
 								<li key={index} className={classes.indicatorItem}>
 									<span className={cx(classes.label)}>

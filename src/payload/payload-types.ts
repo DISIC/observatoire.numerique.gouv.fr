@@ -94,7 +94,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {
@@ -110,6 +110,9 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
   };
   locale: null;
+  widgets: {
+    collections: CollectionsWidget;
+  };
   user: PayloadAdmin;
   jobs: {
     tasks: unknown;
@@ -139,8 +142,10 @@ export interface PayloadAdminAuthOperations {
  * via the `definition` "payload-admins".
  */
 export interface PayloadAdmin {
-  id: string;
+  id: number;
   totpSecret?: string | null;
+  totpPendingSecret?: string | null;
+  totpLastCounter?: number | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -148,6 +153,7 @@ export interface PayloadAdmin {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -165,8 +171,9 @@ export interface PayloadAdmin {
  * via the `definition` "payload-media".
  */
 export interface PayloadMedia {
-  id: string;
+  id: number;
   alt: string;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -184,7 +191,7 @@ export interface PayloadMedia {
  * via the `definition` "payload-indicators".
  */
 export interface PayloadIndicator {
-  id: string;
+  id: number;
   slug:
     | 'online'
     | 'satisfaction'
@@ -234,13 +241,13 @@ export interface PayloadIndicator {
     | 'ri-user-line'
     | 'ri-signal-tower-line'
     | 'ri-lock-unlock-line';
-  versions: (string | PayloadVersion)[];
+  versions: (number | PayloadVersion)[];
   position: number;
   moreInfosTitle?: string | null;
   moreInfos?: string | null;
   threshold_max?: number | null;
   levels?: {
-    docs?: (string | PayloadIndicatorLevel)[];
+    docs?: (number | PayloadIndicatorLevel)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -252,7 +259,7 @@ export interface PayloadIndicator {
  * via the `definition` "payload-versions".
  */
 export interface PayloadVersion {
-  id: string;
+  id: number;
   name: string;
   number: number;
   description?: string | null;
@@ -264,12 +271,12 @@ export interface PayloadVersion {
  * via the `definition` "payload-indicator-levels".
  */
 export interface PayloadIndicatorLevel {
-  id: string;
+  id: number;
   label: string;
   label_stats?: string | null;
   color: 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'orange';
   description: string;
-  indicator: string | PayloadIndicator;
+  indicator: number | PayloadIndicator;
   position: number;
   threshold?: number | null;
   noBackground?: boolean | null;
@@ -282,7 +289,7 @@ export interface PayloadIndicatorLevel {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -299,32 +306,32 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'payload-admins';
-        value: string | PayloadAdmin;
+        value: number | PayloadAdmin;
       } | null)
     | ({
         relationTo: 'payload-media';
-        value: string | PayloadMedia;
+        value: number | PayloadMedia;
       } | null)
     | ({
         relationTo: 'payload-indicators';
-        value: string | PayloadIndicator;
+        value: number | PayloadIndicator;
       } | null)
     | ({
         relationTo: 'payload-indicator-levels';
-        value: string | PayloadIndicatorLevel;
+        value: number | PayloadIndicatorLevel;
       } | null)
     | ({
         relationTo: 'payload-versions';
-        value: string | PayloadVersion;
+        value: number | PayloadVersion;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'payload-admins';
-    value: string | PayloadAdmin;
+    value: number | PayloadAdmin;
   };
   updatedAt: string;
   createdAt: string;
@@ -334,10 +341,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'payload-admins';
-    value: string | PayloadAdmin;
+    value: number | PayloadAdmin;
   };
   key?: string | null;
   value?:
@@ -357,7 +364,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -369,6 +376,8 @@ export interface PayloadMigration {
  */
 export interface PayloadAdminsSelect<T extends boolean = true> {
   totpSecret?: T;
+  totpPendingSecret?: T;
+  totpLastCounter?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -376,6 +385,7 @@ export interface PayloadAdminsSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
@@ -392,6 +402,7 @@ export interface PayloadAdminsSelect<T extends boolean = true> {
  */
 export interface PayloadMediaSelect<T extends boolean = true> {
   alt?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -499,7 +510,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "home".
  */
 export interface Home {
-  id: string;
+  id: number;
   header: {
     title: string;
     description: string;
@@ -510,7 +521,7 @@ export interface Home {
     title: string;
     description: string;
     blocs: {
-      image: string | PayloadMedia;
+      image: number | PayloadMedia;
       title: string;
       description: string;
       buttonText: string;
@@ -526,7 +537,7 @@ export interface Home {
   };
   redirections: {
     textsWithImages: {
-      image: string | PayloadMedia;
+      image: number | PayloadMedia;
       title: string;
       description: string;
       buttonText: string;
@@ -542,7 +553,7 @@ export interface Home {
  * via the `definition` "help".
  */
 export interface Help {
-  id: string;
+  id: number;
   header: {
     title: string;
   };
@@ -591,7 +602,7 @@ export interface Help {
       keyIndicatorsDescription?: string | null;
       keyIndicatorsList?:
         | {
-            indicator: string | PayloadIndicator;
+            indicator: number | PayloadIndicator;
             id?: string | null;
           }[]
         | null;
@@ -601,7 +612,7 @@ export interface Help {
       additionnalIndicatorsDescription?: string | null;
       additionnalIndicatorsList?:
         | {
-            indicator: string | PayloadIndicator;
+            indicator: number | PayloadIndicator;
             id?: string | null;
           }[]
         | null;
@@ -615,7 +626,7 @@ export interface Help {
  * via the `definition` "legals".
  */
 export interface Legal {
-  id: string;
+  id: number;
   'legal-a11y': {
     title: string;
     wysiwyg?: {
@@ -704,7 +715,7 @@ export interface Legal {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
+  id: number;
   description: string;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -873,6 +884,16 @@ export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

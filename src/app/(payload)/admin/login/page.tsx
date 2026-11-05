@@ -4,7 +4,6 @@ import { checkOTP, login } from '@/app/(payload)/admin/actions/login';
 import encodeQR from '@paulmillr/qr';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import * as OTPAuth from 'otpauth';
 import { startTransition, useActionState, useEffect, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 
@@ -23,7 +22,6 @@ interface OTPFormProps {
 	formActionLogin: (formData: FormData) => void;
 	email: string;
 	password: string;
-	totpSecret: string;
 	isOTPDefined: boolean;
 	goBack: () => void;
 	qrCodeSvg: string;
@@ -101,7 +99,6 @@ const OTPForm = ({
 	formActionLogin,
 	email,
 	password,
-	totpSecret,
 	isOTPDefined,
 	goBack,
 	qrCodeSvg
@@ -151,7 +148,6 @@ const OTPForm = ({
 						name="totp"
 						required
 					/>
-					<input type="hidden" name="totpSecret" value={totpSecret} />
 				</div>
 			</div>
 		</div>
@@ -179,6 +175,7 @@ const LoginPage = () => {
 		success: false,
 		error: false,
 		hasOTP: false,
+		otpauthUri: undefined as string | undefined,
 		message: ''
 	});
 
@@ -188,7 +185,6 @@ const LoginPage = () => {
 	});
 
 	const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-	const [totpSecret, setTotpSecret] = useState<string>('');
 	const [showOTP, setShowOTP] = useState<boolean>(false);
 	const [isOTPDefined, setIsOTPDefined] = useState<boolean>(false);
 
@@ -218,24 +214,18 @@ const LoginPage = () => {
 				setIsOTPDefined(!!stateCredentials.hasOTP);
 				setShowOTP(true);
 			}
-		} else if (stateLogin.error) {
+		} else if (stateCredentials.error) {
 			toast.error(stateCredentials.message);
 		}
 	}, [stateCredentials, formActionLogin]);
 
 	useEffect(() => {
-		if (showOTP && !isOTPDefined) {
-			const totp = new OTPAuth.TOTP({
-				issuer: 'Vos démarches essentielles',
-				label: credentialsData.email,
-				algorithm: 'SHA1',
-				digits: 6,
-				period: 30
-			});
-			setTotpSecret(totp.secret.base32);
-			setQrCodeSvg(encodeQR(totp.toString(), 'svg'));
+		if (showOTP && !isOTPDefined && stateCredentials.otpauthUri) {
+			setQrCodeSvg(encodeQR(stateCredentials.otpauthUri, 'svg'));
+		} else {
+			setQrCodeSvg('');
 		}
-	}, [credentialsData.email, showOTP, isOTPDefined]);
+	}, [showOTP, isOTPDefined, stateCredentials.otpauthUri]);
 
 	return (
 		<section className="login template-minimal template-minimal--width-normal">
@@ -264,7 +254,6 @@ const LoginPage = () => {
 						formActionLogin={formActionLogin}
 						email={credentialsData.email}
 						password={credentialsData.password}
-						totpSecret={totpSecret}
 						isOTPDefined={isOTPDefined}
 						goBack={() => {
 							setShowOTP(false);

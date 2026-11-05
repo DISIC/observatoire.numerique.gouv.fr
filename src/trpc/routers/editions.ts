@@ -1,11 +1,11 @@
 import { deleteEdition } from '@/pages/api/editions';
-import { PrismaClient } from '@prisma/client';
+import { Edition } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { protectedProcedure, router } from '../trpc';
 import { fetchGristProcedures } from './grist';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/utils/prisma';
+import { invalidateServerCache } from '@/utils/server-cache';
 
 const PROCEDURES_CREATE_CHUNK_SIZE = 20;
 
@@ -49,7 +49,11 @@ export const editions = router({
 	delete: protectedProcedure
 		.input(z.object({ id: objectId }))
 		.mutation(async ({ input }) => {
-			await deleteEdition(input.id);
+			try {
+				await deleteEdition(input.id);
+			} finally {
+				invalidateServerCache();
+			}
 			return { success: true };
 		}),
 	republish: protectedProcedure
@@ -85,42 +89,51 @@ export const editions = router({
 				});
 			}
 
-			await deleteEdition(edition.id);
-
-			// Même id et même created_at : les liens et l'ordre des éditions sont conservés
-			await prisma.edition.create({
-				data: {
-					id: edition.id,
-					name: edition.name,
-					start_date: edition.start_date,
-					end_date: edition.end_date,
-					created_at: edition.created_at,
-					version: input.version
-				}
-			});
-
-			for (
-				let i = 0;
-				i < procedures.length;
-				i += PROCEDURES_CREATE_CHUNK_SIZE
-			) {
-				await Promise.all(
-					procedures
-						.slice(i, i + PROCEDURES_CREATE_CHUNK_SIZE)
-						.map(({ id, fields, ...procedure }) =>
-							prisma.procedure.create({
-								data: {
-									...procedure,
-									editionId: edition.id,
-									fields: {
-										create: fields.map(({ id, procedureId, ...field }) => field)
-									}
-								}
-							})
-						)
-				);
+			// Vidé même en cas d'échec : l'édition a pu être modifiée en partie
+			try {
+				return await republishEdition(edition, procedures, input.version);
+			} finally {
+				invalidateServerCache();
 			}
-
-			return { proceduresCount: procedures.length };
 		})
 });
+
+async function republishEdition(
+	edition: Edition,
+	procedures: Awaited<ReturnType<typeof fetchGristProcedures>>,
+	version: number
+) {
+	await deleteEdition(edition.id);
+
+	// Même id et même created_at : les liens et l'ordre des éditions sont conservés
+	await prisma.edition.create({
+		data: {
+			id: edition.id,
+			name: edition.name,
+			start_date: edition.start_date,
+			end_date: edition.end_date,
+			created_at: edition.created_at,
+			version
+		}
+	});
+
+	for (let i = 0; i < procedures.length; i += PROCEDURES_CREATE_CHUNK_SIZE) {
+		await Promise.all(
+			procedures
+				.slice(i, i + PROCEDURES_CREATE_CHUNK_SIZE)
+				.map(({ id, fields, ...procedure }) =>
+					prisma.procedure.create({
+						data: {
+							...procedure,
+							editionId: edition.id,
+							fields: {
+								create: fields.map(({ id, procedureId, ...field }) => field)
+							}
+						}
+					})
+				)
+		);
+	}
+
+	return { proceduresCount: procedures.length };
+}

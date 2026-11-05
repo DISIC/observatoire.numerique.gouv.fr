@@ -1,12 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
+import {
+	setNoStoreHeaders,
+	setPublicCacheHeaders
+} from '@/utils/cache-headers';
+import { prisma } from '@/utils/prisma';
+import { isValidObjectId } from '@/utils/tools';
+import { getLastEdition } from '@/utils/editions-server';
 
-const prisma = new PrismaClient();
+export async function getAdministrationsCentral(editionId?: string) {
+	const targetEditionId = editionId ?? (await getLastEdition())?.id;
+	if (!targetEditionId) return [];
 
-export async function getAdministrationsCentral() {
 	const administrationCentrals = await prisma.procedure.groupBy({
 		by: ['administration_central'],
 		where: {
+			editionId: targetEditionId,
 			administration_central: {
 				not: null
 			}
@@ -26,10 +34,22 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.method === 'GET') {
-		const administrationCentrals = await getAdministrationsCentral();
-		res.status(200).json(administrationCentrals);
-	} else {
-		res.status(400).json({ message: 'Unsupported method' });
+	setNoStoreHeaders(res);
+	if (req.method !== 'GET') {
+		return res.status(400).json({ message: 'Unsupported method' });
+	}
+
+	const { editionId } = req.query;
+	if (editionId !== undefined && !isValidObjectId(editionId)) {
+		return res.status(400).json({ message: 'Invalid editionId' });
+	}
+
+	try {
+		const administrationCentrals = await getAdministrationsCentral(editionId);
+		setPublicCacheHeaders(res);
+		return res.status(200).json(administrationCentrals);
+	} catch (err) {
+		console.error('GET /api/administrations-central failed:', err);
+		return res.status(500).json({ message: 'Internal error' });
 	}
 }

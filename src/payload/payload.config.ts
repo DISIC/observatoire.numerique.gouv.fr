@@ -1,5 +1,5 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { buildConfig } from 'payload';
@@ -29,6 +29,18 @@ const transportOptions: SMTPTransport.Options = {
 	}
 };
 
+// Origine publique de l'env : serverURL et liste csrf
+const getPublicOrigin = () => {
+	const url = process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXTAUTH_URL;
+	if (!url) return '';
+	try {
+		return new URL(url).origin;
+	} catch {
+		return '';
+	}
+};
+const publicOrigin = getPublicOrigin();
+
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
@@ -43,11 +55,24 @@ export default buildConfig({
 	globals: [CMSHome, CMSHelp, CMSLegals, CMSFooter],
 	editor: lexicalEditor(),
 	secret: process.env.PAYLOAD_SECRET || '',
+	serverURL: publicOrigin,
+	csrf: publicOrigin ? [publicOrigin] : [],
+	graphQL: {
+		disable: true
+	},
 	typescript: {
 		outputFile: path.resolve(dirname, 'payload-types.ts')
 	},
-	db: mongooseAdapter({
-		url: process.env.DATABASE_URI || ''
+	// Payload dans le schéma « payload », Prisma dans « public »
+	db: postgresAdapter({
+		pool: {
+			connectionString:
+				process.env.DATABASE_URI || process.env.POSTGRESQL_ADDON_URI || '',
+			max: Number(process.env.PAYLOAD_DB_POOL_MAX ?? 5)
+		},
+		schemaName: 'payload',
+		push: false,
+		migrationDir: path.resolve(dirname, '../migrations')
 	}),
 	sharp,
 	email: nodemailerAdapter({

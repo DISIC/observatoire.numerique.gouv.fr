@@ -27,7 +27,7 @@ export function ProceduresTableMobile(props: Props) {
 	const indicators = version
 		? allIndicators.filter(i =>
 				i.versions?.some(v =>
-					typeof v === 'string' ? false : v.number === version
+					typeof v === 'number' ? false : v.number === version
 				)
 		  )
 		: allIndicators;

@@ -13,6 +13,7 @@ import Hotjar from '@hotjar/browser';
 import { trpc } from '../utils/trpc';
 import { AuthProvider } from '@/providers/Auth';
 import MuiDsfrThemeProvider from '@codegouvfr/react-dsfr/mui';
+import { SWRConfig, SWRConfiguration } from 'swr';
 
 // Only in TypeScript projects
 declare module '@codegouvfr/react-dsfr/next-pagesdir' {
@@ -37,6 +38,13 @@ const MATOMO_SITE_ID = process.env.NEXT_PUBLIC_MATOMO_SITE_ID as string;
 const HOTJAR_SITE_ID = parseInt(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID || '0');
 const HOTJAR_VERSION = parseInt(process.env.NEXT_PUBLIC_HOTJAR_VERSION || '6');
 
+// Données publiques : pas de revalidation au focus ni au remontage (le back-office garde le défaut)
+const publicSWRConfig: SWRConfiguration = {
+	revalidateOnFocus: false,
+	revalidateIfStale: false,
+	dedupingInterval: 60_000
+};
+
 function App({ Component, pageProps }: AppProps) {
 	const router = useRouter();
 
@@ -51,7 +59,11 @@ function App({ Component, pageProps }: AppProps) {
 		if (router.pathname.startsWith('/administration/bo')) {
 			return <DashboardLayout>{children}</DashboardLayout>;
 		} else {
-			return <PublicLayout>{children}</PublicLayout>;
+			return (
+				<SWRConfig value={publicSWRConfig}>
+					<PublicLayout>{children}</PublicLayout>
+				</SWRConfig>
+			);
 		}
 	};
 

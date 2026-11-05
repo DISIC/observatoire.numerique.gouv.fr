@@ -1,9 +1,11 @@
 import { standardFields } from '@/payload/fields/standards';
 import { lexicalHTML } from '@payloadcms/richtext-lexical';
 import { GlobalConfig } from 'payload';
+import { globalCacheInvalidationHooks } from '../../hooks/invalidate-server-cache';
 
 export const CMSLegals: GlobalConfig = {
 	slug: 'legals',
+	hooks: globalCacheInvalidationHooks(),
 	label: 'CMS - Pages du footer',
 	access: {
 		read: () => true

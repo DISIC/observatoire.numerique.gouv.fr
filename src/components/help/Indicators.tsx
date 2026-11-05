@@ -71,7 +71,7 @@ export function HelpIndicators(props: Props) {
 				>
 					{keyIndicators.keyIndicatorsList &&
 						keyIndicators.keyIndicatorsList.map(({ indicator }, id) => {
-							if (typeof indicator === 'string') return;
+							if (typeof indicator === 'number') return;
 							return (
 								<div id={`indicator-${indicator.id}`} key={indicator.id}>
 									<AccordionWithIcon
@@ -101,7 +101,7 @@ export function HelpIndicators(props: Props) {
 					{additionnalIndicators.additionnalIndicatorsList &&
 						additionnalIndicators.additionnalIndicatorsList.map(
 							({ indicator }, id) => {
-								if (typeof indicator === 'string') return;
+								if (typeof indicator === 'number') return;
 								return (
 									<div id={`indicator-${indicator.id}`} key={indicator.id}>
 										<AccordionWithIcon

@@ -13,12 +13,12 @@ type Props = {
 		description: string;
 		buttonText: string;
 		buttonLink: string;
-		image: string | PayloadMedia;
+		image: number | PayloadMedia;
 	}[];
 };
 
 type CardProps = {
-	image: string | PayloadMedia;
+	image: number | PayloadMedia;
 	title: string;
 	description: string;
 	button: {

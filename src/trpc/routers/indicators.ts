@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 import { ZGetListParams } from '../types';
+import { cacheKey, cachedCms } from '@/utils/data-cache';
 
 export const indicators = router({
 	getList: publicProcedure
@@ -8,15 +9,21 @@ export const indicators = router({
 		.query(async ({ ctx, input }) => {
 			const { page, perPage } = input;
 
-			const indicators = await ctx.payload.find({
-				collection: 'payload-indicators',
-				limit: perPage,
-				page: page,
-				sort: 'position'
-			});
+			const docs = await cachedCms(
+				cacheKey('indicators:list', { page, perPage }),
+				async () =>
+					(
+						await ctx.payload.find({
+							collection: 'payload-indicators',
+							limit: perPage,
+							page: page,
+							sort: 'position'
+						})
+					).docs
+			);
 
 			return {
-				data: indicators.docs
+				data: docs
 			};
 		}),
 

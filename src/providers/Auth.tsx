@@ -1,6 +1,4 @@
 import { PayloadAdmin } from '@/payload/payload-types';
-import { jwtDecode } from 'jwt-decode';
-import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -20,30 +18,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	const router = useRouter();
 
-	const getTokenInfos = async () => {
-		const jwtToken = await getCookie(
-			process.env.NEXT_PUBLIC_JWT_COOKIE_NAME ?? 'obs-jwt'
-		);
-		if (!jwtToken)
-			return {
-				jwtToken: null,
-				slug: null
-			};
-
-		const decoded = jwtDecode(jwtToken);
-		const slug = (decoded as any)['collection'] as string;
-
-		return {
-			jwtToken,
-			slug
-		};
-	};
-
 	const logout = async () => {
 		await fetch(`/api/auth/removeCookie`, {
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			method: 'POST'
 		}).then(() => {
 			setUser(null);
 		});

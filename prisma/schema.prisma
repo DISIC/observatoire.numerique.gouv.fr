@@ -1,6 +1,8 @@
+// ids sur 24 caractères hexa comme les ObjectId Mongo (conservés à la migration),
+// préfixés par l'horodatage pour rester croissants dans l'ordre de création
 datasource db {
-  provider = "mongodb"
-  url      = env("MONGODB_ADDON_URI")
+  provider = "postgresql"
+  url      = env("POSTGRESQL_ADDON_URI")
 }
 
 generator client {
@@ -32,7 +34,7 @@ enum IndicatorColor {
 }
 
 model OldProcedure {
-  id                                           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                                           String   @id @default(dbgenerated("lpad(to_hex((extract(epoch FROM clock_timestamp()) * 1000000)::bigint), 13, '0') || substr(md5(random()::text), 1, 11)"))
   xwiki_id                                     String
   xwiki_edition                                String
   title                                        String
@@ -68,10 +70,12 @@ model OldProcedure {
   accessibilityScore_value                     String?
   jdma_start_date                              String?
   jdma_end_date                                String?
+
+  @@index([xwiki_edition, ministere])
 }
 
 model Edition {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  id         String      @id @default(dbgenerated("lpad(to_hex((extract(epoch FROM clock_timestamp()) * 1000000)::bigint), 13, '0') || substr(md5(random()::text), 1, 11)"))
   name       String      @unique
   start_date DateTime
   end_date   DateTime
@@ -81,7 +85,7 @@ model Edition {
 }
 
 model Procedure {
-  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                     String   @id @default(dbgenerated("lpad(to_hex((extract(epoch FROM clock_timestamp()) * 1000000)::bigint), 13, '0') || substr(md5(random()::text), 1, 11)"))
   grist_identifier       Int?
   jdma_identifier        Int?
   title                  String
@@ -94,7 +98,7 @@ model Procedure {
   fields                 Field[]
   noJdma                 Boolean
   edition                Edition? @relation(fields: [editionId], references: [id])
-  editionId              String?  @db.ObjectId
+  editionId              String?
 
   @@index([editionId])
   @@index([editionId, title_normalized])
@@ -104,7 +108,7 @@ model Procedure {
 }
 
 model Field {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  id           String         @id @default(dbgenerated("lpad(to_hex((extract(epoch FROM clock_timestamp()) * 1000000)::bigint), 13, '0') || substr(md5(random()::text), 1, 11)"))
   slug         IndicatorSlug
   label        String
   value        String?
@@ -112,7 +116,7 @@ model Field {
   noBackground Boolean?
   goalReached  Boolean?
   procedure    Procedure      @relation(fields: [procedureId], references: [id])
-  procedureId  String         @db.ObjectId
+  procedureId  String        
 
   @@index([procedureId, slug, goalReached, color])
 }

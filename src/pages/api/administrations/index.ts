@@ -1,8 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Prisma, PrismaClient } from '@prisma/client';
+import {
+	setNoStoreHeaders,
+	setPublicCacheHeaders
+} from '@/utils/cache-headers';
+import { Prisma } from '@prisma/client';
 import { isValidObjectId } from '@/utils/tools';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/utils/prisma';
 
 export async function getAdministrations(editionId?: string) {
 	const where: Prisma.ProcedureWhereInput = {};
@@ -26,6 +29,7 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	setNoStoreHeaders(res);
 	if (req.method !== 'GET') {
 		return res.status(400).json({ message: 'Unsupported method' });
 	}
@@ -39,6 +43,7 @@ export default async function handler(
 		const administrations = await getAdministrations(
 			typeof editionId === 'string' ? editionId : undefined
 		);
+		setPublicCacheHeaders(res);
 		return res.status(200).json(administrations);
 	} catch (err) {
 		console.error('GET /api/administrations failed:', err);

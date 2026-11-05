@@ -3,7 +3,7 @@ import { fr } from '@codegouvfr/react-dsfr';
 import Image from 'next/image';
 
 type PayloadImageProps = {
-	image: string | PayloadMedia;
+	image: number | PayloadMedia;
 	width?: number;
 	height?: number;
 	isDecorative?: boolean;

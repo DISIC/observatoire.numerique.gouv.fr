@@ -5,31 +5,34 @@ import {
 } from '@/utils/data-viz';
 import { validIndicatorSlugs } from '@/utils/data-viz-client';
 import { isProcedureKind } from '@/utils/tools';
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+	setNoStoreHeaders,
+	setPublicCacheHeaders
+} from '@/utils/cache-headers';
+import { prisma } from '@/utils/prisma';
+import { getLastEdition } from '@/utils/editions-server';
+import { cacheKey, cachedData } from '@/utils/data-cache';
 
 export type ProcedureKind =
 	| 'administration'
 	| 'administration_central'
 	| 'ministere';
 
-const prisma = new PrismaClient();
+export async function getIndicatorScores(kind: ProcedureKind) {
+	return cachedData(cacheKey('indicator-scores', { kind }), () =>
+		loadIndicatorScores(kind)
+	);
+}
 
-export async function getIndicatorScores(kind: ProcedureKind, search?: string) {
-	const currentEdition = await prisma.edition.findFirstOrThrow({
-		orderBy: {
-			created_at: 'desc'
-		}
-	});
+async function loadIndicatorScores(kind: ProcedureKind) {
+	const currentEdition = await getLastEdition();
+	if (!currentEdition) throw new Error('No edition found');
 
 	const elementGroupedByProcedureKind = await prisma.procedure.groupBy({
 		by: [kind],
 		where: {
-			editionId: currentEdition.id,
-			[kind]: {
-				contains: search,
-				mode: 'insensitive'
-			}
+			editionId: currentEdition.id
 		},
 		_count: true
 	});
@@ -41,14 +44,15 @@ export async function getIndicatorScores(kind: ProcedureKind, search?: string) {
 			_count: element._count
 		}));
 
-	let records = await getIndicatorScoresByProcedureKind({
-		kind,
-		groupByKind
-	});
-
-	const allProceduresRecords = await getAllProceduresIndicatorScores(
-		currentEdition.id
-	);
+	const [scoresByKind, allProceduresRecords] = await Promise.all([
+		getIndicatorScoresByProcedureKind({
+			kind,
+			editionId: currentEdition.id,
+			groupByKind
+		}),
+		getAllProceduresIndicatorScores(currentEdition.id)
+	]);
+	let records = scoresByKind;
 
 	const dataCrossKind: { slug: string; value: number }[] =
 		validIndicatorSlugs.map(slug => {
@@ -81,27 +85,32 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	setNoStoreHeaders(res);
 	if (req.method !== 'GET') {
 		return res.status(400).json({ message: 'Unsupported method' });
 	}
 
-	const { kind, slug, search } = req.query;
+	const { kind, slug } = req.query;
 	if (!isProcedureKind(kind)) {
 		return res.status(400).json({ message: 'Invalid kind' });
 	}
 
 	try {
 		if (typeof slug === 'string') {
-			const indicatorScore = await getIndicatorScoresByProcedureKindSlug({
-				kind,
-				slug
-			});
+			const indicatorScore = await cachedData(
+				cacheKey('indicator-scores-slug', { kind, slug }),
+				async () =>
+					getIndicatorScoresByProcedureKindSlug({
+						kind,
+						slug,
+						editionId: (await getLastEdition())?.id
+					})
+			);
+			setPublicCacheHeaders(res);
 			return res.status(200).json(indicatorScore);
 		}
-		const indicatorScores = await getIndicatorScores(
-			kind,
-			typeof search === 'string' ? search : undefined
-		);
+		const indicatorScores = await getIndicatorScores(kind);
+		setPublicCacheHeaders(res);
 		return res.status(200).json(indicatorScores);
 	} catch (err) {
 		console.error('GET /api/indicator-scores failed:', err);
